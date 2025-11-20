@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OPTISPHERE - Визуальный контент и SEO</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --neon-green: #00ff41;
+            --matrix-green: #00cc33;
+            --dark-bg: #0a0a0a;
+            --darker-bg: #050505;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            padding: 15px 0;
+            background: rgba(5, 5, 5, 0.95);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-with-image {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-img {
+            height: 50px;
+            width: auto;
+            filter: drop-shadow(0 0 8px var(--neon-green));
+        }
+        
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--neon-green);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px var(--neon-green);
+        }
+        
+        .tagline {
+            font-size: 0.9rem;
+            color: #aaa;
+            letter-spacing: 1px;
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .header-contact {
+            text-align: right;
+        }
+        
+        .header-phone {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-green);
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .header-phone:hover {
+            text-shadow: 0 0 10px var(--neon-green);
+        }
+        
+        .header-cta {
+            padding: 10px 25px;
+            background: transparent;
+            color: var(--neon-green);
+            border: 2px solid var(--neon-green);
+            border-radius: 4px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .header-cta:hover {
+            background: var(--neon-green);
+            color: var(--dark-bg);
+            box-shadow: 0 0 20px var(--neon-green);
+        }
+        
+        /* Main Hero with Interactive Panorama */
+        .main-hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            margin-top: 80px;
+        }
+        
+        .panorama-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+        
+        .panorama-image {
+            width: 150%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+            animation: rotatePanorama 60s linear infinite;
+            transform-origin: center center;
+        }
+        
+        @keyframes rotatePanorama {
+            0% {
+                transform: translateX(0%);
+            }
+            100% {
+                transform: translateX(-33.33%);
+            }
+        }
+        
+        .panorama-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(5, 5, 5, 0.9) 0%,
+                rgba(5, 5, 5, 0.7) 50%,
+                rgba(5, 5, 5, 0.9) 100%
+            );
+            z-index: -1;
+        }
+        
+        .hero-content {
+            max-width: 900px;
+            padding: 0 20px;
+            z-index: 1;
+        }
+        
+        .main-hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 30px;
+            color: white;
+            line-height: 1.2;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+        }
+        
+        .main-hero p {
+            font-size: 1.5rem;
+            margin: 0 auto 40px;
+            color: #e0e0e0;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+        }
+        
+        .main-hero strong {
+            color: var(--neon-green);
+            text-shadow: 0 0 10px rgba(0, 255, 65, 0.8);
+        }
+        
+        .hero-actions {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        /* Portfolio Section */
+        .portfolio {
+            padding: 100px 0;
+            background: rgba(5, 5, 5, 0.9);
+        }
+        
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            color: var(--neon-green);
+            margin-bottom: 50px;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+        }
+        
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .portfolio-item {
+            background: rgba(10, 20, 10, 0.6);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 65, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .portfolio-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--neon-green);
+            box-shadow: 0 10px 30px rgba(0, 255, 65, 0.2);
+        }
+        
+        .portfolio-panorama {
+            width: 100%;
+            height: 300px;
+            border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+        }
+        
+        .portfolio-content {
+            padding: 25px;
+        }
+        
+        .portfolio-content h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-green);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        /* Services Section */
+        .services {
+            padding: 80px 0;
+            background: rgba(5, 5, 5, 0.7);
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .service-item {
+            background: rgba(10, 20, 10, 0.6);
+            padding: 40px 30px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 255, 65, 0.3);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .service-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--neon-green);
+        }
+        
+        .service-item h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-green);
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+        }
+        
+        .service-item p {
+            color: #ccc;
+            line-height: 1.6;
+        }
+        
+        /* About Section */
+        .about {
+            padding: 80px 0;
+            text-align: center;
+            background: rgba(10, 10, 10, 0.7);
+        }
+        
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #ccc;
+        }
+        
+        /* Contacts Section */
+        .contacts {
+            padding: 80px 0;
+            background: rgba(5, 5, 5, 0.7);
+            text-align: center;
+        }
+        
+        .contact-compact {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(10, 20, 10, 0.6);
+            padding: 50px;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 255, 65, 0.3);
+        }
+        
+        .contact-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+        }
+        
+        .contact-row:last-child {
+            border-bottom: none;
+        }
+        
+        .contact-label {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-green);
+            font-size: 1.1rem;
+            min-width: 120px;
+            text-align: left;
+        }
+        
+        .contact-value {
+            color: #ccc;
+            font-size: 1.1rem;
+            text-align: right;
+            flex: 1;
+            margin-left: 20px;
+        }
+        
+        .contact-link {
+            color: var(--neon-green);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-link:hover {
+            text-shadow: 0 0 10px var(--neon-green);
+        }
+        
+        /* CTA Button */
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: transparent;
+            color: var(--neon-green);
+            border: 2px solid var(--neon-green);
+            border-radius: 4px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-top: 30px;
+        }
+        
+        .cta-button:hover {
+            background: var(--neon-green);
+            color: var(--dark-bg);
+            box-shadow: 0 0 25px var(--neon-green);
+        }
+        
+        .cta-button.secondary {
+            background: rgba(0, 255, 65, 0.1);
+            border-color: rgba(0, 255, 65, 0.5);
+        }
+        
+        .cta-button.secondary:hover {
+            background: var(--neon-green);
+            border-color: var(--neon-green);
+        }
+        
+        /* Footer */
+        footer {
+            padding: 40px 0;
+            text-align: center;
+            color: #777;
+            border-top: 1px solid rgba(0, 255, 65, 0.1);
+            background: rgba(5, 5, 5, 0.9);
+        }
+        
+        /* Matrix Background */
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -3;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .header-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .logo-with-image {
+                justify-content: center;
+                text-align: center;
+            }
+            
+            .logo-img {
+                height: 40px;
+            }
+            
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .tagline {
+                font-size: 0.8rem;
+            }
+            
+            .main-hero {
+                margin-top: 120px;
+            }
+            
+            .main-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .main-hero p {
+                font-size: 1.2rem;
+            }
+            
+            .hero-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-row {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .contact-label {
+                text-align: center;
+            }
+            
+            .contact-value {
+                text-align: center;
+                margin-left: 0;
+            }
+            
+            .panorama-image {
+                width: 300%;
+                animation: rotatePanoramaMobile 120s linear infinite;
+            }
+            
+            @keyframes rotatePanoramaMobile {
+                0% {
+                    transform: translateX(0%);
+                }
+                100% {
+                    transform: translateX(-66.66%);
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-bg" id="matrixBg"></div>
+    
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-with-image">
+                    <img src="лого.png" alt="OPTISPHERE" class="logo-img">
+                    <div class="logo-text">
+                        <div class="logo">OPTISPHERE</div>
+                        <div class="tagline">ОПТИМИЗАЦИЯ В КАЖДОЙ СФЕРЕ | Крым</div>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <div class="header-contact">
+                        <a href="tel:+79785768451" class="header-phone">+7 (978) 576-84-51</a>
+                    </div>
+                    <a href="#portfolio" class="header-cta">Смотреть работы</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Hero with Interactive Panorama -->
+    <section class="main-hero" id="hero">
+        <div class="panorama-container">
+            <!-- ПАНОРАМА С АВТОМАТИЧЕСКИМ ВРАЩЕНИЕМ -->
+            <img src="448776.jpg" 
+                 alt="Ночная Ялта" class="panorama-image">
+        </div>
+        <div class="panorama-overlay"></div>
+        <div class="hero-content">
+            <h1>Единственный в Крыму специалист, объединяющий визуальный контент и SEO</h1>
+            <p>Создаю панорамы, которые не просто показывают, а <strong>продают</strong> <br> Настраиваю SEO-продвижение, которое <strong>приводит клиентов</strong></p>
+            <div class="hero-actions">
+                <a href="#contacts" class="cta-button">Начать проект</a>
+                <a href="#portfolio" class="cta-button secondary">Смотреть портфолио</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio -->
+    <section class="portfolio" id="portfolio">
+        <div class="container">
+            <h2 class="section-title">Портфолио</h2>
+            <div class="portfolio-grid">
+                <!-- Project 1 -->
+                <div class="portfolio-item">
+                    <div class="portfolio-panorama">
+                        <div style="position:relative;overflow:hidden;height:100%;">
+                            <iframe src="https://yandex.com/map-widget/v1/?ll=34.166155%2C44.494702&mode=search&oid=38719348626&ol=biz&panorama%5Bdirection%5D=297.921023%2C6.292614&panorama%5Bfull%5D=true&panorama%5Bpoint%5D=34.166179%2C44.494597&panorama%5Bspan%5D=113.121974%2C60.000000&tab=panorama&z=17.08" width="100%" height="100%" frameborder="1" allowfullscreen="true" style="position:relative;"></iframe>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3>Ресторан "Гастродвор"</h3>
+                        <p>Ялта | Панорамный обзор</p>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="portfolio-item">
+                    <div class="portfolio-panorama">
+                        <div style="position:relative;overflow:hidden;height:100%;">
+                            <iframe src="https://yandex.com/map-widget/v1/?ll=35.244269%2C44.956134&mode=search&oid=187147096366&ol=biz&panorama%5Bdirection%5D=125.396054%2C1.407981&panorama%5Bfull%5D=true&panorama%5Bpoint%5D=35.244066%2C44.956298&panorama%5Bspan%5D=113.121974%2C60.000000&z=17.08" width="100%" height="100%" frameborder="1" allowfullscreen="true" style="position:relative;"></iframe>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3>Гостиница "Монталь"</h3>
+                        <p>Республика Крым | Гостиница</p>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="portfolio-item">
+                    <div class="portfolio-panorama">
+                        <div style="position:relative;overflow:hidden;height:100%;">
+                            <iframe src="https://yandex.com/map-widget/v1/?indoorLevel=1&ll=34.105429%2C44.957219&mode=search&oid=224318395394&ol=biz&panorama%5Bdirection%5D=49.800000%2C10.000000&panorama%5Bfull%5D=true&panorama%5Bpoint%5D=34.105299%2C44.957235&panorama%5Bspan%5D=113.121974%2C60.000000&tab=panorama&z=17.08" width="100%" height="100%" frameborder="1" allowfullscreen="true" style="position:relative;"></iframe>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3>Барбершоп "Диван"</h3>
+                        <p>Симферополь | Барбершоп</p>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="portfolio-item">
+                    <div class="portfolio-panorama">
+                        <div style="position:relative;overflow:hidden;height:100%;">
+                            <iframe src="https://yandex.com/map-widget/v1/?ll=33.793525%2C44.604707&mode=search&oid=82080847032&ol=biz&panorama%5Bdirection%5D=272.047692%2C18.560105&panorama%5Bfull%5D=true&panorama%5Bpoint%5D=33.793872%2C44.604557&panorama%5Bspan%5D=113.121974%2C60.000000&tab=panorama&z=17.08" width="100%" height="100%" frameborder="1" allowfullscreen="true" style="position:relative;"></iframe>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3>Усадьба "Феодоро"</h3>
+                        <p>Республика Крым | Гостевой дом</p>
+                    </div>
+                </div>
+
+                <!-- Project 5 -->
+                <div class="portfolio-item">
+                    <div class="portfolio-panorama">
+                        <div style="position:relative;overflow:hidden;height:100%;">
+                            <iframe src="https://yandex.com/map-widget/v1/?ll=34.006524%2C44.403300&mode=search&oid=45875848417&ol=biz&panorama%5Bdirection%5D=32.370603%2C3.327403&panorama%5Bfull%5D=true&panorama%5Bpoint%5D=34.004486%2C44.402882&panorama%5Bspan%5D=113.121974%2C60.000000&tab=panorama&z=17.08" width="100%" height="100%" frameborder="1" allowfullscreen="true" style="position:relative;"></iframe>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3>Кафе "Hungry Bird"</h3>
+                        <p>Симеиз | Кафе и кальян-бар</p>
+                    </div>
+                </div>
+
+                <!-- Project 6 -->
+                <div class="portfolio-item">
+                    <div class="portfolio-panorama">
+                        <div style="position:relative;overflow:hidden;height:100%;">
+                            <iframe src="https://yandex.com/map-widget/v1/?ll=34.217843%2C44.953151&mode=search&oid=116212041945&ol=biz&panorama%5Bdirection%5D=125.804996%2C3.891016&panorama%5Bfull%5D=true&panorama%5Bpoint%5D=34.085569%2C44.935173&panorama%5Bspan%5D=113.121974%2C60.000000&tab=panorama&z=11.23" width="100%" height="100%" frameborder="1" allowfullscreen="true" style="position:relative;"></iframe>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3>СТО "FitService"</h3>
+                        <p>Симферополь | Автосервис</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">Услуги</h2>
+            <div class="services-grid">
+                <div class="service-item">
+                    <h3>Панорамная съемка</h3>
+                    <p>Создание интерактивных 360° панорам для бизнеса, которые привлекают клиентов</p>
+                </div>
+                <div class="service-item">
+                    <h3>SEO продвижение</h3>
+                    <p>Комплексная настройка поискового продвижения для увеличения видимости в поиске</p>
+                </div>
+                <div class="service-item">
+                    <h3>Комплексное решение</h3>
+                    <p>Объединение визуального контента и SEO для максимального результата</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section class="about">
+        <div class="container">
+            <h2 class="section-title">Обо мне</h2>
+            <div class="about-content">
+                <p>Специализируюсь на создании продающих панорам и эффективном SEO-продвижении. Работаю исключительно с бизнесом в Крыму, понимаю специфику местного рынка и потребности клиентов.</p>
+                <p style="margin-top: 20px;"><strong>Вижу. Анализирую. Продвигаю. </strong></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacts -->
+    <section class="contacts" id="contacts">
+        <div class="container">
+            <h2 class="section-title">Контакты</h2>
+            <div class="contact-compact">
+                <div class="contact-row">
+                    <div class="contact-label">Телефон</div>
+                    <div class="contact-value">
+                        <a href="tel:+79785768451" class="contact-link">+7 (978) 576-84-51</a>
+                        <div style="font-size: 0.9rem; color: #888; margin-top: 5px;">ОЛЕГ</div>
+                    </div>
+                </div>
+                <div class="contact-row">
+                    <div class="contact-label">Email</div>
+                    <div class="contact-value">
+                        <a href="mailto:radinuko@gmail.com" class="contact-link">radinuko@gmail.com</a>
+                    </div>
+                </div>
+                <div class="contact-row">
+                    <div class="contact-label">Telegram</div>
+                    <div class="contact-value">
+                        <a href="https://t.me/aleg_rad" class="contact-link">@aleg_rad</a>
+                    </div>
+                </div>
+            </div>
+            <a href="tel:+79785768451" class="cta-button">ПОЗВОНИТЬ СЕЙЧАС</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>OPTISPHERE &copy; 2025. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Matrix background effect
+        document.addEventListener('DOMContentLoaded', function() {
+            const matrixBg = document.getElementById('matrixBg');
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            matrixBg.appendChild(canvas);
+            
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            
+            const chars = "010101010101";
+            const charArray = chars.split("");
+            const fontSize = 14;
+            const columns = canvas.width / fontSize;
+            const drops = [];
+            
+            for(let i = 0; i < columns; i++) {
+                drops[i] = 1;
+            }
+            
+            function drawMatrix() {
+                ctx.fillStyle = "rgba(5, 5, 5, 0.04)";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.fillStyle = "#00ff41";
+                ctx.font = fontSize + "px monospace";
+                
+                for(let i = 0; i < drops.length; i++) {
+                    const text = charArray[Math.floor(Math.random() * charArray.length)];
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                    
+                    if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    
+                    drops[i]++;
+                }
+            }
+            
+            setInterval(drawMatrix, 35);
+        });
+    </script>
+</body>
+</html>
