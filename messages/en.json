@@ -1,0 +1,167 @@
+{
+  "nav": {
+    "services": "Services",
+    "portfolio": "Portfolio",
+    "pricing": "Pricing",
+    "contact": "Contact",
+    "cta": "Discuss a project"
+  },
+  "hero": {
+    "badge": "AI WEB STUDIO",
+    "headline": {
+      "line1": "Your first",
+      "line2": "AI salesperson",
+      "line3": "is already working"
+    },
+    "subtitle": "We build websites with a digital assistant inside. Yura closes clients while you run your business.",
+    "cta": {
+      "primary": "Calculate cost",
+      "secondary": "View our work"
+    }
+  },
+  "hook": {
+    "sites": { "value": "47", "label": "sites launched" },
+    "leads": { "value": "1,200+", "label": "leads captured by Yura" },
+    "days": { "value": "7", "label": "days on average" }
+  },
+  "services": {
+    "label": "What we do",
+    "header": "Three ways to grow",
+    "title": "Three ways to grow",
+    "ai_site": {
+      "label": "AI WEBSITE",
+      "title": "AI Website",
+      "desc": "A website with a digital salesperson inside. Yura answers questions, qualifies leads and requests contact — around the clock.",
+      "features": ["Yura as part of the site", "Responsive design", "SEO optimisation", "Ready in 5–10 days"]
+    },
+    "presence": {
+      "label": "PRESENCE",
+      "title": "Presence",
+      "desc": "360° panoramas and visual content. The client 'visits' you before the first call — sees everything from the inside.",
+      "features": ["360° object tours", "Website integration", "Virtual viewing", "From ₽8,000/object"]
+    },
+    "growth": {
+      "label": "GROWTH",
+      "title": "Growth",
+      "desc": "SEO + Yandex.Direct + analytics. AI analyses the audience, the site converts, you get leads.",
+      "features": ["SEO from month one", "Yandex.Direct", "Monthly reports", "Orbit subscription"]
+    }
+  },
+  "portfolio": {
+    "label": "Our work",
+    "title": "Websites that sell",
+    "filters": {
+      "all": "All",
+      "sites": "Sites",
+      "panoramas": "Panoramas",
+      "promo": "Promotion"
+    },
+    "cta": "Open site",
+    "price_prefix": "Price "
+  },
+  "pricing": {
+    "label": "Pricing",
+    "title": "Transparent pricing",
+    "subtitle": "Exact price — after a chat with Yura. These are starting points.",
+    "cta": {
+      "discuss": "Discuss",
+      "calculate": "Calculate price",
+      "subscribe": "Get subscription"
+    },
+    "features": {
+      "start": ["Responsive design", "Single page (landing)", "Application form", "Basic SEO", "AI assistant Yura"],
+      "pro": ["Responsive design", "Up to 10 pages", "AI assistant Yura", "SEO optimisation", "Analytics & reports"],
+      "premium": ["Everything in PRO", "3D / custom animations", "Marketing package", "360° panoramas", "Priority support"]
+    },
+    "tiers": {
+      "start": {
+        "name": "START",
+        "price": "from ₽50,000",
+        "days": "3–5 days",
+        "desc": "Landing page for a quick start"
+      },
+      "pro": {
+        "name": "PRO",
+        "price": "from ₽120,000",
+        "days": "5–10 days",
+        "desc": "Sales website + SEO",
+        "badge": "Popular"
+      },
+      "premium": {
+        "name": "PREMIUM",
+        "price": "from ₽180,000",
+        "days": "10–20 days",
+        "desc": "Custom + 3D + marketing"
+      }
+    },
+    "orbit": {
+      "label": "Subscription",
+      "title": "Orbit",
+      "desc": "Monthly maintenance and development of your website",
+      "tiers": {
+        "start": { "name": "START", "price": "₽10,000/mo", "features": ["Hosting + domain", "24/7 monitoring", "5 edits per month"] },
+        "pro": { "name": "PRO", "price": "₽15,000/mo", "features": ["Everything in START", "SEO + rankings", "Conversion + reports", "Yura updates"] },
+        "max": { "name": "MAX", "price": "₽25,000/mo", "features": ["Everything in PRO", "Yandex.Direct", "Unlimited edits", "Priority support"] }
+      }
+    }
+  },
+  "calculator": {
+    "label": "Calculator",
+    "title": "Find out the cost",
+    "steps": {
+      "business": { "title": "Business type", "options": ["Hotel / apartments", "Construction", "Medicine / clinic", "Other business"] },
+      "type": { "title": "What you need", "options": ["Landing page (1 page)", "Multi-page website", "Online store"] },
+      "features": { "title": "Features", "options": ["AI assistant (Yura)", "Application form", "Services / products catalogue", "SEO optimisation"] },
+      "timeline": { "title": "Timeline", "options": ["Urgent (up to 5 days)", "Normal (up to 14 days)", "No rush (up to 30 days)"] }
+    },
+    "result": {
+      "title": "Your range",
+      "cta": "Discuss with Yura",
+      "tier_label": "Recommended tier"
+    },
+    "nav": {
+      "back": "Back",
+      "next": "Next",
+      "calculate": "Calculate"
+    }
+  },
+  "cta": {
+    "title": "Ready to launch?",
+    "subtitle": "Tell us about the project — Yura will ask a couple of questions and give you an exact price",
+    "button": "Start a conversation",
+    "ready_label": "Ready to start?",
+    "trust": {
+      "response": "Reply in 15 minutes",
+      "contract": "Contract & guarantees",
+      "revisions": "Revisions included"
+    }
+  },
+  "ai": {
+    "trigger": "Ask Yura",
+    "name": "Yura",
+    "subtitle": "Optisphere AI consultant",
+    "placeholder": "Write about your project...",
+    "greeting": "Hi! I'm Yura, Optisphere's AI consultant. Tell me — what's your business and what do you want to get from a website?",
+    "online": "Online",
+    "close": "Close",
+    "send": "Send",
+    "bubble_hint": "Hi, I'm Yura",
+    "lead_confirm": "Got it! Oleg will reach out personally within the day.",
+    "error": "Something went wrong. Please try again."
+  },
+  "footer": {
+    "tagline": "AI-native web studio",
+    "rights": "© 2025 Optisphere. All rights reserved.",
+    "desc": "We build websites that bring in clients — with an AI assistant built in.",
+    "nav_label": "Navigation",
+    "services_label": "Services",
+    "online_label": "We reply within 15 minutes",
+    "made_with": "Made with care",
+    "features": {
+      "speed": "Website in 5–10 days",
+      "ai": "AI assistant Yura",
+      "pano": "360° Panoramas",
+      "seo": "SEO & promotion"
+    }
+  }
+}
