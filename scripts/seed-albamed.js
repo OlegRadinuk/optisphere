@@ -181,7 +181,7 @@ if (existing) {
     name: "Альба Мед",
     description: "Медицинская клиника, Симферополь",
     system_prompt: ALBAMED_SYSTEM_PROMPT,
-    widget_color: "#0891b2",
+    widget_color: "#e85d04",
     widget_title: "Альба",
     widget_placeholder: "Задайте вопрос о здоровье или записи…",
   });
@@ -203,7 +203,7 @@ if (existing) {
     model: "claude-haiku-4-5-20251001",
     tg_token: process.env.ALBAMED_TG_TOKEN || "",
     tg_chat_id: process.env.ALBAMED_TG_CHAT_ID || "",
-    widget_color: "#0891b2",
+    widget_color: "#e85d04",
     widget_title: "Альба",
     widget_placeholder: "Задайте вопрос о здоровье или записи…",
   });
