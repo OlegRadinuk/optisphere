@@ -1,83 +1,95 @@
 (function () {
   "use strict";
 
-  // ── Config from script tag ──────────────────────────────────────────────────
   var script = document.currentScript || (function () {
-    var scripts = document.getElementsByTagName("script");
-    return scripts[scripts.length - 1];
+    var s = document.getElementsByTagName("script");
+    return s[s.length - 1];
   })();
 
-  var BOT_SLUG   = script.getAttribute("data-bot") || "default";
-  var API_BASE   = script.getAttribute("data-api") || "https://optisphere.tech";
-  var PRIMARY    = script.getAttribute("data-color") || null;
-  var TITLE      = script.getAttribute("data-title") || null;
-  var POSITION   = script.getAttribute("data-position") || "right"; // "right" | "left"
-  var GREETING   = script.getAttribute("data-greeting") || null;
+  var BOT_SLUG = script.getAttribute("data-bot")      || "default";
+  var API_BASE = script.getAttribute("data-api")      || "https://optisphere.tech";
+  var PRIMARY  = script.getAttribute("data-color")    || null;
+  var TITLE    = script.getAttribute("data-title")    || null;
+  var POSITION = script.getAttribute("data-position") || "right";
+  var BOTTOM   = parseInt(script.getAttribute("data-bottom") || "24", 10);
+  var GREETING_DELAY = parseInt(script.getAttribute("data-greeting-delay") || "3000", 10);
 
-  // ── State ───────────────────────────────────────────────────────────────────
+  var COLOR     = PRIMARY || "#e85d04";
+  var CHAR_NAME = TITLE   || "Альба";
+  var AVA_LETTER = CHAR_NAME.charAt(0).toUpperCase();
+
   var messages      = [];
   var sessionId     = "s-" + Math.random().toString(36).slice(2);
   var isOpen        = false;
   var isStreaming   = false;
   var leadFormShown = false;
+  var bubbleDismissed = false;
 
-  var COLOR = PRIMARY || "#0891b2";
-  var CHAR_NAME = TITLE || "Ассистент";
-  var AVATAR_LETTER = CHAR_NAME.charAt(0).toUpperCase();
+  var PILL_H    = 48;
+  var BTN_RIGHT = POSITION === "left" ? "auto" : "20px";
+  var BTN_LEFT  = POSITION === "left" ? "20px" : "auto";
 
   // ── CSS ─────────────────────────────────────────────────────────────────────
   function injectCSS() {
-    var pos = POSITION === "left";
+    var isLeft = POSITION === "left";
     var css = [
-      // Toggle button
-      "#opsph-btn{position:fixed;bottom:24px;" + (pos?"left:24px":"right:24px") + ";z-index:9999;width:60px;height:60px;border-radius:50%;background:" + COLOR + ";border:none;cursor:pointer;box-shadow:0 4px 24px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;transition:transform .2s,box-shadow .2s;}",
-      "#opsph-btn:hover{transform:scale(1.08);box-shadow:0 6px 28px rgba(0,0,0,.32);}",
-      "#opsph-btn-avatar{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;color:#fff;font-family:system-ui,sans-serif;letter-spacing:.5px;}",
+      // Pill button
+      "#opsph-btn{position:fixed;bottom:" + BOTTOM + "px;" + (isLeft ? "left:20px" : "right:20px") + ";z-index:9999;height:" + PILL_H + "px;padding:0 18px 0 10px;border-radius:24px;background:" + COLOR + ";border:none;cursor:pointer;box-shadow:0 4px 18px rgba(0,0,0,.22);display:flex;align-items:center;gap:9px;transition:transform .2s,box-shadow .2s;}",
+      "#opsph-btn:hover{transform:scale(1.05);box-shadow:0 6px 24px rgba(0,0,0,.3);}",
+      "#opsph-btn-ava{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:#fff;font-family:system-ui,sans-serif;flex-shrink:0;}",
+      "#opsph-btn-label{font-weight:700;font-size:14px;color:#fff;font-family:system-ui,sans-serif;letter-spacing:.2px;white-space:nowrap;}",
+      // Greeting bubble
+      "#opsph-bubble{position:fixed;bottom:" + (BOTTOM + PILL_H + 10) + "px;" + (isLeft ? "left:20px" : "right:20px") + ";z-index:9998;background:#fff;border-radius:16px;border-bottom-" + (isLeft ? "left" : "right") + "-radius:4px;box-shadow:0 4px 20px rgba(0,0,0,.13);padding:14px 16px 14px 14px;max-width:260px;display:flex;flex-direction:column;gap:8px;animation:opsph-pop .3s ease;border:1.5px solid #f0f0f0;}",
+      "#opsph-bubble.hide{display:none;}",
+      "@keyframes opsph-pop{from{opacity:0;transform:translateY(8px) scale(.96)}to{opacity:1;transform:none}}",
+      "#opsph-bubble-head{display:flex;align-items:center;gap:8px;}",
+      "#opsph-bubble-ava{width:30px;height:30px;border-radius:50%;background:" + COLOR + ";display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fff;font-family:system-ui,sans-serif;flex-shrink:0;}",
+      "#opsph-bubble-name{font-weight:700;font-size:13px;color:#1e293b;font-family:system-ui,sans-serif;}",
+      "#opsph-bubble-close{margin-left:auto;width:20px;height:20px;border:none;background:none;cursor:pointer;color:#94a3b8;font-size:16px;padding:0;line-height:1;display:flex;align-items:center;justify-content:center;}",
+      "#opsph-bubble-text{font-size:13px;color:#334155;font-family:system-ui,sans-serif;line-height:1.5;}",
+      "#opsph-bubble-cta{background:" + COLOR + ";color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;font-family:system-ui,sans-serif;cursor:pointer;transition:opacity .15s;text-align:left;}",
+      "#opsph-bubble-cta:hover{opacity:.88;}",
       // Chat window
-      "#opsph-wrap{position:fixed;bottom:96px;" + (pos?"left:16px":"right:16px") + ";z-index:9998;width:368px;max-width:calc(100vw - 32px);height:540px;max-height:calc(100vh - 120px);background:#fff;border-radius:20px;box-shadow:0 12px 48px rgba(0,0,0,.16);display:flex;flex-direction:column;overflow:hidden;transition:opacity .22s,transform .22s;opacity:0;transform:translateY(18px) scale(.96);pointer-events:none;}",
+      "#opsph-wrap{position:fixed;bottom:" + (BOTTOM + PILL_H + 12) + "px;" + (isLeft ? "left:16px" : "right:16px") + ";z-index:9997;width:368px;max-width:calc(100vw - 32px);height:530px;max-height:calc(100vh - 120px);background:#fff;border-radius:20px;box-shadow:0 12px 48px rgba(0,0,0,.16);display:flex;flex-direction:column;overflow:hidden;transition:opacity .22s,transform .22s;opacity:0;transform:translateY(14px) scale(.97);pointer-events:none;}",
       "#opsph-wrap.open{opacity:1;transform:none;pointer-events:all;}",
       // Header
-      "#opsph-head{background:" + COLOR + ";padding:14px 16px 14px 16px;display:flex;align-items:center;gap:12px;flex-shrink:0;}",
-      "#opsph-head-avatar{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;color:#fff;font-family:system-ui,sans-serif;flex-shrink:0;}",
+      "#opsph-head{background:" + COLOR + ";padding:14px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0;}",
+      "#opsph-head-ava{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;color:#fff;font-family:system-ui,sans-serif;flex-shrink:0;}",
       "#opsph-head-info{flex:1;min-width:0;}",
       "#opsph-head-name{font-weight:700;font-size:15px;color:#fff;font-family:system-ui,sans-serif;}",
-      "#opsph-head-status{font-size:11px;color:rgba(255,255,255,.75);font-family:system-ui,sans-serif;margin-top:1px;}",
-      "#opsph-close{background:rgba(255,255,255,.15);border:none;color:#fff;cursor:pointer;border-radius:50%;width:30px;height:30px;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s;}",
-      "#opsph-close:hover{background:rgba(255,255,255,.3);}",
+      "#opsph-head-sub{font-size:11px;color:rgba(255,255,255,.75);font-family:system-ui,sans-serif;margin-top:1px;}",
+      "#opsph-close{background:rgba(255,255,255,.15);border:none;color:#fff;cursor:pointer;border-radius:50%;width:30px;height:30px;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}",
+      "#opsph-close:hover{background:rgba(255,255,255,.28);}",
       // Messages
-      "#opsph-msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;font-family:system-ui,sans-serif;font-size:14px;line-height:1.5;background:#f8fafc;}",
+      "#opsph-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;font-family:system-ui,sans-serif;font-size:14px;background:#f8fafc;}",
       "#opsph-msgs::-webkit-scrollbar{width:3px;}",
       "#opsph-msgs::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:3px;}",
-      // Bot message row (avatar + bubble)
-      ".opsph-row{display:flex;align-items:flex-end;gap:8px;}",
-      ".opsph-row-avatar{width:28px;height:28px;border-radius:50%;background:" + COLOR + ";display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:#fff;font-family:system-ui,sans-serif;flex-shrink:0;}",
-      ".opsph-msg{max-width:78%;padding:10px 14px;border-radius:14px;word-break:break-word;white-space:pre-wrap;}",
+      ".opsph-row{display:flex;align-items:flex-end;gap:7px;}",
+      ".opsph-row-ava{width:26px;height:26px;border-radius:50%;background:" + COLOR + ";display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px;color:#fff;font-family:system-ui,sans-serif;flex-shrink:0;}",
+      ".opsph-msg{max-width:80%;padding:9px 13px;border-radius:14px;word-break:break-word;white-space:pre-wrap;line-height:1.55;}",
       ".opsph-user{align-self:flex-end;background:" + COLOR + ";color:#fff;border-bottom-right-radius:4px;}",
-      ".opsph-bot{background:#fff;color:#1e293b;border-bottom-left-radius:4px;box-shadow:0 1px 3px rgba(0,0,0,.07);}",
-      // Typing
-      ".opsph-typing-row{display:flex;align-items:flex-end;gap:8px;}",
-      ".opsph-typing{background:#fff;padding:12px 16px;border-radius:14px;border-bottom-left-radius:4px;box-shadow:0 1px 3px rgba(0,0,0,.07);}",
-      ".opsph-typing span{display:inline-block;width:7px;height:7px;background:#94a3b8;border-radius:50%;margin:0 2px;animation:opsph-bounce .9s infinite;}",
+      ".opsph-bot{background:#fff;color:#1e293b;border-bottom-left-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.07);}",
+      ".opsph-typing-row{display:flex;align-items:flex-end;gap:7px;}",
+      ".opsph-typing{background:#fff;padding:11px 14px;border-radius:14px;border-bottom-left-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.07);}",
+      ".opsph-typing span{display:inline-block;width:6px;height:6px;background:#94a3b8;border-radius:50%;margin:0 2px;animation:opsph-bounce .9s infinite;}",
       ".opsph-typing span:nth-child(2){animation-delay:.18s;}",
       ".opsph-typing span:nth-child(3){animation-delay:.36s;}",
       "@keyframes opsph-bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}}",
-      // Lead form card
-      ".opsph-lead-card{background:#fff;border:1.5px solid " + COLOR + ";border-radius:14px;padding:16px;margin:4px 0;box-shadow:0 2px 12px rgba(0,0,0,.08);max-width:86%;}",
+      // Lead form
+      ".opsph-lead-card{background:#fff;border:1.5px solid " + COLOR + ";border-radius:14px;padding:14px;box-shadow:0 2px 10px rgba(0,0,0,.07);max-width:86%;}",
       ".opsph-lead-title{font-weight:700;font-size:13px;color:#1e293b;margin-bottom:10px;font-family:system-ui,sans-serif;}",
       ".opsph-lead-input{width:100%;box-sizing:border-box;padding:9px 12px;border:1px solid #e2e8f0;border-radius:9px;font-size:13px;font-family:system-ui,sans-serif;outline:none;margin-bottom:8px;transition:border-color .15s;}",
       ".opsph-lead-input:focus{border-color:" + COLOR + ";}",
-      ".opsph-lead-btn{width:100%;padding:10px;border:none;border-radius:9px;background:" + COLOR + ";color:#fff;font-weight:600;font-size:13px;font-family:system-ui,sans-serif;cursor:pointer;transition:opacity .15s;}",
-      ".opsph-lead-btn:hover{opacity:.88;}",
+      ".opsph-lead-btn{width:100%;padding:9px;border:none;border-radius:9px;background:" + COLOR + ";color:#fff;font-weight:600;font-size:13px;font-family:system-ui,sans-serif;cursor:pointer;}",
       ".opsph-lead-btn:disabled{opacity:.5;cursor:default;}",
-      ".opsph-lead-success{color:#059669;font-size:13px;font-family:system-ui,sans-serif;font-weight:600;text-align:center;padding:6px 0;}",
-      // Input area
+      ".opsph-lead-ok{color:#059669;font-size:13px;font-family:system-ui,sans-serif;font-weight:600;text-align:center;padding:6px 0;}",
+      // Input
       "#opsph-form{display:flex;padding:10px 12px;border-top:1px solid #e2e8f0;gap:8px;flex-shrink:0;background:#fff;}",
-      "#opsph-input{flex:1;padding:9px 13px;border:1.5px solid #e2e8f0;border-radius:12px;font-size:14px;font-family:system-ui,sans-serif;outline:none;resize:none;min-height:38px;max-height:100px;line-height:1.4;transition:border-color .15s;color:#1e293b;background:#f8fafc;}",
+      "#opsph-input{flex:1;padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:12px;font-size:14px;font-family:system-ui,sans-serif;outline:none;resize:none;min-height:38px;max-height:96px;line-height:1.4;transition:border-color .15s;color:#1e293b;background:#f8fafc;}",
       "#opsph-input:focus{border-color:" + COLOR + ";background:#fff;}",
-      "#opsph-send{width:38px;height:38px;border-radius:12px;border:none;background:" + COLOR + ";cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity .15s;}",
+      "#opsph-send{width:38px;height:38px;border-radius:12px;border:none;background:" + COLOR + ";cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}",
       "#opsph-send:disabled{opacity:.45;cursor:default;}",
-      // Mobile
-      "@media(max-width:480px){#opsph-wrap{width:calc(100vw - 20px);bottom:88px;" + (pos?"left:10px":"right:10px") + ";}#opsph-btn{bottom:18px;" + (pos?"left:18px":"right:18px") + ";}}"
+      "@media(max-width:480px){#opsph-wrap{width:calc(100vw - 20px);}#opsph-btn{" + (isLeft?"left:12px":"right:12px") + "}#opsph-bubble{" + (isLeft?"left:12px":"right:12px") + ";max-width:calc(100vw - 40px);}}"
     ].join("");
 
     var el = document.createElement("style");
@@ -87,12 +99,17 @@
 
   // ── DOM ─────────────────────────────────────────────────────────────────────
   function buildDOM() {
-    // Toggle button — avatar letter
+    // Pill button
     var btn = document.createElement("button");
     btn.id = "opsph-btn";
-    btn.setAttribute("aria-label", "Открыть чат с " + CHAR_NAME);
-    btn.innerHTML = '<div id="opsph-btn-avatar">' + escHtml(AVATAR_LETTER) + '</div>';
-    btn.addEventListener("click", toggle);
+    btn.setAttribute("aria-label", "Чат с " + CHAR_NAME);
+    btn.innerHTML =
+      '<div id="opsph-btn-ava">' + escHtml(AVA_LETTER) + '</div>' +
+      '<span id="opsph-btn-label">' + escHtml(CHAR_NAME) + '</span>';
+    btn.addEventListener("click", function () {
+      hideBubble();
+      toggle();
+    });
     document.body.appendChild(btn);
 
     // Chat window
@@ -102,46 +119,76 @@
     wrap.setAttribute("aria-modal", "true");
     wrap.innerHTML = [
       '<div id="opsph-head">',
-        '<div id="opsph-head-avatar">' + escHtml(AVATAR_LETTER) + '</div>',
+        '<div id="opsph-head-ava">' + escHtml(AVA_LETTER) + '</div>',
         '<div id="opsph-head-info">',
           '<div id="opsph-head-name">' + escHtml(CHAR_NAME) + '</div>',
-          '<div id="opsph-head-status">● Онлайн · отвечает мгновенно</div>',
+          '<div id="opsph-head-sub">● Онлайн · ИИ-ассистент клиники</div>',
         '</div>',
         '<button id="opsph-close" aria-label="Закрыть">✕</button>',
       '</div>',
       '<div id="opsph-msgs" aria-live="polite"></div>',
       '<form id="opsph-form" autocomplete="off">',
-        '<textarea id="opsph-input" placeholder="Напишите вопрос…" rows="1" aria-label="Введите сообщение"></textarea>',
-        '<button id="opsph-send" type="submit" aria-label="Отправить">' + sendIcon() + '</button>',
+        '<textarea id="opsph-input" placeholder="Напишите вопрос…" rows="1"></textarea>',
+        '<button id="opsph-send" type="submit">' + sendIcon() + '</button>',
       '</form>'
     ].join("");
     document.body.appendChild(wrap);
 
     wrap.querySelector("#opsph-close").addEventListener("click", toggle);
     wrap.querySelector("#opsph-form").addEventListener("submit", onSubmit);
-
-    var input = wrap.querySelector("#opsph-input");
-    input.addEventListener("keydown", function (e) {
+    var inp = wrap.querySelector("#opsph-input");
+    inp.addEventListener("keydown", function (e) {
       if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault();
         wrap.querySelector("#opsph-form").dispatchEvent(new Event("submit", { bubbles: true }));
       }
     });
-    input.addEventListener("input", function () {
+    inp.addEventListener("input", function () {
       this.style.height = "auto";
-      this.style.height = Math.min(this.scrollHeight, 100) + "px";
+      this.style.height = Math.min(this.scrollHeight, 96) + "px";
     });
+  }
+
+  // ── Greeting bubble ──────────────────────────────────────────────────────────
+  function showBubble() {
+    if (bubbleDismissed || isOpen) return;
+    var el = document.createElement("div");
+    el.id = "opsph-bubble";
+    el.innerHTML = [
+      '<div id="opsph-bubble-head">',
+        '<div id="opsph-bubble-ava">' + escHtml(AVA_LETTER) + '</div>',
+        '<span id="opsph-bubble-name">' + escHtml(CHAR_NAME) + '</span>',
+        '<button id="opsph-bubble-close" aria-label="Закрыть">✕</button>',
+      '</div>',
+      '<div id="opsph-bubble-text">Здравствуйте! Я ' + escHtml(CHAR_NAME) + ' — ИИ-ассистент клиники 👋<br>Помогу с вопросами о врачах, записи на приём или симптомах.</div>',
+      '<button id="opsph-bubble-cta">Написать →</button>',
+    ].join("");
+    document.body.appendChild(el);
+
+    el.querySelector("#opsph-bubble-close").addEventListener("click", function (e) {
+      e.stopPropagation();
+      hideBubble();
+    });
+    el.querySelector("#opsph-bubble-cta").addEventListener("click", function () {
+      hideBubble();
+      if (!isOpen) toggle();
+    });
+  }
+
+  function hideBubble() {
+    bubbleDismissed = true;
+    var el = document.getElementById("opsph-bubble");
+    if (el) el.remove();
   }
 
   // ── Toggle ───────────────────────────────────────────────────────────────────
   function toggle() {
     isOpen = !isOpen;
     var wrap = document.getElementById("opsph-wrap");
-    var btn  = document.getElementById("opsph-btn");
+    var label = document.getElementById("opsph-btn-label");
     if (isOpen) {
       wrap.classList.add("open");
-      btn.innerHTML = '<div id="opsph-btn-avatar">✕</div>';
-      btn.setAttribute("aria-label", "Закрыть чат");
+      if (label) label.textContent = "Закрыть";
       if (messages.length === 0) showGreeting();
       setTimeout(function () {
         var i = document.getElementById("opsph-input");
@@ -149,26 +196,27 @@
       }, 60);
     } else {
       wrap.classList.remove("open");
-      btn.innerHTML = '<div id="opsph-btn-avatar">' + escHtml(AVATAR_LETTER) + '</div>';
-      btn.setAttribute("aria-label", "Открыть чат с " + CHAR_NAME);
+      if (label) label.textContent = CHAR_NAME;
     }
   }
 
-  // ── Greeting ─────────────────────────────────────────────────────────────────
+  // ── Greeting message in chat ──────────────────────────────────────────────────
   function showGreeting() {
-    var text = GREETING || ("Здравствуйте! Я " + CHAR_NAME + " — ваш медицинский ассистент. Помогу записаться к врачу или ответить на вопросы о клинике.");
-    appendBotRow(text);
+    appendBotRow(
+      "Здравствуйте! Я " + CHAR_NAME + " — ИИ-ассистент клиники Альба Мед. 👋\n\n" +
+      "Помогу:\n• Разобраться с симптомами → к какому врачу идти\n• Записаться на приём\n• Узнать адрес, часы работы\n\nКакой у вас вопрос?"
+    );
   }
 
   // ── Submit ────────────────────────────────────────────────────────────────────
   function onSubmit(e) {
     e.preventDefault();
     if (isStreaming) return;
-    var input = document.getElementById("opsph-input");
-    var text  = input.value.trim();
+    var inp = document.getElementById("opsph-input");
+    var text = inp.value.trim();
     if (!text) return;
-    input.value = "";
-    input.style.height = "auto";
+    inp.value = "";
+    inp.style.height = "auto";
     messages.push({ role: "user", content: text });
     appendUserMsg(text);
     streamBot();
@@ -178,7 +226,6 @@
   function streamBot() {
     isStreaming = true;
     setSendDisabled(true);
-
     var typingRow = appendTypingRow();
 
     fetch(API_BASE + "/api/bots/" + BOT_SLUG + "/chat", {
@@ -203,23 +250,19 @@
         var full    = "";
 
         function read() {
-          reader.read().then(function (result) {
-            if (result.done) {
-              // Strip [SAVE_LEAD] from display, show form if present
+          reader.read().then(function (r) {
+            if (r.done) {
               var cleaned = full.replace(/\[SAVE_LEAD\]/g, "").trimEnd();
               bubble.textContent = cleaned;
               messages.push({ role: "assistant", content: cleaned });
-              if (full.indexOf("[SAVE_LEAD]") !== -1 && !leadFormShown) {
-                showLeadForm();
-              }
+              if (full.indexOf("[SAVE_LEAD]") !== -1 && !leadFormShown) showLeadForm();
               isStreaming = false;
               setSendDisabled(false);
               scrollToBottom();
               return;
             }
-            var chunk = decoder.decode(result.value, { stream: true });
+            var chunk = decoder.decode(r.value, { stream: true });
             full += chunk;
-            // Stream without the marker (hide it progressively)
             bubble.textContent = full.replace(/\[SAVE_LEAD\]/g, "");
             scrollToBottom();
             read();
@@ -233,7 +276,7 @@
       })
       .catch(function () {
         typingRow.remove();
-        appendBotRow("Произошла ошибка. Попробуйте ещё раз.");
+        appendBotRow("Произошла ошибка соединения. Попробуйте ещё раз или позвоните: +7 (978) 788-77-22");
         isStreaming = false;
         setSendDisabled(false);
       });
@@ -242,7 +285,6 @@
   // ── Lead Form ─────────────────────────────────────────────────────────────────
   function showLeadForm() {
     leadFormShown = true;
-
     var card = document.createElement("div");
     card.className = "opsph-lead-card";
     card.innerHTML = [
@@ -251,7 +293,6 @@
       '<input class="opsph-lead-input" id="opsph-lead-phone" type="tel" placeholder="Телефон *" autocomplete="tel">',
       '<button class="opsph-lead-btn" id="opsph-lead-submit">Отправить заявку</button>'
     ].join("");
-
     msgs().appendChild(card);
     scrollToBottom();
 
@@ -259,13 +300,9 @@
     submitBtn.addEventListener("click", function () {
       var name  = card.querySelector("#opsph-lead-name").value.trim();
       var phone = card.querySelector("#opsph-lead-phone").value.trim();
-      if (!phone) {
-        card.querySelector("#opsph-lead-phone").focus();
-        return;
-      }
+      if (!phone) { card.querySelector("#opsph-lead-phone").focus(); return; }
       submitBtn.disabled = true;
       submitBtn.textContent = "Отправляем…";
-
       fetch(API_BASE + "/api/bots/" + BOT_SLUG + "/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -274,16 +311,14 @@
       })
         .then(function (r) { return r.json(); })
         .then(function () {
-          card.innerHTML = '<div class="opsph-lead-success">✓ Заявка принята! Перезвоним в ближайшее время.</div>';
-          appendBotRow("Отлично! Администратор позвонит вам для подтверждения. Если хотите — можете позвонить сами: +7 (978) 788-77-22.");
+          card.innerHTML = '<div class="opsph-lead-ok">✓ Заявка принята! Перезвоним в ближайшее время.</div>';
+          appendBotRow("Отлично, записала! Администратор свяжется с вами. Если удобнее — звоните сами: +7 (978) 788-77-22.");
         })
         .catch(function () {
           submitBtn.disabled = false;
           submitBtn.textContent = "Попробовать снова";
         });
     });
-
-    // Enter on phone submits
     card.querySelector("#opsph-lead-phone").addEventListener("keydown", function (e) {
       if (e.key === "Enter") submitBtn.click();
     });
@@ -302,35 +337,33 @@
     var row = document.createElement("div");
     row.className = "opsph-row";
     var av = document.createElement("div");
-    av.className = "opsph-row-avatar";
-    av.textContent = AVATAR_LETTER;
-    var bubble = document.createElement("div");
-    bubble.className = "opsph-msg opsph-bot";
+    av.className = "opsph-row-ava";
+    av.textContent = AVA_LETTER;
+    var b = document.createElement("div");
+    b.className = "opsph-msg opsph-bot";
     row.appendChild(av);
-    row.appendChild(bubble);
+    row.appendChild(b);
     return row;
   }
 
   function appendBotRow(text) {
-    var row    = createBotRow();
-    var bubble = row.querySelector(".opsph-bot");
-    bubble.textContent = text;
+    var row = createBotRow();
+    row.querySelector(".opsph-bot").textContent = text;
     msgs().appendChild(row);
     scrollToBottom();
-    return bubble;
   }
 
   function appendTypingRow() {
     var row = document.createElement("div");
     row.className = "opsph-typing-row";
     var av = document.createElement("div");
-    av.className = "opsph-row-avatar";
-    av.textContent = AVATAR_LETTER;
-    var typing = document.createElement("div");
-    typing.className = "opsph-typing";
-    typing.innerHTML = "<span></span><span></span><span></span>";
+    av.className = "opsph-row-ava";
+    av.textContent = AVA_LETTER;
+    var t = document.createElement("div");
+    t.className = "opsph-typing";
+    t.innerHTML = "<span></span><span></span><span></span>";
     row.appendChild(av);
-    row.appendChild(typing);
+    row.appendChild(t);
     msgs().appendChild(row);
     scrollToBottom();
     return row;
@@ -338,10 +371,9 @@
 
   function msgs()          { return document.getElementById("opsph-msgs"); }
   function scrollToBottom(){ var m = msgs(); if (m) m.scrollTop = m.scrollHeight; }
-  function setSendDisabled(v) { var b = document.getElementById("opsph-send"); if (b) b.disabled = v; }
-  function escHtml(s)      { return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+  function setSendDisabled(v){ var b = document.getElementById("opsph-send"); if (b) b.disabled = v; }
+  function escHtml(s)      { return ("" + s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 
-  // ── Icons ─────────────────────────────────────────────────────────────────────
   function sendIcon() {
     return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 2L15 22l-4-9-9-4 20-7z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   }
@@ -350,6 +382,9 @@
   function init() {
     injectCSS();
     buildDOM();
+    if (GREETING_DELAY >= 0) {
+      setTimeout(showBubble, GREETING_DELAY);
+    }
   }
 
   if (document.readyState === "loading") {
