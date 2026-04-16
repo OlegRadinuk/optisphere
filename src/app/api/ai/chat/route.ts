@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from "next/server"
 import OpenAI from "openai"
 
-const ai = new OpenAI({
-  apiKey: process.env.ANTHROPIC_API_KEY ?? process.env.AI_API_KEY,
-  baseURL: process.env.AI_BASE_URL ?? "https://api.anthropic.com/v1/",
-})
+function getAI() {
+  return new OpenAI({
+    apiKey: process.env.ANTHROPIC_API_KEY ?? process.env.AI_API_KEY ?? "placeholder",
+    baseURL: process.env.AI_BASE_URL ?? "https://api.anthropic.com/v1/",
+  })
+}
 
 const TODAY = new Date().toLocaleDateString("ru-RU", {
   day: "numeric",
@@ -323,7 +325,7 @@ export async function POST(request: NextRequest): Promise<Response> {
           }
         }
 
-        const completion = await ai.chat.completions.create({
+        const completion = await getAI().chat.completions.create({
           model: process.env.AI_MODEL ?? "claude-haiku-4-5-20251001",
           stream: true,
           messages: [
