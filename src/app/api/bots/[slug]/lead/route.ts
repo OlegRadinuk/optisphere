@@ -10,7 +10,7 @@ const corsHeaders = (origin: string) => ({
 
 async function sendTelegram(token: string, chatId: string, text: string) {
   try {
-    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    await fetch(`https://tg-proxy.radinuko.workers.dev/bot${token}/sendMessage`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
