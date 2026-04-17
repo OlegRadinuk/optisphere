@@ -28,7 +28,7 @@ function initSchema(db: Database.Database) {
       description TEXT    DEFAULT '',
       system_prompt TEXT  NOT NULL DEFAULT '',
       api_key     TEXT    NOT NULL DEFAULT '',
-      base_url    TEXT    NOT NULL DEFAULT 'https://aiprime.store/v1/',
+      base_url    TEXT    NOT NULL DEFAULT 'https://aiprimetech.io/v1/',
       model       TEXT    NOT NULL DEFAULT 'claude-haiku-4-5-20251001',
       tg_token    TEXT    DEFAULT '',
       tg_chat_id  TEXT    DEFAULT '',

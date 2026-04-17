@@ -73,7 +73,7 @@ export async function POST(request: NextRequest): Promise<Response> {
       description: data.description ?? "",
       system_prompt: data.system_prompt ?? "",
       api_key: data.api_key ?? "",
-      base_url: data.base_url ?? "https://aiprime.store/v1/",
+      base_url: data.base_url ?? "https://aiprimetech.io/v1/",
       model: data.model ?? "claude-haiku-4-5-20251001",
       tg_token: data.tg_token ?? "",
       tg_chat_id: data.tg_chat_id ?? "",

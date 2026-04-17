@@ -10,7 +10,7 @@ const DEFAULT_FORM = {
   description: "",
   system_prompt: "",
   api_key: "",
-  base_url: "https://aiprime.store/v1/",
+  base_url: "https://aiprimetech.io/v1/",
   model: "claude-haiku-4-5-20251001",
   tg_token: "",
   tg_chat_id: "",
