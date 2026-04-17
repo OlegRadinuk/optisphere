@@ -133,10 +133,18 @@ export async function POST(
           }
         }
 
+        // Inject system prompt into first user message — some proxies ignore the system role
+        const apiMessages = body.messages.map((m, i) => {
+          if (i === 0 && m.role === "user") {
+            return { ...m, content: `${systemPrompt}\n\n---\n${m.content}` }
+          }
+          return m
+        })
+
         const completion = await ai.chat.completions.create({
           model: client.model,
           stream: true,
-          messages: [{ role: "system", content: systemPrompt }, ...body.messages],
+          messages: apiMessages,
         })
 
         for await (const chunk of completion) {
