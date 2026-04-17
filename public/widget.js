@@ -290,7 +290,7 @@
     card.innerHTML = [
       '<div class="opsph-lead-title">📋 Записаться на приём</div>',
       '<input class="opsph-lead-input" id="opsph-lead-name" type="text" placeholder="Ваше имя" autocomplete="name">',
-      '<input class="opsph-lead-input" id="opsph-lead-phone" type="tel" placeholder="Телефон *" autocomplete="tel">',
+      '<input class="opsph-lead-input" id="opsph-lead-phone" type="tel" placeholder="+7 (___) ___ __ __" autocomplete="tel">',
       '<button class="opsph-lead-btn" id="opsph-lead-submit">Отправить заявку</button>'
     ].join("");
     msgs().appendChild(card);
@@ -319,7 +319,15 @@
           submitBtn.textContent = "Попробовать снова";
         });
     });
-    card.querySelector("#opsph-lead-phone").addEventListener("keydown", function (e) {
+    var phoneInp = card.querySelector("#opsph-lead-phone");
+    phoneInp.addEventListener("input", function () {
+      var pos = this.selectionStart;
+      var prev = this.value;
+      this.value = formatPhone(this.value);
+      // keep cursor near end if user is typing forward
+      if (pos >= prev.length) this.selectionStart = this.selectionEnd = this.value.length;
+    });
+    phoneInp.addEventListener("keydown", function (e) {
       if (e.key === "Enter") submitBtn.click();
     });
   }
@@ -373,6 +381,20 @@
   function scrollToBottom(){ var m = msgs(); if (m) m.scrollTop = m.scrollHeight; }
   function setSendDisabled(v){ var b = document.getElementById("opsph-send"); if (b) b.disabled = v; }
   function escHtml(s)      { return ("" + s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+  function formatPhone(val) {
+    var digits = val.replace(/\D/g, "");
+    if (!digits) return "";
+    if (digits[0] === "8") digits = "7" + digits.slice(1);
+    if (digits[0] !== "7") digits = "7" + digits;
+    digits = digits.slice(0, 11);
+    var r = "+7";
+    if (digits.length > 1) r += " (" + digits.slice(1, 4);
+    if (digits.length >= 4) r += ") " + digits.slice(4, 7);
+    if (digits.length >= 7) r += " " + digits.slice(7, 9);
+    if (digits.length >= 9) r += " " + digits.slice(9, 11);
+    return r;
+  }
 
   function sendIcon() {
     return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 2L15 22l-4-9-9-4 20-7z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
