@@ -5,6 +5,7 @@ import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import YuraWidgetLoader from "@/components/ai/YuraWidgetLoader";
+import { HeroChatProvider } from "@/components/ai/HeroChatContext";
 import "../globals.css";
 
 const geist = Geist({
@@ -67,8 +68,10 @@ export default async function LocaleLayout({ children, params }: Props) {
     <html lang={locale} className={`${geist.variable} ${orbitron.variable}`}>
       <body className="bg-base text-text">
         <NextIntlClientProvider messages={messages}>
-          {children}
-          <YuraWidgetLoader />
+          <HeroChatProvider>
+            {children}
+            <YuraWidgetLoader />
+          </HeroChatProvider>
         </NextIntlClientProvider>
       </body>
     </html>

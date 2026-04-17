@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { useTranslations } from "next-intl"
+import { useHeroChat } from "@/components/ai/HeroChatContext"
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 
@@ -263,6 +264,7 @@ function MessageBubble({ msg }: { msg: ChatMessage }) {
 
 export default function YuraWidget() {
   const t = useTranslations("ai")
+  const { heroChatOpen } = useHeroChat()
 
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState<ChatMessage[]>([])
@@ -275,6 +277,7 @@ export default function YuraWidget() {
   const [showLeadForm, setShowLeadForm] = useState(false)
   const [leadFormSubmitting, setLeadFormSubmitting] = useState(false)
   const [leadFormSubmitted, setLeadFormSubmitted] = useState(false)
+  const [scrolledPastHero, setScrolledPastHero] = useState(false)
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const messagesContainerRef = useRef<HTMLDivElement>(null)
@@ -322,28 +325,33 @@ export default function YuraWidget() {
     }
   }, [isOpen, messages.length, t, calcResult])
 
-  // Bubble hint: show after 12s timer OR after 400px scroll
+  // Track scroll past hero (threshold: 0.8 * innerHeight for widget visibility,
+  // full innerHeight for bubble trigger)
   useEffect(() => {
-    let shown = false
-    const show = () => {
-      if (shown) return
-      shown = true
-      setShowBubble(true)
-      setHasUnread(true)
-    }
-
-    const timer = setTimeout(show, 12000)
+    let bubbleShown = false
+    let bubbleTimer: ReturnType<typeof setTimeout> | null = null
 
     const handleScroll = () => {
-      if (window.scrollY > 400) {
-        show()
+      const y = window.scrollY
+      const h = window.innerHeight
+      setScrolledPastHero(y > h * 0.8)
+
+      // Trigger bubble after passing full hero height, with 2s delay
+      if (!bubbleShown && y > h) {
+        bubbleShown = true
+        bubbleTimer = setTimeout(() => {
+          setShowBubble(true)
+          setHasUnread(true)
+        }, 2000)
         window.removeEventListener("scroll", handleScroll)
       }
     }
+
     window.addEventListener("scroll", handleScroll, { passive: true })
+    handleScroll()
 
     return () => {
-      clearTimeout(timer)
+      if (bubbleTimer) clearTimeout(bubbleTimer)
       window.removeEventListener("scroll", handleScroll)
     }
   }, [])
@@ -594,7 +602,8 @@ export default function YuraWidget() {
         }
       `}</style>
 
-      {/* Fixed container */}
+      {/* Fixed container — hidden until user scrolls past hero, or when hero
+           inline chat is open (unless widget is already open by the user) */}
       <div
         style={{
           position: "fixed",
@@ -605,6 +614,11 @@ export default function YuraWidget() {
           flexDirection: "column",
           alignItems: "flex-end",
           gap: "0.75rem",
+          pointerEvents: isOpen || (scrolledPastHero && !heroChatOpen) ? "auto" : "none",
+          opacity: isOpen || (scrolledPastHero && !heroChatOpen) ? 1 : 0,
+          transform:
+            isOpen || (scrolledPastHero && !heroChatOpen) ? "translateY(0)" : "translateY(16px)",
+          transition: "opacity 0.3s ease, transform 0.3s ease",
         }}
       >
         {/* ── Chat panel ── */}

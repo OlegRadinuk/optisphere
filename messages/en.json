@@ -147,7 +147,23 @@
     "send": "Send",
     "bubble_hint": "Hi, I'm Yura",
     "lead_confirm": "Got it! Oleg will reach out personally within the day.",
-    "error": "Something went wrong. Please try again."
+    "error": "Something went wrong. Please try again.",
+    "mic_start": "Start voice input",
+    "mic_stop": "Stop recording",
+    "mic_listening": "Listening…",
+    "progress_label": "{count} questions left before estimate",
+    "progress_done": "Preparing estimate",
+    "pre_question": {
+      "default": "Do you already have a website?",
+      "hover": "Just looking? Ask me anything — tap here",
+      "yes": "Yes, I do",
+      "no": "No, I need one"
+    },
+    "first_messages": {
+      "v1": "I find where a website loses money. We have three departments: marketing, development, quality — every project goes through all three. Do you already have a site, or building from scratch?",
+      "v2": "I'm Yura. Most sites lose visitors in the first 8 seconds — we build so they stay. Do you already have a site, or building from scratch?",
+      "v3": "I help figure out why competitors get leads while you get traffic. Straight talk, no fluff. Do you already have a site, or building from scratch?"
+    }
   },
   "footer": {
     "tagline": "AI-native web studio",
