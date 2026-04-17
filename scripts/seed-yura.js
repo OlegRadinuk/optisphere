@@ -186,7 +186,7 @@ if (existing) {
     name: "Optisphere",
     description: "Веб-студия Optisphere",
     system_prompt: YURA_SYSTEM_PROMPT,
-    api_key: "sk-2d6c211a86009fc902114a4edafda78caacaac9f7f3b3adfc85407e437b0d5bf",
+    api_key: "sk-4587ad771d95d16a9e6f03d7bae2e5e32154d8c1de71074dc24071e208018da8",
     base_url: "https://aiprime.store/v1/",
     model: "claude-haiku-4-5-20251001",
     tg_token: "",
