@@ -212,3 +212,11 @@ export function getLeads(clientId: number): Lead[] {
     )
     .all(clientId) as Lead[]
 }
+
+export function getMessagesBySession(clientId: number, sessionId: string, limit = 20): Message[] {
+  return getDb()
+    .prepare(
+      "SELECT * FROM messages WHERE client_id = ? AND session_id = ? ORDER BY created_at DESC LIMIT ?"
+    )
+    .all(clientId, sessionId, limit) as Message[]
+}

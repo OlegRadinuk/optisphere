@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { getClientBySlug, saveLead } from "@/lib/db"
+import { getClientBySlug, saveLead, getMessagesBySession } from "@/lib/db"
 
 const corsHeaders = (origin: string) => ({
   "Access-Control-Allow-Origin": origin,
@@ -71,7 +71,19 @@ export async function POST(
       .filter(Boolean)
       .join("\n")
 
-    await sendTelegram(client.tg_token, client.tg_chat_id, lines)
+    // Append recent conversation context
+    let fullText = lines
+    if (sessionId) {
+      const msgs = getMessagesBySession(client.id, sessionId, 20).reverse()
+      if (msgs.length > 0) {
+        const history = msgs
+          .map((m) => `${m.role === "user" ? "👤" : "🤖"} ${m.content.slice(0, 300)}`)
+          .join("\n")
+        fullText += `\n\n<b>Диалог:</b>\n${history}`
+      }
+    }
+
+    await sendTelegram(client.tg_token, client.tg_chat_id, fullText)
   }
 
   return NextResponse.json({ ok: true }, { headers: cors })
