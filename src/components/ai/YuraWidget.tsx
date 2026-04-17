@@ -18,7 +18,7 @@ interface LeadFormData {
   time: string
 }
 
-const FORM_MARKER = "[SHOW_FORM]"
+const FORM_MARKER = "[SAVE_LEAD]"
 
 // ── Lead form bubble ───────────────────────────────────────────────────────────
 
@@ -494,7 +494,7 @@ export default function YuraWidget() {
     const contact = detectContact(trimmed)
 
     try {
-      const res = await fetch("/api/ai/chat", {
+      const res = await fetch("/api/bots/yura/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

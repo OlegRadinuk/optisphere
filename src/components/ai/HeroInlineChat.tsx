@@ -18,7 +18,7 @@ interface LeadFormData {
   time: string;
 }
 
-const FORM_MARKER = '[SHOW_FORM]';
+const FORM_MARKER = '[SAVE_LEAD]';
 const TOTAL_STEPS = 3;
 
 export type SphereSignalState = 'idle' | 'active' | 'listening' | 'responding';
@@ -445,7 +445,7 @@ export default function HeroInlineChat({
       const contact = detectContact(lastUserText);
 
       try {
-        const res = await fetch('/api/ai/chat', {
+        const res = await fetch('/api/bots/yura/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ messages: fullMessages, sessionId: sessionId.current }),
