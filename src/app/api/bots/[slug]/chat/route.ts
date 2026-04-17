@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import OpenAI from "openai"
+import Anthropic from "@anthropic-ai/sdk"
 import { getClientBySlug, saveMessage } from "@/lib/db"
 
 // ── Rate limiter (per ip+slug) ─────────────────────────────────────────────────
@@ -115,9 +115,12 @@ export async function POST(
     if (detectedUrl) urlFetchPromise = fetchPage(detectedUrl)
   }
 
-  const ai = new OpenAI({
-    apiKey: client.api_key || process.env.ANTHROPIC_API_KEY,
-    baseURL: client.base_url || process.env.AI_BASE_URL,
+  const baseURL = (client.base_url || process.env.AI_BASE_URL || "https://aiprime.store")
+    .replace(/\/v1\/?$/, "")
+
+  const ai = new Anthropic({
+    apiKey: client.api_key || process.env.ANTHROPIC_API_KEY || "",
+    baseURL,
   })
 
   const encoder = new TextEncoder()
@@ -133,27 +136,20 @@ export async function POST(
           }
         }
 
-        // Inject system prompt into first user message — some proxies ignore the system role
-        const apiMessages = body.messages.map((m, i) => {
-          if (i === 0 && m.role === "user") {
-            return { ...m, content: `${systemPrompt}\n\n---\n${m.content}` }
-          }
-          return m
-        })
-
-        const completion = await ai.chat.completions.create({
+        const response = await ai.messages.stream({
           model: client.model,
-          stream: true,
-          messages: apiMessages,
+          max_tokens: 1024,
+          system: systemPrompt,
+          messages: body.messages,
         })
 
-        for await (const chunk of completion) {
-          const delta = chunk.choices[0]?.delta as Record<string, unknown>
-          if (delta?.reasoning_content) continue
-          const text = delta?.content
-          if (typeof text === "string" && text) {
-            assistantReply += text
-            controller.enqueue(encoder.encode(text))
+        for await (const chunk of response) {
+          if (chunk.type === "content_block_delta" && chunk.delta.type === "text_delta") {
+            const text = chunk.delta.text
+            if (text) {
+              assistantReply += text
+              controller.enqueue(encoder.encode(text))
+            }
           }
         }
 

@@ -16,6 +16,7 @@
     "gen:orbit": "node --experimental-vm-modules scripts/gen-assets.js orbit"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.90.0",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.5.0",
     "@react-three/postprocessing": "^3.0.4",
