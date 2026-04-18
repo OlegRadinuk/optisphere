@@ -165,8 +165,6 @@ export default function HeroSection() {
         margin: '0 auto',
         padding: isMobile ? '90px 20px 60px' : '90px 48px 60px',
         flex: 1,
-        display: 'flex',
-        alignItems: 'center',
         width: '100%',
         display: 'flex',
         flexDirection: isMobile ? 'column' : 'row',
