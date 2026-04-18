@@ -45,8 +45,8 @@ const vertexShader = /* glsl */ `
     if (uState > 1.5 && uState < 2.5) breathMul = 1.8 + uAudioLevel * 2.0; // listening
     if (uState > 2.5) breathMul = 2.0;                             // responding
 
-    float breath = (sin(uTime * 0.65) * 0.022 + sin(uTime * 1.3) * 0.008) * breathMul;
-    float n = noise2(uv * 5.0 + uTime * 0.12) * 0.012;
+    float breath = (sin(uTime * 0.65) * 0.038 + sin(uTime * 1.3) * 0.015) * breathMul;
+    float n = noise2(uv * 4.0 + uTime * 0.18) * 0.028;
     vec3 displaced = position * (1.0 + breath + n);
 
     gl_Position = projectionMatrix * modelViewMatrix * vec4(displaced, 1.0);
@@ -154,18 +154,19 @@ const fragmentShader = /* glsl */ `
     // Active: tint indigo toward violet
     vec3 cIndigoTinted = mix(cIndigo, mix(cIndigo, cViolet, 0.55), isActive);
 
-    vec3 col = mix(cVoid, cDeep, plasma * 0.5);
+    vec3 col = mix(cVoid, cDeep, plasma * 0.45);
 
-    col = mix(col, cGrid,          gridLine * 0.85);
-    col = mix(col, cIndigoTinted,  node     * 0.75 * (0.4 + hot * 0.6));
-    col += cCyan   * nodeHot  * 0.5;
-    col += cHot    * pow(nodeHot, 3.0) * 0.35;
+    col = mix(col, cGrid,          gridLine * 0.08);
+    col = mix(col, cIndigoTinted,  node     * 0.20 * (0.4 + hot * 0.6));
+    col += cCyan   * nodeHot  * 0.08;
+    col += cHot    * pow(nodeHot, 3.0) * 0.06;
 
-    col += cCyan * dataPulse * 0.7;
-    col += cHot  * dataPulse * dataPulse * 0.4;
+    col += cCyan * dataPulse * 0.15;
+    col += cHot  * dataPulse * dataPulse * 0.08;
 
-    col += cIndigoTinted * pow(plasma, 3.5) * 0.45;
-    col += cCyan         * pow(plasma, 6.0) * 0.3;
+    col += cIndigoTinted * pow(plasma, 2.0) * 0.90;
+    col += cCyan         * pow(plasma, 4.0) * 0.70;
+    col += cViolet       * pow(plasma, 6.0) * 0.50;
 
     col += cCyan * rings * 0.55;
     col += cHot  * rings * rings * 0.35;
@@ -604,12 +605,6 @@ export function NexusSphere({
         />
       </Canvas>
 
-      <NeuralNetwork
-        width={size}
-        height={size}
-        isMobile={isMobile}
-        mouseRef={mouseRef as React.RefObject<[number, number]>}
-      />
     </motion.div>
   );
 }
@@ -691,11 +686,7 @@ export function NexusSphereMobile({
     >
       <div style={{
         position: 'absolute', inset: 0, borderRadius: '50%',
-        backgroundImage: `
-          linear-gradient(rgba(99,102,241,0.15) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(99,102,241,0.15) 1px, transparent 1px)
-        `,
-        backgroundSize: `${size/8}px ${size/8}px`,
+        background: 'radial-gradient(circle at 60% 25%, rgba(6,182,212,0.25) 0%, transparent 55%), radial-gradient(circle at 35% 70%, rgba(139,92,246,0.20) 0%, transparent 50%)',
         pointerEvents: 'none',
       }} />
       <style>{`

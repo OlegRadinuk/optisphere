@@ -8,14 +8,17 @@
   },
   "hero": {
     "badge": "AI WEB STUDIO",
+    "title_line1": "Websites that",
+    "title_line2": "sell on their own",
+    "title_line3": "while you sleep",
+    "subtitle": "We build websites, add AI assistants and promote via SEO & Yandex Direct. Yura qualifies leads 24/7.",
     "headline": {
-      "line1": "Your first",
-      "line2": "AI salesperson",
-      "line3": "is already working"
+      "line1": "Websites that",
+      "line2": "sell on their own",
+      "line3": "while you sleep"
     },
-    "subtitle": "We build websites with a digital assistant inside. Yura closes clients while you run your business.",
     "cta": {
-      "primary": "Calculate cost",
+      "primary": "Discuss a project",
       "secondary": "View our work"
     }
   },
