@@ -8,21 +8,17 @@ import { motion, AnimatePresence } from 'framer-motion';
 const BAR_COUNT = 28;
 
 function Waveform({ active }: { active: boolean }) {
-  const barsRef = useRef<number[]>(Array.from({ length: BAR_COUNT }, () => Math.random()));
-  const [bars, setBars] = useState(barsRef.current);
+  const [bars, setBars] = useState(() => Array.from({ length: BAR_COUNT }, () => Math.random()));
   const rafRef = useRef<number>(0);
-  const tRef = useRef(0);
 
   useEffect(() => {
     const animate = (now: number) => {
       rafRef.current = requestAnimationFrame(animate);
-      tRef.current = now * 0.002;
-      const t = tRef.current;
+      const t = now * 0.002;
       setBars(Array.from({ length: BAR_COUNT }, (_, i) => {
-        const base = active
+        return active
           ? 0.3 + 0.65 * Math.abs(Math.sin(t * 2.2 + i * 0.38))
           : 0.08 + 0.18 * Math.abs(Math.sin(t * 0.5 + i * 0.55));
-        return base;
       }));
     };
     rafRef.current = requestAnimationFrame(animate);
@@ -30,24 +26,18 @@ function Waveform({ active }: { active: boolean }) {
   }, [active]);
 
   return (
-    <div style={{
-      display: 'flex', alignItems: 'center', gap: 2,
-      height: 36, padding: '0 2px',
-    }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 2, height: 36, padding: '0 2px' }}>
       {bars.map((h, i) => (
-        <div
-          key={i}
-          style={{
-            width: 3,
-            height: `${Math.max(4, h * 34)}px`,
-            borderRadius: 2,
-            background: active
-              ? `rgba(0,212,255,${0.5 + h * 0.5})`
-              : `rgba(0,212,255,${0.15 + h * 0.25})`,
-            transition: 'height 0.08s ease, background 0.3s ease',
-            flexShrink: 0,
-          }}
-        />
+        <div key={i} style={{
+          width: 3,
+          height: `${Math.max(4, h * 34)}px`,
+          borderRadius: 2,
+          background: active
+            ? `rgba(0,212,255,${0.5 + h * 0.5})`
+            : `rgba(0,212,255,${0.15 + h * 0.25})`,
+          transition: 'height 0.08s ease, background 0.3s ease',
+          flexShrink: 0,
+        }} />
       ))}
     </div>
   );
@@ -67,7 +57,7 @@ function TypingText({ text }: { text: string }) {
       i++;
       setDisplayed(text.slice(0, i));
       if (i >= text.length) { clearInterval(id); setDone(true); }
-    }, 28);
+    }, 22);
     return () => clearInterval(id);
   }, [text]);
 
@@ -79,9 +69,42 @@ function TypingText({ text }: { text: string }) {
   );
 }
 
-// ─── Message bubble ───────────────────────────────────────────────────────────
+// ─── Message ─────────────────────────────────────────────────────────────────
 
 interface Msg { role: 'yura' | 'user'; text: string; }
+
+// ─── Placeholder animator ─────────────────────────────────────────────────────
+
+const HINTS = ['Расскажите о проекте…', 'Какой бизнес?', 'Есть сайт или нужен новый?', 'Напишите Юре…'];
+
+function AnimatedPlaceholder({ active }: { active: boolean }) {
+  const [idx, setIdx] = useState(0);
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    if (active) return;
+    const id = setInterval(() => {
+      setVisible(false);
+      setTimeout(() => {
+        setIdx(i => (i + 1) % HINTS.length);
+        setVisible(true);
+      }, 300);
+    }, 2800);
+    return () => clearInterval(id);
+  }, [active]);
+
+  return (
+    <span style={{
+      position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)',
+      fontSize: '0.82rem', pointerEvents: 'none', userSelect: 'none',
+      color: 'rgba(0,212,255,0.35)',
+      transition: 'opacity 0.3s',
+      opacity: visible ? 1 : 0,
+    }}>
+      {HINTS[idx]}
+    </span>
+  );
+}
 
 // ─── Main HUD ─────────────────────────────────────────────────────────────────
 
@@ -100,12 +123,13 @@ export default function YuraHUD({ onLeadCaptured }: YuraHUDProps) {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [started, setStarted] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [inputFocused, setInputFocused] = useState(false);
+  const messagesRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const abortRef = useRef<AbortController | null>(null);
-
   const firstMsg = useRef(FIRST_MESSAGES[Math.floor(Math.random() * FIRST_MESSAGES.length)]);
 
+  // First message after delay
   useEffect(() => {
     const t = setTimeout(() => {
       setMessages([{ role: 'yura', text: firstMsg.current }]);
@@ -114,8 +138,11 @@ export default function YuraHUD({ onLeadCaptured }: YuraHUDProps) {
     return () => clearTimeout(t);
   }, []);
 
+  // Scroll within the messages container only — never scroll the page
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const el = messagesRef.current;
+    if (!el) return;
+    el.scrollTop = el.scrollHeight;
   }, [messages]);
 
   const send = useCallback(async (text: string) => {
@@ -143,6 +170,7 @@ export default function YuraHUD({ onLeadCaptured }: YuraHUDProps) {
 
       if (!res.ok || !res.body) throw new Error('API error');
 
+      // API streams plain text — read chunks directly
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
       let full = '';
@@ -151,23 +179,12 @@ export default function YuraHUD({ onLeadCaptured }: YuraHUDProps) {
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
-        const chunk = decoder.decode(value, { stream: true });
-        for (const line of chunk.split('\n')) {
-          if (line.startsWith('data: ')) {
-            const data = line.slice(6).trim();
-            if (data === '[DONE]') break;
-            try {
-              const parsed = JSON.parse(data);
-              const delta = parsed.choices?.[0]?.delta?.content ?? '';
-              full += delta;
-              setMessages(prev => {
-                const copy = [...prev];
-                copy[copy.length - 1] = { role: 'yura', text: full };
-                return copy;
-              });
-            } catch {}
-          }
-        }
+        full += decoder.decode(value, { stream: true });
+        setMessages(prev => {
+          const copy = [...prev];
+          copy[copy.length - 1] = { role: 'yura', text: full };
+          return copy;
+        });
       }
 
       if (onLeadCaptured && (full.includes('телефон') || full.includes('заявк') || full.includes('свяж'))) {
@@ -199,23 +216,24 @@ export default function YuraHUD({ onLeadCaptured }: YuraHUDProps) {
       backdropFilter: 'blur(20px)',
     }}>
       {/* Scan line */}
-      <div style={{
+      <div aria-hidden="true" style={{
         position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0,
         backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,212,255,0.018) 3px, rgba(0,212,255,0.018) 4px)',
       }} />
 
       {/* Corner accents */}
-      {[['0','0','right','bottom'],['0','auto','right','top'],['auto','0','left','bottom'],['auto','auto','left','top']].map(([t,b,r,l], i) => (
-        <div key={i} aria-hidden="true" style={{
-          position: 'absolute', top: t === 'auto' ? 'auto' : t === '0' ? 12 : undefined,
-          bottom: b === 'auto' ? 'auto' : b === '0' ? 12 : undefined,
-          right: r === 'auto' ? 'auto' : r === '0' ? 12 : undefined,
-          left: l === 'auto' ? 'auto' : l === '0' ? 12 : undefined,
-          width: 12, height: 12,
-          borderTop: ['bottom','top'].includes(t === '0' ? 'top' : 'bottom') ? undefined : i < 2 ? '1px solid rgba(0,212,255,0.5)' : undefined,
-          borderBottom: i >= 2 ? '1px solid rgba(0,212,255,0.5)' : undefined,
-          borderLeft: [0,2].includes(i) ? undefined : '1px solid rgba(0,212,255,0.5)',
-          borderRight: [0,2].includes(i) ? '1px solid rgba(0,212,255,0.5)' : undefined,
+      {(['tl','tr','bl','br'] as const).map(pos => (
+        <div key={pos} aria-hidden="true" style={{
+          position: 'absolute',
+          top: pos.startsWith('t') ? 10 : 'auto',
+          bottom: pos.startsWith('b') ? 10 : 'auto',
+          left: pos.endsWith('l') ? 10 : 'auto',
+          right: pos.endsWith('r') ? 10 : 'auto',
+          width: 10, height: 10,
+          borderTop: pos.startsWith('t') ? '1px solid rgba(0,212,255,0.5)' : undefined,
+          borderBottom: pos.startsWith('b') ? '1px solid rgba(0,212,255,0.5)' : undefined,
+          borderLeft: pos.endsWith('l') ? '1px solid rgba(0,212,255,0.5)' : undefined,
+          borderRight: pos.endsWith('r') ? '1px solid rgba(0,212,255,0.5)' : undefined,
         }} />
       ))}
 
@@ -237,8 +255,7 @@ export default function YuraHUD({ onLeadCaptured }: YuraHUDProps) {
           <div style={{
             position: 'absolute', bottom: 1, right: 1,
             width: 9, height: 9, borderRadius: '50%',
-            background: '#22c55e',
-            border: '2px solid #06060F',
+            background: '#22c55e', border: '2px solid #06060F',
             animation: 'hudPulse 2s ease-in-out infinite',
           }} />
         </div>
@@ -259,15 +276,18 @@ export default function YuraHUD({ onLeadCaptured }: YuraHUDProps) {
       </div>
 
       {/* Messages */}
-      <div style={{
-        position: 'relative', zIndex: 1,
-        height: 170,
-        overflowY: 'auto',
-        padding: '14px 16px',
-        display: 'flex', flexDirection: 'column', gap: 10,
-        scrollbarWidth: 'thin',
-        scrollbarColor: 'rgba(0,212,255,0.2) transparent',
-      }}>
+      <div
+        ref={messagesRef}
+        style={{
+          position: 'relative', zIndex: 1,
+          height: 170,
+          overflowY: 'auto',
+          padding: '14px 16px',
+          display: 'flex', flexDirection: 'column', gap: 10,
+          scrollbarWidth: 'thin',
+          scrollbarColor: 'rgba(0,212,255,0.2) transparent',
+        }}
+      >
         <AnimatePresence initial={false}>
           {messages.map((msg, i) => (
             <motion.div
@@ -275,24 +295,15 @@ export default function YuraHUD({ onLeadCaptured }: YuraHUDProps) {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.25 }}
-              style={{
-                display: 'flex',
-                justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start',
-              }}
+              style={{ display: 'flex', justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start' }}
             >
               <div style={{
                 maxWidth: '85%',
                 padding: '8px 12px',
                 borderRadius: msg.role === 'user' ? '12px 12px 3px 12px' : '12px 12px 12px 3px',
-                background: msg.role === 'user'
-                  ? 'rgba(79,70,229,0.35)'
-                  : 'rgba(0,212,255,0.08)',
-                border: msg.role === 'user'
-                  ? '1px solid rgba(79,70,229,0.4)'
-                  : '1px solid rgba(0,212,255,0.15)',
-                fontSize: '0.82rem',
-                lineHeight: 1.5,
-                color: '#E8EAED',
+                background: msg.role === 'user' ? 'rgba(79,70,229,0.35)' : 'rgba(0,212,255,0.08)',
+                border: msg.role === 'user' ? '1px solid rgba(79,70,229,0.4)' : '1px solid rgba(0,212,255,0.15)',
+                fontSize: '0.82rem', lineHeight: 1.5, color: '#E8EAED',
               }}>
                 {i === messages.length - 1 && msg.role === 'yura' && started
                   ? <TypingText text={msg.text} />
@@ -306,15 +317,12 @@ export default function YuraHUD({ onLeadCaptured }: YuraHUDProps) {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ display: 'flex', gap: 4, padding: '4px 8px' }}>
             {[0, 1, 2].map(i => (
               <div key={i} style={{
-                width: 6, height: 6, borderRadius: '50%',
-                background: '#00D4FF',
+                width: 6, height: 6, borderRadius: '50%', background: '#00D4FF',
                 animation: `hudDot 1.2s ${i * 0.2}s ease-in-out infinite`,
               }} />
             ))}
           </motion.div>
         )}
-
-        <div ref={messagesEndRef} />
       </div>
 
       {/* Input */}
@@ -324,28 +332,35 @@ export default function YuraHUD({ onLeadCaptured }: YuraHUDProps) {
         padding: '10px 12px',
         display: 'flex', gap: 8, alignItems: 'center',
       }}>
-        <input
-          ref={inputRef}
-          value={input}
-          onChange={e => setInput(e.target.value)}
-          onKeyDown={handleKey}
-          placeholder="Напишите Юре..."
-          disabled={loading}
-          style={{
-            flex: 1,
-            background: 'rgba(0,212,255,0.05)',
-            border: '1px solid rgba(0,212,255,0.18)',
-            borderRadius: 8,
-            padding: '8px 12px',
-            fontSize: '0.82rem',
-            color: '#F8FAFC',
-            outline: 'none',
-            fontFamily: 'inherit',
-            transition: 'border-color 0.2s',
-          }}
-          onFocus={e => { e.target.style.borderColor = 'rgba(0,212,255,0.5)'; }}
-          onBlur={e => { e.target.style.borderColor = 'rgba(0,212,255,0.18)'; }}
-        />
+        {/* Input with animated placeholder */}
+        <div style={{ flex: 1, position: 'relative' }}>
+          {!input && !inputFocused && <AnimatedPlaceholder active={loading} />}
+          <input
+            ref={inputRef}
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            onKeyDown={handleKey}
+            onFocus={() => setInputFocused(true)}
+            onBlur={() => setInputFocused(false)}
+            placeholder={inputFocused ? 'Напишите Юре…' : ''}
+            disabled={loading}
+            style={{
+              width: '100%',
+              background: 'rgba(0,212,255,0.05)',
+              border: `1px solid ${inputFocused ? 'rgba(0,212,255,0.5)' : 'rgba(0,212,255,0.18)'}`,
+              borderRadius: 8,
+              padding: '8px 12px',
+              fontSize: '0.82rem',
+              color: '#F8FAFC',
+              outline: 'none',
+              fontFamily: 'inherit',
+              transition: 'border-color 0.2s, box-shadow 0.2s',
+              boxShadow: inputFocused ? '0 0 0 3px rgba(0,212,255,0.08)' : 'none',
+              boxSizing: 'border-box',
+            }}
+          />
+        </div>
+
         <button
           onClick={() => send(input)}
           disabled={loading || !input.trim()}
@@ -372,7 +387,7 @@ export default function YuraHUD({ onLeadCaptured }: YuraHUDProps) {
         position: 'relative', zIndex: 1,
         borderTop: '1px solid rgba(0,212,255,0.08)',
         padding: '8px 16px',
-        display: 'flex', gap: 0, justifyContent: 'space-around',
+        display: 'flex', justifyContent: 'space-around',
       }}>
         {[['6', 'сайтов'], ['1 200+', 'лидов поймано'], ['4.9', 'рейтинг']].map(([val, label]) => (
           <div key={label} style={{ textAlign: 'center' }}>
