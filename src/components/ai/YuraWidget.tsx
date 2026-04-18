@@ -139,12 +139,19 @@ function LeadFormBubble({
 
 // ── Session ID helper ──────────────────────────────────────────────────────────
 
+function genUUID(): string {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID()
+  }
+  return Math.random().toString(36).slice(2) + Date.now().toString(36)
+}
+
 function getSessionId(): string {
-  if (typeof window === "undefined") return crypto.randomUUID()
+  if (typeof window === "undefined") return genUUID()
   const key = "yura_session_id"
   const stored = sessionStorage.getItem(key)
   if (stored) return stored
-  const id = crypto.randomUUID()
+  const id = genUUID()
   sessionStorage.setItem(key, id)
   return id
 }
