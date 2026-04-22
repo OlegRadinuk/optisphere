@@ -1,0 +1,161 @@
+- generic [ref=e3]:
+  - complementary [ref=e4]:
+    - button "R radinuko's Workspace" [ref=e6]:
+      - generic [ref=e7]:
+        - generic [ref=e9]: R
+        - generic [ref=e11]:
+          - generic [ref=e12]: radinuko's Workspace
+          - img [ref=e14]
+    - generic [ref=e16]:
+      - navigation "Main navigation" [ref=e17]:
+        - list [ref=e18]:
+          - listitem [ref=e19]:
+            - link "Home" [ref=e20] [cursor=pointer]:
+              - /url: /home
+              - generic "Home" [ref=e21]:
+                - img [ref=e22]
+                - generic [ref=e25]: Home
+          - listitem [ref=e26]:
+            - link "Discover" [ref=e27] [cursor=pointer]:
+              - /url: /discover
+              - generic "Discover" [ref=e28]:
+                - img [ref=e29]
+                - generic [ref=e33]: Discover
+          - listitem [ref=e34]:
+            - link "My files" [ref=e35] [cursor=pointer]:
+              - /url: /files
+              - generic "My files" [ref=e36]:
+                - img [ref=e37]
+                - generic [ref=e40]: My files
+          - listitem [ref=e41]:
+            - link "Templates" [ref=e42] [cursor=pointer]:
+              - /url: /templates
+              - generic "Templates" [ref=e43]:
+                - img [ref=e44]
+                - generic [ref=e47]: Templates
+          - listitem [ref=e48]:
+            - link "Navigation item" [ref=e49] [cursor=pointer]:
+              - /url: /generate
+              - generic "Navigation item" [ref=e50]:
+                - img [ref=e51]
+                - generic [ref=e56]: Generate
+          - listitem [ref=e57]:
+            - link "Shared with me" [ref=e58] [cursor=pointer]:
+              - /url: /shared
+              - generic "Shared with me" [ref=e59]:
+                - img [ref=e60]
+                - generic [ref=e64]: Shared with me
+          - listitem [ref=e65]:
+            - link "Community" [ref=e66] [cursor=pointer]:
+              - /url: /community
+              - generic [ref=e67]:
+                - img [ref=e68]
+                - generic [ref=e73]: Community
+          - listitem [ref=e74]:
+            - link "Academy" [ref=e75] [cursor=pointer]:
+              - /url: /academy
+              - generic "Academy" [ref=e76]:
+                - img [ref=e77]
+                - generic [ref=e81]: Academy
+                - generic [ref=e82]: NEW
+          - listitem [ref=e83]:
+            - link "Navigation item" [ref=e84] [cursor=pointer]:
+              - /url: /inbox
+              - generic "Navigation item" [ref=e85]:
+                - img [ref=e86]
+                - generic [ref=e89]: Inbox
+      - generic [ref=e91]:
+        - heading "Projects" [level=4] [ref=e93]:
+          - text: Projects
+          - img [ref=e94]
+        - region [ref=e96]:
+          - link "Overview" [ref=e98]:
+            - /url: /workspace/f04b865b-795b-4b31-a6a6-a97029ceec1b
+            - img [ref=e99]
+            - text: Overview
+          - button "New Project" [ref=e105]:
+            - img [ref=e106]
+            - text: New Project
+    - generic [ref=e107]:
+      - generic [ref=e108]:
+        - generic [ref=e109]:
+          - img [ref=e110]
+          - generic [ref=e112]:
+            - paragraph [ref=e113]: Upgrade your workspace
+            - paragraph [ref=e114]: Unlock all features on Spline.
+        - button "Upgrade" [ref=e115]
+      - navigation "Secondary navigation" [ref=e117]:
+        - list [ref=e118]:
+          - listitem [ref=e119]:
+            - link "Archive" [ref=e120] [cursor=pointer]:
+              - /url: /archived
+              - generic "Archive" [ref=e121]:
+                - img [ref=e122]
+                - generic [ref=e124]: Archive
+          - listitem [ref=e125]:
+            - link "Updates" [ref=e126] [cursor=pointer]:
+              - /url: /updates
+              - generic "Updates" [ref=e127]:
+                - img [ref=e128]
+                - generic [ref=e130]: Updates
+          - listitem [ref=e131]:
+            - button "Help & Feedback" [ref=e132]:
+              - img [ref=e133]
+              - generic [ref=e137]: Help & Feedback
+          - listitem
+  - generic [ref=e139]:
+    - generic [ref=e140]:
+      - generic [ref=e141]:
+        - generic [ref=e142]:
+          - button "Explore" [ref=e143]
+          - button "Feed" [ref=e144]
+          - button "Notifications" [ref=e145]
+        - generic [ref=e147]:
+          - generic:
+            - img
+          - searchbox "Search Community" [ref=e148]
+      - generic [ref=e154]:
+        - button "Publish" [ref=e155]:
+          - img [ref=e157]
+          - text: Publish
+        - button "Profile" [ref=e159]:
+          - img [ref=e160]
+    - iframe [ref=e222]:
+      - img [ref=f61e7]
+    - generic [ref=e223]:
+      - generic [ref=e224]:
+        - generic [ref=e225]:
+          - generic [ref=e227]: ‌
+          - img [ref=e229]
+        - generic [ref=e231]:
+          - generic [ref=e233]: ‌
+          - img [ref=e235]
+        - generic [ref=e237]:
+          - generic [ref=e238]: 145 Comments
+          - generic [ref=e239]:
+            - generic [ref=e241]: R
+            - textbox "Share your thoughts, kudos or feedback" [ref=e245]
+          - generic [ref=e249]:
+            - img [ref=e251]
+            - generic [ref=e255]: Be the first to share your thoughts!
+            - generic [ref=e256]: Leave a comment from the input above.
+      - generic [ref=e257]:
+        - generic [ref=e258]:
+          - generic [ref=e260]: ‌
+          - img [ref=e262]
+        - generic [ref=e264]:
+          - generic [ref=e266]: ‌
+          - img [ref=e268]
+        - generic [ref=e271]:
+          - generic [ref=e272]:
+            - img [ref=e274]
+            - paragraph [ref=e281]: Made in Spline
+          - generic [ref=e282]:
+            - img [ref=e284]
+            - paragraph [ref=e287]: 2 years ago
+          - generic [ref=e288]:
+            - img [ref=e290]
+            - paragraph [ref=e293]:
+              - text: Licensed under
+              - link "CC0 1.0" [ref=e294] [cursor=pointer]:
+                - /url: https://creativecommons.org/publicdomain/zero/1.0/

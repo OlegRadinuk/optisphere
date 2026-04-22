@@ -159,6 +159,14 @@ export function HudRail() {
   );
 }
 
+const BOOT_MESSAGES = [
+  'YURA.KERNEL INITIALIZING...',
+  'AGENT READY · WAITING FOR INPUT',
+  'ВЫ ТЕРЯЕТЕ ЗАЯВКИ ПОКА ВАС НЕТ ОНЛАЙН — ЮРА НЕТ',
+  'КОНКУРЕНТ В ТОПЕ? ЗНАЮ ПОЧЕМУ — СПРОСИ ЮРУ',
+  'САЙТ БЕЗ AI = МЕНЕДЖЕР КОТОРЫЙ СПИТ 16 ЧАСОВ В СУТКИ',
+];
+
 const LOG_MESSAGES = [
   '> yura.reason(niche="dental") → 6 options generated · 412ms',
   '> agents[sales].handoff(lead#4821) → qualified · $1.2M pipeline',
@@ -168,12 +176,33 @@ const LOG_MESSAGES = [
   '> ads.optimize(campaign#114) → CTR +34% · stable',
 ];
 
+const ALL_MESSAGES = [...BOOT_MESSAGES, ...LOG_MESSAGES];
+
 export function HudLogTicker() {
   const [idx, setIdx] = useState(0);
+  const [booted, setBooted] = useState(false);
+
   useEffect(() => {
-    const t = setInterval(() => setIdx(i => (i + 1) % LOG_MESSAGES.length), 3200);
+    // Boot sequence: cycle through BOOT_MESSAGES every 2.5s
+    if (idx < BOOT_MESSAGES.length - 1) {
+      const t = setTimeout(() => setIdx(i => i + 1), 2500);
+      return () => clearTimeout(t);
+    }
+    // After boot sequence completes, switch to cycling ALL_MESSAGES
+    if (!booted) {
+      const t = setTimeout(() => {
+        setBooted(true);
+        setIdx(0);
+      }, 2500);
+      return () => clearTimeout(t);
+    }
+    // Regular cycle through all messages
+    const t = setInterval(() => setIdx(i => (i + 1) % ALL_MESSAGES.length), 3200);
     return () => clearInterval(t);
-  }, []);
+  }, [idx, booted]);
+
+  const displayText = booted ? ALL_MESSAGES[idx] : BOOT_MESSAGES[idx];
+
   return (
     <>
       <div style={{
@@ -190,7 +219,7 @@ export function HudLogTicker() {
       }} className="hud-log-ticker">
         <span style={{ display:'inline-block', width:6, height:6, background:'var(--op-accent-2)', boxShadow:'0 0 8px var(--op-accent-2)', animation:'hudPulse 1.8s ease-in-out infinite' }}/>
         <span style={{ color:'var(--op-accent-2)', textTransform:'uppercase', letterSpacing:'0.14em' }}>SYS.LOG</span>
-        <span style={{ color:'var(--op-text-secondary)', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis', maxWidth:'60vw' }}>{LOG_MESSAGES[idx]}</span>
+        <span style={{ color:'var(--op-text-secondary)', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis', maxWidth:'60vw' }}>{displayText}</span>
       </div>
       <style>{`
         @media (max-width: 640px) { .hud-log-ticker { display: none !important; } }

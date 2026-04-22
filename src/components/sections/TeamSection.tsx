@@ -1,5 +1,6 @@
 'use client';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import SectionIntro from '@/components/hud/SectionIntro';
 
 const DEPTS: Record<string, { color: string; agents: [string, string][] }> = {
@@ -59,12 +60,32 @@ function AgentTile({ a, i }: { a: [string, string]; i: number }) {
   );
 }
 
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.05 } },
+};
+const itemVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 0.61, 0.36, 1] as const } },
+};
+
 export default function TeamSection() {
+  const headingRef = useRef(null);
+  const gridRef = useRef(null);
+  const headingInView = useInView(headingRef, { once: true, margin: '-80px' });
+  const gridInView = useInView(gridRef, { once: true, margin: '-80px' });
+
   return (
     <section id="team" style={{ padding:'96px 0' }}>
       <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px' }}>
         <div style={{ display:'grid', gridTemplateColumns:'minmax(0,2fr) minmax(0,3fr)', gap:64, alignItems:'flex-start' }} className="team-layout">
-          <div style={{ display:'flex', flexDirection:'column', gap:20 }}>
+          <motion.div
+            ref={headingRef}
+            initial={{ opacity: 0, y: 28 }}
+            animate={headingInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.55, ease: [0.22, 0.61, 0.36, 1] }}
+            style={{ display:'flex', flexDirection:'column', gap:20 }}
+          >
             <div style={{ display:'inline-flex', alignItems:'center', gap:14, font:"500 11px/1 'JetBrains Mono',monospace", letterSpacing:'0.14em', textTransform:'uppercase', marginBottom:4 }}>
               <span style={{ color:'var(--op-text-muted)', padding:'6px 10px', border:'1px solid var(--op-border-strong)', clipPath:'polygon(4px 0,100% 0,100% calc(100% - 4px),calc(100% - 4px) 100%,0 100%,0 4px)' }}>SECTION.06</span>
               <span style={{ display:'inline-block', width:40, height:1, background:'var(--op-border-strong)' }}/>
@@ -87,11 +108,22 @@ export default function TeamSection() {
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
           <div style={{ display:'flex', flexDirection:'column', gap:16 }}>
-            <div style={{ display:'grid', gridTemplateColumns:'repeat(5,1fr)', gap:10 }} className="team-grid">
-              {FLAT_AGENTS.map((a,i) => <AgentTile key={a[0]} a={a} i={i}/>)}
-            </div>
+            <motion.div
+              ref={gridRef}
+              variants={containerVariants}
+              initial="hidden"
+              animate={gridInView ? 'visible' : 'hidden'}
+              style={{ display:'grid', gridTemplateColumns:'repeat(5,1fr)', gap:10 }}
+              className="team-grid"
+            >
+              {FLAT_AGENTS.map((a,i) => (
+                <motion.div key={a[0]} variants={itemVariants}>
+                  <AgentTile a={a} i={i}/>
+                </motion.div>
+              ))}
+            </motion.div>
             <div style={{ display:'flex', flexWrap:'wrap', gap:10, marginTop:4 }}>
               {Object.entries(DEPTS).map(([name, d]) => (
                 <span key={name} style={{ display:'inline-flex', alignItems:'center', gap:6, font:"400 11px 'JetBrains Mono',monospace", color:'var(--op-text-muted)', letterSpacing:'.08em', textTransform:'uppercase' }}>

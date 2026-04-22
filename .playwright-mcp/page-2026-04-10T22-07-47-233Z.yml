@@ -1,0 +1,530 @@
+- generic [active] [ref=e1]:
+  - button "Open Next.js Dev Tools" [ref=e609] [cursor=pointer]:
+    - img [ref=e610]
+  - alert [ref=e613]
+  - main [ref=e637]:
+    - generic [ref=e640]:
+      - link "Optisphere" [ref=e641] [cursor=pointer]:
+        - /url: "#"
+        - img [ref=e642]
+        - generic [ref=e648]: Optisphere
+      - navigation [ref=e649]:
+        - link "Services" [ref=e650] [cursor=pointer]:
+          - /url: "#services"
+          - text: Services
+        - link "Portfolio" [ref=e651] [cursor=pointer]:
+          - /url: "#portfolio"
+          - text: Portfolio
+        - link "Pricing" [ref=e652] [cursor=pointer]:
+          - /url: "#pricing"
+          - text: Pricing
+        - link "Contact" [ref=e653] [cursor=pointer]:
+          - /url: "#contact"
+          - text: Contact
+      - generic [ref=e654]:
+        - button "Switch language" [ref=e655]:
+          - generic [ref=e656]: RU
+          - generic [ref=e657]: /
+          - generic [ref=e658]: EN
+        - link "Start a project" [ref=e659] [cursor=pointer]:
+          - /url: "#contact"
+    - generic [ref=e660]:
+      - generic:
+        - generic:
+          - generic: Full-cycle web studio
+          - heading "Websites that convert" [level=1]:
+            - text: Websites that
+            - text: convert
+          - paragraph: We craft cinematic websites, 360° panoramas and configure digital promotion. Working worldwide.
+          - generic [ref=e661]:
+            - link "Start a project" [ref=e662] [cursor=pointer]:
+              - /url: "#contact"
+            - link "Estimate cost" [ref=e663] [cursor=pointer]:
+              - /url: "#calculator"
+          - generic:
+            - generic:
+              - generic:
+                - generic: 25+
+                - generic: projects
+            - generic:
+              - generic:
+                - generic: 97%
+                - generic: satisfied
+            - generic:
+              - generic:
+                - generic: 3–7
+                - generic: days
+      - generic:
+        - generic: Scroll
+    - generic [ref=e665]:
+      - generic [ref=e666]:
+        - generic [ref=e667]: Services
+        - heading "Three directions. One executor." [level=2] [ref=e668]:
+          - text: Three directions.
+          - text: One executor.
+      - generic [ref=e669]:
+        - generic [ref=e670]:
+          - generic [ref=e671]:
+            - img [ref=e673]
+            - generic [ref=e679]: from 30 000 ₽
+          - generic [ref=e680]:
+            - generic [ref=e681]: Websites
+            - heading "Websites that work while you sleep" [level=3] [ref=e682]
+            - paragraph [ref=e683]: We build high-converting websites with animations, 3D elements and scroll-driven effects. Every project is unique — no templates.
+          - generic [ref=e684]:
+            - generic [ref=e685]: Next.js
+            - generic [ref=e686]: Framer Motion
+            - generic [ref=e687]: Three.js
+            - generic [ref=e688]: TypeScript
+          - list [ref=e689]:
+            - listitem [ref=e690]:
+              - img [ref=e692]
+              - text: Ready in 3–7 days
+            - listitem [ref=e694]:
+              - img [ref=e696]
+              - text: SEO optimization included
+            - listitem [ref=e698]:
+              - img [ref=e700]
+              - text: Mobile-first out of the box
+            - listitem [ref=e702]:
+              - img [ref=e704]
+              - text: Content management panel
+          - link "Discuss project" [ref=e706] [cursor=pointer]:
+            - /url: "#contact"
+            - text: Discuss project
+            - img [ref=e707]
+        - generic [ref=e709]:
+          - generic [ref=e710]:
+            - img [ref=e712]
+            - generic [ref=e716]: from 8 000 ₽ / location
+          - generic [ref=e717]:
+            - generic [ref=e718]: 360° Panoramas
+            - heading "Let clients walk in before they visit" [level=3] [ref=e719]
+            - paragraph [ref=e720]: Interactive virtual tours for hotels, restaurants, clinics and real estate. Gyroscope support on mobile.
+          - generic [ref=e721]:
+            - generic [ref=e722]: WebGL
+            - generic [ref=e723]: Three.js
+            - generic [ref=e724]: VR
+            - generic [ref=e725]: Mobile
+          - list [ref=e726]:
+            - listitem [ref=e727]:
+              - img [ref=e729]
+              - text: Shooting or processing your material
+            - listitem [ref=e731]:
+              - img [ref=e733]
+              - text: Embed on site and Google Maps
+            - listitem [ref=e735]:
+              - img [ref=e737]
+              - text: Hotspots and interactive points
+            - listitem [ref=e739]:
+              - img [ref=e741]
+              - text: VR headset support
+          - link "Discuss project" [ref=e743] [cursor=pointer]:
+            - /url: "#contact"
+            - text: Discuss project
+            - img [ref=e744]
+        - generic [ref=e746]:
+          - generic [ref=e747]:
+            - img [ref=e749]
+            - generic [ref=e752]: from 15 000 ₽ / mo
+          - generic [ref=e753]:
+            - generic [ref=e754]: Promotion
+            - heading "Traffic that turns into clients" [level=3] [ref=e755]
+            - paragraph [ref=e756]: SEO optimization and Yandex.Direct setup. We work for results — more calls, more leads.
+          - generic [ref=e757]:
+            - generic [ref=e758]: SEO
+            - generic [ref=e759]: Yandex.Direct
+            - generic [ref=e760]: Analytics
+            - generic [ref=e761]: Conversion
+          - list [ref=e762]:
+            - listitem [ref=e763]:
+              - img [ref=e765]
+              - text: Technical SEO audit
+            - listitem [ref=e767]:
+              - img [ref=e769]
+              - text: Semantic core
+            - listitem [ref=e771]:
+              - img [ref=e773]
+              - text: Direct setup and management
+            - listitem [ref=e775]:
+              - img [ref=e777]
+              - text: Monthly reports
+          - link "Discuss project" [ref=e779] [cursor=pointer]:
+            - /url: "#contact"
+            - text: Discuss project
+            - img [ref=e780]
+    - generic [ref=e783]:
+      - generic [ref=e784]:
+        - generic [ref=e785]: Portfolio
+        - heading "Selected projects" [level=2] [ref=e786]
+      - generic [ref=e787]:
+        - button "All" [ref=e788]
+        - button "Websites" [ref=e789]
+        - button "Panoramas" [ref=e790]
+        - button "Promotion" [ref=e791]
+      - generic [ref=e792]:
+        - article [ref=e793]:
+          - generic [ref=e794]:
+            - generic [ref=e796]: Websites
+            - img [ref=e797]
+          - generic [ref=e801]:
+            - heading "Hotel Nova" [level=3] [ref=e802]
+            - paragraph [ref=e803]: Sales website for boutique hotel with online booking and virtual tour
+            - generic [ref=e804]:
+              - generic [ref=e805]: Next.js
+              - generic [ref=e806]: Three.js
+              - generic [ref=e807]: Booking
+            - generic [ref=e808]:
+              - generic [ref=e809]:
+                - generic [ref=e810]: A site like this —
+                - generic [ref=e811]: from 120 000 ₽
+              - link "Order similar" [ref=e812] [cursor=pointer]:
+                - /url: "#contact"
+                - text: Order similar
+                - img [ref=e813]
+        - article [ref=e815]:
+          - generic [ref=e816]:
+            - generic [ref=e818]: Websites
+            - img [ref=e819]
+          - generic [ref=e823]:
+            - heading "MedPro Clinic" [level=3] [ref=e824]
+            - paragraph [ref=e825]: Corporate website for medical clinic with online appointment booking
+            - generic [ref=e826]:
+              - generic [ref=e827]: Next.js
+              - generic [ref=e828]: CMS
+              - generic [ref=e829]: SEO
+            - generic [ref=e830]:
+              - generic [ref=e831]:
+                - generic [ref=e832]: A site like this —
+                - generic [ref=e833]: from 90 000 ₽
+              - link "Order similar" [ref=e834] [cursor=pointer]:
+                - /url: "#contact"
+                - text: Order similar
+                - img [ref=e835]
+        - article [ref=e837]:
+          - generic [ref=e838]:
+            - generic [ref=e840]: Websites
+            - img [ref=e841]
+          - generic [ref=e845]:
+            - heading "BuildPro" [level=3] [ref=e846]
+            - paragraph [ref=e847]: Construction company website with project portfolio and cost calculator
+            - generic [ref=e848]:
+              - generic [ref=e849]: Next.js
+              - generic [ref=e850]: Calculator
+              - generic [ref=e851]: Gallery
+            - generic [ref=e852]:
+              - generic [ref=e853]:
+                - generic [ref=e854]: A site like this —
+                - generic [ref=e855]: from 80 000 ₽
+              - link "Order similar" [ref=e856] [cursor=pointer]:
+                - /url: "#contact"
+                - text: Order similar
+                - img [ref=e857]
+        - article [ref=e859]:
+          - generic [ref=e860]:
+            - generic [ref=e862]: Panoramas
+            - img [ref=e863]
+          - generic [ref=e867]:
+            - heading "Le Grand Restaurant" [level=3] [ref=e868]
+            - paragraph [ref=e869]: Virtual restaurant tour — 8 locations, embedded in Google Maps
+            - generic [ref=e870]:
+              - generic [ref=e871]: 360°
+              - generic [ref=e872]: WebGL
+              - generic [ref=e873]: Google Maps
+            - generic [ref=e874]:
+              - generic [ref=e875]:
+                - generic [ref=e876]: A site like this —
+                - generic [ref=e877]: from 45 000 ₽
+              - link "Order similar" [ref=e878] [cursor=pointer]:
+                - /url: "#contact"
+                - text: Order similar
+                - img [ref=e879]
+        - article [ref=e881]:
+          - generic [ref=e882]:
+            - generic [ref=e884]: Panoramas
+            - img [ref=e885]
+          - generic [ref=e889]:
+            - heading "Gorizont Residences" [level=3] [ref=e890]
+            - paragraph [ref=e891]: Interactive apartment tour — 24 panoramas, VR mode
+            - generic [ref=e892]:
+              - generic [ref=e893]: 360°
+              - generic [ref=e894]: VR
+              - generic [ref=e895]: Real estate
+            - generic [ref=e896]:
+              - generic [ref=e897]:
+                - generic [ref=e898]: A site like this —
+                - generic [ref=e899]: from 80 000 ₽
+              - link "Order similar" [ref=e900] [cursor=pointer]:
+                - /url: "#contact"
+                - text: Order similar
+                - img [ref=e901]
+        - article [ref=e903]:
+          - generic [ref=e904]:
+            - generic [ref=e906]: Promotion
+            - img [ref=e907]
+          - generic [ref=e911]:
+            - heading "AutoMax Dealership" [level=3] [ref=e912]
+            - paragraph [ref=e913]: SEO + Yandex.Direct. +220% organic traffic in 3 months
+            - generic [ref=e914]:
+              - generic [ref=e915]: SEO
+              - generic [ref=e916]: Яндекс.Директ
+              - generic [ref=e917]: +220% трафик
+            - generic [ref=e918]:
+              - generic [ref=e919]:
+                - generic [ref=e920]: A site like this —
+                - generic [ref=e921]: from 15 000 ₽/mo
+              - link "Order similar" [ref=e922] [cursor=pointer]:
+                - /url: "#contact"
+                - text: Order similar
+                - img [ref=e923]
+    - generic [ref=e926]:
+      - generic [ref=e927]:
+        - generic [ref=e928]: Websites
+        - heading "Development pricing" [level=2] [ref=e929]
+        - generic [ref=e930]:
+          - generic [ref=e931]:
+            - generic [ref=e932]:
+              - generic [ref=e933]: Start
+              - generic [ref=e934]: from 50 000 ₽
+              - generic [ref=e935]: 3–5 days
+            - list [ref=e937]:
+              - listitem [ref=e938]:
+                - img [ref=e940]
+                - text: Landing page up to 7 sections
+              - listitem [ref=e942]:
+                - img [ref=e944]
+                - text: Custom design
+              - listitem [ref=e946]:
+                - img [ref=e948]
+                - text: Mobile-first
+              - listitem [ref=e950]:
+                - img [ref=e952]
+                - text: SEO optimization
+            - link "Discuss project" [ref=e954] [cursor=pointer]:
+              - /url: "#contact"
+          - generic [ref=e955]:
+            - generic [ref=e957]: Popular
+            - generic [ref=e958]:
+              - generic [ref=e959]: Pro
+              - generic [ref=e960]: from 120 000 ₽
+              - generic [ref=e961]: 5–10 days
+            - list [ref=e963]:
+              - listitem [ref=e964]:
+                - img [ref=e966]
+                - text: Sales website of any complexity
+              - listitem [ref=e968]:
+                - img [ref=e970]
+                - text: CMS panel
+              - listitem [ref=e972]:
+                - img [ref=e974]
+                - text: SEO + analytics
+              - listitem [ref=e976]:
+                - img [ref=e978]
+                - text: Animations and 3D elements
+              - listitem [ref=e980]:
+                - img [ref=e982]
+                - text: 2 months support
+            - link "Discuss project" [ref=e984] [cursor=pointer]:
+              - /url: "#contact"
+          - generic [ref=e985]:
+            - generic [ref=e986]:
+              - generic [ref=e987]: Premium
+              - generic [ref=e988]: from 180 000 ₽
+              - generic [ref=e989]: 10–21 days
+            - list [ref=e991]:
+              - listitem [ref=e992]:
+                - img [ref=e994]
+                - text: Full custom development
+              - listitem [ref=e996]:
+                - img [ref=e998]
+                - text: 3D scenes and WebGL
+              - listitem [ref=e1000]:
+                - img [ref=e1002]
+                - text: Marketing packaging
+              - listitem [ref=e1004]:
+                - img [ref=e1006]
+                - text: CMS + integrations
+              - listitem [ref=e1008]:
+                - img [ref=e1010]
+                - text: SEO + Direct launch
+              - listitem [ref=e1012]:
+                - img [ref=e1014]
+                - text: 3 months support
+            - link "Discuss project" [ref=e1016] [cursor=pointer]:
+              - /url: "#contact"
+      - generic [ref=e1017]:
+        - generic [ref=e1018]: Support
+        - generic [ref=e1019]:
+          - heading "Orbit — your digital manager" [level=2] [ref=e1020]
+          - paragraph [ref=e1021]: Your site under constant care. Hosting, edits, SEO, reports — all included. You run your business, we take care of the site.
+        - generic [ref=e1022]:
+          - generic [ref=e1023]:
+            - generic [ref=e1024]:
+              - generic [ref=e1025]: Orbit Start
+              - generic [ref=e1026]:
+                - generic [ref=e1027]: 8 000
+                - generic [ref=e1028]: ₽ / mo
+            - list [ref=e1030]:
+              - listitem [ref=e1031]:
+                - img [ref=e1033]
+                - text: Hosting + domain
+              - listitem [ref=e1035]:
+                - img [ref=e1037]
+                - text: 24/7 monitoring
+              - listitem [ref=e1039]:
+                - img [ref=e1041]
+                - text: 5 edits per month
+              - listitem [ref=e1043]:
+                - img [ref=e1045]
+                - text: Response within 24 hours
+            - link "Get started" [ref=e1047] [cursor=pointer]:
+              - /url: "#contact"
+          - generic [ref=e1048]:
+            - generic [ref=e1050]: Popular
+            - generic [ref=e1051]:
+              - generic [ref=e1052]: Orbit Pro
+              - generic [ref=e1053]:
+                - generic [ref=e1054]: 15 000
+                - generic [ref=e1055]: ₽ / mo
+            - list [ref=e1057]:
+              - listitem [ref=e1058]:
+                - img [ref=e1060]
+                - text: Hosting + domain
+              - listitem [ref=e1062]:
+                - img [ref=e1064]
+                - text: 24/7 monitoring
+              - listitem [ref=e1066]:
+                - img [ref=e1068]
+                - text: 10 edits per month
+              - listitem [ref=e1070]:
+                - img [ref=e1072]
+                - text: Quarterly SEO audit
+              - listitem [ref=e1074]:
+                - img [ref=e1076]
+                - text: Monthly report
+              - listitem [ref=e1078]:
+                - img [ref=e1080]
+                - text: Response within 4 hours
+            - link "Get started" [ref=e1082] [cursor=pointer]:
+              - /url: "#contact"
+          - generic [ref=e1083]:
+            - generic [ref=e1084]:
+              - generic [ref=e1085]: Orbit Max
+              - generic [ref=e1086]:
+                - generic [ref=e1087]: 25 000
+                - generic [ref=e1088]: ₽ / mo
+            - list [ref=e1090]:
+              - listitem [ref=e1091]:
+                - img [ref=e1093]
+                - text: Hosting + domain
+              - listitem [ref=e1095]:
+                - img [ref=e1097]
+                - text: 24/7 monitoring
+              - listitem [ref=e1099]:
+                - img [ref=e1101]
+                - text: Unlimited edits
+              - listitem [ref=e1103]:
+                - img [ref=e1105]
+                - text: Yandex.Direct management
+              - listitem [ref=e1107]:
+                - img [ref=e1109]
+                - text: Monthly SEO audit
+              - listitem [ref=e1111]:
+                - img [ref=e1113]
+                - text: Monthly report
+              - listitem [ref=e1115]:
+                - img [ref=e1117]
+                - text: Priority response within 2 hours
+            - link "Get started" [ref=e1119] [cursor=pointer]:
+              - /url: "#contact"
+    - generic [ref=e1121]:
+      - generic [ref=e1122]:
+        - generic [ref=e1123]: Calculator
+        - heading "Calculate the cost" [level=2] [ref=e1124]
+        - paragraph [ref=e1125]: Select your parameters and get an instant estimate.
+      - generic [ref=e1126]:
+        - generic [ref=e1127]:
+          - generic [ref=e1129]: "1"
+          - generic [ref=e1131]: Project type
+        - generic [ref=e1132]:
+          - generic [ref=e1134]: "2"
+          - generic [ref=e1136]: Design
+        - generic [ref=e1137]:
+          - generic [ref=e1139]: "3"
+          - generic [ref=e1141]: Add-ons
+        - generic [ref=e1142]:
+          - generic [ref=e1144]: "4"
+          - generic [ref=e1145]: Estimated cost
+      - generic [ref=e1147]:
+        - button "Landing page" [ref=e1148] [cursor=pointer]:
+          - img [ref=e1150]
+          - generic [ref=e1153]: Landing page
+        - button "Corporate website" [ref=e1154] [cursor=pointer]:
+          - img [ref=e1156]
+          - generic [ref=e1161]: Corporate website
+        - button "E-commerce" [ref=e1162] [cursor=pointer]:
+          - img [ref=e1164]
+          - generic [ref=e1168]: E-commerce
+        - button "360° Panorama" [ref=e1169] [cursor=pointer]:
+          - img [ref=e1171]
+          - generic [ref=e1174]: 360° Panorama
+        - button "Promotion" [ref=e1175] [cursor=pointer]:
+          - img [ref=e1177]
+          - generic [ref=e1180]: Promotion
+    - generic [ref=e1182]:
+      - generic [ref=e1183]:
+        - generic [ref=e1184]: Contact
+        - heading "Start a project?" [level=2] [ref=e1185]
+        - paragraph [ref=e1186]: Leave a request — I'll reply within a day and propose a solution for your goals.
+      - generic [ref=e1187]:
+        - generic [ref=e1188]:
+          - generic [ref=e1189]:
+            - generic [ref=e1190]: ОП
+            - generic [ref=e1191]:
+              - generic [ref=e1192]: Oleg Petrov
+              - generic [ref=e1193]: Studio founder
+          - generic [ref=e1196]: I'll reply within a day
+          - link "Message on Telegram" [ref=e1197] [cursor=pointer]:
+            - /url: https://t.me/optisphere_oleg
+            - img [ref=e1198]
+            - text: Message on Telegram
+          - list [ref=e1200]:
+            - listitem [ref=e1201]:
+              - img [ref=e1202]
+              - text: Free consultation
+            - listitem [ref=e1204]:
+              - img [ref=e1205]
+              - text: Estimate within 24 hours
+            - listitem [ref=e1207]:
+              - img [ref=e1208]
+              - text: Contract before we start
+        - generic [ref=e1211]:
+          - generic [ref=e1212]:
+            - generic [ref=e1213]: Name
+            - textbox [ref=e1214]
+          - generic [ref=e1215]:
+            - generic [ref=e1216]: Phone / Telegram
+            - textbox [ref=e1217]
+          - generic [ref=e1218]:
+            - generic [ref=e1219]: About the project
+            - textbox "Tell me about your project..." [ref=e1220]
+          - button "Send" [ref=e1221] [cursor=pointer]
+    - generic [ref=e1224]:
+      - generic [ref=e1225]:
+        - generic [ref=e1226]:
+          - generic [ref=e1227]: OPTISPHERE
+          - paragraph [ref=e1228]: Building digital assets that work
+        - navigation [ref=e1229]:
+          - link "Services" [ref=e1230] [cursor=pointer]:
+            - /url: "#services"
+          - link "Portfolio" [ref=e1231] [cursor=pointer]:
+            - /url: "#portfolio"
+          - link "Pricing" [ref=e1232] [cursor=pointer]:
+            - /url: "#pricing"
+          - link "Contact" [ref=e1233] [cursor=pointer]:
+            - /url: "#contact"
+        - link "Telegram" [ref=e1235] [cursor=pointer]:
+          - /url: https://t.me/optisphere
+          - img [ref=e1236]
+          - text: Telegram
+      - generic [ref=e1238]: © 2025 Optisphere. Made with ♥ in Russia

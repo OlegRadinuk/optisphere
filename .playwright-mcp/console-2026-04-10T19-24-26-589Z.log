@@ -1,0 +1,6 @@
+[    3478ms] [INFO] Slow network is detected. See https://www.chromestatus.com/feature/5636954674692096 for more details. Fallback font will be used while loading: https://spline.design/fonts/SplineSansMono-Regular.woff2 @ https://spline.design/:15
+[   56166ms] [LOG] / {} @ https://spline.design/_next/static/chunks/cbc6fe866d52e555.js:6
+[   56202ms] [LOG] / {} @ https://spline.design/_next/static/chunks/cbc6fe866d52e555.js:6
+[   56240ms] [LOG] / {} @ https://spline.design/_next/static/chunks/cbc6fe866d52e555.js:6
+[   56323ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://spline.design/geoip:0
+[   56324ms] [WARNING] geo function failed :::  SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not valid JSON @ https://spline.design/_next/static/chunks/cbc6fe866d52e555.js:6

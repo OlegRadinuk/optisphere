@@ -1,0 +1,1520 @@
+- generic [ref=e3]:
+  - complementary [ref=e4]:
+    - button "R radinuko's Workspace" [ref=e6]:
+      - generic [ref=e7]:
+        - generic [ref=e9]: R
+        - generic [ref=e11]:
+          - generic [ref=e12]: radinuko's Workspace
+          - img [ref=e14]
+    - generic [ref=e16]:
+      - navigation "Main navigation" [ref=e17]:
+        - list [ref=e18]:
+          - listitem [ref=e19]:
+            - link "Home" [ref=e20] [cursor=pointer]:
+              - /url: /home
+              - generic "Home" [ref=e21]:
+                - img [ref=e22]
+                - generic [ref=e25]: Home
+          - listitem [ref=e26]:
+            - link "Discover" [ref=e27] [cursor=pointer]:
+              - /url: /discover
+              - generic "Discover" [ref=e28]:
+                - img [ref=e29]
+                - generic [ref=e33]: Discover
+          - listitem [ref=e34]:
+            - link "My files" [ref=e35] [cursor=pointer]:
+              - /url: /files
+              - generic "My files" [ref=e36]:
+                - img [ref=e37]
+                - generic [ref=e40]: My files
+          - listitem [ref=e41]:
+            - link "Templates" [ref=e42] [cursor=pointer]:
+              - /url: /templates
+              - generic "Templates" [ref=e43]:
+                - img [ref=e44]
+                - generic [ref=e47]: Templates
+          - listitem [ref=e48]:
+            - link "Navigation item" [ref=e49] [cursor=pointer]:
+              - /url: /generate
+              - generic "Navigation item" [ref=e50]:
+                - img [ref=e51]
+                - generic [ref=e56]: Generate
+          - listitem [ref=e57]:
+            - link "Shared with me" [ref=e58] [cursor=pointer]:
+              - /url: /shared
+              - generic "Shared with me" [ref=e59]:
+                - img [ref=e60]
+                - generic [ref=e64]: Shared with me
+          - listitem [ref=e65]:
+            - link "Community" [ref=e66] [cursor=pointer]:
+              - /url: /community
+              - generic [ref=e67]:
+                - img [ref=e68]
+                - generic [ref=e73]: Community
+          - listitem [ref=e74]:
+            - link "Academy" [ref=e75] [cursor=pointer]:
+              - /url: /academy
+              - generic "Academy" [ref=e76]:
+                - img [ref=e77]
+                - generic [ref=e81]: Academy
+                - generic [ref=e82]: NEW
+          - listitem [ref=e83]:
+            - link "Navigation item" [ref=e84] [cursor=pointer]:
+              - /url: /inbox
+              - generic "Navigation item" [ref=e85]:
+                - img [ref=e86]
+                - generic [ref=e89]: Inbox
+      - generic [ref=e91]:
+        - heading "Projects" [level=4] [ref=e93]:
+          - text: Projects
+          - img [ref=e94]
+        - region [ref=e96]:
+          - link "Overview" [ref=e98]:
+            - /url: /workspace/f04b865b-795b-4b31-a6a6-a97029ceec1b
+            - img [ref=e99]
+            - text: Overview
+          - button "New Project" [ref=e105]:
+            - img [ref=e106]
+            - text: New Project
+    - generic [ref=e107]:
+      - generic [ref=e108]:
+        - generic [ref=e109]:
+          - img [ref=e110]
+          - generic [ref=e112]:
+            - paragraph [ref=e113]: Upgrade your workspace
+            - paragraph [ref=e114]: Unlock all features on Spline.
+        - button "Upgrade" [ref=e115]
+      - navigation "Secondary navigation" [ref=e117]:
+        - list [ref=e118]:
+          - listitem [ref=e119]:
+            - link "Archive" [ref=e120] [cursor=pointer]:
+              - /url: /archived
+              - generic "Archive" [ref=e121]:
+                - img [ref=e122]
+                - generic [ref=e124]: Archive
+          - listitem [ref=e125]:
+            - link "Updates" [ref=e126] [cursor=pointer]:
+              - /url: /updates
+              - generic "Updates" [ref=e127]:
+                - img [ref=e128]
+                - generic [ref=e130]: Updates
+          - listitem [ref=e131]:
+            - button "Help & Feedback" [ref=e132]:
+              - img [ref=e133]
+              - generic [ref=e137]: Help & Feedback
+          - listitem
+  - generic [ref=e139]:
+    - generic [ref=e140]:
+      - generic [ref=e141]:
+        - generic [ref=e142]:
+          - button "Explore" [ref=e143]
+          - button "Feed" [ref=e144]
+          - button "Notifications" [ref=e145]
+        - generic [ref=e147]:
+          - generic:
+            - img
+          - searchbox "Search Community" [ref=e148]
+      - generic [ref=e154]:
+        - button "Publish" [ref=e155]:
+          - img [ref=e157]
+          - text: Publish
+        - button "Profile" [ref=e159]:
+          - img [ref=e160]
+    - iframe [ref=e222]:
+      - img [ref=f61e7]
+    - generic [ref=e223]:
+      - generic [ref=e224]:
+        - generic [ref=e295]:
+          - generic [ref=e296]: Particles 🌑
+          - generic [ref=e297]:
+            - generic [ref=e298]:
+              - link "Profile Aurora" [ref=e299] [cursor=pointer]:
+                - /url: /@auroregmbt
+                - img "Profile Aurora" [ref=e303]
+              - generic [ref=e304]:
+                - link "auroregmbt" [ref=e306] [cursor=pointer]:
+                  - /url: /@auroregmbt
+                - generic [ref=e307]: 3117 followers
+            - button "Follow" [ref=e308]:
+              - img [ref=e309]
+              - generic [ref=e311]: Follow
+            - generic [ref=e312]:
+              - generic [ref=e313]:
+                - img [ref=e314]
+                - generic [ref=e317]: 248,214
+              - button "756" [ref=e319]:
+                - img [ref=e320]
+                - generic [ref=e323]: "756"
+              - button "9,080" [ref=e325]:
+                - img [ref=e326]
+                - generic [ref=e328]: 9,080
+              - button "Remix 70,484" [ref=e330]:
+                - img [ref=e331]
+                - generic [ref=e334]: Remix
+                - generic [ref=e335]: 70,484
+        - generic [ref=e336]:
+          - generic [ref=e337]: Artistic exploration using particles ✨
+          - generic [ref=e338]:
+            - link "#particles" [ref=e339] [cursor=pointer]:
+              - /url: /community/tag/particles
+              - generic [ref=e340]: "#particles"
+            - link "#3d" [ref=e341] [cursor=pointer]:
+              - /url: /community/tag/3d
+              - generic [ref=e342]: "#3d"
+            - link "#sphere" [ref=e343] [cursor=pointer]:
+              - /url: /community/tag/sphere
+              - generic [ref=e344]: "#sphere"
+            - link "#spline" [ref=e345] [cursor=pointer]:
+              - /url: /community/tag/spline
+              - generic [ref=e346]: "#spline"
+            - link "#move" [ref=e347] [cursor=pointer]:
+              - /url: /community/tag/move
+              - generic [ref=e348]: "#move"
+            - link "#animation" [ref=e349] [cursor=pointer]:
+              - /url: /community/tag/animation
+              - generic [ref=e350]: "#animation"
+            - link "#mouse" [ref=e351] [cursor=pointer]:
+              - /url: /community/tag/mouse
+              - generic [ref=e352]: "#mouse"
+        - generic [ref=e237]:
+          - generic [ref=e238]: 145 Comments
+          - generic [ref=e239]:
+            - generic [ref=e241]: R
+            - textbox "Share your thoughts, kudos or feedback" [ref=e245]
+          - generic [ref=e247]:
+            - generic [ref=e371]:
+              - link "Profile Buruk" [ref=e372] [cursor=pointer]:
+                - /url: /@BoltMT
+                - img "Profile Buruk" [ref=e377]
+              - generic [ref=e378]:
+                - generic [ref=e379]:
+                  - generic [ref=e381]: "@BoltMT"
+                  - generic [ref=e382]: 2 months ago
+                  - paragraph [ref=e383]: So simple and easy to make, but I believe the most liked and viewed thing on Spline, amazing job.
+                - generic [ref=e385]: Reply
+            - generic [ref=e387]:
+              - link "S" [ref=e388] [cursor=pointer]:
+                - /url: /@shane.grindle
+                - generic [ref=e392]: S
+              - generic [ref=e393]:
+                - generic [ref=e394]:
+                  - generic [ref=e396]: "@shane.grindle"
+                  - generic [ref=e397]: 4 months ago
+                  - paragraph [ref=e398]: AMAZING!!
+                - generic [ref=e400]: Reply
+            - generic [ref=e402]:
+              - link "C" [ref=e403] [cursor=pointer]:
+                - /url: /@connor_3332
+                - generic [ref=e407]: C
+              - generic [ref=e408]:
+                - generic [ref=e409]:
+                  - generic [ref=e411]: "@connor_3332"
+                  - generic [ref=e412]: 5 months ago
+                  - paragraph [ref=e413]:
+                    - link "@auroregmbt" [ref=e414] [cursor=pointer]:
+                      - /url: /@auroregmbt
+                    - text: how do you have particles not fade in, just always constant?
+                - generic [ref=e415]:
+                  - generic [ref=e416]:
+                    - img [ref=e417]
+                    - text: 1 Replies
+                    - img [ref=e421]
+                  - generic [ref=e424]: Reply
+            - generic [ref=e426]:
+              - link "C" [ref=e427] [cursor=pointer]:
+                - /url: /@connor_3332
+                - generic [ref=e431]: C
+              - generic [ref=e432]:
+                - generic [ref=e433]:
+                  - generic [ref=e435]: "@connor_3332"
+                  - generic [ref=e436]: 5 months ago
+                  - paragraph [ref=e437]:
+                    - link "@auroregmbt" [ref=e438] [cursor=pointer]:
+                      - /url: /@auroregmbt
+                    - text: How in the hell, do you get particles to not fade in. I just want it always constant!!!
+                - generic [ref=e440]: Reply
+            - generic [ref=e442]:
+              - link "C" [ref=e443] [cursor=pointer]:
+                - /url: /@connor_3332
+                - generic [ref=e447]: C
+              - generic [ref=e448]:
+                - generic [ref=e449]:
+                  - generic [ref=e451]: "@connor_3332"
+                  - generic [ref=e452]: 5 months ago
+                  - paragraph [ref=e453]: How in the hell, do you get particles to not fade in. I just want it always constant!!!
+                - generic [ref=e455]: Reply
+            - generic [ref=e457]:
+              - link "M" [ref=e458] [cursor=pointer]:
+                - /url: /@murodbektuychiyev83
+                - generic [ref=e462]: M
+              - generic [ref=e463]:
+                - generic [ref=e464]:
+                  - generic [ref=e466]: "@murodbektuychiyev83"
+                  - generic [ref=e467]: 6 months ago
+                  - paragraph [ref=e468]: Great!
+                - generic [ref=e470]: Reply
+            - generic [ref=e472]:
+              - link "T" [ref=e473] [cursor=pointer]:
+                - /url: /@tim_88940
+                - generic [ref=e477]: T
+              - generic [ref=e478]:
+                - generic [ref=e479]:
+                  - generic [ref=e481]: "@tim_88940"
+                  - generic [ref=e482]: 6 months ago
+                  - paragraph [ref=e483]: how do you make in spline? if this wasn't produced here then why pay for a month subscription to view other guys work?
+                - generic [ref=e484]:
+                  - generic [ref=e485]:
+                    - img [ref=e486]
+                    - text: 1 Replies
+                    - img [ref=e490]
+                  - generic [ref=e493]: Reply
+            - generic [ref=e495]:
+              - link "Profile Limonea" [ref=e496] [cursor=pointer]:
+                - /url: /@s20185808
+                - img "Profile Limonea" [ref=e501]
+              - generic [ref=e502]:
+                - generic [ref=e503]:
+                  - generic [ref=e505]: "@s20185808"
+                  - generic [ref=e506]: 6 months ago
+                  - paragraph [ref=e507]: wow! i like the effects!
+                - generic [ref=e509]: Reply
+            - generic [ref=e511]:
+              - link "I" [ref=e512] [cursor=pointer]:
+                - /url: /@ihxsanbi
+                - generic [ref=e516]: I
+              - generic [ref=e517]:
+                - generic [ref=e518]:
+                  - generic [ref=e520]: "@ihxsanbi"
+                  - generic [ref=e521]: 6 months ago
+                  - paragraph [ref=e522]: amazing bro
+                - generic [ref=e524]: Reply
+            - generic [ref=e526]:
+              - link "T" [ref=e527] [cursor=pointer]:
+                - /url: /@nswebapp005
+                - generic [ref=e531]: T
+              - generic [ref=e532]:
+                - generic [ref=e533]:
+                  - generic [ref=e535]: "@nswebapp005"
+                  - generic [ref=e536]: 7 months ago
+                  - paragraph [ref=e537]: test 2
+                - generic [ref=e538]:
+                  - generic [ref=e539]:
+                    - img [ref=e540]
+                    - text: 2 Replies
+                    - img [ref=e544]
+                  - generic [ref=e547]: Reply
+            - generic [ref=e549]:
+              - link "T" [ref=e550] [cursor=pointer]:
+                - /url: /@nswebapp005
+                - generic [ref=e554]: T
+              - generic [ref=e555]:
+                - generic [ref=e556]:
+                  - generic [ref=e558]: "@nswebapp005"
+                  - generic [ref=e559]: 7 months ago
+                  - paragraph [ref=e560]: test
+                - generic [ref=e562]: Reply
+            - generic [ref=e564]:
+              - link "M" [ref=e565] [cursor=pointer]:
+                - /url: /@marixmem9
+                - generic [ref=e569]: M
+              - generic [ref=e570]:
+                - generic [ref=e571]:
+                  - generic [ref=e573]: "@marixmem9"
+                  - generic [ref=e574]: 7 months ago
+                  - paragraph [ref=e575]: where did you make this here in spline or blender
+                - generic [ref=e577]: Reply
+            - generic [ref=e579]:
+              - link "M" [ref=e580] [cursor=pointer]:
+                - /url: /@maxai9492
+                - generic [ref=e584]: M
+              - generic [ref=e585]:
+                - generic [ref=e586]:
+                  - generic [ref=e588]: "@maxai9492"
+                  - generic [ref=e589]: 8 months ago
+                  - paragraph [ref=e590]: not able to see anything i want to see it and use it but dont see anything why on chrom or any browser
+                - generic [ref=e591]:
+                  - generic [ref=e592]:
+                    - img [ref=e593]
+                    - text: 2 Replies
+                    - img [ref=e597]
+                  - generic [ref=e600]: Reply
+            - generic [ref=e602]:
+              - link "R" [ref=e603] [cursor=pointer]:
+                - /url: /@ravishankarpatelps
+                - generic [ref=e607]: R
+              - generic [ref=e608]:
+                - generic [ref=e609]:
+                  - generic [ref=e611]: "@ravishankarpatelps"
+                  - generic [ref=e612]: 8 months ago
+                  - paragraph [ref=e613]: Nice!!
+                - generic [ref=e615]: Reply
+            - generic [ref=e617]:
+              - link "A" [ref=e618] [cursor=pointer]:
+                - /url: /@ashleyj.gibbons
+                - generic [ref=e622]: A
+              - generic [ref=e623]:
+                - generic [ref=e624]:
+                  - generic [ref=e626]: "@ashleyj.gibbons"
+                  - generic [ref=e627]: 9 months ago
+                  - paragraph [ref=e628]: Amazing!
+                - generic [ref=e630]: Reply
+            - generic [ref=e632]:
+              - link "D" [ref=e633] [cursor=pointer]:
+                - /url: /@dhkang1225
+                - generic [ref=e637]: D
+              - generic [ref=e638]:
+                - generic [ref=e639]:
+                  - generic [ref=e641]: "@dhkang1225"
+                  - generic [ref=e642]: 9 months ago
+                  - paragraph [ref=e643]: The animation is incredible.
+                - generic [ref=e645]: Reply
+            - generic [ref=e647]:
+              - link "S" [ref=e648] [cursor=pointer]:
+                - /url: /@business.hamdani
+                - generic [ref=e652]: S
+              - generic [ref=e653]:
+                - generic [ref=e654]:
+                  - generic [ref=e656]: "@business.hamdani"
+                  - generic [ref=e657]: 9 months ago
+                  - paragraph [ref=e658]: Hey , i want to change colours of particles ,how can i do that , can someone help me .
+                - generic [ref=e659]:
+                  - generic [ref=e660]:
+                    - img [ref=e661]
+                    - text: 1 Replies
+                    - img [ref=e665]
+                  - generic [ref=e668]: Reply
+            - generic [ref=e670]:
+              - link "A" [ref=e671] [cursor=pointer]:
+                - /url: /@awesxme
+                - generic [ref=e675]: A
+              - generic [ref=e676]:
+                - generic [ref=e677]:
+                  - generic [ref=e679]: "@awesxme"
+                  - generic [ref=e680]: 9 months ago
+                  - paragraph [ref=e681]: Smooooth
+                - generic [ref=e683]: Reply
+            - generic [ref=e685]:
+              - link "A" [ref=e686] [cursor=pointer]:
+                - /url: /@coltonmc_2013
+                - generic [ref=e690]: A
+              - generic [ref=e691]:
+                - generic [ref=e692]:
+                  - generic [ref=e694]: "@coltonmc_2013"
+                  - generic [ref=e695]: 9 months ago
+                  - paragraph [ref=e696]:
+                    - generic [ref=e697]: Insane nice work
+                - generic [ref=e699]: Reply
+            - generic [ref=e701]:
+              - link "A" [ref=e702] [cursor=pointer]:
+                - /url: /@antonio_75538
+                - generic [ref=e706]: A
+              - generic [ref=e707]:
+                - generic [ref=e708]:
+                  - generic [ref=e710]: "@antonio_75538"
+                  - generic [ref=e711]: 9 months ago
+                  - paragraph [ref=e712]: that's great
+                - generic [ref=e714]: Reply
+            - generic [ref=e716]:
+              - link "N" [ref=e717] [cursor=pointer]:
+                - /url: /@natisirak7777
+                - generic [ref=e721]: "N"
+              - generic [ref=e722]:
+                - generic [ref=e723]:
+                  - generic [ref=e725]: "@natisirak7777"
+                  - generic [ref=e726]: 10 months ago
+                  - paragraph [ref=e727]:
+                    - generic [ref=e728]: wow
+                - generic [ref=e730]: Reply
+            - generic [ref=e732]:
+              - link "S" [ref=e733] [cursor=pointer]:
+                - /url: /@stevejaymo
+                - generic [ref=e737]: S
+              - generic [ref=e738]:
+                - generic [ref=e739]:
+                  - generic [ref=e741]: "@stevejaymo"
+                  - generic [ref=e742]: 10 months ago
+                  - paragraph [ref=e743]: Is it possible to export this with no background Completely transparent? if so... how?
+                - generic [ref=e745]: Reply
+            - generic [ref=e747]:
+              - link "C" [ref=e748] [cursor=pointer]:
+                - /url: /@christyhu0317
+                - generic [ref=e752]: C
+              - generic [ref=e753]:
+                - generic [ref=e754]:
+                  - generic [ref=e756]: "@christyhu0317"
+                  - generic [ref=e757]: 11 months ago
+                  - paragraph [ref=e758]: Hello, how can I change the color of this sphere?
+                - generic [ref=e760]: Reply
+            - generic [ref=e762]:
+              - link "Z" [ref=e763] [cursor=pointer]:
+                - /url: /@zhanguangcan
+                - generic [ref=e767]: Z
+              - generic [ref=e768]:
+                - generic [ref=e769]:
+                  - generic [ref=e771]: "@zhanguangcan"
+                  - generic [ref=e772]: 11 months ago
+                  - paragraph [ref=e773]: Hello author, I would like to know how this sphere can adapt to the size of the screen
+                - generic [ref=e775]: Reply
+            - generic [ref=e777]:
+              - link "Profile martika" [ref=e778] [cursor=pointer]:
+                - /url: /@mpitdelgado
+                - img "Profile martika" [ref=e783]
+              - generic [ref=e784]:
+                - generic [ref=e785]:
+                  - generic [ref=e787]: "@mpitdelgado"
+                  - generic [ref=e788]: 11 months ago
+                  - paragraph [ref=e789]: espectacular!!!
+                - generic [ref=e791]: Reply
+            - generic [ref=e793]:
+              - link "N" [ref=e794] [cursor=pointer]:
+                - /url: /@nutsukpuijoan
+                - generic [ref=e798]: "N"
+              - generic [ref=e799]:
+                - generic [ref=e800]:
+                  - generic [ref=e802]: "@nutsukpuijoan"
+                  - generic [ref=e803]: 1 year ago
+                  - paragraph [ref=e804]: really amazing
+                - generic [ref=e806]: Reply
+            - generic [ref=e808]:
+              - link "A" [ref=e809] [cursor=pointer]:
+                - /url: /@adam.m.leis
+                - generic [ref=e813]: A
+              - generic [ref=e814]:
+                - generic [ref=e815]:
+                  - generic [ref=e817]: "@adam.m.leis"
+                  - generic [ref=e818]: 1 year ago
+                  - paragraph [ref=e819]: Wow… that's absurdly beautiful. 👏
+                - generic [ref=e821]: Reply
+            - generic [ref=e823]:
+              - link "V" [ref=e824] [cursor=pointer]:
+                - /url: /@vanessa.v.dantas
+                - generic [ref=e828]: V
+              - generic [ref=e829]:
+                - generic [ref=e830]:
+                  - generic [ref=e832]: "@vanessa.v.dantas"
+                  - generic [ref=e833]: 1 year ago
+                  - paragraph [ref=e834]: Amazing!
+                - generic [ref=e836]: Reply
+            - generic [ref=e838]:
+              - link "A" [ref=e839] [cursor=pointer]:
+                - /url: /@ashmit.khu
+                - generic [ref=e843]: A
+              - generic [ref=e844]:
+                - generic [ref=e845]:
+                  - generic [ref=e847]: "@ashmit.khu"
+                  - generic [ref=e848]: 1 year ago
+                  - paragraph [ref=e849]: Can i somehow create a similar Particle Effect where it forms my face a little bit... i wanna use it in my portfolio if someone knows let me know how till then if you wanna check out my website its- ashmitkhurana.com
+                - generic [ref=e850]:
+                  - generic [ref=e851]:
+                    - img [ref=e852]
+                    - text: 1 Replies
+                    - img [ref=e856]
+                  - generic [ref=e859]: Reply
+            - generic [ref=e861]:
+              - link "J" [ref=e862] [cursor=pointer]:
+                - /url: /@justinsavarge
+                - generic [ref=e866]: J
+              - generic [ref=e867]:
+                - generic [ref=e868]:
+                  - generic [ref=e870]: "@justinsavarge"
+                  - generic [ref=e871]: 1 year ago
+                  - paragraph [ref=e872]:
+                    - generic [ref=e873]: so does this not create an infinite loop when being used? would hate to imagine a scenario whereby simply clicking on the map creates a infinite loop draining resources. just asking
+                - generic [ref=e875]: Reply
+            - generic [ref=e877]:
+              - link "T" [ref=e878] [cursor=pointer]:
+                - /url: /@tiffanymgannon
+                - generic [ref=e882]: T
+              - generic [ref=e883]:
+                - generic [ref=e884]:
+                  - generic [ref=e886]: "@tiffanymgannon"
+                  - generic [ref=e887]: 1 year ago
+                  - paragraph [ref=e888]: LOVE
+                - generic [ref=e890]: Reply
+            - generic [ref=e892]:
+              - link "S" [ref=e893] [cursor=pointer]:
+                - /url: /@sweettysultania
+                - generic [ref=e897]: S
+              - generic [ref=e898]:
+                - generic [ref=e899]:
+                  - generic [ref=e901]: "@sweettysultania"
+                  - generic [ref=e902]: 1 year ago
+                  - paragraph [ref=e903]: waooo amazing work
+                - generic [ref=e905]: Reply
+            - generic [ref=e907]:
+              - link "Profile Robert Midzic" [ref=e908] [cursor=pointer]:
+                - /url: /@parexceLabs
+                - img "Profile Robert Midzic" [ref=e913]
+              - generic [ref=e914]:
+                - generic [ref=e915]:
+                  - generic [ref=e917]: "@parexceLabs"
+                  - generic [ref=e918]: 1 year ago
+                  - paragraph [ref=e919]:
+                    - generic [ref=e920]: awesome work. I will remix it and use on my website. Do I need to mention you as author? Not sure how it works from Legal perspective
+                - generic [ref=e921]:
+                  - generic [ref=e922]:
+                    - img [ref=e923]
+                    - text: 1 Replies
+                    - img [ref=e927]
+                  - generic [ref=e930]: Reply
+            - generic [ref=e932]:
+              - link "B" [ref=e933] [cursor=pointer]:
+                - /url: /@bibimbapo
+                - generic [ref=e937]: B
+              - generic [ref=e938]:
+                - generic [ref=e939]:
+                  - generic [ref=e941]: "@bibimbapo"
+                  - generic [ref=e942]: 1 year ago
+                  - paragraph [ref=e943]: That is so NICE! Thanks
+                - generic [ref=e945]: Reply
+            - generic [ref=e947]:
+              - link "B" [ref=e948] [cursor=pointer]:
+                - /url: /@bhuvanesh0325
+                - generic [ref=e952]: B
+              - generic [ref=e953]:
+                - generic [ref=e954]:
+                  - generic [ref=e956]: "@bhuvanesh0325"
+                  - generic [ref=e957]: 1 year ago
+                  - paragraph [ref=e958]:
+                    - generic [ref=e959]: Hi, I am trying to use this in framer. It works after I embedded it in my hero section and works the way as it is supposed to, but I am no able to scroll down to the other section below with mouse gesture on my laptop. I have to manually use the scrollbar to scroll down. Is there any setting that needs to be changed for this.
+                    - text: Thanks in advance
+                - generic [ref=e960]:
+                  - generic [ref=e961]:
+                    - img [ref=e962]
+                    - text: 1 Replies
+                    - img [ref=e966]
+                  - generic [ref=e969]: Reply
+            - generic [ref=e971]:
+              - link "F" [ref=e972] [cursor=pointer]:
+                - /url: /@franciscorecaite
+                - generic [ref=e976]: F
+              - generic [ref=e977]:
+                - generic [ref=e978]:
+                  - generic [ref=e980]: "@franciscorecaite"
+                  - generic [ref=e981]: 1 year ago
+                  - paragraph [ref=e982]: very nice!
+                - generic [ref=e984]: Reply
+            - generic [ref=e986]:
+              - link "S" [ref=e987] [cursor=pointer]:
+                - /url: /@rajputshubham63672
+                - generic [ref=e991]: S
+              - generic [ref=e992]:
+                - generic [ref=e993]:
+                  - generic [ref=e995]: "@rajputshubham63672"
+                  - generic [ref=e996]: 1 year ago
+                  - paragraph [ref=e997]: cool this effect
+                - generic [ref=e999]: Reply
+            - generic [ref=e1001]:
+              - link "S" [ref=e1002] [cursor=pointer]:
+                - /url: /@sangam1998.nyk
+                - generic [ref=e1006]: S
+              - generic [ref=e1007]:
+                - generic [ref=e1008]:
+                  - generic [ref=e1010]: "@sangam1998.nyk"
+                  - generic [ref=e1011]: 1 year ago
+                  - paragraph [ref=e1012]: how can i use this library for my website
+                - generic [ref=e1014]: Reply
+            - generic [ref=e1016]:
+              - link "C" [ref=e1017] [cursor=pointer]:
+                - /url: /@chengfangkilig
+                - generic [ref=e1021]: C
+              - generic [ref=e1022]:
+                - generic [ref=e1023]:
+                  - generic [ref=e1025]: "@chengfangkilig"
+                  - generic [ref=e1026]: 1 year ago
+                  - paragraph [ref=e1027]: VERY GOOD
+                - generic [ref=e1029]: Reply
+            - generic [ref=e1031]:
+              - link "Profile theoldnew" [ref=e1032] [cursor=pointer]:
+                - /url: /@659934
+                - img "Profile theoldnew" [ref=e1037]
+              - generic [ref=e1038]:
+                - generic [ref=e1039]:
+                  - generic [ref=e1041]: "@659934"
+                  - generic [ref=e1042]: 1 year ago
+                  - paragraph [ref=e1043]: skibidi cool beans
+                - generic [ref=e1044]:
+                  - generic [ref=e1045]:
+                    - img [ref=e1046]
+                    - text: 1 Replies
+                    - img [ref=e1050]
+                  - generic [ref=e1053]: Reply
+            - generic [ref=e1055]:
+              - link "D" [ref=e1056] [cursor=pointer]:
+                - /url: /@borakiliccioglu5
+                - generic [ref=e1060]: D
+              - generic [ref=e1061]:
+                - generic [ref=e1062]:
+                  - generic [ref=e1064]: "@borakiliccioglu5"
+                  - generic [ref=e1065]: 1 year ago
+                  - paragraph [ref=e1066]: barmaklarına gurban
+                - generic [ref=e1068]: Reply
+            - generic [ref=e1070]:
+              - link "H" [ref=e1071] [cursor=pointer]:
+                - /url: /@hiiamexistent
+                - generic [ref=e1075]: H
+              - generic [ref=e1076]:
+                - generic [ref=e1077]:
+                  - generic [ref=e1079]: "@hiiamexistent"
+                  - generic [ref=e1080]: 1 year ago
+                  - paragraph [ref=e1081]:
+                    - generic [ref=e1082]: Damn thats good
+                - generic [ref=e1083]:
+                  - generic [ref=e1084]:
+                    - img [ref=e1085]
+                    - text: 1 Replies
+                    - img [ref=e1089]
+                  - generic [ref=e1092]: Reply
+            - generic [ref=e1094]:
+              - link "D" [ref=e1095] [cursor=pointer]:
+                - /url: /@designuttam123
+                - generic [ref=e1099]: D
+              - generic [ref=e1100]:
+                - generic [ref=e1101]:
+                  - generic [ref=e1103]: "@designuttam123"
+                  - generic [ref=e1104]: 1 year ago
+                  - paragraph [ref=e1105]:
+                    - generic [ref=e1106]: out of the world
+                - generic [ref=e1108]: Reply
+            - generic [ref=e1110]:
+              - link "A" [ref=e1111] [cursor=pointer]:
+                - /url: /@arthur.legoux
+                - generic [ref=e1115]: A
+              - generic [ref=e1116]:
+                - generic [ref=e1117]:
+                  - generic [ref=e1119]: "@arthur.legoux"
+                  - generic [ref=e1120]: 1 year ago
+                  - paragraph [ref=e1121]: Incredible !
+                - generic [ref=e1123]: Reply
+            - generic [ref=e1125]:
+              - link "R" [ref=e1126] [cursor=pointer]:
+                - /url: /@gecko
+                - generic [ref=e1130]: R
+              - generic [ref=e1131]:
+                - generic [ref=e1132]:
+                  - generic [ref=e1134]: "@gecko"
+                  - generic [ref=e1135]: 1 year ago
+                  - paragraph [ref=e1136]: amazing !!!
+                - generic [ref=e1138]: Reply
+            - generic [ref=e1140]:
+              - link "L" [ref=e1141] [cursor=pointer]:
+                - /url: /@bamidelelouis01
+                - generic [ref=e1145]: L
+              - generic [ref=e1146]:
+                - generic [ref=e1147]:
+                  - generic [ref=e1149]: "@bamidelelouis01"
+                  - generic [ref=e1150]: 2 years ago
+                  - paragraph [ref=e1151]: Can I use it commercially?
+                - generic [ref=e1153]: Reply
+            - generic [ref=e1155]:
+              - link "G" [ref=e1156] [cursor=pointer]:
+                - /url: /@2944262939
+                - generic [ref=e1160]: G
+              - generic [ref=e1161]:
+                - generic [ref=e1162]:
+                  - generic [ref=e1164]: "@2944262939"
+                  - generic [ref=e1165]: 2 years ago
+                  - paragraph [ref=e1166]: 非常好
+                - generic [ref=e1168]: Reply
+            - generic [ref=e1170]:
+              - link "Profile Tristan" [ref=e1171] [cursor=pointer]:
+                - /url: /@veela
+                - img "Profile Tristan" [ref=e1176]
+              - generic [ref=e1177]:
+                - generic [ref=e1178]:
+                  - generic [ref=e1180]: "@veela"
+                  - generic [ref=e1181]: 2 years ago
+                  - paragraph [ref=e1182]: This is insane 🤯
+                - generic [ref=e1184]: Reply
+            - generic [ref=e1186]:
+              - link "N" [ref=e1187] [cursor=pointer]:
+                - /url: /@n.bannink
+                - generic [ref=e1191]: "N"
+              - generic [ref=e1192]:
+                - generic [ref=e1193]:
+                  - generic [ref=e1195]: "@n.bannink"
+                  - generic [ref=e1196]: 2 years ago
+                  - paragraph [ref=e1197]: Nice work!
+                - generic [ref=e1199]: Reply
+            - generic [ref=e1201]:
+              - link "E" [ref=e1202] [cursor=pointer]:
+                - /url: /@edenclinton012
+                - generic [ref=e1206]: E
+              - generic [ref=e1207]:
+                - generic [ref=e1208]:
+                  - generic [ref=e1210]: "@edenclinton012"
+                  - generic [ref=e1211]: 2 years ago
+                  - paragraph [ref=e1212]:
+                    - generic [ref=e1213]: how do i out i on my backround?!
+                - generic [ref=e1215]: Reply
+            - generic [ref=e1217]:
+              - link "J" [ref=e1218] [cursor=pointer]:
+                - /url: /@morabs
+                - generic [ref=e1222]: J
+              - generic [ref=e1223]:
+                - generic [ref=e1224]:
+                  - generic [ref=e1226]: "@morabs"
+                  - generic [ref=e1227]: 2 years ago
+                  - paragraph [ref=e1228]: Can I put audio to this?
+                - generic [ref=e1230]: Reply
+            - generic [ref=e1232]:
+              - link "L" [ref=e1233] [cursor=pointer]:
+                - /url: /@lourenco.apereira
+                - generic [ref=e1237]: L
+              - generic [ref=e1238]:
+                - generic [ref=e1239]:
+                  - generic [ref=e1241]: "@lourenco.apereira"
+                  - generic [ref=e1242]: 2 years ago
+                  - paragraph [ref=e1243]:
+                    - generic [ref=e1244]: can we get this?
+                - generic [ref=e1246]: Reply
+            - generic [ref=e1248]:
+              - link "I" [ref=e1249] [cursor=pointer]:
+                - /url: /@ibrahimaliameh
+                - generic [ref=e1253]: I
+              - generic [ref=e1254]:
+                - generic [ref=e1255]:
+                  - generic [ref=e1257]: "@ibrahimaliameh"
+                  - generic [ref=e1258]: 2 years ago
+                  - paragraph [ref=e1259]: yoooo this is so awesome!!
+                - generic [ref=e1261]: Reply
+            - generic [ref=e1263]:
+              - link "K" [ref=e1264] [cursor=pointer]:
+                - /url: /@kpselyavko
+                - generic [ref=e1268]: K
+              - generic [ref=e1269]:
+                - generic [ref=e1270]:
+                  - generic [ref=e1272]: "@kpselyavko"
+                  - generic [ref=e1273]: 2 years ago
+                  - paragraph [ref=e1274]: Tell me, do you have a video tutorial explaining how to do this?
+                - generic [ref=e1275]:
+                  - generic [ref=e1276]:
+                    - img [ref=e1277]
+                    - text: 1 Replies
+                    - img [ref=e1281]
+                  - generic [ref=e1284]: Reply
+            - generic [ref=e1286]:
+              - link "牛" [ref=e1287] [cursor=pointer]:
+                - /url: /@nr2331163
+                - generic [ref=e1291]: 牛
+              - generic [ref=e1292]:
+                - generic [ref=e1293]:
+                  - generic [ref=e1295]: "@nr2331163"
+                  - generic [ref=e1296]: 2 years ago
+                  - paragraph [ref=e1297]: good
+                - generic [ref=e1299]: Reply
+            - generic [ref=e1301]:
+              - link "Profile miti" [ref=e1302] [cursor=pointer]:
+                - /url: /@miti
+                - img "Profile miti" [ref=e1307]
+              - generic [ref=e1308]:
+                - generic [ref=e1309]:
+                  - generic [ref=e1311]: "@miti"
+                  - generic [ref=e1312]: 2 years ago
+                  - paragraph [ref=e1313]: This is amazing
+                - generic [ref=e1315]: Reply
+            - generic [ref=e1317]:
+              - link "B" [ref=e1318] [cursor=pointer]:
+                - /url: /@bahatbayshat
+                - generic [ref=e1322]: B
+              - generic [ref=e1323]:
+                - generic [ref=e1324]:
+                  - generic [ref=e1326]: "@bahatbayshat"
+                  - generic [ref=e1327]: 2 years ago
+                  - paragraph [ref=e1328]: you have any tutorials for this can help
+                - generic [ref=e1330]: Reply
+            - generic [ref=e1332]:
+              - link "I" [ref=e1333] [cursor=pointer]:
+                - /url: /@bibongbong
+                - generic [ref=e1337]: I
+              - generic [ref=e1338]:
+                - generic [ref=e1339]:
+                  - generic [ref=e1341]: "@bibongbong"
+                  - generic [ref=e1342]: 2 years ago
+                  - paragraph [ref=e1343]: OH ， so cool ....
+                - generic [ref=e1345]: Reply
+            - generic [ref=e1347]:
+              - link "M" [ref=e1348] [cursor=pointer]:
+                - /url: /@rajpriyanshu048
+                - generic [ref=e1352]: M
+              - generic [ref=e1353]:
+                - generic [ref=e1354]:
+                  - generic [ref=e1356]: "@rajpriyanshu048"
+                  - generic [ref=e1357]: 2 years ago
+                  - paragraph [ref=e1358]:
+                    - generic [ref=e1359]: It is really great to find this.
+                - generic [ref=e1361]: Reply
+            - generic [ref=e1363]:
+              - link "M" [ref=e1364] [cursor=pointer]:
+                - /url: /@melaniarositani
+                - generic [ref=e1368]: M
+              - generic [ref=e1369]:
+                - generic [ref=e1370]:
+                  - generic [ref=e1372]: "@melaniarositani"
+                  - generic [ref=e1373]: 2 years ago
+                  - paragraph [ref=e1374]: Awesome!
+                - generic [ref=e1376]: Reply
+            - generic [ref=e1378]:
+              - link "L" [ref=e1379] [cursor=pointer]:
+                - /url: /@lawrenceslackey
+                - generic [ref=e1383]: L
+              - generic [ref=e1384]:
+                - generic [ref=e1385]:
+                  - generic [ref=e1387]: "@lawrenceslackey"
+                  - generic [ref=e1388]: 2 years ago
+                  - paragraph [ref=e1389]: Awesome work!
+                - generic [ref=e1391]: Reply
+            - generic [ref=e1393]:
+              - link "B" [ref=e1394] [cursor=pointer]:
+                - /url: /@ben.dixon
+                - generic [ref=e1398]: B
+              - generic [ref=e1399]:
+                - generic [ref=e1400]:
+                  - generic [ref=e1402]: "@ben.dixon"
+                  - generic [ref=e1403]: 2 years ago
+                  - paragraph [ref=e1404]: Beautiful!
+                - generic [ref=e1405]:
+                  - generic [ref=e1406]:
+                    - img [ref=e1407]
+                    - text: 1 Replies
+                    - img [ref=e1411]
+                  - generic [ref=e1414]: Reply
+            - generic [ref=e1416]:
+              - link "M" [ref=e1417] [cursor=pointer]:
+                - /url: /@pixoteam.ir
+                - generic [ref=e1421]: M
+              - generic [ref=e1422]:
+                - generic [ref=e1423]:
+                  - generic [ref=e1425]: "@pixoteam.ir"
+                  - generic [ref=e1426]: 2 years ago
+                  - paragraph [ref=e1427]:
+                    - generic [ref=e1428]: love it
+                - generic [ref=e1430]: Reply
+            - generic [ref=e1432]:
+              - link "C" [ref=e1433] [cursor=pointer]:
+                - /url: /@christian.mmg
+                - generic [ref=e1437]: C
+              - generic [ref=e1438]:
+                - generic [ref=e1439]:
+                  - generic [ref=e1441]: "@christian.mmg"
+                  - generic [ref=e1442]: 2 years ago
+                  - paragraph [ref=e1443]: I have a technical question, how can I make the interaction multitouch that with several interactive points react ? is there any function ?
+                - generic [ref=e1445]: Reply
+            - generic [ref=e1447]:
+              - link "S" [ref=e1448] [cursor=pointer]:
+                - /url: /@levowebdevelopment
+                - generic [ref=e1452]: S
+              - generic [ref=e1453]:
+                - generic [ref=e1454]:
+                  - generic [ref=e1456]: "@levowebdevelopment"
+                  - generic [ref=e1457]: 2 years ago
+                  - paragraph [ref=e1458]: Reminds me of sperm lol
+                - generic [ref=e1459]:
+                  - generic [ref=e1460]:
+                    - img [ref=e1461]
+                    - text: 1 Replies
+                    - img [ref=e1465]
+                  - generic [ref=e1468]: Reply
+            - generic [ref=e1470]:
+              - link "L" [ref=e1471] [cursor=pointer]:
+                - /url: /@ashioyalarry
+                - generic [ref=e1475]: L
+              - generic [ref=e1476]:
+                - generic [ref=e1477]:
+                  - generic [ref=e1479]: "@ashioyalarry"
+                  - generic [ref=e1480]: 2 years ago
+                  - paragraph [ref=e1481]: by any chanceDo you have the code for this animation ??????
+                - generic [ref=e1483]: Reply
+            - generic [ref=e1485]:
+              - link "B" [ref=e1486] [cursor=pointer]:
+                - /url: /@duzst97
+                - generic [ref=e1490]: B
+              - generic [ref=e1491]:
+                - generic [ref=e1492]:
+                  - generic [ref=e1494]: "@duzst97"
+                  - generic [ref=e1495]: 2 years ago
+                  - paragraph [ref=e1496]: can we change sphere to a logo ?
+                - generic [ref=e1498]: Reply
+            - generic [ref=e1500]:
+              - link "A" [ref=e1501] [cursor=pointer]:
+                - /url: /@antoniettalamannaa
+                - generic [ref=e1505]: A
+              - generic [ref=e1506]:
+                - generic [ref=e1507]:
+                  - generic [ref=e1509]: "@antoniettalamannaa"
+                  - generic [ref=e1510]: 2 years ago
+                  - paragraph [ref=e1511]: Love it
+                - generic [ref=e1513]: Reply
+            - generic [ref=e1515]:
+              - link "U" [ref=e1516] [cursor=pointer]:
+                - /url: /@unmanideglurkar0212
+                - generic [ref=e1520]: U
+              - generic [ref=e1521]:
+                - generic [ref=e1522]:
+                  - generic [ref=e1524]: "@unmanideglurkar0212"
+                  - generic [ref=e1525]: 2 years ago
+                  - paragraph [ref=e1526]: This is so cool! Love it
+                - generic [ref=e1528]: Reply
+            - generic [ref=e1530]:
+              - link "M" [ref=e1531] [cursor=pointer]:
+                - /url: /@marcelgra590
+                - generic [ref=e1535]: M
+              - generic [ref=e1536]:
+                - generic [ref=e1537]:
+                  - generic [ref=e1539]: "@marcelgra590"
+                  - generic [ref=e1540]: 2 years ago
+                  - paragraph [ref=e1541]:
+                    - generic [ref=e1542]: Hello,
+                    - generic [ref=e1543]: awesome work! I would iike to use it in my website, but it seens like it is not responsive. Is there any way to fix that?
+                    - text: Thanks!
+                - generic [ref=e1545]: Reply
+            - generic [ref=e1547]:
+              - link "J" [ref=e1548] [cursor=pointer]:
+                - /url: /@japrojetosbh
+                - generic [ref=e1552]: J
+              - generic [ref=e1553]:
+                - generic [ref=e1554]:
+                  - generic [ref=e1556]: "@japrojetosbh"
+                  - generic [ref=e1557]: 2 years ago
+                  - paragraph [ref=e1558]:
+                    - generic [ref=e1559]: Hello everyone
+                    - generic [ref=e1560]: I need a new logo to company's friend
+                    - generic [ref=e1561]: name -- MINAS FORTE Engenharia
+                    - generic [ref=e1562]: Anyone could a help that send something that ? thaks
+                    - generic [ref=e1563]: japrojetosbhgmail.com
+                    - text: thks in advance
+                - generic [ref=e1564]:
+                  - generic [ref=e1565]:
+                    - img [ref=e1566]
+                    - text: 2 Replies
+                    - img [ref=e1570]
+                  - generic [ref=e1573]: Reply
+            - generic [ref=e1575]:
+              - link "Profile Ramjan Khandelwal" [ref=e1576] [cursor=pointer]:
+                - /url: /@gleamingraven
+                - img "Profile Ramjan Khandelwal" [ref=e1581]
+              - generic [ref=e1582]:
+                - generic [ref=e1583]:
+                  - generic [ref=e1585]: "@gleamingraven"
+                  - generic [ref=e1586]: 2 years ago
+                  - paragraph [ref=e1587]:
+                    - generic [ref=e1588]: Amazing !!!
+                - generic [ref=e1590]: Reply
+            - generic [ref=e1592]:
+              - link "Profile lily" [ref=e1593] [cursor=pointer]:
+                - /url: /@gilchristsi
+                - img "Profile lily" [ref=e1598]
+              - generic [ref=e1599]:
+                - generic [ref=e1600]:
+                  - generic [ref=e1602]: "@gilchristsi"
+                  - generic [ref=e1603]: 2 years ago
+                  - paragraph [ref=e1604]:
+                    - generic [ref=e1605]: its insany
+                - generic [ref=e1607]: Reply
+            - generic [ref=e1609]:
+              - link "Profile lily" [ref=e1610] [cursor=pointer]:
+                - /url: /@gilchristsi
+                - img "Profile lily" [ref=e1615]
+              - generic [ref=e1616]:
+                - generic [ref=e1617]:
+                  - generic [ref=e1619]: "@gilchristsi"
+                  - generic [ref=e1620]: 2 years ago
+                  - paragraph [ref=e1621]:
+                    - generic [ref=e1622]: i don't know how you did that
+                - generic [ref=e1624]: Reply
+            - generic [ref=e1626]:
+              - link "E" [ref=e1627] [cursor=pointer]:
+                - /url: /@kodoxmagnum
+                - generic [ref=e1631]: E
+              - generic [ref=e1632]:
+                - generic [ref=e1633]:
+                  - generic [ref=e1635]: "@kodoxmagnum"
+                  - generic [ref=e1636]: 2 years ago
+                  - paragraph [ref=e1637]: great work!
+                - generic [ref=e1639]: Reply
+            - generic [ref=e1641]:
+              - link "A" [ref=e1642] [cursor=pointer]:
+                - /url: /@jorgequinones87
+                - generic [ref=e1646]: A
+              - generic [ref=e1647]:
+                - generic [ref=e1648]:
+                  - generic [ref=e1650]: "@jorgequinones87"
+                  - generic [ref=e1651]: 2 years ago
+                  - paragraph [ref=e1652]: como puedo usarlo ? lo vendes o que ?
+                - generic [ref=e1654]: Reply
+            - generic [ref=e1656]:
+              - link "E" [ref=e1657] [cursor=pointer]:
+                - /url: /@r16lab
+                - generic [ref=e1661]: E
+              - generic [ref=e1662]:
+                - generic [ref=e1663]:
+                  - generic [ref=e1665]: "@r16lab"
+                  - generic [ref=e1666]: 2 years ago
+                  - paragraph [ref=e1667]:
+                    - generic [ref=e1668]: Very cool Thanks for sharing!
+                - generic [ref=e1670]: Reply
+            - generic [ref=e1672]:
+              - link "H" [ref=e1673] [cursor=pointer]:
+                - /url: /@highdefinitionsound
+                - generic [ref=e1677]: H
+              - generic [ref=e1678]:
+                - generic [ref=e1679]:
+                  - generic [ref=e1681]: "@highdefinitionsound"
+                  - generic [ref=e1682]: 2 years ago
+                  - paragraph [ref=e1683]: WOW! JUST WOW!! Can you post a video on how you achieved this amazing sphere? I would love to see those skills at action.
+                - generic [ref=e1684]:
+                  - generic [ref=e1685]:
+                    - img [ref=e1686]
+                    - text: 1 Replies
+                    - img [ref=e1690]
+                  - generic [ref=e1693]: Reply
+            - generic [ref=e1695]:
+              - link "M" [ref=e1696] [cursor=pointer]:
+                - /url: /@markogmn
+                - generic [ref=e1700]: M
+              - generic [ref=e1701]:
+                - generic [ref=e1702]:
+                  - generic [ref=e1704]: "@markogmn"
+                  - generic [ref=e1705]: 2 years ago
+                  - paragraph [ref=e1706]: Amazing work!
+                - generic [ref=e1707]:
+                  - generic [ref=e1708]:
+                    - img [ref=e1709]
+                    - text: 1 Replies
+                    - img [ref=e1713]
+                  - generic [ref=e1716]: Reply
+            - generic [ref=e1718]:
+              - link "Profile Moli_xEs" [ref=e1719] [cursor=pointer]:
+                - /url: /@Molixes
+                - img "Profile Moli_xEs" [ref=e1724]
+              - generic [ref=e1725]:
+                - generic [ref=e1726]:
+                  - generic [ref=e1728]: "@Molixes"
+                  - generic [ref=e1729]: 2 years ago
+                  - paragraph [ref=e1730]:
+                    - generic [ref=e1731]: extraordinary
+                - generic [ref=e1732]:
+                  - generic [ref=e1733]:
+                    - img [ref=e1734]
+                    - text: 1 Replies
+                    - img [ref=e1738]
+                  - generic [ref=e1741]: Reply
+            - generic [ref=e1743]:
+              - link "Profile lily" [ref=e1744] [cursor=pointer]:
+                - /url: /@gilchristsi
+                - img "Profile lily" [ref=e1749]
+              - generic [ref=e1750]:
+                - generic [ref=e1751]:
+                  - generic [ref=e1753]: "@gilchristsi"
+                  - generic [ref=e1754]: 2 years ago
+                  - paragraph [ref=e1755]: hi that is so cool
+                - generic [ref=e1756]:
+                  - generic [ref=e1757]:
+                    - img [ref=e1758]
+                    - text: 1 Replies
+                    - img [ref=e1762]
+                  - generic [ref=e1765]: Reply
+            - generic [ref=e1767]:
+              - link "Profile lily" [ref=e1768] [cursor=pointer]:
+                - /url: /@gilchristsi
+                - img "Profile lily" [ref=e1773]
+              - generic [ref=e1774]:
+                - generic [ref=e1775]:
+                  - generic [ref=e1777]: "@gilchristsi"
+                  - generic [ref=e1778]: 2 years ago
+                  - paragraph [ref=e1779]: hi that is so cool
+                - generic [ref=e1781]: Reply
+            - generic [ref=e1783]:
+              - link "L" [ref=e1784] [cursor=pointer]:
+                - /url: /@liorcdesign
+                - generic [ref=e1788]: L
+              - generic [ref=e1789]:
+                - generic [ref=e1790]:
+                  - generic [ref=e1792]: "@liorcdesign"
+                  - generic [ref=e1793]: 2 years ago
+                  - paragraph [ref=e1794]:
+                    - text: "Stunning! wonderful, I love it, bravo. Waiting for the tutorial :"
+                    - link "@auroregmbt" [ref=e1795] [cursor=pointer]:
+                      - /url: /@auroregmbt
+                - generic [ref=e1797]: Reply
+            - generic [ref=e1799]:
+              - link "T" [ref=e1800] [cursor=pointer]:
+                - /url: /@twanmoorlag
+                - generic [ref=e1804]: T
+              - generic [ref=e1805]:
+                - generic [ref=e1806]:
+                  - generic [ref=e1808]: "@twanmoorlag"
+                  - generic [ref=e1809]: 2 years ago
+                  - paragraph [ref=e1810]: How can u customize this ? Is that allowed?
+                - generic [ref=e1812]: Reply
+            - generic [ref=e1814]:
+              - link "M" [ref=e1815] [cursor=pointer]:
+                - /url: /@gengar.aiworld
+                - generic [ref=e1819]: M
+              - generic [ref=e1820]:
+                - generic [ref=e1821]:
+                  - generic [ref=e1823]: "@gengar.aiworld"
+                  - generic [ref=e1824]: 2 years ago
+                  - paragraph [ref=e1825]: how can ı export this project?
+                - generic [ref=e1826]:
+                  - generic [ref=e1827]:
+                    - img [ref=e1828]
+                    - text: 1 Replies
+                    - img [ref=e1832]
+                  - generic [ref=e1835]: Reply
+            - generic [ref=e1837]:
+              - link "Profile TimLiam" [ref=e1838] [cursor=pointer]:
+                - /url: /@intimas85
+                - img "Profile TimLiam" [ref=e1843]
+              - generic [ref=e1844]:
+                - generic [ref=e1845]:
+                  - generic [ref=e1847]: "@intimas85"
+                  - generic [ref=e1848]: 2 years ago
+                  - paragraph [ref=e1849]: its amazing, can i use this for my project ? i tried to remix this file, but unfortunately i don't know why for me this file not working. jast black sceen , if someone have same problem please share how to solve it?
+                - generic [ref=e1850]:
+                  - generic [ref=e1851]:
+                    - img [ref=e1852]
+                    - text: 2 Replies
+                    - img [ref=e1856]
+                  - generic [ref=e1859]: Reply
+            - generic [ref=e1861]:
+              - link "T" [ref=e1862] [cursor=pointer]:
+                - /url: /@thmsetscheidt
+                - generic [ref=e1866]: T
+              - generic [ref=e1867]:
+                - generic [ref=e1868]:
+                  - generic [ref=e1870]: "@thmsetscheidt"
+                  - generic [ref=e1871]: 2 years ago
+                  - paragraph [ref=e1872]: Wow! This is so cool! Fantastic work! I would like to remix it and use it on my personal website, will mention you as inspiration!
+                - generic [ref=e1874]: Reply
+            - generic [ref=e1876]:
+              - link "R" [ref=e1877] [cursor=pointer]:
+                - /url: /@rachelyamada01
+                - generic [ref=e1881]: R
+              - generic [ref=e1882]:
+                - generic [ref=e1883]:
+                  - generic [ref=e1885]: "@rachelyamada01"
+                  - generic [ref=e1886]: 2 years ago
+                  - paragraph [ref=e1887]: This looks amazing! May I use this for my project?
+                - generic [ref=e1889]: Reply
+            - generic [ref=e1891]:
+              - link "S" [ref=e1892] [cursor=pointer]:
+                - /url: /@sahilb.sbg
+                - generic [ref=e1896]: S
+              - generic [ref=e1897]:
+                - generic [ref=e1898]:
+                  - generic [ref=e1900]: "@sahilb.sbg"
+                  - generic [ref=e1901]: 2 years ago
+                  - paragraph [ref=e1902]: Hi I am trying to apply the same mouse hover in order to move giant spheres in random directions of my screen, but I can't seem to get it to work. Can you please make a tutorial?
+                - generic [ref=e1904]: Reply
+            - generic [ref=e1906]:
+              - link "A" [ref=e1907] [cursor=pointer]:
+                - /url: /@austintjohnson
+                - generic [ref=e1911]: A
+              - generic [ref=e1912]:
+                - generic [ref=e1913]:
+                  - generic [ref=e1915]: "@austintjohnson"
+                  - generic [ref=e1916]: 2 years ago
+                  - paragraph [ref=e1917]: "This is incredible! I'd love to use this in a personal project if that's okay?! I'm building a React app and just curious if anyone knows why the particles don't appear when trying to render in React?! Text appears just fine :"
+                - generic [ref=e1919]: Reply
+            - generic [ref=e1921]:
+              - link "M" [ref=e1922] [cursor=pointer]:
+                - /url: /@mayurwade
+                - generic [ref=e1926]: M
+              - generic [ref=e1927]:
+                - generic [ref=e1928]:
+                  - generic [ref=e1930]: "@mayurwade"
+                  - generic [ref=e1931]: 2 years ago
+                  - paragraph [ref=e1932]: looking Different 😍
+                - generic [ref=e1934]: Reply
+            - generic [ref=e1936]:
+              - link "Profile Georgy Alaverdyan" [ref=e1937] [cursor=pointer]:
+                - /url: /@georgy
+                - img "Profile Georgy Alaverdyan" [ref=e1942]
+              - generic [ref=e1943]:
+                - generic [ref=e1944]:
+                  - generic [ref=e1946]: "@georgy"
+                  - generic [ref=e1947]: 2 years ago
+                  - paragraph [ref=e1948]: This honestly looks mind-blowing!
+                - generic [ref=e1950]: Reply
+            - generic [ref=e1952]:
+              - link "D" [ref=e1953] [cursor=pointer]:
+                - /url: /@kozyrkov.daniil
+                - generic [ref=e1957]: D
+              - generic [ref=e1958]:
+                - generic [ref=e1959]:
+                  - generic [ref=e1961]: "@kozyrkov.daniil"
+                  - generic [ref=e1962]: 2 years ago
+                  - paragraph [ref=e1963]: THIS IS ASTONISHING!
+                - generic [ref=e1965]: Reply
+            - generic [ref=e1967]:
+              - link "T" [ref=e1968] [cursor=pointer]:
+                - /url: /@ihome469
+                - generic [ref=e1972]: T
+              - generic [ref=e1973]:
+                - generic [ref=e1974]:
+                  - generic [ref=e1976]: "@ihome469"
+                  - generic [ref=e1977]: 2 years ago
+                  - paragraph [ref=e1978]:
+                    - generic [ref=e1979]: this is amazing!!!
+                - generic [ref=e1981]: Reply
+            - generic [ref=e1983]:
+              - link "J" [ref=e1984] [cursor=pointer]:
+                - /url: /@songsofhues
+                - generic [ref=e1988]: J
+              - generic [ref=e1989]:
+                - generic [ref=e1990]:
+                  - generic [ref=e1992]: "@songsofhues"
+                  - generic [ref=e1993]: 2 years ago
+                  - paragraph [ref=e1994]: So mesmerizing!
+                - generic [ref=e1996]: Reply
+            - generic [ref=e1998]:
+              - link "I" [ref=e1999] [cursor=pointer]:
+                - /url: /@richeaiulia
+                - generic [ref=e2003]: I
+              - generic [ref=e2004]:
+                - generic [ref=e2005]:
+                  - generic [ref=e2007]: "@richeaiulia"
+                  - generic [ref=e2008]: 2 years ago
+                  - paragraph [ref=e2009]: How do you stop the final object from moving around the frame? When you scroll and move with the mouse it just disappears from the frame. Even thought I set the frame to custom size from the desktop the particle sphere goes out from the frame.
+                - generic [ref=e2011]: Reply
+            - generic [ref=e2013]:
+              - link "S" [ref=e2014] [cursor=pointer]:
+                - /url: /@nasirabdullahsyed
+                - generic [ref=e2018]: S
+              - generic [ref=e2019]:
+                - generic [ref=e2020]:
+                  - generic [ref=e2022]: "@nasirabdullahsyed"
+                  - generic [ref=e2023]: 2 years ago
+                  - paragraph [ref=e2024]: Absolutely amazing !
+                - generic [ref=e2026]: Reply
+            - generic [ref=e2028]:
+              - link "V" [ref=e2029] [cursor=pointer]:
+                - /url: /@vipul47
+                - generic [ref=e2033]: V
+              - generic [ref=e2034]:
+                - generic [ref=e2035]:
+                  - generic [ref=e2037]: "@vipul47"
+                  - generic [ref=e2038]: 2 years ago
+                  - paragraph [ref=e2039]: Surreal!
+                - generic [ref=e2041]: Reply
+            - generic [ref=e2043]:
+              - link "E" [ref=e2044] [cursor=pointer]:
+                - /url: /@emile.catteeuw3
+                - generic [ref=e2048]: E
+              - generic [ref=e2049]:
+                - generic [ref=e2050]:
+                  - generic [ref=e2052]: "@emile.catteeuw3"
+                  - generic [ref=e2053]: 2 years ago
+                  - paragraph [ref=e2054]: i have trouble figuring out how to change the shape in which the particles exist, tried replacing the sphere with a custom shape i made but the particles didn't behave as expected . tried making a simple cat face in which the particles would exist -- basically a sphere with 2 ears added
+                - generic [ref=e2056]: Reply
+            - generic [ref=e2058]:
+              - link "I" [ref=e2059] [cursor=pointer]:
+                - /url: /@richeaiulia
+                - generic [ref=e2063]: I
+              - generic [ref=e2064]:
+                - generic [ref=e2065]:
+                  - generic [ref=e2067]: "@richeaiulia"
+                  - generic [ref=e2068]: 2 years ago
+                  - paragraph [ref=e2069]:
+                    - generic [ref=e2070]: This is so cool! I will use this on my band website!
+                - generic [ref=e2072]: Reply
+            - generic [ref=e2074]:
+              - link "R" [ref=e2075] [cursor=pointer]:
+                - /url: /@resha
+                - generic [ref=e2079]: R
+              - generic [ref=e2080]:
+                - generic [ref=e2081]:
+                  - generic [ref=e2083]: "@resha"
+                  - generic [ref=e2084]: 2 years ago
+                  - paragraph [ref=e2085]: Wow! Super!
+                - generic [ref=e2087]: Reply
+            - generic [ref=e2089]:
+              - link "V" [ref=e2090] [cursor=pointer]:
+                - /url: /@leryn.nova
+                - generic [ref=e2094]: V
+              - generic [ref=e2095]:
+                - generic [ref=e2096]:
+                  - generic [ref=e2098]: "@leryn.nova"
+                  - generic [ref=e2099]: 2 years ago
+                  - paragraph [ref=e2100]: "not working : ("
+                - generic [ref=e2101]:
+                  - generic [ref=e2102]:
+                    - img [ref=e2103]
+                    - text: 1 Replies
+                    - img [ref=e2107]
+                  - generic [ref=e2110]: Reply
+            - generic [ref=e2112]:
+              - link "V" [ref=e2113] [cursor=pointer]:
+                - /url: /@vigneshvjn99
+                - generic [ref=e2117]: V
+              - generic [ref=e2118]:
+                - generic [ref=e2119]:
+                  - generic [ref=e2121]: "@vigneshvjn99"
+                  - generic [ref=e2122]: 2 years ago
+                  - paragraph [ref=e2123]:
+                    - generic [ref=e2124]: hey , can u drop a tutorial for this
+                - generic [ref=e2125]:
+                  - generic [ref=e2126]:
+                    - img [ref=e2127]
+                    - text: 2 Replies
+                    - img [ref=e2131]
+                  - generic [ref=e2134]: Reply
+            - generic [ref=e2136]:
+              - link "S" [ref=e2137] [cursor=pointer]:
+                - /url: /@shadeqgame20
+                - generic [ref=e2141]: S
+              - generic [ref=e2142]:
+                - generic [ref=e2143]:
+                  - generic [ref=e2145]: "@shadeqgame20"
+                  - generic [ref=e2146]: 2 years ago
+                  - paragraph [ref=e2147]: Very cool! Permission to use it for my project. Thank you.
+                - generic [ref=e2148]:
+                  - generic [ref=e2149]:
+                    - img [ref=e2150]
+                    - text: 1 Replies
+                    - img [ref=e2154]
+                  - generic [ref=e2157]: Reply
+            - generic [ref=e2159]:
+              - link "Profile Shark" [ref=e2160] [cursor=pointer]:
+                - /url: /@shahrukhmd
+                - img "Profile Shark" [ref=e2165]
+              - generic [ref=e2166]:
+                - generic [ref=e2167]:
+                  - generic [ref=e2169]: "@shahrukhmd"
+                  - generic [ref=e2170]: 2 years ago
+                  - paragraph [ref=e2171]: This is soo cool!!
+                - generic [ref=e2173]: Reply
+            - generic [ref=e2175]:
+              - link "Profile Whis" [ref=e2176] [cursor=pointer]:
+                - /url: /@whis
+                - img "Profile Whis" [ref=e2181]
+              - generic [ref=e2182]:
+                - generic [ref=e2183]:
+                  - generic [ref=e2185]: "@whis"
+                  - generic [ref=e2186]: 2 years ago
+                  - paragraph [ref=e2187]: getting strong Prometheus vibes from this! very cool!
+                - generic [ref=e2188]:
+                  - generic [ref=e2189]:
+                    - img [ref=e2190]
+                    - text: 1 Replies
+                    - img [ref=e2194]
+                  - generic [ref=e2197]: Reply
+            - generic [ref=e2199]:
+              - link "Y" [ref=e2200] [cursor=pointer]:
+                - /url: /@samiysfsyn
+                - generic [ref=e2204]: "Y"
+              - generic [ref=e2205]:
+                - generic [ref=e2206]:
+                  - generic [ref=e2208]: "@samiysfsyn"
+                  - generic [ref=e2209]: 2 years ago
+                  - paragraph [ref=e2210]: why the particles are not showing up when i remix?
+                - generic [ref=e2211]:
+                  - generic [ref=e2212]:
+                    - img [ref=e2213]
+                    - text: 1 Replies
+                    - img [ref=e2217]
+                  - generic [ref=e2220]: Reply
+            - generic [ref=e2222]:
+              - link "A" [ref=e2223] [cursor=pointer]:
+                - /url: /@abdulrehman17312
+                - generic [ref=e2227]: A
+              - generic [ref=e2228]:
+                - generic [ref=e2229]:
+                  - generic [ref=e2231]: "@abdulrehman17312"
+                  - generic [ref=e2232]: 2 years ago
+                  - paragraph [ref=e2233]:
+                    - generic [ref=e2234]: how i use this effect in my website
+                - generic [ref=e2235]:
+                  - generic [ref=e2236]:
+                    - img [ref=e2237]
+                    - text: 1 Replies
+                    - img [ref=e2241]
+                  - generic [ref=e2244]: Reply
+            - generic [ref=e2246]:
+              - link "Profile Abdur Rahman" [ref=e2247] [cursor=pointer]:
+                - /url: /@Abdur
+                - img "Profile Abdur Rahman" [ref=e2252]
+              - generic [ref=e2253]:
+                - generic [ref=e2254]:
+                  - generic [ref=e2256]: "@Abdur"
+                  - generic [ref=e2257]: 2 years ago
+                  - paragraph [ref=e2258]: Woah! That is a cool effect! auroegmbt!
+                - generic [ref=e2259]:
+                  - generic [ref=e2260]:
+                    - img [ref=e2261]
+                    - text: 1 Replies
+                    - img [ref=e2265]
+                  - generic [ref=e2268]: Reply
+            - generic [ref=e2270]:
+              - link "N" [ref=e2271] [cursor=pointer]:
+                - /url: /@nana
+                - generic [ref=e2275]: "N"
+              - generic [ref=e2276]:
+                - generic [ref=e2277]:
+                  - generic [ref=e2279]: "@nana"
+                  - generic [ref=e2280]: 2 years ago
+                  - paragraph [ref=e2281]:
+                    - generic [ref=e2282]: I love it! 🤩🤩🤩 It would fit in perfectly on a website
+                    - text: Awesome work
+                    - link "@auroregmbt" [ref=e2283] [cursor=pointer]:
+                      - /url: /@auroregmbt
+                    - text: "!"
+                - generic [ref=e2284]:
+                  - generic [ref=e2285]:
+                    - img [ref=e2286]
+                    - text: 1 Replies
+                    - img [ref=e2290]
+                  - generic [ref=e2293]: Reply
+            - generic [ref=e2295]:
+              - link "S" [ref=e2296] [cursor=pointer]:
+                - /url: /@sally
+                - generic [ref=e2300]: S
+              - generic [ref=e2301]:
+                - generic [ref=e2302]:
+                  - generic [ref=e2304]: "@sally"
+                  - generic [ref=e2305]: 2 years ago
+                  - paragraph [ref=e2306]: This is cool!😍
+                - generic [ref=e2307]:
+                  - generic [ref=e2308]:
+                    - img [ref=e2309]
+                    - text: 1 Replies
+                    - img [ref=e2313]
+                  - generic [ref=e2316]: Reply
+      - generic [ref=e257]:
+        - generic [ref=e353]:
+          - heading "Share" [level=3] [ref=e354]
+          - generic [ref=e355]:
+            - button [ref=e356]:
+              - img [ref=e357]
+            - link [ref=e360] [cursor=pointer]:
+              - /url: https://twitter.com/intent/tweet?text=Check%20out%20%22Particles%20%F0%9F%8C%91%22%20by%20Aurora%20on%20%40splinetool%3A&url=https%3A%2F%2Fapp.spline.design%2Fcommunity%2Ffile%2F3ff7b617-2fe9-46c7-8e06-b6d7c382f4db
+              - button [ref=e361]:
+                - img [ref=e362]
+            - button [ref=e364]:
+              - img [ref=e366]
+        - generic [ref=e2317]:
+          - heading "More by auroregmbt" [level=3] [ref=e2318]
+          - generic [ref=e2319]:
+            - link "Chess ♟️" [ref=e2320] [cursor=pointer]:
+              - /url: /community/file/80f399ca-105a-46e0-a4ae-c9f6ea1bd5c2
+              - img "Chess ♟️" [ref=e2326]
+            - link "Product" [ref=e2327] [cursor=pointer]:
+              - /url: /community/file/117303bd-f2d4-4f51-bfdf-5bf12559801c
+              - img "Product" [ref=e2333]
+            - link "Cards ♣️" [ref=e2334] [cursor=pointer]:
+              - /url: /community/file/d4a65f4e-28c1-4632-ae59-406b5e390c4e
+              - img "Cards ♣️" [ref=e2340]
+        - generic [ref=e271]:
+          - generic [ref=e272]:
+            - img [ref=e274]
+            - paragraph [ref=e281]: Made in Spline
+          - generic [ref=e282]:
+            - img [ref=e284]
+            - paragraph [ref=e287]: 2 years ago
+          - generic [ref=e288]:
+            - img [ref=e290]
+            - paragraph [ref=e293]:
+              - text: Licensed under
+              - link "CC0 1.0" [ref=e294] [cursor=pointer]:
+                - /url: https://creativecommons.org/publicdomain/zero/1.0/

@@ -1,0 +1,14 @@
+- main [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e5]:
+      - generic [ref=e6]: Веб-студия полного цикла
+      - heading "Сайты которые продают" [level=1] [ref=e8]:
+        - text: Сайты которые
+        - text: продают
+      - paragraph [ref=e9]: Разрабатываем кинематографичные сайты, панорамы 360° и настраиваем продвижение. Работаем по всему миру.
+      - generic [ref=e10]:
+        - link "Обсудить проект" [ref=e11] [cursor=pointer]:
+          - /url: "#contact"
+        - link "Портфолио" [ref=e12] [cursor=pointer]:
+          - /url: "#portfolio"
+    - generic [ref=e15]: Scroll

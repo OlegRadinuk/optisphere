@@ -1,5 +1,6 @@
 'use client';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import SectionIntro from '@/components/hud/SectionIntro';
 
 const FAQS = [
@@ -29,17 +30,43 @@ function FaqItem({ q, a, open, onClick }: { q: string; a: string; open: boolean;
   );
 }
 
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.08 } },
+};
+const itemVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 0.61, 0.36, 1] as const } },
+};
+
 export default function FaqSection() {
   const [open, setOpen] = useState(0);
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-80px' });
+
   return (
     <section id="faq" style={{ padding:'96px 0' }}>
       <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px' }}>
-        <SectionIntro code="08" cmd="faq.search()" title="Частые вопросы"/>
-        <div style={{ display:'flex', flexDirection:'column', gap:10, maxWidth:860 }}>
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.55, ease: [0.22, 0.61, 0.36, 1] }}
+        >
+          <SectionIntro code="08" cmd="faq.search()" title="Частые вопросы"/>
+        </motion.div>
+        <motion.div
+          ref={ref}
+          variants={containerVariants}
+          initial="hidden"
+          animate={inView ? 'visible' : 'hidden'}
+          style={{ display:'flex', flexDirection:'column', gap:10, maxWidth:860 }}
+        >
           {FAQS.map((f,i) => (
-            <FaqItem key={i} q={f.q} a={f.a} open={open===i} onClick={() => setOpen(open===i ? -1 : i)}/>
+            <motion.div key={i} variants={itemVariants}>
+              <FaqItem q={f.q} a={f.a} open={open===i} onClick={() => setOpen(open===i ? -1 : i)}/>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

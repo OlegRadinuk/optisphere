@@ -1,0 +1,11 @@
+[     346ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[     405ms] [LOG] [HMR] connected @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[     545ms] [LOG] 📌 [Header] mode: hero @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[     545ms] [LOG] 📌 [Header] searchParams: null @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[     546ms] [LOG] 📌 [Header] pathname: / @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[     546ms] [LOG] 📌 [Header] isApartmentPage: false @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[     547ms] [LOG] 📌 [Header] activeApartment: null @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[    1047ms] [ERROR] Error fetching hero slides: Error: no slides
+    at Hero.useEffect.fetchSlides (http://localhost:3001/_next/static/chunks/_8e68ed5e._.js:99:35) @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[    7410ms] [WARNING] The resource http://localhost:3001/_next/static/media/44fac91e6f2d2b1b-s.p.0a39a854.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3001/:0
+[    7410ms] [WARNING] The resource http://localhost:3001/_next/static/media/e8f2fbee2754df70-s.p.9b7a96b4.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3001/:0

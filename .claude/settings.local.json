@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(*)",
+      "mcp__plugin_playwright_playwright__*",
+      "Skill(*)"
+    ]
+  }
+}

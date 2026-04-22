@@ -1,0 +1,18 @@
+[   43600ms] [INFO] Slow network is detected. See https://www.chromestatus.com/feature/5636954674692096 for more details. Fallback font will be used while loading: https://spline.design/fonts/SplineSansMono-Regular.woff2 @ https://spline.design/:0
+[   43897ms] [LOG] / {} @ https://spline.design/_next/static/chunks/cbc6fe866d52e555.js:6
+[   43899ms] [LOG] onAccept cookie banner true @ https://spline.design/_next/static/chunks/cbc6fe866d52e555.js:6
+[   43907ms] [LOG] / {} @ https://spline.design/_next/static/chunks/cbc6fe866d52e555.js:6
+[   43937ms] [WARNING] updating from  119 to  118 @ https://spline.design/_next/static/chunks/d407a39f286295ce.js:3138
+[   43938ms] [WARNING] Your .splinecode file is more recent than the library. Please upgrade @splinetool/runtime to the latest version. @ https://spline.design/_next/static/chunks/d407a39f286295ce.js:8173
+[   44301ms] [WARNING] updating from  115 to  118 @ https://spline.design/_next/static/chunks/d407a39f286295ce.js:3138
+[   44303ms] [WARNING] updating from  115 to  118 @ https://spline.design/_next/static/chunks/d407a39f286295ce.js:3138
+[   44363ms] [LOG] / {} @ https://spline.design/_next/static/chunks/cbc6fe866d52e555.js:6
+[   61581ms] [LOG] 
+%c  %c
+
+%cSpline
+%c1.12.81
+ background: linear-gradient(124.21deg, #FFC81D 0%, #F34EF1 10.21%, #3DFCC6 19.96%, #3DFCC6 27.38%, #4380FF 34.39%, #4380FF 55.06%, #FF3AF3 66.05%, #FF3AF3 89.11%);border-radius: 6px; background: none; color: #888; font-size: 20px; color: #666; font-size: 15px; @ https://app.spline.design/assets/entries/pages_index.BcxEDAbd.js:5227
+[   62832ms] [ERROR] Access to fetch at 'https://o461187.ingest.sentry.io/api/5717832/envelope/?sentry_key=4169885f834f44d38b70b2c84a715266&sentry_version=7' from origin 'https://app.spline.design' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ https://app.spline.design/signin?_gl=1*iqsyls*_ga*MTA2Nzk0NzUxMi4xNzc1ODQ5MDM4*_ga_M5CVVT7F18*czE3NzU4NDkxMDQkbzEkZzEkdDE3NzU4NDkyNTgkajYwJGwwJGgw*_gcl_au*MTM5OTQ4MDY1Ny4xNzc1ODQ5MDM1*_ga_ZQ4RYDGKW3*czE3NzU4NDkwMzgkbzEkZzEkdDE3NzU4NDkyNTgkajYwJGwwJGgw:0
+[   62834ms] [ERROR] Failed to load resource: net::ERR_FAILED @ https://o461187.ingest.sentry.io/api/5717832/envelope/?sentry_key=4169885f834f44d38b70b2c84a715266&sentry_version=7:0
+[   65935ms] [INFO] Slow network is detected. See https://www.chromestatus.com/feature/5636954674692096 for more details. Fallback font will be used while loading: https://fonts.gstatic.com/s/roboto/v48/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3yUBA.woff2 @ https://www.gstatic.com/recaptcha/releases/gTpTIWhbKpxADzTzkcabhXN4/recaptcha__en.js:303

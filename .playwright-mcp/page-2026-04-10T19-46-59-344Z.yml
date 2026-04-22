@@ -1,0 +1,429 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - generic:
+      - generic [ref=e12]:
+        - generic [ref=e13]:
+          - button "Back to My Files" [ref=e14]:
+            - img [ref=e15]
+          - generic [ref=e18]: Particles 🌑
+          - button "Main Dropdown" [ref=e19]:
+            - img [ref=e20]
+        - generic [ref=e26]:
+          - tablist [ref=e27]:
+            - tab "Objects" [selected] [ref=e28]
+            - tab "Assets" [ref=e29]
+          - tabpanel "Objects" [ref=e30]:
+            - generic [ref=e33]:
+              - generic [ref=e34]:
+                - text: Scenes
+                - img [ref=e35]
+              - button "New Scene Dropdown" [ref=e39]:
+                - img [ref=e40]
+            - generic [ref=e42]:
+              - radiogroup [ref=e44]:
+                - radio "Scene 1" [checked] [ref=e47]:
+                  - generic [ref=e48]:
+                    - img [ref=e49]
+                    - generic [ref=e51]: Scene 1
+                    - img [ref=e52]
+              - generic [ref=e59]:
+                - generic:
+                  - img
+                - searchbox "Search" [ref=e60]
+              - tree [ref=e70]:
+                - treeitem "Text" [level=1] [ref=e71]:
+                  - generic [ref=e73]:
+                    - img [ref=e74]
+                    - generic [ref=e77]: Text
+                - treeitem "Sphere show" [level=1] [ref=e78]:
+                  - generic [ref=e80]:
+                    - img [ref=e81]
+                    - generic [ref=e86]: Sphere
+                    - button "show" [ref=e90]:
+                      - img [ref=e91]
+                - treeitem "Open Group Particles" [level=1] [ref=e94]:
+                  - generic [ref=e96]:
+                    - button "Open Group" [ref=e97]:
+                      - img [ref=e98]
+                    - img [ref=e100]
+                    - generic [ref=e106]: Particles
+                - treeitem "Directional Light" [level=1] [ref=e107]:
+                  - generic [ref=e109]:
+                    - img [ref=e110]
+                    - generic [ref=e116]: Directional Light
+            - generic [ref=e118]:
+              - button "Open Templates" [ref=e119]:
+                - img [ref=e121]
+                - text: Templates
+              - button "Import" [ref=e124]:
+                - img [ref=e126]
+                - text: Import
+              - button "Open Support Menu" [ref=e128]:
+                - img [ref=e130]
+                - text: Help & Feedback
+      - generic [ref=e135]:
+        - generic [ref=e136]:
+          - button "R" [ref=e139]:
+            - generic [ref=e143]: R
+          - generic [ref=e144]:
+            - button "111%" [ref=e146]:
+              - generic [ref=e148]:
+                - text: 111%
+                - img [ref=e149]
+            - generic [ref=e151]:
+              - button "Share" [ref=e152]
+              - button "Export" [ref=e154]
+        - generic [ref=e155]:
+          - generic [ref=e160]:
+            - generic [ref=e162]: Viewport
+            - combobox "Select" [ref=e163]:
+              - generic:
+                - generic:
+                  - generic: Personal Camera
+              - img [ref=e165]
+          - generic [ref=e167]:
+            - generic [ref=e169]:
+              - generic [ref=e170]: Frame
+              - button "Toggle Frame Mode" [ref=e173]:
+                - img [ref=e174]
+            - generic [ref=e177]:
+              - generic [ref=e180]:
+                - generic [ref=e182]: Size
+                - combobox "Select" [ref=e184]:
+                  - generic:
+                    - generic:
+                      - generic: Responsive
+                  - img [ref=e186]
+              - generic [ref=e190]:
+                - generic [ref=e192]: Auto Zoom
+                - generic [ref=e196]:
+                  - generic [ref=e197]:
+                    - radio "Yes" [ref=e198]
+                    - generic [ref=e199]: "Yes"
+                  - generic [ref=e200]:
+                    - radio "No" [checked] [ref=e201]
+                    - generic [ref=e202]: "No"
+              - generic [ref=e205]:
+                - generic [ref=e207]: Screen UI
+                - combobox "Select" [ref=e208]:
+                  - generic:
+                    - generic:
+                      - generic: None
+                  - img [ref=e210]
+          - generic [ref=e212]:
+            - generic [ref=e215]: Scene
+            - generic [ref=e216]:
+              - generic [ref=e219]:
+                - generic [ref=e221]: BG Color
+                - generic [ref=e224]:
+                  - textbox "Color" [ref=e228]: "121212"
+                  - textbox "Number" [ref=e232]: 100%
+              - generic [ref=e235]:
+                - generic [ref=e237]:
+                  - img [ref=e239]
+                  - text: Play Camera
+                - combobox "Select" [ref=e244]:
+                  - generic:
+                    - generic:
+                      - generic: Personal Camera
+                  - img [ref=e246]
+              - generic [ref=e251]:
+                - generic [ref=e253]:
+                  - img [ref=e255]
+                  - text: Light
+                - img "Toggle Panel" [ref=e260]
+              - generic [ref=e265]:
+                - generic [ref=e267]:
+                  - img [ref=e269]
+                  - text: Simulation
+                - img "Toggle Panel" [ref=e276]
+              - generic [ref=e281]:
+                - generic [ref=e283]:
+                  - img [ref=e285]
+                  - text: Effects
+                  - img [ref=e291]
+                - button "Toggle Effects" [ref=e295]
+              - generic [ref=e299]:
+                - generic [ref=e301]:
+                  - img [ref=e303]
+                  - text: Fog
+                  - img [ref=e307]
+                - button "Toggle Fog" [ref=e311]
+              - generic [ref=e315]:
+                - generic [ref=e317]:
+                  - img [ref=e319]
+                  - text: Ambient Shadows
+                  - img [ref=e324]
+                - button "Toggle Ambient Shadows" [ref=e328]
+          - generic [ref=e329]:
+            - generic [ref=e331]:
+              - generic [ref=e332]: Global Settings
+              - button "Open Global Settings" [ref=e335]:
+                - img [ref=e336]
+            - generic [ref=e340]:
+              - generic [ref=e345]:
+                - generic [ref=e347]: Grid Plane
+                - combobox "Select" [ref=e349]:
+                  - generic:
+                    - generic:
+                      - generic: Floor (XZ)
+                  - img [ref=e351]
+              - generic [ref=e355]:
+                - generic [ref=e357]: Snapping
+                - generic [ref=e361]:
+                  - generic [ref=e362]:
+                    - radio "Object" [ref=e363]
+                    - generic [ref=e364]: Object
+                  - generic [ref=e365]:
+                    - radio "Grid" [ref=e366]
+                    - generic [ref=e367]: Grid
+                  - generic [ref=e368]:
+                    - radio "Off" [checked] [ref=e369]
+                    - generic [ref=e370]: "Off"
+          - generic [ref=e373]:
+            - generic [ref=e374]: Variables & Data
+            - img "Variables & Data" [ref=e377]
+          - generic [ref=e382]:
+            - generic [ref=e386]:
+              - generic [ref=e387]: Material Assets
+              - generic [ref=e389]:
+                - button "Open context menu" [ref=e390]:
+                  - img [ref=e391]
+                - button "Create New Material" [ref=e395]:
+                  - img [ref=e396]
+            - generic [ref=e398]:
+              - generic [ref=e400]:
+                - img [ref=e402] [cursor=pointer]
+                - generic [ref=e412]:
+                  - generic [ref=e413]: Texte
+                  - button "Options" [ref=e415]:
+                    - img [ref=e416]
+              - generic [ref=e421]:
+                - img [ref=e423] [cursor=pointer]
+                - generic [ref=e433]:
+                  - generic [ref=e434]: Untitled Material
+                  - button "Options" [ref=e436]:
+                    - img [ref=e437]
+              - generic [ref=e442]:
+                - img [ref=e444] [cursor=pointer]
+                - generic [ref=e454]:
+                  - generic [ref=e455]: Text Material
+                  - button "Options" [ref=e457]:
+                    - img [ref=e458]
+              - generic [ref=e463]:
+                - img [ref=e465] [cursor=pointer]
+                - generic [ref=e475]:
+                  - generic [ref=e476]: Text Material
+                  - button "Options" [ref=e478]:
+                    - img [ref=e479]
+          - generic [ref=e483]:
+            - generic [ref=e487]:
+              - generic [ref=e488]: Color Assets
+              - generic [ref=e490]:
+                - button "Open context menu" [ref=e491]:
+                  - img [ref=e492]
+                - button "Create New Color" [ref=e496]:
+                  - img [ref=e497]
+            - generic [ref=e501]:
+              - img [ref=e503] [cursor=pointer]
+              - generic [ref=e512]:
+                - generic [ref=e513]: Default Color
+                - button "Options" [ref=e515]:
+                  - img [ref=e516]
+          - generic [ref=e524]:
+            - generic [ref=e525]: Image Assets
+            - generic [ref=e527]:
+              - button "Open context menu" [ref=e528]:
+                - img [ref=e529]
+              - button "Create New Image" [ref=e533]:
+                - img [ref=e534]
+          - generic [ref=e540]:
+            - generic [ref=e541]: Media Assets
+            - generic [ref=e543]:
+              - button "Open context menu" [ref=e544]:
+                - img [ref=e545]
+              - button "Create New Video" [ref=e549]:
+                - img [ref=e550]
+          - generic [ref=e556]:
+            - generic [ref=e557]: Audio Assets
+            - generic [ref=e559]:
+              - button "Open context menu" [ref=e560]:
+                - img [ref=e561]
+              - button "Create New Audio" [ref=e565]:
+                - img [ref=e566]
+      - toolbar [ref=e568]:
+        - generic "Create New Object" [ref=e569]:
+          - button "Create New Object" [ref=e570]:
+            - img [ref=e572]
+        - separator [ref=e574]
+        - generic "AI Generate" [ref=e575]:
+          - button "AI Generate" [ref=e576]:
+            - img [ref=e578]
+        - generic [ref=e582]:
+          - button "Create 2D Object" [ref=e583]:
+            - img [ref=e585]
+          - button "Toggle 2D Object" [ref=e587]:
+            - img [ref=e588]
+        - generic [ref=e590]:
+          - button "Create 3D Object" [ref=e591]:
+            - img [ref=e593]
+          - button "Toggle 3D Object" [ref=e596]:
+            - img [ref=e597]
+        - button "Create Text Object" [ref=e599]:
+          - img [ref=e601]
+        - generic [ref=e603]:
+          - button "Toggle Pen Tool" [ref=e604]:
+            - img [ref=e606]
+          - button "Toggle Pen - Path Tool" [ref=e611]:
+            - img [ref=e612]
+        - button "Comment Tool" [ref=e614]:
+          - img [ref=e616]
+        - separator [ref=e620]
+        - switch "Toggle Timeline" [ref=e621]:
+          - generic [ref=e623]:
+            - img [ref=e625]
+            - img [ref=e628]
+        - separator [ref=e633]
+        - button "Play Mode" [ref=e634]:
+          - img [ref=e636]
+      - generic [ref=e638]:
+        - generic [ref=e639]:
+          - button "Reset" [ref=e640]
+          - button "Isometric" [ref=e644]
+        - generic [ref=e645]:
+          - generic [ref=e646]: Orthographic
+          - generic [ref=e648]: Perspective
+  - dialog [ref=e649]:
+    - generic [ref=e651]:
+      - generic [ref=e656]:
+        - generic [ref=e657]: Web
+        - generic [ref=e658]:
+          - img [ref=e660]
+          - generic [ref=e663]:
+            - generic [ref=e664]: Public URL
+            - generic [ref=e665]: Share and Embed
+        - generic [ref=e666]:
+          - img [ref=e668]
+          - generic [ref=e672]:
+            - generic [ref=e673]: Viewer
+            - generic [ref=e674]: Integrated Embed
+        - generic [ref=e675]:
+          - img [ref=e677]
+          - generic [ref=e680]:
+            - generic [ref=e681]: Code Export
+            - generic [ref=e682]: Next.js, Three.js, React...
+        - generic [ref=e683]:
+          - img [ref=e685]
+          - generic [ref=e688]:
+            - generic [ref=e689]: Self-Hosted
+            - generic [ref=e690]: Download Assets
+        - generic [ref=e691]: Mobile Platform
+        - generic [ref=e692]:
+          - img [ref=e694]
+          - generic [ref=e697]:
+            - generic [ref=e698]: Apple
+            - generic [ref=e699]: iOS, visionOS...
+        - generic [ref=e700]:
+          - img [ref=e702]
+          - generic [ref=e705]:
+            - generic [ref=e706]: Android
+            - generic [ref=e707]: APK, Android Studio...
+        - generic [ref=e708]: Files
+        - generic [ref=e709]:
+          - img [ref=e711]
+          - generic [ref=e717]:
+            - generic [ref=e718]: Image
+            - generic [ref=e719]: JPG, PNG
+        - generic [ref=e720]:
+          - img [ref=e722]
+          - generic [ref=e724]:
+            - generic [ref=e725]: Video
+            - generic [ref=e726]: MP4, WEBM...
+        - generic [ref=e727]:
+          - img [ref=e729]
+          - generic [ref=e731]:
+            - generic [ref=e732]: 3D Formats
+            - generic [ref=e733]: GLTF, GLB, STL, USDZ
+        - generic [ref=e734]:
+          - img [ref=e736]
+          - generic [ref=e742]:
+            - generic [ref=e743]: 3D Printing
+            - generic [ref=e744]: STL
+        - generic [ref=e745]:
+          - img [ref=e747]
+          - generic [ref=e750]:
+            - generic [ref=e751]: Spline File
+            - generic [ref=e752]: Save a local copy
+      - generic [ref=e753]:
+        - generic [ref=e756]:
+          - tablist [ref=e757]:
+            - tab "Overview" [selected] [ref=e758]
+            - tab "Play Settings" [ref=e759]
+          - tabpanel "Overview" [active] [ref=e760]:
+            - generic [ref=e764]:
+              - generic [ref=e766]:
+                - generic:
+                  - img
+                - textbox [ref=e767]: https://my.spline.design/particles-a8pFGUvjwnMVOwbWAeSNpFso/
+                - img [ref=e769]
+              - generic [ref=e771]:
+                - 'button "Copy to clipboard: <iframe src=''https://my.spline.design/particles-a8pFGUvjwnMVOwbWAeSNpFso/'' frameborder=''0'' width=''100%'' height=''100%''></iframe>" [ref=e772]': Copy Embed
+                - 'button "Copy to clipboard: https://my.spline.design/particles-a8pFGUvjwnMVOwbWAeSNpFso/" [ref=e773]': Copy Link
+              - generic [ref=e776]:
+                - generic [ref=e778]: Main Scene
+                - combobox "Select" [ref=e779]:
+                  - generic:
+                    - generic:
+                      - generic: Scene 1
+                  - img [ref=e781]
+              - generic [ref=e785]:
+                - generic [ref=e787]: Camera
+                - combobox "Select" [ref=e788]:
+                  - generic:
+                    - generic:
+                      - generic: Personal Camera
+                  - img [ref=e790]
+              - separator [ref=e792]
+              - generic [ref=e793]:
+                - generic [ref=e794]:
+                  - generic [ref=e796]:
+                    - text: Logo
+                    - img [ref=e800]
+                  - generic [ref=e805]:
+                    - generic [ref=e806]:
+                      - radio "Yes" [checked] [ref=e807]
+                      - generic [ref=e808]: "Yes"
+                    - generic [ref=e809]:
+                      - radio "No" [ref=e810]
+                      - generic [ref=e811]: "No"
+                - generic [ref=e812]:
+                  - generic [ref=e814]: Loading
+                  - combobox "Select" [ref=e816]:
+                    - generic:
+                      - generic:
+                        - generic: None
+                    - img [ref=e818]
+                - generic [ref=e820]:
+                  - generic [ref=e822]: Loading Preview
+                  - generic [ref=e826]:
+                    - generic [ref=e827]:
+                      - radio "Yes" [ref=e828]
+                      - generic [ref=e829]: "Yes"
+                    - generic [ref=e830]:
+                      - radio "No" [checked] [ref=e831]
+                      - generic [ref=e832]: "No"
+                - generic [ref=e833]:
+                  - generic [ref=e835]: Hint
+                  - combobox "Select" [ref=e837]:
+                    - generic:
+                      - generic:
+                        - generic: None
+                    - img [ref=e839]
+              - generic [ref=e841]:
+                - generic [ref=e842]:
+                  - img [ref=e843]
+                  - heading "Performance" [level=3] [ref=e845]
+                - paragraph [ref=e846]: Check the state of your scene and where to optimize it.
+                - generic [ref=e847]: Optimizations can be made
+                - button "Run Test" [ref=e849]
+        - button "Update Public URL" [ref=e852]

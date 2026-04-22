@@ -1,0 +1,438 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e5]:
+      - link "Optisphere" [ref=e6] [cursor=pointer]:
+        - /url: "#"
+        - img [ref=e7]
+        - generic [ref=e13]: Optisphere
+      - navigation [ref=e14]:
+        - link "Услуги" [ref=e15] [cursor=pointer]:
+          - /url: "#services"
+          - text: Услуги
+        - link "Портфолио" [ref=e16] [cursor=pointer]:
+          - /url: "#portfolio"
+          - text: Портфолио
+        - link "Цены" [ref=e17] [cursor=pointer]:
+          - /url: "#pricing"
+          - text: Цены
+        - link "Контакт" [ref=e18] [cursor=pointer]:
+          - /url: "#contact"
+          - text: Контакт
+      - generic [ref=e19]:
+        - button "Switch language" [ref=e20]:
+          - generic [ref=e21]: RU
+          - generic [ref=e22]: /
+          - generic [ref=e23]: EN
+        - link "Обсудить проект" [ref=e24] [cursor=pointer]:
+          - /url: "#contact"
+    - generic [ref=e25]:
+      - generic:
+        - generic:
+          - generic: Веб-студия полного цикла
+          - heading "Сайты которые продают" [level=1]:
+            - text: Сайты которые
+            - text: продают
+          - paragraph: Разрабатываем кинематографичные сайты, панорамы 360° и настраиваем продвижение. Работаем по всему миру.
+          - generic [ref=e27]:
+            - link "Обсудить проект" [ref=e28] [cursor=pointer]:
+              - /url: "#contact"
+            - link "Рассчитать стоимость" [ref=e29] [cursor=pointer]:
+              - /url: "#calculator"
+          - generic:
+            - generic:
+              - generic:
+                - generic: 25+
+                - generic: проектов
+            - generic:
+              - generic:
+                - generic: 97%
+                - generic: довольных
+            - generic:
+              - generic:
+                - generic: 3–7
+                - generic: дней
+      - generic:
+        - generic: Scroll
+    - generic [ref=e31]:
+      - generic [ref=e32]:
+        - generic [ref=e33]: Услуги
+        - heading "Три направления. Один исполнитель." [level=2] [ref=e34]:
+          - text: Три направления.
+          - text: Один исполнитель.
+      - generic [ref=e35]:
+        - generic [ref=e36]:
+          - generic [ref=e37]:
+            - img [ref=e39]
+            - generic [ref=e45]: от 30 000 ₽
+          - generic [ref=e46]:
+            - generic [ref=e47]: Сайты
+            - heading "Сайты которые работают пока вы спите" [level=3] [ref=e48]
+            - paragraph [ref=e49]: Создаём продающие сайты с анимациями, 3D-элементами и scroll-driven эффектами. Каждый проект уникален — никаких шаблонов.
+          - generic [ref=e50]:
+            - generic [ref=e51]: Next.js
+            - generic [ref=e52]: Framer Motion
+            - generic [ref=e53]: Three.js
+            - generic [ref=e54]: TypeScript
+          - list [ref=e55]:
+            - listitem [ref=e56]:
+              - img [ref=e58]
+              - text: Готово за 3–7 дней
+            - listitem [ref=e60]:
+              - img [ref=e62]
+              - text: SEO-оптимизация в подарок
+            - listitem [ref=e64]:
+              - img [ref=e66]
+              - text: Мобильная версия из коробки
+            - listitem [ref=e68]:
+              - img [ref=e70]
+              - text: Панель управления контентом
+          - link "Обсудить проект" [ref=e72] [cursor=pointer]:
+            - /url: "#contact"
+            - text: Обсудить проект
+            - img [ref=e73]
+        - generic [ref=e75]:
+          - generic [ref=e76]:
+            - img [ref=e78]
+            - generic [ref=e82]: от 8 000 ₽ / объект
+          - generic [ref=e83]:
+            - generic [ref=e84]: Панорамы 360°
+            - heading "Позвольте клиентам войти до визита" [level=3] [ref=e85]
+            - paragraph [ref=e86]: Интерактивные виртуальные туры для гостиниц, ресторанов, клиник и объектов недвижимости. Управление гироскопом на мобильном.
+          - generic [ref=e87]:
+            - generic [ref=e88]: WebGL
+            - generic [ref=e89]: Three.js
+            - generic [ref=e90]: VR
+            - generic [ref=e91]: Мобильный
+          - list [ref=e92]:
+            - listitem [ref=e93]:
+              - img [ref=e95]
+              - text: Съёмка или обработка вашего материала
+            - listitem [ref=e97]:
+              - img [ref=e99]
+              - text: Встраивание на сайт и в Google Maps
+            - listitem [ref=e101]:
+              - img [ref=e103]
+              - text: Хотспоты и интерактивные точки
+            - listitem [ref=e105]:
+              - img [ref=e107]
+              - text: Поддержка VR-очков
+          - link "Обсудить проект" [ref=e109] [cursor=pointer]:
+            - /url: "#contact"
+            - text: Обсудить проект
+            - img [ref=e110]
+        - generic [ref=e112]:
+          - generic [ref=e113]:
+            - img [ref=e115]
+            - generic [ref=e118]: от 15 000 ₽ / мес
+          - generic [ref=e119]:
+            - generic [ref=e120]: Продвижение
+            - heading "Трафик который превращается в клиентов" [level=3] [ref=e121]
+            - paragraph [ref=e122]: SEO-оптимизация и настройка Яндекс.Директ. Работаем на результат — больше звонков, больше заявок.
+          - generic [ref=e123]:
+            - generic [ref=e124]: SEO
+            - generic [ref=e125]: Яндекс.Директ
+            - generic [ref=e126]: Аналитика
+            - generic [ref=e127]: Конверсия
+          - list [ref=e128]:
+            - listitem [ref=e129]:
+              - img [ref=e131]
+              - text: Технический SEO-аудит
+            - listitem [ref=e133]:
+              - img [ref=e135]
+              - text: Семантическое ядро
+            - listitem [ref=e137]:
+              - img [ref=e139]
+              - text: Настройка и ведение Директ
+            - listitem [ref=e141]:
+              - img [ref=e143]
+              - text: Ежемесячные отчёты
+          - link "Обсудить проект" [ref=e145] [cursor=pointer]:
+            - /url: "#contact"
+            - text: Обсудить проект
+            - img [ref=e146]
+    - generic [ref=e149]:
+      - generic [ref=e150]:
+        - generic [ref=e151]: Портфолио
+        - heading "Избранные проекты" [level=2] [ref=e152]
+      - generic [ref=e153]:
+        - button "Все" [ref=e154]
+        - button "Сайты" [ref=e155]
+        - button "Панорамы" [ref=e156]
+        - button "Продвижение" [ref=e157]
+      - generic [ref=e158]:
+        - article [ref=e159]:
+          - generic [ref=e160]:
+            - generic [ref=e162]: Сайты
+            - img [ref=e163]
+          - generic [ref=e167]:
+            - heading "Отель Nova" [level=3] [ref=e168]
+            - paragraph [ref=e169]: Продающий сайт для бутик-отеля с онлайн бронированием и виртуальным туром
+            - generic [ref=e170]:
+              - generic [ref=e171]: Next.js
+              - generic [ref=e172]: Three.js
+              - generic [ref=e173]: Booking
+            - generic [ref=e174]:
+              - generic [ref=e175]:
+                - generic [ref=e176]: Сайт как этот —
+                - generic [ref=e177]: от 120 000 ₽
+              - link "Заказать такой" [ref=e178] [cursor=pointer]:
+                - /url: "#contact"
+                - text: Заказать такой
+                - img [ref=e179]
+        - article [ref=e181]:
+          - generic [ref=e182]:
+            - generic [ref=e184]: Сайты
+            - img [ref=e185]
+          - generic [ref=e189]:
+            - heading "Клиника MedPro" [level=3] [ref=e190]
+            - paragraph [ref=e191]: Корпоративный сайт медицинской клиники с онлайн-записью к врачам
+            - generic [ref=e192]:
+              - generic [ref=e193]: Next.js
+              - generic [ref=e194]: CMS
+              - generic [ref=e195]: SEO
+            - generic [ref=e196]:
+              - generic [ref=e197]:
+                - generic [ref=e198]: Сайт как этот —
+                - generic [ref=e199]: от 90 000 ₽
+              - link "Заказать такой" [ref=e200] [cursor=pointer]:
+                - /url: "#contact"
+                - text: Заказать такой
+                - img [ref=e201]
+        - article [ref=e203]:
+          - generic [ref=e204]:
+            - generic [ref=e206]: Сайты
+            - img [ref=e207]
+          - generic [ref=e211]:
+            - heading "СтройПро" [level=3] [ref=e212]
+            - paragraph [ref=e213]: Сайт строительной компании с портфолио объектов и калькулятором
+            - generic [ref=e214]:
+              - generic [ref=e215]: Next.js
+              - generic [ref=e216]: Calculator
+              - generic [ref=e217]: Gallery
+            - generic [ref=e218]:
+              - generic [ref=e219]:
+                - generic [ref=e220]: Сайт как этот —
+                - generic [ref=e221]: от 80 000 ₽
+              - link "Заказать такой" [ref=e222] [cursor=pointer]:
+                - /url: "#contact"
+                - text: Заказать такой
+                - img [ref=e223]
+        - article [ref=e225]:
+          - generic [ref=e226]:
+            - generic [ref=e228]: Панорамы
+            - img [ref=e229]
+          - generic [ref=e233]:
+            - heading "Ресторан Le Grand" [level=3] [ref=e234]
+            - paragraph [ref=e235]: Виртуальный тур по ресторану — 8 локаций, встроен в Google Maps
+            - generic [ref=e236]:
+              - generic [ref=e237]: 360°
+              - generic [ref=e238]: WebGL
+              - generic [ref=e239]: Google Maps
+            - generic [ref=e240]:
+              - generic [ref=e241]:
+                - generic [ref=e242]: Сайт как этот —
+                - generic [ref=e243]: от 45 000 ₽
+              - link "Заказать такой" [ref=e244] [cursor=pointer]:
+                - /url: "#contact"
+                - text: Заказать такой
+                - img [ref=e245]
+        - article [ref=e247]:
+          - generic [ref=e248]:
+            - generic [ref=e250]: Панорамы
+            - img [ref=e251]
+          - generic [ref=e255]:
+            - heading "ЖК Горизонт" [level=3] [ref=e256]
+            - paragraph [ref=e257]: Интерактивный тур по квартирам ЖК — 24 панорамы, VR-режим
+            - generic [ref=e258]:
+              - generic [ref=e259]: 360°
+              - generic [ref=e260]: VR
+              - generic [ref=e261]: Real estate
+            - generic [ref=e262]:
+              - generic [ref=e263]:
+                - generic [ref=e264]: Сайт как этот —
+                - generic [ref=e265]: от 80 000 ₽
+              - link "Заказать такой" [ref=e266] [cursor=pointer]:
+                - /url: "#contact"
+                - text: Заказать такой
+                - img [ref=e267]
+        - article [ref=e269]:
+          - generic [ref=e270]:
+            - generic [ref=e272]: Продвижение
+            - img [ref=e273]
+          - generic [ref=e277]:
+            - heading "Автосалон AutoMax" [level=3] [ref=e278]
+            - paragraph [ref=e279]: SEO + Яндекс.Директ. За 3 месяца +220% органического трафика
+            - generic [ref=e280]:
+              - generic [ref=e281]: SEO
+              - generic [ref=e282]: Яндекс.Директ
+              - generic [ref=e283]: +220% трафик
+            - generic [ref=e284]:
+              - generic [ref=e285]:
+                - generic [ref=e286]: Сайт как этот —
+                - generic [ref=e287]: от 15 000 ₽/мес
+              - link "Заказать такой" [ref=e288] [cursor=pointer]:
+                - /url: "#contact"
+                - text: Заказать такой
+                - img [ref=e289]
+    - generic [ref=e292]:
+      - generic [ref=e293]:
+        - generic [ref=e294]: Сайты
+        - heading "Цены на разработку" [level=2] [ref=e295]
+        - generic [ref=e296]:
+          - generic [ref=e297]:
+            - generic [ref=e298]:
+              - generic [ref=e299]: Start
+              - generic [ref=e300]: от 50 000 ₽
+              - generic [ref=e301]: 3–5 дней
+            - list [ref=e303]:
+              - listitem [ref=e304]:
+                - img [ref=e306]
+                - text: Лендинг до 7 блоков
+              - listitem [ref=e308]:
+                - img [ref=e310]
+                - text: Уникальный дизайн
+              - listitem [ref=e312]:
+                - img [ref=e314]
+                - text: Mobile-first
+              - listitem [ref=e316]:
+                - img [ref=e318]
+                - text: SEO-оптимизация
+            - link "Обсудить проект" [ref=e320] [cursor=pointer]:
+              - /url: "#contact"
+          - generic [ref=e321]:
+            - generic [ref=e323]: Популярный
+            - generic [ref=e324]:
+              - generic [ref=e325]: Pro
+              - generic [ref=e326]: от 120 000 ₽
+              - generic [ref=e327]: 5–10 дней
+            - list [ref=e329]:
+              - listitem [ref=e330]:
+                - img [ref=e332]
+                - text: Продающий сайт любой сложности
+              - listitem [ref=e334]:
+                - img [ref=e336]
+                - text: CMS-панель управления
+              - listitem [ref=e338]:
+                - img [ref=e340]
+                - text: SEO + аналитика
+              - listitem [ref=e342]:
+                - img [ref=e344]
+                - text: Анимации и 3D-элементы
+              - listitem [ref=e346]:
+                - img [ref=e348]
+                - text: Поддержка 2 месяца
+            - link "Обсудить проект" [ref=e350] [cursor=pointer]:
+              - /url: "#contact"
+          - generic [ref=e351]:
+            - generic [ref=e352]:
+              - generic [ref=e353]: Premium
+              - generic [ref=e354]: от 180 000 ₽
+              - generic [ref=e355]: 10–21 день
+            - list [ref=e357]:
+              - listitem [ref=e358]:
+                - img [ref=e360]
+                - text: Полная кастомная разработка
+              - listitem [ref=e362]:
+                - img [ref=e364]
+                - text: 3D-сцены и WebGL
+              - listitem [ref=e366]:
+                - img [ref=e368]
+                - text: Маркетинговая упаковка
+              - listitem [ref=e370]:
+                - img [ref=e372]
+                - text: CMS + интеграции
+              - listitem [ref=e374]:
+                - img [ref=e376]
+                - text: SEO + Директ старт
+              - listitem [ref=e378]:
+                - img [ref=e380]
+                - text: Поддержка 3 месяца
+            - link "Обсудить проект" [ref=e382] [cursor=pointer]:
+              - /url: "#contact"
+      - generic [ref=e383]:
+        - generic [ref=e384]: Поддержка
+        - generic [ref=e385]:
+          - heading "Орбита — ваш цифровой управляющий" [level=2] [ref=e386]
+          - paragraph [ref=e387]: Ваш сайт под постоянным наблюдением. Хостинг, правки, SEO, отчёты — всё включено. Вы занимаетесь бизнесом, мы заботимся о сайте.
+        - generic [ref=e388]:
+          - generic [ref=e389]:
+            - generic [ref=e390]:
+              - generic [ref=e391]: Орбита Старт
+              - generic [ref=e392]:
+                - generic [ref=e393]: 8 000
+                - generic [ref=e394]: ₽ / мес
+            - list [ref=e396]:
+              - listitem [ref=e397]:
+                - img [ref=e399]
+                - text: Хостинг + домен
+              - listitem [ref=e401]:
+                - img [ref=e403]
+                - text: Мониторинг 24/7
+              - listitem [ref=e405]:
+                - img [ref=e407]
+                - text: 5 правок в месяц
+              - listitem [ref=e409]:
+                - img [ref=e411]
+                - text: Ответ за 24 часа
+            - link "Подключить" [ref=e413] [cursor=pointer]:
+              - /url: "#contact"
+          - generic [ref=e414]:
+            - generic [ref=e416]: Популярный
+            - generic [ref=e417]:
+              - generic [ref=e418]: Орбита Про
+              - generic [ref=e419]:
+                - generic [ref=e420]: 15 000
+                - generic [ref=e421]: ₽ / мес
+            - list [ref=e423]:
+              - listitem [ref=e424]:
+                - img [ref=e426]
+                - text: Хостинг + домен
+              - listitem [ref=e428]:
+                - img [ref=e430]
+                - text: Мониторинг 24/7
+              - listitem [ref=e432]:
+                - img [ref=e434]
+                - text: 10 правок в месяц
+              - listitem [ref=e436]:
+                - img [ref=e438]
+                - text: SEO-аудит ежеквартально
+              - listitem [ref=e440]:
+                - img [ref=e442]
+                - text: Ежемесячный отчёт
+              - listitem [ref=e444]:
+                - img [ref=e446]
+                - text: Ответ за 4 часа
+            - link "Подключить" [ref=e448] [cursor=pointer]:
+              - /url: "#contact"
+          - generic [ref=e449]:
+            - generic [ref=e450]:
+              - generic [ref=e451]: Орбита Макс
+              - generic [ref=e452]:
+                - generic [ref=e453]: 25 000
+                - generic [ref=e454]: ₽ / мес
+            - list [ref=e456]:
+              - listitem [ref=e457]:
+                - img [ref=e459]
+                - text: Хостинг + домен
+              - listitem [ref=e461]:
+                - img [ref=e463]
+                - text: Мониторинг 24/7
+              - listitem [ref=e465]:
+                - img [ref=e467]
+                - text: Безлимит правок
+              - listitem [ref=e469]:
+                - img [ref=e471]
+                - text: Ведение Яндекс.Директ
+              - listitem [ref=e473]:
+                - img [ref=e475]
+                - text: SEO-аудит ежемесячно
+              - listitem [ref=e477]:
+                - img [ref=e479]
+                - text: Ежемесячный отчёт
+              - listitem [ref=e481]:
+                - img [ref=e483]
+                - text: Приоритетный ответ за 2 часа
+            - link "Подключить" [ref=e485] [cursor=pointer]:
+              - /url: "#contact"
+  - button "Open Next.js Dev Tools" [ref=e491] [cursor=pointer]:
+    - img [ref=e492]

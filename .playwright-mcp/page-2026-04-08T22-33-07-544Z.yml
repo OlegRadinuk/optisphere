@@ -1,0 +1,19 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic:
+        - generic:
+          - generic: Веб-студия полного цикла
+          - heading "Сайты которые продают" [level=1]:
+            - text: Сайты которые
+            - text: продают
+          - paragraph: Разрабатываем кинематографичные сайты, панорамы 360° и настраиваем продвижение. Работаем по всему миру.
+          - generic [ref=e5]:
+            - link "Обсудить проект" [ref=e6] [cursor=pointer]:
+              - /url: "#contact"
+            - link "Портфолио" [ref=e7] [cursor=pointer]:
+              - /url: "#portfolio"
+      - generic:
+        - generic: Scroll
+  - button "Open Next.js Dev Tools" [ref=e13] [cursor=pointer]:
+    - img [ref=e14]

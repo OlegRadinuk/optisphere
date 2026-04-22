@@ -1,3 +1,6 @@
+'use client';
+import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import SectionIntro from '@/components/hud/SectionIntro';
 
 const CASES = [
@@ -15,14 +18,39 @@ const CASES = [
     metrics:[['+156%','регистрации'],['−72%','цена лида'],['93%','вопросов AI']], footer:'за 7 месяцев' },
 ];
 
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.08 } },
+};
+const itemVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 0.61, 0.36, 1] as const } },
+};
+
 export default function CasesSection() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-80px' });
+
   return (
     <section id="cases" style={{ padding:'96px 0' }}>
       <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px' }}>
-        <SectionIntro code="04" cmd="cases.query({hot:true})" title="Что получается на практике" sub="Анонимно, но точно. Полные кейсы с названиями — под NDA, покажем в разговоре." crimson/>
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:16 }} className="cases-grid">
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.55, ease: [0.22, 0.61, 0.36, 1] }}
+        >
+          <SectionIntro code="04" cmd="cases.query({hot:true})" title="Что получается на практике" sub="Анонимно, но точно. Полные кейсы с названиями — под NDA, покажем в разговоре." crimson/>
+        </motion.div>
+        <motion.div
+          ref={ref}
+          variants={containerVariants}
+          initial="hidden"
+          animate={inView ? 'visible' : 'hidden'}
+          style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:16 }}
+          className="cases-grid"
+        >
           {CASES.map((c,i) => (
-            <article key={i} style={{ background:'var(--op-surface-elevated)', border:'1px solid var(--op-border)', borderRadius:12, padding:24, display:'flex', flexDirection:'column', gap:20 }}>
+            <motion.article key={i} variants={itemVariants} style={{ background:'var(--op-surface-elevated)', border:'1px solid var(--op-border)', borderRadius:12, padding:24, display:'flex', flexDirection:'column', gap:20 }}>
               <div style={{ display:'flex', gap:12, alignItems:'center' }}>
                 <div style={{ display:'flex', flexDirection:'column', gap:2 }}>
                   <span style={{ font:"500 15px/1.2 'Inter',sans-serif", color:'var(--op-text)', letterSpacing:'-0.01em' }}>{c.niche}</span>
@@ -43,9 +71,9 @@ export default function CasesSection() {
               <div style={{ marginTop:'auto', paddingTop:12, borderTop:'1px solid var(--op-border)', font:"400 11px/1 'JetBrains Mono',monospace", color:'var(--op-text-muted)', letterSpacing:'.1em', textTransform:'uppercase' }}>
                 {c.footer}
               </div>
-            </article>
+            </motion.article>
           ))}
-        </div>
+        </motion.div>
       </div>
       <style>{`@media(max-width:900px){.cases-grid{grid-template-columns:1fr!important;}}@media(min-width:641px)and(max-width:900px){.cases-grid{grid-template-columns:repeat(2,1fr)!important;}}`}</style>
     </section>

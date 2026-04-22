@@ -87,11 +87,11 @@ function LeadFormBubble({
         margin: "8px 0 8px 12px",
         padding: "16px",
         borderRadius: "16px 16px 16px 4px",
-        background: "rgba(99,102,241,0.08)",
-        border: "1px solid rgba(99,102,241,0.2)",
+        background: "rgba(232,32,32,0.08)",
+        border: "1px solid rgba(232,32,32,0.2)",
       }}
     >
-      <p style={{ color: "#c4b5fd", fontSize: 13, marginBottom: 12, fontWeight: 500 }}>
+      <p style={{ color: "var(--op-text-secondary)", fontSize: 13, marginBottom: 12, fontWeight: 500 }}>
         Оставьте контакт — Олег свяжется лично:
       </p>
       <form onSubmit={handleSubmit}>
@@ -131,7 +131,7 @@ function LeadFormBubble({
             onChange={(e) => setConsentChecked(e.target.checked)}
             style={{
               marginTop: 2,
-              accentColor: "#6366F1",
+              accentColor: "var(--op-accent)",
               flexShrink: 0,
             }}
           />
@@ -141,7 +141,7 @@ function LeadFormBubble({
               href="/privacy"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: "#a5b4fc", textDecoration: "underline" }}
+              style={{ color: "var(--op-accent)", textDecoration: "underline" }}
             >
               {consentLinkText}
             </a>
@@ -157,8 +157,8 @@ function LeadFormBubble({
             border: "none",
             background:
               isSubmitting || !data.name.trim() || !data.phone.trim() || !consentChecked
-                ? "rgba(99,102,241,0.3)"
-                : "linear-gradient(135deg, #6366F1, #06B6D4)",
+                ? "rgba(232,32,32,0.3)"
+                : "linear-gradient(135deg, #e82020, #ff4a4a)",
             color: "#fff",
             fontSize: 13,
             fontWeight: 600,
@@ -239,7 +239,7 @@ function YuraAvatar({ size = 36 }: { size?: number }) {
           top: "50%",
           left: "50%",
           borderRadius: "50%",
-          border: "1px solid rgba(6,182,212,0.32)",
+          border: "1px solid rgba(232,32,32,0.32)",
           animation: "yuraOrbit 5s linear infinite",
           pointerEvents: "none",
         }}
@@ -250,8 +250,8 @@ function YuraAvatar({ size = 36 }: { size?: number }) {
           width: size,
           height: size,
           borderRadius: "50%",
-          background: "linear-gradient(135deg, #6366F1 0%, #06B6D4 100%)",
-          boxShadow: "0 0 12px rgba(99,102,241,0.5)",
+          background: "linear-gradient(135deg, #e82020 0%, #ff4a4a 100%)",
+          boxShadow: "0 0 12px rgba(232,32,32,0.5)",
           animation: "yuraPulse 2.5s ease-in-out infinite",
           position: "relative",
           overflow: "hidden",
@@ -264,7 +264,7 @@ function YuraAvatar({ size = 36 }: { size?: number }) {
             width: "36%",
             height: "36%",
             borderRadius: "50%",
-            background: "rgba(255,255,255,0.38)",
+            background: "rgba(232,32,32,0.2)",
             top: "14%",
             left: "17%",
           }}
@@ -297,10 +297,10 @@ function MessageBubble({ msg }: { msg: ChatMessage }) {
           padding: "10px 14px",
           borderRadius: isUser ? "16px 16px 4px 16px" : "16px 16px 16px 4px",
           background: isUser
-            ? "rgba(99,102,241,0.18)"
+            ? "rgba(232,32,32,0.18)"
             : "rgba(255,255,255,0.04)",
           border: isUser
-            ? "1px solid rgba(99,102,241,0.35)"
+            ? "1px solid rgba(232,32,32,0.35)"
             : "1px solid rgba(255,255,255,0.08)",
           color: "var(--op-text)",
           fontSize: "0.875rem",
@@ -639,8 +639,8 @@ export default function YuraWidget() {
       {/* Keyframe styles */}
       <style>{`
         @keyframes yuraPulse {
-          0%, 100% { box-shadow: 0 0 12px rgba(99,102,241,0.5); }
-          50%       { box-shadow: 0 0 22px rgba(6,182,212,0.7); }
+          0%, 100% { box-shadow: 0 0 12px rgba(232,32,32,0.5); }
+          50%       { box-shadow: 0 0 22px rgba(255,74,74,0.7); }
         }
         @keyframes yuraDot {
           0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
@@ -695,19 +695,19 @@ export default function YuraWidget() {
                 display: "flex",
                 flexDirection: "column",
                 overflow: "hidden",
-                background: "rgba(13,13,26,0.96)",
+                background: "rgba(10,10,10,0.96)",
                 border: "1px solid rgba(255,255,255,0.1)",
                 backdropFilter: "blur(32px)",
                 WebkitBackdropFilter: "blur(32px)",
                 boxShadow:
-                  "0 8px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(99,102,241,0.12), inset 0 1px 0 rgba(255,255,255,0.06)",
+                  "0 8px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(232,32,32,0.12), inset 0 1px 0 rgba(255,255,255,0.06)",
               }}
             >
               {/* Gradient accent top strip */}
               <div
                 style={{
                   height: 2,
-                  background: "linear-gradient(90deg, #6366F1, #06B6D4)",
+                  background: "linear-gradient(90deg, #e82020, #ff4a4a)",
                   flexShrink: 0,
                 }}
               />
@@ -899,7 +899,7 @@ export default function YuraWidget() {
                     transition: "border-color 0.15s ease",
                   }}
                   onFocus={(e) => {
-                    e.currentTarget.style.borderColor = "rgba(99,102,241,0.5)"
+                    e.currentTarget.style.borderColor = "rgba(232,32,32,0.5)"
                   }}
                   onBlur={(e) => {
                     e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"
@@ -917,7 +917,7 @@ export default function YuraWidget() {
                     cursor: input.trim() && !isTyping ? "pointer" : "default",
                     background:
                       input.trim() && !isTyping
-                        ? "linear-gradient(135deg, #6366F1, #06B6D4)"
+                        ? "linear-gradient(135deg, #e82020, #ff4a4a)"
                         : "rgba(255,255,255,0.07)",
                     color: "#fff",
                     display: "flex",
@@ -958,8 +958,8 @@ export default function YuraWidget() {
               transition={{ duration: 0.22 }}
               onClick={toggleOpen}
               style={{
-                background: "rgba(13,13,26,0.96)",
-                border: "1px solid rgba(99,102,241,0.35)",
+                background: "rgba(10,10,10,0.96)",
+                border: "1px solid rgba(232,32,32,0.35)",
                 borderRadius: "12px 12px 4px 12px",
                 padding: "0.625rem 1rem",
                 fontSize: "0.8125rem",
@@ -968,7 +968,7 @@ export default function YuraWidget() {
                 backdropFilter: "blur(16px)",
                 WebkitBackdropFilter: "blur(16px)",
                 boxShadow:
-                  "0 4px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(99,102,241,0.08)",
+                  "0 4px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(232,32,32,0.08)",
                 cursor: "pointer",
                 display: "flex",
                 alignItems: "center",
@@ -992,7 +992,7 @@ export default function YuraWidget() {
                 position: "absolute",
                 inset: -3,
                 borderRadius: "50%",
-                border: "2px solid rgba(99,102,241,0.45)",
+                border: "2px solid rgba(232,32,32,0.45)",
                 animation: "yuraRing 2.2s ease-out infinite",
                 pointerEvents: "none",
               }}
@@ -1041,10 +1041,10 @@ export default function YuraWidget() {
               borderRadius: "50%",
               border: "none",
               cursor: "pointer",
-              background: "linear-gradient(135deg, #6366F1, #06B6D4)",
+              background: "linear-gradient(135deg, #e82020, #ff4a4a)",
               boxShadow: isOpen
-                ? "0 4px 16px rgba(99,102,241,0.3)"
-                : "0 4px 24px rgba(99,102,241,0.52)",
+                ? "0 4px 16px rgba(232,32,32,0.3)"
+                : "0 8px 24px rgba(232,32,32,0.4)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -1055,13 +1055,13 @@ export default function YuraWidget() {
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = "scale(1.08)"
               e.currentTarget.style.boxShadow =
-                "0 6px 32px rgba(99,102,241,0.72)"
+                "0 6px 32px rgba(232,32,32,0.72)"
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = "scale(1)"
               e.currentTarget.style.boxShadow = isOpen
-                ? "0 4px 16px rgba(99,102,241,0.3)"
-                : "0 4px 24px rgba(99,102,241,0.52)"
+                ? "0 4px 16px rgba(232,32,32,0.3)"
+                : "0 8px 24px rgba(232,32,32,0.4)"
             }}
           >
             <AnimatePresence mode="wait">

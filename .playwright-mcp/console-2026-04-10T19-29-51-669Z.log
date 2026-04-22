@@ -1,0 +1,10 @@
+[    1419ms] [LOG] 
+%c  %c
+
+%cSpline
+%c1.12.81
+ background: linear-gradient(124.21deg, #FFC81D 0%, #F34EF1 10.21%, #3DFCC6 19.96%, #3DFCC6 27.38%, #4380FF 34.39%, #4380FF 55.06%, #FF3AF3 66.05%, #FF3AF3 89.11%);border-radius: 6px; background: none; color: #888; font-size: 20px; color: #666; font-size: 15px; @ https://app.spline.design/assets/entries/pages_index.BcxEDAbd.js:5227
+[    1988ms] [INFO] Slow network is detected. See https://www.chromestatus.com/feature/5636954674692096 for more details. Fallback font will be used while loading: https://fonts.gstatic.com/s/roboto/v48/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3iUBGEe.woff2 @ https://www.youtube.com/embed/Jsdl0fsn764:0
+[    1990ms] [ERROR] Access to fetch at 'https://o461187.ingest.sentry.io/api/5717832/envelope/?sentry_key=4169885f834f44d38b70b2c84a715266&sentry_version=7' from origin 'https://app.spline.design' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ https://app.spline.design/community:0
+[    1991ms] [ERROR] Failed to load resource: net::ERR_FAILED @ https://o461187.ingest.sentry.io/api/5717832/envelope/?sentry_key=4169885f834f44d38b70b2c84a715266&sentry_version=7:0
+[    3694ms] [INFO] Slow network is detected. See https://www.chromestatus.com/feature/5636954674692096 for more details. Fallback font will be used while loading: https://fonts.gstatic.com/s/roboto/v48/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3yUBA.woff2 @ https://www.youtube.com/s/_/ytembeds/_/js/k=ytembeds.base.en_US.mxVnDCCJ6X8.2021.O/am=AAAAAQ/d=1/exm=base,root/ed=1/br=1/rs=AGKMywGzHSXu-Gd-JV8JUwGgxf0HunXycg/m=r78Drb:905

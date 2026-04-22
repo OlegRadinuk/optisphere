@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "defaultMode": "bypassPermissions",
+    "allow": [
+      "Bash(*)"
+    ],
+    "deny": [
+      "Bash(git push --force*)",
+      "Bash(* --no-verify*)",
+      "Bash(DROP *)",
+      "Bash(TRUNCATE *)",
+      "Bash(DELETE FROM *)",
+      "Bash(format *)",
+      "Bash(diskpart*)"
+    ]
+  },
+  "skipDangerousModePermissionPrompt": true
+}

@@ -1,0 +1,112 @@
+- generic [ref=e1]:
+  - generic:
+    - generic:
+      - link "Перейти к основному контенту" [ref=e2] [cursor=pointer]
+      - link "Справка по использованию специальных возможностей" [ref=e3] [cursor=pointer]:
+        - /url: https://support.google.com/websearch/answer/181196?hl=ru
+      - link "Оставить отзыв о специальных возможностях" [ref=e4] [cursor=pointer]
+  - generic [ref=e9]:
+    - search [ref=e10]:
+      - generic [ref=e13]:
+        - link "Главная страница Google" [ref=e14] [cursor=pointer]:
+          - /url: https://www.google.com/webhp?hl=ru&ictx=0&sa=X&ved=0ahUKEwiTv6fHgeSTAxU1V6QEHdpiNlMQpYkNCAs
+          - img "Главная страница Google" [ref=e15]
+        - generic [ref=e20]:
+          - combobox "Найти" [ref=e23]: site:prod.spline.design atom OR sphere OR cosmic filetype:splinecode site:prod.spline.design atom OR sphere OR cosmic filetype:splinecode
+          - generic [ref=e24]:
+            - button "Очистить" [ref=e26] [cursor=pointer]:
+              - img [ref=e28]
+            - generic [ref=e31]:
+              - button "Экранная клавиатура" [ref=e32] [cursor=pointer]:
+                - img [ref=e34]
+              - button "Голосовой поиск" [ref=e36] [cursor=pointer]:
+                - img [ref=e37]
+              - button "Поиск по картинке" [ref=e39] [cursor=pointer]:
+                - img [ref=e40]
+        - button "Поиск" [ref=e42] [cursor=pointer]:
+          - img [ref=e45]
+    - generic [ref=e47]:
+      - button "Настройки" [ref=e49] [cursor=pointer]:
+        - img [ref=e52]
+      - generic [ref=e55]:
+        - button "Приложения Google" [ref=e57] [cursor=pointer]:
+          - img [ref=e58]
+        - link "Войти" [ref=e62] [cursor=pointer]:
+          - /url: https://accounts.google.com/ServiceLogin?hl=ru&passive=true&continue=https://www.google.com/search%3Fq%3Dsite:prod.spline.design%2Batom%2BOR%2Bsphere%2BOR%2Bcosmic%2Bfiletype:splinecode%26sei%3Dr07ZadbVFeTInsEPvdScyQ8&ec=futura_srp_og_si_72236_p
+  - generic [ref=e64]:
+    - navigation [ref=e70]:
+      - generic [ref=e76]:
+        - list [ref=e77]:
+          - listitem [ref=e78]:
+            - link "Все" [disabled] [ref=e79]:
+              - generic [ref=e81]: Все
+          - listitem [ref=e82]:
+            - link "Картинки" [ref=e83] [cursor=pointer]:
+              - /url: /search?sca_esv=954a16bda8dfd6ee&udm=2&fbs=ADc_l-YxK3swBjTDQHhZTLkQayPpYelXTBXeLekAGL6rAoWNpKyvsOeJP4p_qchqQo3eUdchTAEhiw4wreOBln0NVdE5ntue-Gayl-lHw23X2RDfQyaI8Tp0GTVxszI74Z5vg61LoEvGkA7-RSEzJ01ll6wW7VvxrWZ6NeLCLUqSjgdypKepqxh1GqvnIZ5fazcvTMU-pVOGFqwjjhbJv1uNdTuXD9TiQEtJvuiAa7Gh3p5hMz37DvE&q=site:prod.spline.design+atom+OR+sphere+OR+cosmic+filetype:splinecode&sa=X&ved=2ahUKEwiTv6fHgeSTAxU1V6QEHdpiNlMQtKgLegQIFBAB
+              - generic [ref=e85]: Картинки
+          - listitem [ref=e86]:
+            - link "Видео" [ref=e87] [cursor=pointer]:
+              - /url: /search?sca_esv=954a16bda8dfd6ee&udm=7&fbs=ADc_l-YxK3swBjTDQHhZTLkQayPpYelXTBXeLekAGL6rAoWNpKyvsOeJP4p_qchqQo3eUdchTAEhiw4wreOBln0NVdE5ntue-Gayl-lHw23X2RDfQyaI8Tp0GTVxszI74Z5vg61LoEvGkA7-RSEzJ01ll6wW7VvxrWZ6NeLCLUqSjgdypKepqxh1GqvnIZ5fazcvTMU-pVOGFqwjjhbJv1uNdTuXD9TiQEtJvuiAa7Gh3p5hMz37DvE&q=site:prod.spline.design+atom+OR+sphere+OR+cosmic+filetype:splinecode&sa=X&ved=2ahUKEwiTv6fHgeSTAxU1V6QEHdpiNlMQtKgLegQIERAB
+              - generic [ref=e89]: Видео
+          - listitem [ref=e90]:
+            - link "Короткие видео" [ref=e91] [cursor=pointer]:
+              - /url: /search?sca_esv=954a16bda8dfd6ee&udm=39&fbs=ADc_l-YxK3swBjTDQHhZTLkQayPpYelXTBXeLekAGL6rAoWNpKyvsOeJP4p_qchqQo3eUdchTAEhiw4wreOBln0NVdE5ntue-Gayl-lHw23X2RDfQyaI8Tp0GTVxszI74Z5vg61LoEvGkA7-RSEzJ01ll6wW7VvxrWZ6NeLCLUqSjgdypKepqxh1GqvnIZ5fazcvTMU-pVOGFqwjjhbJv1uNdTuXD9TiQEtJvuiAa7Gh3p5hMz37DvE&q=site:prod.spline.design+atom+OR+sphere+OR+cosmic+filetype:splinecode&sa=X&ved=2ahUKEwiTv6fHgeSTAxU1V6QEHdpiNlMQs6gLegQIEhAB
+              - generic [ref=e93]: Короткие видео
+          - listitem [ref=e94]:
+            - link "Новости" [ref=e95] [cursor=pointer]:
+              - /url: /search?sca_esv=954a16bda8dfd6ee&q=site:prod.spline.design+atom+OR+sphere+OR+cosmic+filetype:splinecode&tbm=nws&source=lnms&fbs=ADc_l-YxK3swBjTDQHhZTLkQayPpYelXTBXeLekAGL6rAoWNpKyvsOeJP4p_qchqQo3eUdchTAEhiw4wreOBln0NVdE5ntue-Gayl-lHw23X2RDfQyaI8Tp0GTVxszI74Z5vg61LoEvGkA7-RSEzJ01ll6wW7VvxrWZ6NeLCLUqSjgdypKepqxh1GqvnIZ5fazcvTMU-pVOGFqwjjhbJv1uNdTuXD9TiQEtJvuiAa7Gh3p5hMz37DvE&sa=X&ved=2ahUKEwiTv6fHgeSTAxU1V6QEHdpiNlMQ0pQJegQIFRAB
+              - generic [ref=e97]: Новости
+          - listitem [ref=e98]:
+            - link "Веб-версия" [ref=e99] [cursor=pointer]:
+              - /url: /search?sca_esv=954a16bda8dfd6ee&udm=web&fbs=ADc_l-YxK3swBjTDQHhZTLkQayPpYelXTBXeLekAGL6rAoWNpKyvsOeJP4p_qchqQo3eUdchTAEhiw4wreOBln0NVdE5ntue-Gayl-lHw23X2RDfQyaI8Tp0GTVxszI74Z5vg61LoEvGkA7-RSEzJ01ll6wW7VvxrWZ6NeLCLUqSjgdypKepqxh1GqvnIZ5fazcvTMU-pVOGFqwjjhbJv1uNdTuXD9TiQEtJvuiAa7Gh3p5hMz37DvE&q=site:prod.spline.design+atom+OR+sphere+OR+cosmic+filetype:splinecode&sa=X&ved=2ahUKEwiTv6fHgeSTAxU1V6QEHdpiNlMQs6gLegQIExAB
+              - generic [ref=e101]: Веб-версия
+          - listitem [ref=e102]:
+            - link "Книги" [ref=e103] [cursor=pointer]:
+              - /url: /search?sca_esv=954a16bda8dfd6ee&q=site:prod.spline.design+atom+OR+sphere+OR+cosmic+filetype:splinecode&udm=36&source=lnms&fbs=ADc_l-YxK3swBjTDQHhZTLkQayPpYelXTBXeLekAGL6rAoWNpKyvsOeJP4p_qchqQo3eUdchTAEhiw4wreOBln0NVdE5ntue-Gayl-lHw23X2RDfQyaI8Tp0GTVxszI74Z5vg61LoEvGkA7-RSEzJ01ll6wW7VvxrWZ6NeLCLUqSjgdypKepqxh1GqvnIZ5fazcvTMU-pVOGFqwjjhbJv1uNdTuXD9TiQEtJvuiAa7Gh3p5hMz37DvE&sa=X&ved=2ahUKEwiTv6fHgeSTAxU1V6QEHdpiNlMQ0pQJegQIEBAB
+              - generic [ref=e105]: Книги
+          - listitem [ref=e106]:
+            - button "Ещё фильтры" [ref=e107] [cursor=pointer]:
+              - generic "Ещё фильтры" [ref=e108]:
+                - generic [ref=e109]:
+                  - generic [ref=e110]: Ещё
+                  - img [ref=e112]
+        - button "Инструменты" [ref=e115] [cursor=pointer]:
+          - generic [ref=e117]:
+            - generic [ref=e118]: Инструменты
+            - img [ref=e120]
+    - heading "Результаты поиска" [level=1] [ref=e122]
+    - main [ref=e128]:
+      - generic:
+        - generic:
+          - navigation
+      - navigation
+    - contentinfo [ref=e129]:
+      - heading "Ссылки в нижнем колонтитуле" [level=1] [ref=e130]
+      - generic [ref=e134]:
+        - generic [ref=e138]:
+          - button "Судак - Определено по IP-адресу" [ref=e140] [cursor=pointer]:
+            - generic [ref=e141]: Судак
+            - generic [ref=e143]:
+              - text: "-"
+              - generic [ref=e144]: Определено по IP-адресу
+          - text: "-"
+          - button "Обновить" [ref=e146] [cursor=pointer]: Обновить
+        - generic [ref=e149]:
+          - link "Справка" [ref=e150] [cursor=pointer]:
+            - /url: https://support.google.com/websearch/?p=ws_results_help&hl=ru&fg=1
+          - link "Отправить отзыв" [ref=e151] [cursor=pointer]:
+            - /url: "#"
+          - link "Конфиденциальность" [ref=e152] [cursor=pointer]:
+            - /url: https://policies.google.com/privacy?hl=ru&fg=1
+          - link "Условия" [ref=e153] [cursor=pointer]:
+            - /url: https://policies.google.com/terms?hl=ru&fg=1
+  - generic:
+    - dialog "Ответы даже на самые сложные вопросы из домашнего задания":
+      - generic [ref=e162]:
+        - generic [ref=e163]: Ответы даже на самые сложные вопросы из домашнего задания
+        - generic [ref=e164]: Чтобы выбрать задачу и узнать о ней больше, нажмите правой кнопкой мыши и выберите "Поиск с Google Объективом".
+        - generic [ref=e165]:
+          - button "Не интересует" [ref=e167] [cursor=pointer]:
+            - generic [ref=e169]: Не интересует
+          - button "Попробовать" [ref=e171] [cursor=pointer]:
+            - generic [ref=e173]: Попробовать

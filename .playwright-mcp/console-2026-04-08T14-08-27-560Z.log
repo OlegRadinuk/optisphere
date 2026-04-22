@@ -1,0 +1,8 @@
+[     633ms] [WARNING] <link rel=preload> uses an unsupported `as` value @ https://deniz-more.ru/:97
+[    1185ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ https://deniz-more.ru/site.webmanifest:0
+[    1187ms] [ERROR] Manifest fetch from https://deniz-more.ru/site.webmanifest failed, code 404 @ https://deniz-more.ru/:0
+[    1722ms] [LOG] Deniz Hotel website initialized successfully @ https://deniz-more.ru/js/script.js:468
+[    7780ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ https://deniz-more.ru/site.webmanifest:0
+[    7780ms] [ERROR] Manifest fetch from https://deniz-more.ru/site.webmanifest failed, code 404 @ https://deniz-more.ru/:0
+[    7821ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ https://deniz-more.ru/favicon-32x32.png:0
+[    8028ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ https://deniz-more.ru/favicon-16x16.png:0

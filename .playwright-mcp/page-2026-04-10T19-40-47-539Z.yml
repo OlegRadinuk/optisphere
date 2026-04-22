@@ -1,0 +1,230 @@
+- generic [ref=e3]:
+  - complementary [ref=e4]:
+    - button "R radinuko's Workspace" [ref=e6]:
+      - generic [ref=e7]:
+        - generic [ref=e9]: R
+        - generic [ref=e11]:
+          - generic [ref=e12]: radinuko's Workspace
+          - img [ref=e14]
+    - generic [ref=e16]:
+      - navigation "Main navigation" [ref=e17]:
+        - list [ref=e18]:
+          - listitem [ref=e19]:
+            - link "Home" [ref=e20] [cursor=pointer]:
+              - /url: /home
+              - generic "Home" [ref=e21]:
+                - img [ref=e22]
+                - generic [ref=e25]: Home
+          - listitem [ref=e26]:
+            - link "Discover" [ref=e27] [cursor=pointer]:
+              - /url: /discover
+              - generic "Discover" [ref=e28]:
+                - img [ref=e29]
+                - generic [ref=e33]: Discover
+          - listitem [ref=e34]:
+            - link "My files" [ref=e35] [cursor=pointer]:
+              - /url: /files
+              - generic "My files" [ref=e36]:
+                - img [ref=e37]
+                - generic [ref=e40]: My files
+          - listitem [ref=e41]:
+            - link "Templates" [ref=e42] [cursor=pointer]:
+              - /url: /templates
+              - generic "Templates" [ref=e43]:
+                - img [ref=e44]
+                - generic [ref=e47]: Templates
+          - listitem [ref=e48]:
+            - link "Navigation item" [ref=e49] [cursor=pointer]:
+              - /url: /generate
+              - generic "Navigation item" [ref=e50]:
+                - img [ref=e51]
+                - generic [ref=e56]: Generate
+          - listitem [ref=e57]:
+            - link "Shared with me" [ref=e58] [cursor=pointer]:
+              - /url: /shared
+              - generic "Shared with me" [ref=e59]:
+                - img [ref=e60]
+                - generic [ref=e64]: Shared with me
+          - listitem [ref=e65]:
+            - link "Community" [ref=e66] [cursor=pointer]:
+              - /url: /community
+              - generic [ref=e67]:
+                - img [ref=e68]
+                - generic [ref=e73]: Community
+          - listitem [ref=e74]:
+            - link "Academy" [ref=e75] [cursor=pointer]:
+              - /url: /academy
+              - generic "Academy" [ref=e76]:
+                - img [ref=e77]
+                - generic [ref=e81]: Academy
+                - generic [ref=e82]: NEW
+          - listitem [ref=e83]:
+            - link "Navigation item" [ref=e84] [cursor=pointer]:
+              - /url: /inbox
+              - generic "Navigation item" [ref=e85]:
+                - img [ref=e86]
+                - generic [ref=e89]: Inbox
+      - generic [ref=e91]:
+        - heading "Projects" [level=4] [ref=e93]:
+          - text: Projects
+          - img [ref=e94]
+        - region [ref=e96]:
+          - link "Overview" [ref=e98]:
+            - /url: /workspace/f04b865b-795b-4b31-a6a6-a97029ceec1b
+            - img [ref=e99]
+            - text: Overview
+          - button "New Project" [ref=e105]:
+            - img [ref=e106]
+            - text: New Project
+    - generic [ref=e107]:
+      - generic [ref=e108]:
+        - generic [ref=e109]:
+          - img [ref=e110]
+          - generic [ref=e112]:
+            - paragraph [ref=e113]: Upgrade your workspace
+            - paragraph [ref=e114]: Unlock all features on Spline.
+        - button "Upgrade" [ref=e115]
+      - navigation "Secondary navigation" [ref=e117]:
+        - list [ref=e118]:
+          - listitem [ref=e119]:
+            - link "Archive" [ref=e120] [cursor=pointer]:
+              - /url: /archived
+              - generic "Archive" [ref=e121]:
+                - img [ref=e122]
+                - generic [ref=e124]: Archive
+          - listitem [ref=e125]:
+            - link "Updates" [ref=e126] [cursor=pointer]:
+              - /url: /updates
+              - generic "Updates" [ref=e127]:
+                - img [ref=e128]
+                - generic [ref=e130]: Updates
+          - listitem [ref=e131]:
+            - button "Help & Feedback" [ref=e132]:
+              - img [ref=e133]
+              - generic [ref=e137]: Help & Feedback
+          - listitem
+  - generic [ref=e139]:
+    - generic [ref=e140]:
+      - generic [ref=e141]:
+        - generic [ref=e142]:
+          - button "Explore" [ref=e143]
+          - button "Feed" [ref=e144]
+          - button "Notifications" [ref=e145]
+        - generic [ref=e147]:
+          - generic:
+            - img
+          - searchbox "Search Community" [ref=e148]
+      - generic [ref=e149]:
+        - button "Publish" [ref=e150]:
+          - img [ref=e152]
+          - text: Publish
+        - button "Profile" [ref=e154]:
+          - img [ref=e155]
+    - iframe [ref=e161]:
+      - generic [ref=f69e2]:
+        - generic:
+          - generic:
+            - img [ref=f69e12]
+            - img [ref=f69e16]
+          - generic [ref=f69e18]:
+            - generic: Press on the canvas to focus and interact
+    - generic [ref=e162]:
+      - generic [ref=e163]:
+        - generic [ref=e164]:
+          - generic [ref=e165]: Particles 🌑
+          - generic [ref=e166]:
+            - generic [ref=e167]:
+              - link "Profile Aurora" [ref=e168] [cursor=pointer]:
+                - /url: /@auroregmbt
+                - img "Profile Aurora" [ref=e172]
+              - generic [ref=e173]:
+                - link "auroregmbt" [ref=e175] [cursor=pointer]:
+                  - /url: /@auroregmbt
+                - generic [ref=e176]: 3117 followers
+            - button "Follow" [ref=e177]:
+              - img [ref=e178]
+              - generic [ref=e180]: Follow
+            - generic [ref=e181]:
+              - generic [ref=e182]:
+                - img [ref=e183]
+                - generic [ref=e186]: 248,214
+              - button "756" [ref=e188]:
+                - img [ref=e189]
+                - generic [ref=e192]: "756"
+              - button "9,080" [ref=e194]:
+                - img [ref=e195]
+                - generic [ref=e197]: 9,080
+              - button "Remix 70,484" [ref=e199]:
+                - img [ref=e200]
+                - generic [ref=e203]: Remix
+                - generic [ref=e204]: 70,484
+        - generic [ref=e205]:
+          - generic [ref=e206]: Artistic exploration using particles ✨
+          - generic [ref=e207]:
+            - link "#particles" [ref=e208] [cursor=pointer]:
+              - /url: /community/tag/particles
+              - generic [ref=e209]: "#particles"
+            - link "#3d" [ref=e210] [cursor=pointer]:
+              - /url: /community/tag/3d
+              - generic [ref=e211]: "#3d"
+            - link "#sphere" [ref=e212] [cursor=pointer]:
+              - /url: /community/tag/sphere
+              - generic [ref=e213]: "#sphere"
+            - link "#spline" [ref=e214] [cursor=pointer]:
+              - /url: /community/tag/spline
+              - generic [ref=e215]: "#spline"
+            - link "#move" [ref=e216] [cursor=pointer]:
+              - /url: /community/tag/move
+              - generic [ref=e217]: "#move"
+            - link "#animation" [ref=e218] [cursor=pointer]:
+              - /url: /community/tag/animation
+              - generic [ref=e219]: "#animation"
+            - link "#mouse" [ref=e220] [cursor=pointer]:
+              - /url: /community/tag/mouse
+              - generic [ref=e221]: "#mouse"
+        - generic [ref=e222]:
+          - generic [ref=e223]: 145 Comments
+          - generic [ref=e224]:
+            - generic [ref=e226]: R
+            - textbox "Share your thoughts, kudos or feedback" [ref=e230]
+          - generic [ref=e234]:
+            - img [ref=e236]
+            - generic [ref=e240]: Be the first to share your thoughts!
+            - generic [ref=e241]: Leave a comment from the input above.
+      - generic [ref=e242]:
+        - generic [ref=e243]:
+          - heading "Share" [level=3] [ref=e244]
+          - generic [ref=e245]:
+            - button [ref=e246]:
+              - img [ref=e247]
+            - link [ref=e250] [cursor=pointer]:
+              - /url: https://twitter.com/intent/tweet?text=Check%20out%20%22Particles%20%F0%9F%8C%91%22%20by%20Aurora%20on%20%40splinetool%3A&url=https%3A%2F%2Fapp.spline.design%2Fcommunity%2Ffile%2F3ff7b617-2fe9-46c7-8e06-b6d7c382f4db
+              - button [ref=e251]:
+                - img [ref=e252]
+            - button [ref=e254]:
+              - img [ref=e256]
+        - generic [ref=e260]:
+          - heading "More by auroregmbt" [level=3] [ref=e261]
+          - generic [ref=e262]:
+            - link "Chess ♟️" [ref=e263] [cursor=pointer]:
+              - /url: /community/file/80f399ca-105a-46e0-a4ae-c9f6ea1bd5c2
+              - img "Chess ♟️" [ref=e269]
+            - link "Product" [ref=e270] [cursor=pointer]:
+              - /url: /community/file/117303bd-f2d4-4f51-bfdf-5bf12559801c
+              - img "Product" [ref=e276]
+            - link "Cards ♣️" [ref=e277] [cursor=pointer]:
+              - /url: /community/file/d4a65f4e-28c1-4632-ae59-406b5e390c4e
+              - img "Cards ♣️" [ref=e283]
+        - generic [ref=e285]:
+          - generic [ref=e286]:
+            - img [ref=e288]
+            - paragraph [ref=e295]: Made in Spline
+          - generic [ref=e296]:
+            - img [ref=e298]
+            - paragraph [ref=e301]: 2 years ago
+          - generic [ref=e302]:
+            - img [ref=e304]
+            - paragraph [ref=e307]:
+              - text: Licensed under
+              - link "CC0 1.0" [ref=e308] [cursor=pointer]:
+                - /url: https://creativecommons.org/publicdomain/zero/1.0/

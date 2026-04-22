@@ -1,0 +1,175 @@
+[    1185ms] [LOG] 
+%c  %c
+
+%cSpline
+%c1.12.81
+ background: linear-gradient(124.21deg, #FFC81D 0%, #F34EF1 10.21%, #3DFCC6 19.96%, #3DFCC6 27.38%, #4380FF 34.39%, #4380FF 55.06%, #FF3AF3 66.05%, #FF3AF3 89.11%);border-radius: 6px; background: none; color: #888; font-size: 20px; color: #666; font-size: 15px; @ https://app.spline.design/assets/entries/pages_index.BcxEDAbd.js:5227
+[    1576ms] [ERROR] Access to fetch at 'https://o461187.ingest.sentry.io/api/5717832/envelope/?sentry_key=4169885f834f44d38b70b2c84a715266&sentry_version=7' from origin 'https://app.spline.design' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ https://app.spline.design/community/file/3ff7b617-2fe9-46c7-8e06-b6d7c382f4db:0
+[    1576ms] [ERROR] Failed to load resource: net::ERR_FAILED @ https://o461187.ingest.sentry.io/api/5717832/envelope/?sentry_key=4169885f834f44d38b70b2c84a715266&sentry_version=7:0
+[    3049ms] [ERROR] Failed to load resource: the server responded with a status of 500 () @ https://community-api.spline.design/search/3ff7b617-2fe9-46c7-8e06-b6d7c382f4db/similes?limit=3&offset=0:0
+[    3051ms] [ERROR] Community action error wr @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    3143ms] [LOG] 
+%c  %c
+
+%cSpline
+%c1.12.81
+ background: linear-gradient(124.21deg, #FFC81D 0%, #F34EF1 10.21%, #3DFCC6 19.96%, #3DFCC6 27.38%, #4380FF 34.39%, #4380FF 55.06%, #FF3AF3 66.05%, #FF3AF3 89.11%);border-radius: 6px; background: none; color: #888; font-size: 20px; color: #666; font-size: 15px; @ https://app.spline.design/assets/entries/pages_index.BcxEDAbd.js:5227
+[    3513ms] [ERROR] Access to fetch at 'https://o461187.ingest.sentry.io/api/5717832/envelope/?sentry_key=4169885f834f44d38b70b2c84a715266&sentry_version=7' from origin 'https://app.spline.design' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ https://app.spline.design/file/d83d64e2-7f3c-42ab-8cc9-09a9cf2f1c3d?view=preview:0
+[    3513ms] [ERROR] Failed to load resource: net::ERR_FAILED @ https://o461187.ingest.sentry.io/api/5717832/envelope/?sentry_key=4169885f834f44d38b70b2c84a715266&sentry_version=7:0
+[    5425ms] [WARNING] updating from  111 to  122 @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    5687ms] [WARNING] THREE.WebGLProgram: Unsupported encoding: srgb @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    5718ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    5755ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    5771ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    5833ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    5924ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    5925ms] [WARNING] THREE.WebGLProgram: Unsupported encoding: srgb @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    5977ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    5989ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6029ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6037ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6041ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6055ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6189ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6196ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6203ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6215ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6229ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6242ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6255ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6270ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6282ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6295ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6309ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6321ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6335ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6349ms] [ERROR] ---- failed to open <0> as a font @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6353ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6362ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6375ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6391ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6401ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6415ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6429ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6442ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6455ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6469ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6481ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6495ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6509ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6522ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6535ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6549ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6562ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6575ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6589ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6601ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6614ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6629ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6642ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6655ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6669ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6681ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6695ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6709ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6722ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6735ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6749ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6762ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6775ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6789ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6801ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6815ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6831ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6842ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6855ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6869ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6881ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6895ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6909ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6922ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    6935ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    7118ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    7183ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    7211ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    7216ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    7235ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    7251ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    7257ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    7269ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    7293ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    7301ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    7308ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    7321ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    7335ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    7348ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    7364ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    7376ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    7411ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    7416ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    7439ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    7444ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    7459ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    7468ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    7481ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    7495ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    7508ms] [WARNING] THREE.WebGLRenderer: Texture marked for update but image is incomplete @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[    8025ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://community-api.spline.design/profile/gmail.com:0
+[    8142ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://community-api.spline.design/profile/auroegmbt:0
+[   44523ms] [ERROR] Failed to load resource: the server responded with a status of 500 () @ https://community-api.spline.design/search/3ff7b617-2fe9-46c7-8e06-b6d7c382f4db/similes?limit=3&offset=0:0
+[   44524ms] [ERROR] Community action error wr @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[   46554ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.google.com') does not match the recipient window's origin ('https://app.spline.design'). @ https://www.googletagmanager.com/gtm.js?id=GTM-M236R784:815
+[   46554ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('https://app.spline.design'). @ https://www.googletagmanager.com/gtm.js?id=GTM-M236R784:815
+[   46554ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://m.youtube.com') does not match the recipient window's origin ('https://app.spline.design'). @ https://www.googletagmanager.com/gtm.js?id=GTM-M236R784:815
+[  305276ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.google.com') does not match the recipient window's origin ('https://app.spline.design'). @ https://www.googletagmanager.com/gtm.js?id=GTM-M236R784:815
+[  305276ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('https://app.spline.design'). @ https://www.googletagmanager.com/gtm.js?id=GTM-M236R784:815
+[  305276ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://m.youtube.com') does not match the recipient window's origin ('https://app.spline.design'). @ https://www.googletagmanager.com/gtm.js?id=GTM-M236R784:815
+[ 5734819ms] [LOG] Click URL:  https://app.spline.design/community @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[ 5748988ms] [LOG] Click URL:  https://app.spline.design/community/file/7f2b650b-0a43-44c8-95ce-13b496061a55 @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[ 5749255ms] [ERROR] Access to fetch at 'https://o461187.ingest.sentry.io/api/5717832/envelope/?sentry_key=4169885f834f44d38b70b2c84a715266&sentry_version=7' from origin 'https://app.spline.design' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ https://app.spline.design/community/file/7f2b650b-0a43-44c8-95ce-13b496061a55:0
+[ 5749255ms] [ERROR] Failed to load resource: net::ERR_FAILED @ https://o461187.ingest.sentry.io/api/5717832/envelope/?sentry_key=4169885f834f44d38b70b2c84a715266&sentry_version=7:0
+[ 5749259ms] [ERROR] Access to fetch at 'https://o461187.ingest.sentry.io/api/5717832/envelope/?sentry_key=4169885f834f44d38b70b2c84a715266&sentry_version=7' from origin 'https://app.spline.design' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ https://app.spline.design/community/file/7f2b650b-0a43-44c8-95ce-13b496061a55:0
+[ 5749259ms] [ERROR] Failed to load resource: net::ERR_FAILED @ https://o461187.ingest.sentry.io/api/5717832/envelope/?sentry_key=4169885f834f44d38b70b2c84a715266&sentry_version=7:0
+[ 5749620ms] [ERROR] Failed to load resource: the server responded with a status of 500 () @ https://community-api.spline.design/search/3ff7b617-2fe9-46c7-8e06-b6d7c382f4db/similes?limit=3&offset=0:0
+[ 5749620ms] [ERROR] Community action error wr @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[ 5750020ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://community-api.spline.design/profile/auroegmbt:0
+[ 5750481ms] [ERROR] Failed to load resource: the server responded with a status of 500 () @ https://community-api.spline.design/search/7f2b650b-0a43-44c8-95ce-13b496061a55/similes?limit=3&offset=0:0
+[ 5750481ms] [ERROR] Community action error wr @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[ 5750565ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://community-api.spline.design/profile/gmail.com:0
+[ 5750741ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://community-api.spline.design/profile/auroegmbt:0
+[ 5751209ms] [INFO] Slow network is detected. See https://www.chromestatus.com/feature/5636954674692096 for more details. Fallback font will be used while loading: https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfMZhrib2Bg-4.ttf @ https://app.spline.design/two-static/_next/static/chunks/7774b0846448ffff.js:0
+[ 5751274ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://community-api.spline.design/profile/gmail.com:0
+[ 5759456ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://community-api.spline.design/profile/gmail.com:0
+[ 5759465ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://community-api.spline.design/profile/auroegmbt:0
+[ 5800156ms] [ERROR] Access to fetch at 'https://o461187.ingest.sentry.io/api/5717832/envelope/?sentry_key=4169885f834f44d38b70b2c84a715266&sentry_version=7' from origin 'https://app.spline.design' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ https://app.spline.design/community:0
+[ 5800156ms] [ERROR] Failed to load resource: net::ERR_FAILED @ https://o461187.ingest.sentry.io/api/5717832/envelope/?sentry_key=4169885f834f44d38b70b2c84a715266&sentry_version=7:0
+[ 5800157ms] [ERROR] Access to fetch at 'https://o461187.ingest.sentry.io/api/5717832/envelope/?sentry_key=4169885f834f44d38b70b2c84a715266&sentry_version=7' from origin 'https://app.spline.design' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ https://app.spline.design/community:0
+[ 5800157ms] [ERROR] Failed to load resource: net::ERR_FAILED @ https://o461187.ingest.sentry.io/api/5717832/envelope/?sentry_key=4169885f834f44d38b70b2c84a715266&sentry_version=7:0
+[ 5822026ms] [LOG] Click URL:  https://app.spline.design/community/file/615b9422-9985-43f6-8593-d7d7bc3b0be1 @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[ 5822145ms] [ERROR] Access to fetch at 'https://o461187.ingest.sentry.io/api/5717832/envelope/?sentry_key=4169885f834f44d38b70b2c84a715266&sentry_version=7' from origin 'https://app.spline.design' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ https://app.spline.design/community/file/615b9422-9985-43f6-8593-d7d7bc3b0be1:0
+[ 5822145ms] [ERROR] Failed to load resource: net::ERR_FAILED @ https://o461187.ingest.sentry.io/api/5717832/envelope/?sentry_key=4169885f834f44d38b70b2c84a715266&sentry_version=7:0
+[ 5822145ms] [ERROR] Access to fetch at 'https://o461187.ingest.sentry.io/api/5717832/envelope/?sentry_key=4169885f834f44d38b70b2c84a715266&sentry_version=7' from origin 'https://app.spline.design' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ https://app.spline.design/community/file/615b9422-9985-43f6-8593-d7d7bc3b0be1:0
+[ 5822146ms] [ERROR] Failed to load resource: net::ERR_FAILED @ https://o461187.ingest.sentry.io/api/5717832/envelope/?sentry_key=4169885f834f44d38b70b2c84a715266&sentry_version=7:0
+[ 5822895ms] [ERROR] Failed to load resource: the server responded with a status of 500 () @ https://community-api.spline.design/search/7f2b650b-0a43-44c8-95ce-13b496061a55/similes?limit=3&offset=0:0
+[ 5822896ms] [ERROR] Community action error wr @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[ 5822919ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://community-api.spline.design/profile/gmail.com:0
+[ 5822954ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://community-api.spline.design/profile/auroegmbt:0
+[ 5823501ms] [ERROR] Failed to load resource: the server responded with a status of 500 () @ https://community-api.spline.design/search/615b9422-9985-43f6-8593-d7d7bc3b0be1/similes?limit=3&offset=0:0
+[ 5823503ms] [ERROR] Community action error wr @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[ 5823596ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://community-api.spline.design/profile/gmail.com:0
+[ 5823633ms] [LOG] 
+%c  %c
+
+%cSpline
+%c1.12.81
+ background: linear-gradient(124.21deg, #FFC81D 0%, #F34EF1 10.21%, #3DFCC6 19.96%, #3DFCC6 27.38%, #4380FF 34.39%, #4380FF 55.06%, #FF3AF3 66.05%, #FF3AF3 89.11%);border-radius: 6px; background: none; color: #888; font-size: 20px; color: #666; font-size: 15px; @ https://app.spline.design/assets/entries/pages_index.BcxEDAbd.js:5227
+[ 5823636ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://community-api.spline.design/profile/auroegmbt:0
+[ 5824028ms] [ERROR] Access to fetch at 'https://o461187.ingest.sentry.io/api/5717832/envelope/?sentry_key=4169885f834f44d38b70b2c84a715266&sentry_version=7' from origin 'https://app.spline.design' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ https://app.spline.design/file/b5699b21-c899-49e4-93ea-c50ffc534501?view=preview:0
+[ 5824028ms] [ERROR] Failed to load resource: net::ERR_FAILED @ https://o461187.ingest.sentry.io/api/5717832/envelope/?sentry_key=4169885f834f44d38b70b2c84a715266&sentry_version=7:0
+[ 5827489ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://community-api.spline.design/profile/gmail.com:0
+[ 5827710ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://community-api.spline.design/profile/ilyacross1704:0
+[ 5827768ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://community-api.spline.design/profile/LuxeSingh:0
+[ 5828873ms] [WARNING] updating from  113 to  122 @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[ 5830628ms] [WARNING] THREE.WebGLProgram: Unsupported encoding: srgb @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[ 5830663ms] [WARNING] THREE.WebGLProgram: Unsupported encoding: srgb @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4
+[ 5831248ms] [ERROR] ---- failed to open <0> as a font @ https://app.spline.design/assets/chunks/chunk-C1GBGJcI.js:4

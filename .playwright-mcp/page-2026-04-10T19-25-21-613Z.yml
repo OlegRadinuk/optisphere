@@ -1,0 +1,636 @@
+- generic [ref=e2]:
+  - link "Meet Omma Build interactive experiences, websites, 3d, and apps using natural language." [ref=e4] [cursor=pointer]:
+    - /url: https://omma.build
+    - heading "Meet Omma" [level=4] [ref=e6]
+    - paragraph [ref=e7]: Build interactive experiences, websites, 3d, and apps using natural language.
+    - img [ref=e8]
+  - banner [ref=e10]:
+    - navigation "Main" [ref=e11]:
+      - list [ref=e13]:
+        - generic [ref=e14]:
+          - link "Spline logo" [ref=e15] [cursor=pointer]:
+            - /url: /
+            - img "Spline logo" [ref=e16]
+          - button "Open nav menu" [ref=e17]:
+            - img "Open nav menu" [ref=e18]
+  - main [ref=e20]:
+    - generic [ref=e21]:
+      - generic:
+        - heading "The all-in-one platform for 3D and design" [level=1]
+        - paragraph: Spline is a design platform to create and collaborate on interactive production-ready experiences in real-time.
+        - link "Get started — it’s free" [ref=e22] [cursor=pointer]:
+          - /url: https://app.spline.design/signin
+          - generic [ref=e23]: Get started
+          - text: — it’s free
+          - img [ref=e24]
+      - generic: Drag with two fingers to orbit
+    - generic [ref=e30]:
+      - heading "A complete platform for real-time interactive design" [level=2] [ref=e31]:
+        - text: A complete platform for
+        - generic [ref=e32]: real-time interactive design
+      - paragraph [ref=e33]: Get started by remixing a 3D design made by the Spline community.
+      - generic [ref=e35]:
+        - generic [ref=e37]:
+          - link "Interactive Websites Interactive Websites @DesignGabor" [ref=e39] [cursor=pointer]:
+            - /url: https://app.spline.design/file/1d2b824b-2ce5-4b02-96cb-063814048e46
+            - img "Interactive Websites" [ref=e42]
+            - generic [ref=e44]:
+              - img [ref=e46]
+              - generic [ref=e49]:
+                - heading "Interactive Websites" [level=3] [ref=e50]
+                - paragraph [ref=e51]: "@DesignGabor"
+          - link "Product Design Product Design @heyvlad" [ref=e53] [cursor=pointer]:
+            - /url: https://app.spline.design/file/4d31b859-0317-47cc-87bd-50206e319a05
+            - img "Product Design" [ref=e56]
+            - generic [ref=e58]:
+              - img [ref=e60]
+              - generic [ref=e67]:
+                - heading "Product Design" [level=3] [ref=e68]
+                - paragraph [ref=e69]: "@heyvlad"
+          - link "Brand & Marketing Brand & Marketing @sanny.verkissen" [ref=e71] [cursor=pointer]:
+            - /url: https://app.spline.design/file/9cdb9d24-8118-4b77-b801-7d94fa48980f
+            - img "Brand & Marketing" [ref=e74]
+            - generic [ref=e76]:
+              - img [ref=e78]
+              - generic [ref=e80]:
+                - heading "Brand & Marketing" [level=3] [ref=e81]
+                - paragraph [ref=e82]: "@sanny.verkissen"
+          - link "Gamified Experiences Gamified Experiences @rluzmotion" [ref=e84] [cursor=pointer]:
+            - /url: https://app.spline.design/file/8ca6090d-854e-4f31-958d-9d1b83df749a
+            - img "Gamified Experiences" [ref=e87]
+            - generic [ref=e89]:
+              - img [ref=e91]
+              - generic [ref=e94]:
+                - heading "Gamified Experiences" [level=3] [ref=e95]
+                - paragraph [ref=e96]: "@rluzmotion"
+          - link "3D Mockups 3D Mockups @tanyadizone" [ref=e98] [cursor=pointer]:
+            - /url: https://app.spline.design/file/9d023a93-5ce8-46b7-a01b-c5fd7f9353be
+            - img "3D Mockups" [ref=e101]
+            - generic [ref=e103]:
+              - img [ref=e105]
+              - generic [ref=e108]:
+                - heading "3D Mockups" [level=3] [ref=e109]
+                - paragraph [ref=e110]: "@tanyadizone"
+          - link "3D Logos 3D Logos @samborek" [ref=e112] [cursor=pointer]:
+            - /url: https://app.spline.design/file/42f68d5a-4ffc-40d1-ae6f-c2f3740f5676
+            - img "3D Logos" [ref=e115]
+            - generic [ref=e117]:
+              - img [ref=e119]
+              - generic [ref=e121]:
+                - heading "3D Logos" [level=3] [ref=e122]
+                - paragraph [ref=e123]: "@samborek"
+          - link "Animated Characters Animated Characters @aximoris" [ref=e125] [cursor=pointer]:
+            - /url: https://app.spline.design/file/8b9b5100-4168-4401-8f66-2d5ab24026fb
+            - img "Animated Characters" [ref=e128]
+            - generic [ref=e130]:
+              - img [ref=e132]
+              - generic [ref=e134]:
+                - heading "Animated Characters" [level=3] [ref=e135]
+                - paragraph [ref=e136]: "@aximoris"
+          - link "Interactive Websites Interactive Websites @DesignGabor" [ref=e138] [cursor=pointer]:
+            - /url: https://app.spline.design/file/1d2b824b-2ce5-4b02-96cb-063814048e46
+            - img "Interactive Websites" [ref=e141]
+            - generic [ref=e143]:
+              - img [ref=e145]
+              - generic [ref=e148]:
+                - heading "Interactive Websites" [level=3] [ref=e149]
+                - paragraph [ref=e150]: "@DesignGabor"
+          - link "Product Design Product Design @heyvlad" [ref=e152] [cursor=pointer]:
+            - /url: https://app.spline.design/file/4d31b859-0317-47cc-87bd-50206e319a05
+            - img "Product Design" [ref=e155]
+            - generic [ref=e157]:
+              - img [ref=e159]
+              - generic [ref=e166]:
+                - heading "Product Design" [level=3] [ref=e167]
+                - paragraph [ref=e168]: "@heyvlad"
+          - link "Brand & Marketing Brand & Marketing @sanny.verkissen" [ref=e170] [cursor=pointer]:
+            - /url: https://app.spline.design/file/9cdb9d24-8118-4b77-b801-7d94fa48980f
+            - img "Brand & Marketing" [ref=e173]
+            - generic [ref=e175]:
+              - img [ref=e177]
+              - generic [ref=e179]:
+                - heading "Brand & Marketing" [level=3] [ref=e180]
+                - paragraph [ref=e181]: "@sanny.verkissen"
+          - link "Gamified Experiences Gamified Experiences @rluzmotion" [ref=e183] [cursor=pointer]:
+            - /url: https://app.spline.design/file/8ca6090d-854e-4f31-958d-9d1b83df749a
+            - img "Gamified Experiences" [ref=e186]
+            - generic [ref=e188]:
+              - img [ref=e190]
+              - generic [ref=e193]:
+                - heading "Gamified Experiences" [level=3] [ref=e194]
+                - paragraph [ref=e195]: "@rluzmotion"
+          - link "3D Mockups 3D Mockups @tanyadizone" [ref=e197] [cursor=pointer]:
+            - /url: https://app.spline.design/file/9d023a93-5ce8-46b7-a01b-c5fd7f9353be
+            - img "3D Mockups" [ref=e200]
+            - generic [ref=e202]:
+              - img [ref=e204]
+              - generic [ref=e207]:
+                - heading "3D Mockups" [level=3] [ref=e208]
+                - paragraph [ref=e209]: "@tanyadizone"
+          - link "3D Logos 3D Logos @samborek" [ref=e211] [cursor=pointer]:
+            - /url: https://app.spline.design/file/42f68d5a-4ffc-40d1-ae6f-c2f3740f5676
+            - img "3D Logos" [ref=e214]
+            - generic [ref=e216]:
+              - img [ref=e218]
+              - generic [ref=e220]:
+                - heading "3D Logos" [level=3] [ref=e221]
+                - paragraph [ref=e222]: "@samborek"
+          - link "Animated Characters Animated Characters @aximoris" [ref=e224] [cursor=pointer]:
+            - /url: https://app.spline.design/file/8b9b5100-4168-4401-8f66-2d5ab24026fb
+            - img "Animated Characters" [ref=e227]
+            - generic [ref=e229]:
+              - img [ref=e231]
+              - generic [ref=e233]:
+                - heading "Animated Characters" [level=3] [ref=e234]
+                - paragraph [ref=e235]: "@aximoris"
+        - generic [ref=e237]:
+          - link "Animated Characters Animated Characters @heyvlad" [ref=e239] [cursor=pointer]:
+            - /url: https://app.spline.design/file/fcb3d45a-1ffd-474a-afbf-9643cc3a0d40
+            - img "Animated Characters" [ref=e242]
+            - generic [ref=e244]:
+              - img [ref=e246]
+              - generic [ref=e248]:
+                - heading "Animated Characters" [level=3] [ref=e249]
+                - paragraph [ref=e250]: "@heyvlad"
+          - link "Industrial & Manufacturing Industrial & Manufacturing @lionti" [ref=e252] [cursor=pointer]:
+            - /url: https://app.spline.design/file/be46966e-a499-476d-be62-3842f4b1ddbf
+            - img "Industrial & Manufacturing" [ref=e255]
+            - generic [ref=e257]:
+              - img [ref=e259]
+              - generic [ref=e261]:
+                - heading "Industrial & Manufacturing" [level=3] [ref=e262]
+                - paragraph [ref=e263]: "@lionti"
+          - link "3D Icons 3D Icons @adriandaniluk" [ref=e265] [cursor=pointer]:
+            - /url: https://app.spline.design/file/d8113525-9d21-4006-a8df-2abb5d4e5165
+            - img "3D Icons" [ref=e268]
+            - generic [ref=e270]:
+              - img [ref=e272]
+              - generic [ref=e274]:
+                - heading "3D Icons" [level=3] [ref=e275]
+                - paragraph [ref=e276]: "@adriandaniluk"
+          - link "Brand & Marketing Brand & Marketing @vladkolokolnikov" [ref=e278] [cursor=pointer]:
+            - /url: https://app.spline.design/file/67f56854-67d0-4779-b5ed-371c2f5d169e
+            - img "Brand & Marketing" [ref=e281]
+            - generic [ref=e283]:
+              - img [ref=e285]
+              - generic [ref=e287]:
+                - heading "Brand & Marketing" [level=3] [ref=e288]
+                - paragraph [ref=e289]: "@vladkolokolnikov"
+          - link "Gamified Experiences Gamified Experiences @vladkolokolnikov" [ref=e291] [cursor=pointer]:
+            - /url: https://app.spline.design/file/04b49732-6e8b-4651-9dff-a904f1d23548
+            - img "Gamified Experiences" [ref=e294]
+            - generic [ref=e296]:
+              - img [ref=e298]
+              - generic [ref=e301]:
+                - heading "Gamified Experiences" [level=3] [ref=e302]
+                - paragraph [ref=e303]: "@vladkolokolnikov"
+          - link "Industrial & Manufacturing Industrial & Manufacturing @gleb124" [ref=e305] [cursor=pointer]:
+            - /url: https://app.spline.design/file/6bb58e3d-6f46-415a-85a9-9788abf1f309
+            - img "Industrial & Manufacturing" [ref=e308]
+            - generic [ref=e310]:
+              - img [ref=e312]
+              - generic [ref=e314]:
+                - heading "Industrial & Manufacturing" [level=3] [ref=e315]
+                - paragraph [ref=e316]: "@gleb124"
+          - link "Animated Characters Animated Characters @heyvlad" [ref=e318] [cursor=pointer]:
+            - /url: https://app.spline.design/file/fcb3d45a-1ffd-474a-afbf-9643cc3a0d40
+            - img "Animated Characters" [ref=e321]
+            - generic [ref=e323]:
+              - img [ref=e325]
+              - generic [ref=e327]:
+                - heading "Animated Characters" [level=3] [ref=e328]
+                - paragraph [ref=e329]: "@heyvlad"
+          - link "Industrial & Manufacturing Industrial & Manufacturing @lionti" [ref=e331] [cursor=pointer]:
+            - /url: https://app.spline.design/file/be46966e-a499-476d-be62-3842f4b1ddbf
+            - img "Industrial & Manufacturing" [ref=e334]
+            - generic [ref=e336]:
+              - img [ref=e338]
+              - generic [ref=e340]:
+                - heading "Industrial & Manufacturing" [level=3] [ref=e341]
+                - paragraph [ref=e342]: "@lionti"
+          - link "3D Icons 3D Icons @adriandaniluk" [ref=e344] [cursor=pointer]:
+            - /url: https://app.spline.design/file/d8113525-9d21-4006-a8df-2abb5d4e5165
+            - img "3D Icons" [ref=e347]
+            - generic [ref=e349]:
+              - img [ref=e351]
+              - generic [ref=e353]:
+                - heading "3D Icons" [level=3] [ref=e354]
+                - paragraph [ref=e355]: "@adriandaniluk"
+          - link "Brand & Marketing Brand & Marketing @vladkolokolnikov" [ref=e357] [cursor=pointer]:
+            - /url: https://app.spline.design/file/67f56854-67d0-4779-b5ed-371c2f5d169e
+            - img "Brand & Marketing" [ref=e360]
+            - generic [ref=e362]:
+              - img [ref=e364]
+              - generic [ref=e366]:
+                - heading "Brand & Marketing" [level=3] [ref=e367]
+                - paragraph [ref=e368]: "@vladkolokolnikov"
+          - link "Gamified Experiences Gamified Experiences @vladkolokolnikov" [ref=e370] [cursor=pointer]:
+            - /url: https://app.spline.design/file/04b49732-6e8b-4651-9dff-a904f1d23548
+            - img "Gamified Experiences" [ref=e373]
+            - generic [ref=e375]:
+              - img [ref=e377]
+              - generic [ref=e380]:
+                - heading "Gamified Experiences" [level=3] [ref=e381]
+                - paragraph [ref=e382]: "@vladkolokolnikov"
+          - link "Industrial & Manufacturing Industrial & Manufacturing @gleb124" [ref=e384] [cursor=pointer]:
+            - /url: https://app.spline.design/file/6bb58e3d-6f46-415a-85a9-9788abf1f309
+            - img "Industrial & Manufacturing" [ref=e387]
+            - generic [ref=e389]:
+              - img [ref=e391]
+              - generic [ref=e393]:
+                - heading "Industrial & Manufacturing" [level=3] [ref=e394]
+                - paragraph [ref=e395]: "@gleb124"
+    - generic [ref=e397]:
+      - heading "Empowering individuals and teams at world’s leading organizations" [level=3] [ref=e398]:
+        - text: Empowering individuals and teams
+        - generic [ref=e399]: at world’s leading organizations
+      - generic [ref=e400]:
+        - img "Scale Logo" [ref=e401]:
+          - img [ref=e402]
+        - img "Google Logo" [ref=e405]:
+          - img [ref=e406]
+        - img "Shopify Logo" [ref=e409]:
+          - img [ref=e410]
+        - img "Amazon Logo" [ref=e413]:
+          - img [ref=e414]
+        - img "Giphy Logo" [ref=e418]:
+          - img [ref=e419]
+        - img "Webflow Logo" [ref=e422]:
+          - img [ref=e423]
+        - img "Alloy Logo" [ref=e433]:
+          - img [ref=e434]
+        - img "OpenAI Logo" [ref=e444]:
+          - img [ref=e445]
+        - img "Microsoft Logo" [ref=e448]:
+          - img [ref=e449]
+        - img "Luma Logo" [ref=e452]:
+          - img [ref=e453]
+        - img "Meta Logo" [ref=e456]:
+          - img [ref=e457]
+        - img "Snapchat Logo" [ref=e460]:
+          - img [ref=e461]
+        - img "Forbes Logo" [ref=e463]:
+          - img [ref=e464]
+        - img "Siemens Logo" [ref=e467]:
+          - img [ref=e468]
+        - img "Burton Logo" [ref=e471]:
+          - img [ref=e472]
+    - generic [ref=e474]:
+      - heading "Where ideas become production-ready experiences" [level=2] [ref=e475]:
+        - text: Where ideas become
+        - generic [ref=e476]: production-ready experiences
+      - paragraph [ref=e477]: Supercharge your team to deliver production-ready interactive 2D & 3D experiences all-in-one platform.
+    - generic [ref=e509]:
+      - img [ref=e510]
+      - heading "\"We wanted to appeal to an enterprise audience. That's where Spline comes in. It helps our brand feel more cutting-edge than our competition.\"" [level=2] [ref=e514]
+      - generic [ref=e515]:
+        - img "Andrew Pons" [ref=e516]
+        - generic [ref=e517]:
+          - generic [ref=e518]: Andrew Pons,
+          - generic [ref=e519]: Principal Brand Designer
+    - generic [ref=e521]:
+      - generic [ref=e522]:
+        - img [ref=e524]
+        - generic [ref=e527]: 3D Design
+      - heading "Collaborative 3D Design, ready for production" [level=2] [ref=e528]
+      - paragraph [ref=e529]: A web-based, collaborative 3D design platform to create production-ready interactive real-time 3D experiences.
+      - link "Learn more" [ref=e531] [cursor=pointer]:
+        - /url: /3d-design
+        - generic [ref=e532]: Learn more
+        - img [ref=e533]
+      - generic [ref=e536]:
+        - generic [ref=e537]:
+          - generic [ref=e539]:
+            - heading "Express your creativity in 3D" [level=3] [ref=e540]
+            - paragraph [ref=e541]: Familiar design tools to help you create your best 3D designs.
+            - generic [ref=e542]:
+              - generic [ref=e543]:
+                - img [ref=e544]
+                - generic [ref=e546]: Real-time rendering
+              - generic [ref=e547]:
+                - img [ref=e548]
+                - generic [ref=e550]: Primitives & 3D Modeling
+              - generic [ref=e551]:
+                - img [ref=e552]
+                - generic [ref=e554]: Multi-platform exports
+          - generic [ref=e558]:
+            - heading "Layer-based materials" [level=3] [ref=e559]
+            - paragraph [ref=e560]: Create unique materials with multiple layers or use the ready-made material library.
+        - generic [ref=e563]:
+          - generic [ref=e564]:
+            - generic:
+              - heading "Interactivity & Motion" [level=3] [ref=e565]
+              - paragraph [ref=e566]: Add interactivity and animation with Spline's powerful event system.
+              - generic:
+                - generic [ref=e567]:
+                  - img [ref=e568]
+                  - generic [ref=e570]: States & Events
+                - generic [ref=e571]:
+                  - img [ref=e572]
+                  - generic [ref=e574]: Timeline Animation
+                - generic [ref=e575]:
+                  - img [ref=e576]
+                  - generic [ref=e578]: Game controls
+                - generic [ref=e579]:
+                  - img [ref=e580]
+                  - generic [ref=e582]: Physics & Particles
+          - generic [ref=e586]:
+            - heading "Variables & Data" [level=3] [ref=e587]
+            - paragraph [ref=e588]: Bring real-time data into your experiences with Variables, Webhooks, APIs and AI.
+    - generic [ref=e591]:
+      - img [ref=e592]
+      - heading "\"With Spline, we can create interactive 3D objects that make our product feel tangible. It's more than decoration. It's how we show we care about the details.\"" [level=2] [ref=e594]
+      - generic [ref=e595]:
+        - img "Zeh Fernandes" [ref=e596]
+        - generic [ref=e597]:
+          - generic [ref=e598]: Zeh Fernandes,
+          - generic [ref=e599]: Founding Designer
+    - generic [ref=e601]:
+      - generic [ref=e602]:
+        - img [ref=e604]
+        - generic [ref=e609]: Design
+      - heading "Hana – a canvas for interactive design" [level=2] [ref=e610]
+      - paragraph [ref=e611]: A web-based and collaborative design tool to create production-ready interactive real-time experiences.
+      - link "Learn more" [ref=e613] [cursor=pointer]:
+        - /url: /hana
+        - generic [ref=e614]: Learn more
+        - img [ref=e615]
+      - generic [ref=e618]:
+        - generic [ref=e619]:
+          - generic [ref=e620]:
+            - generic [ref=e621]:
+              - heading "Design & Collaborate" [level=3] [ref=e622]
+              - paragraph [ref=e623]: Familiar design tools to help you create faster.
+            - img "Design & Collaborate" [ref=e625]
+          - generic [ref=e626]:
+            - generic [ref=e627]:
+              - heading "Vector Networks" [level=3] [ref=e628]
+              - paragraph [ref=e629]: Create custom shapes with a powerful vector network system.
+            - img "Pen Tool" [ref=e631]
+        - generic [ref=e632]:
+          - generic [ref=e633]:
+            - generic [ref=e634]:
+              - heading "Visual Effects" [level=3] [ref=e635]
+              - paragraph [ref=e636]: Enhance your designs with shadows, blurs, glass and 3D projections.
+            - img "Visual Effects" [ref=e638]
+          - generic [ref=e639]:
+            - generic [ref=e640]:
+              - heading "Interactivity & Motion" [level=3] [ref=e641]
+              - paragraph [ref=e642]: Design interactive and animated experiences with states and events.
+            - img "Interactivity & Motion" [ref=e644]
+    - generic [ref=e645]:
+      - heading "Create and collaborate in real-time" [level=2] [ref=e646]
+      - paragraph [ref=e647]: Add comments, invite your team, or share a link! Brainstorming in 3D is easy with Spline.
+    - generic [ref=e648]:
+      - heading "Ship real-time experiences to the Web, iOS and Android" [level=2] [ref=e649]
+      - paragraph [ref=e650]: A multi-platform solution to seamlessly integrate interactive 3D experiences into your websites, apps, and digital products.
+      - generic [ref=e651]:
+        - generic [ref=e652]:
+          - img [ref=e653]
+          - generic [ref=e656]: Web
+        - generic [ref=e657]:
+          - img [ref=e658]
+          - generic [ref=e660]: Apple
+        - generic [ref=e661]:
+          - img [ref=e662]
+          - generic [ref=e664]: Android
+      - generic [ref=e665]:
+        - generic [ref=e666]:
+          - generic: Press and drag to interact
+        - generic [ref=e668]:
+          - generic [ref=e669]: Webflow Project
+          - generic [ref=e670]:
+            - generic [ref=e671]:
+              - generic [ref=e672]: "1"
+              - generic [ref=e673]: "2"
+              - generic [ref=e674]: "3"
+              - generic [ref=e675]: "4"
+              - generic [ref=e676]: "5"
+              - generic [ref=e677]: "6"
+              - generic [ref=e678]: "7"
+              - generic [ref=e679]: "8"
+              - generic [ref=e680]: "9"
+              - generic [ref=e681]: "10"
+            - code [ref=e684]: <!-- Import Spline Viewer --> <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js"> </script> <!-- Add your 3D scene using the spline-viewer component --> <spline-viewer url="https://prod.spline.design/9951u9cumiw2Ehj8/scene.splinecode" </spline-viewer>
+          - generic [ref=e685]:
+            - button "Copy Code" [ref=e686] [cursor=pointer]:
+              - img [ref=e687]
+              - text: Copy Code
+            - link "Docs" [ref=e690] [cursor=pointer]:
+              - /url: https://docs.spline.design/doc/integrating-with-webflow/doc9gU5omPVR
+      - generic [ref=e691]:
+        - button "Webflow" [ref=e692] [cursor=pointer]:
+          - img [ref=e693]
+          - generic [ref=e695]: Webflow
+        - button "Framer" [ref=e696] [cursor=pointer]:
+          - img [ref=e697]
+          - generic [ref=e700]: Framer
+        - button "Wix Studio" [ref=e701] [cursor=pointer]:
+          - img [ref=e702]
+          - generic [ref=e706]: Wix Studio
+        - button "HTML / JS" [ref=e707] [cursor=pointer]:
+          - img [ref=e708]
+          - generic [ref=e711]: HTML / JS
+        - button "React" [ref=e712] [cursor=pointer]:
+          - img [ref=e713]
+          - generic [ref=e718]: React
+        - button "Next.js" [ref=e719] [cursor=pointer]:
+          - img [ref=e720]
+          - generic [ref=e726]: Next.js
+        - button "Swift" [ref=e727] [cursor=pointer]:
+          - img [ref=e728]
+          - generic [ref=e731]: Swift
+        - button "Kotlin" [ref=e732] [cursor=pointer]:
+          - img [ref=e733]
+          - generic [ref=e737]: Kotlin
+    - generic [ref=e738]:
+      - heading "Loved by innovative teams around the world" [level=2] [ref=e739]:
+        - text: Loved by innovative teams
+        - generic [ref=e740]: around the world
+      - generic [ref=e741]:
+        - link "Read story \"I wanted to do something really cool with 3D, really bring our brand to life, and Spline was the only tool that would let me do that.\" Andrew Pons Andrew Pons Principal Brand Designer" [ref=e742] [cursor=pointer]:
+          - /url: https://blog.spline.design/how-oscilar-brands-ai-risk-platform-with-spline
+          - generic [ref=e743]:
+            - img [ref=e745]
+            - generic [ref=e749]:
+              - text: Read story
+              - img [ref=e750]
+          - generic [ref=e752]:
+            - generic [ref=e753]: "\"I wanted to do something really cool with 3D, really bring our brand to life, and Spline was the only tool that would let me do that.\""
+            - generic [ref=e754]:
+              - img "Andrew Pons" [ref=e756]
+              - generic [ref=e757]:
+                - paragraph [ref=e758]: Andrew Pons
+                - paragraph [ref=e759]: Principal Brand Designer
+        - link "Read story \"Before Spline, we would need a developer just to handle the 3D integration. Now designers can focus on crafting assets, and engineers don't have to rebuild them from scratch.\" Zeh Fernandes Zeh Fernandes Founding Designer" [ref=e760] [cursor=pointer]:
+          - /url: https://blog.spline.design/how-resend-uses-spline-for-3d-design
+          - generic [ref=e761]:
+            - img [ref=e763]
+            - generic [ref=e765]:
+              - text: Read story
+              - img [ref=e766]
+          - generic [ref=e768]:
+            - generic [ref=e769]: "\"Before Spline, we would need a developer just to handle the 3D integration. Now designers can focus on crafting assets, and engineers don't have to rebuild them from scratch.\""
+            - generic [ref=e770]:
+              - img "Zeh Fernandes" [ref=e772]
+              - generic [ref=e773]:
+                - paragraph [ref=e774]: Zeh Fernandes
+                - paragraph [ref=e775]: Founding Designer
+        - link "Read story \"Spline is very easy and fast to learn. The learning curve is low, even junior designers can step in and integrate 3D experiences into a Webflow project.\" Pavel Dergachev Pavel Dergachev Founder & Creative Director" [ref=e776] [cursor=pointer]:
+          - /url: https://blog.spline.design/how-koji-studio-uses-spline-for-3d-product-showcase
+          - generic [ref=e777]:
+            - img [ref=e779]
+            - generic [ref=e784]:
+              - text: Read story
+              - img [ref=e785]
+          - generic [ref=e787]:
+            - generic [ref=e788]: "\"Spline is very easy and fast to learn. The learning curve is low, even junior designers can step in and integrate 3D experiences into a Webflow project.\""
+            - generic [ref=e789]:
+              - img "Pavel Dergachev" [ref=e791]
+              - generic [ref=e792]:
+                - paragraph [ref=e793]: Pavel Dergachev
+                - paragraph [ref=e794]: Founder & Creative Director
+    - generic [ref=e795]:
+      - heading "Getting started with Spline" [level=2] [ref=e796]
+      - paragraph [ref=e797]: Remix designs from the community and library, and learn with written docs and video tutorials.
+      - generic [ref=e798]:
+        - generic [ref=e799]:
+          - img [ref=e801]
+          - heading "Community Platform" [level=3] [ref=e805]
+          - paragraph [ref=e806]: Explore and remix designs made by other community members.
+        - img "Community Platform" [ref=e807]
+        - link "Explore Community" [ref=e808] [cursor=pointer]:
+          - /url: https://community.spline.design/
+      - generic [ref=e809]:
+        - link "Library Explore library files." [ref=e810] [cursor=pointer]:
+          - /url: /examples
+          - generic [ref=e811]:
+            - img [ref=e813]
+            - generic [ref=e815]:
+              - heading "Library" [level=3] [ref=e816]
+              - img [ref=e818]
+            - paragraph [ref=e820]: Explore library files.
+        - link "Academy Learn with video guides." [ref=e821] [cursor=pointer]:
+          - /url: https://academy.spline.design
+          - generic [ref=e822]:
+            - img [ref=e824]
+            - generic [ref=e826]:
+              - heading "Academy" [level=3] [ref=e827]
+              - img [ref=e829]
+            - paragraph [ref=e831]: Learn with video guides.
+        - link "Docs Learn with written docs." [ref=e832] [cursor=pointer]:
+          - /url: https://docs.spline.design/
+          - generic [ref=e833]:
+            - img [ref=e835]
+            - generic [ref=e837]:
+              - heading "Docs" [level=3] [ref=e838]
+              - img [ref=e840]
+            - paragraph [ref=e842]: Learn with written docs.
+        - link "Download Download Spline apps." [ref=e843] [cursor=pointer]:
+          - /url: /download
+          - generic [ref=e844]:
+            - img [ref=e846]
+            - generic [ref=e848]:
+              - heading "Download" [level=3] [ref=e849]
+              - img [ref=e851]
+            - paragraph [ref=e853]: Download Spline apps.
+    - generic [ref=e854]:
+      - generic [ref=e856]:
+        - heading "Design. Collaborate. Ship." [level=2] [ref=e857]
+        - paragraph [ref=e858]: Superpower your team to deliver production-ready interactive 2D and 3D experiences all in one platform.
+      - link "Get started — it's free" [ref=e859] [cursor=pointer]:
+        - /url: https://app.spline.design/signin
+        - generic [ref=e860]: Get started
+        - text: — it's free
+        - img [ref=e861]
+  - contentinfo [ref=e863]:
+    - generic [ref=e864]:
+      - link "Spline logo" [ref=e866] [cursor=pointer]:
+        - /url: /
+        - img "Spline logo" [ref=e867]
+      - generic [ref=e868]:
+        - generic [ref=e869]:
+          - heading "Products" [level=3] [ref=e870]
+          - link "3D Design" [ref=e871] [cursor=pointer]:
+            - /url: /3d-design
+          - link "Hana" [ref=e872] [cursor=pointer]:
+            - /url: /hana
+          - link "iOS" [ref=e873] [cursor=pointer]:
+            - /url: /ios
+          - link "Android" [ref=e874] [cursor=pointer]:
+            - /url: /android
+          - link "Spline Mirror" [ref=e875] [cursor=pointer]:
+            - /url: /spline-mirror
+          - link "Pricing" [ref=e876] [cursor=pointer]:
+            - /url: /pricing
+          - link "Download" [ref=e877] [cursor=pointer]:
+            - /url: /download
+          - link "Download Spline Mirror" [ref=e878] [cursor=pointer]:
+            - /url: /download-mirror
+          - link "AI 3D Generation" [ref=e879] [cursor=pointer]:
+            - /url: /ai-generate
+        - generic [ref=e880]:
+          - heading "Resources" [level=3] [ref=e881]
+          - link "Contra" [ref=e882] [cursor=pointer]:
+            - /url: /contra
+          - link "Affiliate" [ref=e883] [cursor=pointer]:
+            - /url: /affiliate
+          - link "Hana Challenge" [ref=e884] [cursor=pointer]:
+            - /url: /hana-challenge
+          - link "Education" [ref=e885] [cursor=pointer]:
+            - /url: /education
+          - link "Enterprise" [ref=e886] [cursor=pointer]:
+            - /url: /enterprise
+          - link "Solutions" [ref=e887] [cursor=pointer]:
+            - /url: /solutions
+          - link "Docs" [ref=e888] [cursor=pointer]:
+            - /url: https://docs.spline.design/
+          - link "Spline API" [ref=e889] [cursor=pointer]:
+            - /url: https://www.npmjs.com/package/@splinetool/runtime
+          - link "Examples" [ref=e890] [cursor=pointer]:
+            - /url: /examples
+          - link "Academy" [ref=e891] [cursor=pointer]:
+            - /url: https://academy.spline.design
+          - link "Customers" [ref=e892] [cursor=pointer]:
+            - /url: /customers
+          - link "Spline Community" [ref=e893] [cursor=pointer]:
+            - /url: https://community.spline.design
+          - link "Updates" [ref=e894] [cursor=pointer]:
+            - /url: https://updates.spline.design
+        - generic [ref=e895]:
+          - heading "Company" [level=3] [ref=e896]
+          - link "Blog" [ref=e897] [cursor=pointer]:
+            - /url: https://blog.spline.design/
+          - link "Careers" [ref=e898] [cursor=pointer]:
+            - /url: https://www.ycombinator.com/companies/spline/jobs
+          - link "Terms & Conditions" [ref=e899] [cursor=pointer]:
+            - /url: /terms
+          - link "Privacy" [ref=e900] [cursor=pointer]:
+            - /url: /privacy
+          - link "Security" [ref=e901] [cursor=pointer]:
+            - /url: /security
+        - generic [ref=e902]:
+          - heading "Contact" [level=3] [ref=e903]
+          - link "help@spline.design" [ref=e904] [cursor=pointer]:
+            - /url: mailto:help@spline.design
+          - link "jobs@spline.design" [ref=e905] [cursor=pointer]:
+            - /url: mailto:jobs@spline.design
+    - separator [ref=e906]
+    - generic [ref=e907]:
+      - generic [ref=e908]: © 2026 - Spline, Inc.
+      - generic [ref=e909]:
+        - link [ref=e910] [cursor=pointer]:
+          - /url: https://twitter.com/splinetool
+          - img [ref=e911]
+        - link [ref=e914] [cursor=pointer]:
+          - /url: https://instagram.com/splinetool
+          - img [ref=e915]
+        - link [ref=e917] [cursor=pointer]:
+          - /url: https://www.youtube.com/@splinetool
+          - img [ref=e918]
+        - link [ref=e920] [cursor=pointer]:
+          - /url: https://www.tiktok.com/@splinedesign
+          - img [ref=e921]
+        - link [ref=e923] [cursor=pointer]:
+          - /url: https://discord.gg/M9hNDMqvnw
+          - img [ref=e924]

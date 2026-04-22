@@ -1,0 +1,8 @@
+[     691ms] [LOG] 
+%c  %c
+
+%cSpline
+%c1.12.81
+ background: linear-gradient(124.21deg, #FFC81D 0%, #F34EF1 10.21%, #3DFCC6 19.96%, #3DFCC6 27.38%, #4380FF 34.39%, #4380FF 55.06%, #FF3AF3 66.05%, #FF3AF3 89.11%);border-radius: 6px; background: none; color: #888; font-size: 20px; color: #666; font-size: 15px; @ https://app.spline.design/assets/entries/pages_index.BcxEDAbd.js:5227
+[    1059ms] [ERROR] Access to fetch at 'https://o461187.ingest.sentry.io/api/5717832/envelope/?sentry_key=4169885f834f44d38b70b2c84a715266&sentry_version=7' from origin 'https://app.spline.design' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ https://app.spline.design/community/search?query=energy+orb&sort=trending:0
+[    1059ms] [ERROR] Failed to load resource: net::ERR_FAILED @ https://o461187.ingest.sentry.io/api/5717832/envelope/?sentry_key=4169885f834f44d38b70b2c84a715266&sentry_version=7:0

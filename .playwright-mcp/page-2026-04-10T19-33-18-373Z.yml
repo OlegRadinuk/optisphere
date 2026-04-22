@@ -1,0 +1,161 @@
+- generic [ref=e3]:
+  - complementary [ref=e4]:
+    - button "R radinuko's Workspace" [ref=e6]:
+      - generic [ref=e7]:
+        - generic [ref=e9]: R
+        - generic [ref=e11]:
+          - generic [ref=e12]: radinuko's Workspace
+          - img [ref=e14]
+    - generic [ref=e16]:
+      - navigation "Main navigation" [ref=e17]:
+        - list [ref=e18]:
+          - listitem [ref=e19]:
+            - link "Home" [ref=e20] [cursor=pointer]:
+              - /url: /home
+              - generic "Home" [ref=e21]:
+                - img [ref=e22]
+                - generic [ref=e25]: Home
+          - listitem [ref=e26]:
+            - link "Discover" [ref=e27] [cursor=pointer]:
+              - /url: /discover
+              - generic "Discover" [ref=e28]:
+                - img [ref=e29]
+                - generic [ref=e33]: Discover
+          - listitem [ref=e34]:
+            - link "My files" [ref=e35] [cursor=pointer]:
+              - /url: /files
+              - generic "My files" [ref=e36]:
+                - img [ref=e37]
+                - generic [ref=e40]: My files
+          - listitem [ref=e41]:
+            - link "Templates" [ref=e42] [cursor=pointer]:
+              - /url: /templates
+              - generic "Templates" [ref=e43]:
+                - img [ref=e44]
+                - generic [ref=e47]: Templates
+          - listitem [ref=e48]:
+            - link "Navigation item" [ref=e49] [cursor=pointer]:
+              - /url: /generate
+              - generic "Navigation item" [ref=e50]:
+                - img [ref=e51]
+                - generic [ref=e56]: Generate
+          - listitem [ref=e57]:
+            - link "Shared with me" [ref=e58] [cursor=pointer]:
+              - /url: /shared
+              - generic "Shared with me" [ref=e59]:
+                - img [ref=e60]
+                - generic [ref=e64]: Shared with me
+          - listitem [ref=e65]:
+            - link "Community" [ref=e66] [cursor=pointer]:
+              - /url: /community
+              - generic [ref=e67]:
+                - img [ref=e68]
+                - generic [ref=e73]: Community
+          - listitem [ref=e74]:
+            - link "Academy" [ref=e75] [cursor=pointer]:
+              - /url: /academy
+              - generic "Academy" [ref=e76]:
+                - img [ref=e77]
+                - generic [ref=e81]: Academy
+                - generic [ref=e82]: NEW
+          - listitem [ref=e83]:
+            - link "Navigation item" [ref=e84] [cursor=pointer]:
+              - /url: /inbox
+              - generic "Navigation item" [ref=e85]:
+                - img [ref=e86]
+                - generic [ref=e89]: Inbox
+      - generic [ref=e91]:
+        - heading "Projects" [level=4] [ref=e93]:
+          - text: Projects
+          - img [ref=e94]
+        - region [ref=e96]:
+          - link "Overview" [ref=e98]:
+            - /url: /workspace/f04b865b-795b-4b31-a6a6-a97029ceec1b
+            - img [ref=e99]
+            - text: Overview
+          - button "New Project" [ref=e105]:
+            - img [ref=e106]
+            - text: New Project
+    - generic [ref=e107]:
+      - generic [ref=e108]:
+        - generic [ref=e109]:
+          - img [ref=e110]
+          - generic [ref=e112]:
+            - paragraph [ref=e113]: Upgrade your workspace
+            - paragraph [ref=e114]: Unlock all features on Spline.
+        - button "Upgrade" [ref=e115]
+      - navigation "Secondary navigation" [ref=e117]:
+        - list [ref=e118]:
+          - listitem [ref=e119]:
+            - link "Archive" [ref=e120] [cursor=pointer]:
+              - /url: /archived
+              - generic "Archive" [ref=e121]:
+                - img [ref=e122]
+                - generic [ref=e124]: Archive
+          - listitem [ref=e125]:
+            - link "Updates" [ref=e126] [cursor=pointer]:
+              - /url: /updates
+              - generic "Updates" [ref=e127]:
+                - img [ref=e128]
+                - generic [ref=e130]: Updates
+          - listitem [ref=e131]:
+            - button "Help & Feedback" [ref=e132]:
+              - img [ref=e133]
+              - generic [ref=e137]: Help & Feedback
+          - listitem
+  - generic [ref=e139]:
+    - generic [ref=e140]:
+      - generic [ref=e141]:
+        - generic [ref=e142]:
+          - button "Explore" [ref=e143]
+          - button "Feed" [ref=e144]
+          - button "Notifications" [ref=e145]
+        - generic [ref=e146]:
+          - generic [ref=e147]:
+            - generic:
+              - img
+            - searchbox "Search Community" [ref=e148]: energy orb
+          - button [ref=e149]:
+            - img [ref=e150]
+      - generic [ref=e154]:
+        - button "Publish" [ref=e155]:
+          - img [ref=e157]
+          - text: Publish
+        - button "Profile" [ref=e159]:
+          - img [ref=e160]
+    - generic [ref=e164]:
+      - generic [ref=e165]:
+        - heading "Results for \"energy orb\"" [level=1] [ref=e166]:
+          - text: Results for
+          - generic [ref=e167]: "\"energy orb\""
+        - heading "Searching scenes, models, interactive experiences built by the Spline Community." [level=2] [ref=e168]
+      - generic [ref=e169]:
+        - generic [ref=e170]: Search results
+        - generic [ref=e172]:
+          - button "Trending" [ref=e173]
+          - button "Popular" [ref=e174]
+          - button "New" [ref=e175]
+          - button "Creators" [ref=e176]
+        - combobox [ref=e178]:
+          - generic:
+            - generic: All types
+          - img [ref=e180]
+      - list [ref=e183]:
+        - listitem [ref=e184]:
+          - generic [ref=e185]:
+            - link "Liquid Energy Orb" [ref=e188] [cursor=pointer]:
+              - /url: /community/file/5b27bf3e-1192-45af-976d-508133072b34
+              - img "Liquid Energy Orb" [ref=e194]
+            - generic [ref=e196]:
+              - link "Liquid Energy Orb" [ref=e199] [cursor=pointer]:
+                - /url: /community/file/5b27bf3e-1192-45af-976d-508133072b34
+              - generic [ref=e200]:
+                - link "Profile Neodivisu" [ref=e202] [cursor=pointer]:
+                  - /url: /@neodivisu
+                  - img "Profile Neodivisu" [ref=e205]
+                - link "neodivisu" [ref=e207] [cursor=pointer]:
+                  - /url: /@neodivisu
+                  - generic [ref=e208]: neodivisu
+                - generic [ref=e210]:
+                  - generic [ref=e211]: 170 views
+                  - generic [ref=e212]: 2 likes

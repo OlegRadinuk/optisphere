@@ -1,0 +1,524 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - link "Версаль" [ref=e3] [cursor=pointer]:
+      - /url: "#"
+    - text: 
+    - navigation [ref=e4]:
+      - list [ref=e5]:
+        - listitem [ref=e6]:
+          - link "Номера" [ref=e7] [cursor=pointer]:
+            - /url: "#rooms"
+        - listitem [ref=e8]:
+          - link "О гостинице" [ref=e9] [cursor=pointer]:
+            - /url: "#about"
+        - listitem [ref=e10]:
+          - link "Виртуальный тур" [ref=e11] [cursor=pointer]:
+            - /url: "#virtual-tour"
+        - listitem [ref=e12]:
+          - link "Новофёдоровка" [ref=e13] [cursor=pointer]:
+            - /url: "#novofedorovka"
+        - listitem [ref=e14]:
+          - link "Бронирование" [ref=e15] [cursor=pointer]:
+            - /url: booking-info.html
+        - listitem [ref=e16]:
+          - link "Контакты" [ref=e17] [cursor=pointer]:
+            - /url: "#contacts"
+  - generic [ref=e18]:
+    - generic [ref=e19]: Ваш браузер не поддерживает видео.
+    - generic [ref=e21]:
+      - generic [ref=e22]:
+        - heading "Версаль" [level=1] [ref=e23]
+        - generic [ref=e24]:
+          - paragraph [ref=e25]: Гостиница
+          - generic [ref=e26]: •
+          - paragraph [ref=e27]: в Новофёдоровке
+      - link "Забронировать номер" [ref=e28] [cursor=pointer]:
+        - /url: "#booking"
+  - generic [ref=e29]:
+    - generic [ref=e30]:
+      - generic [ref=e32]: 
+      - generic [ref=e33]:
+        - heading "2-х местный комфорт" [level=4] [ref=e34]
+        - paragraph [ref=e35]: от 2 500 ₽/сутки
+    - generic [ref=e36]:
+      - generic [ref=e38]: 
+      - generic [ref=e39]:
+        - heading "3-х местный комфорт" [level=4] [ref=e40]
+        - paragraph [ref=e41]: от 3 200 ₽/сутки
+    - generic [ref=e42]:
+      - generic [ref=e44]: 
+      - generic [ref=e45]:
+        - heading "Улучшенный 4-5 местный" [level=4] [ref=e46]
+        - paragraph [ref=e47]: от 4 500 ₽/сутки
+    - link " Полный прайс-лист " [ref=e48] [cursor=pointer]:
+      - /url: booking-info.html#prices
+      - generic [ref=e49]: 
+      - text: Полный прайс-лист
+      - generic [ref=e50]: 
+  - generic [ref=e51]:
+    - heading "Забронируйте номер прямо сейчас" [level=2] [ref=e52]
+    - generic [ref=e53]:
+      - generic [ref=e54]:
+        - generic [ref=e55]:
+          - generic [ref=e56]: Дата заезда *
+          - textbox "Дата заезда *" [ref=e57]:
+            - /placeholder: дд.мм.гггг
+        - generic [ref=e58]:
+          - generic [ref=e59]: Дата выезда *
+          - textbox "Дата выезда *" [ref=e60]:
+            - /placeholder: дд.мм.гггг
+        - generic [ref=e61]:
+          - generic [ref=e62]: Ваше имя *
+          - textbox "Ваше имя *" [ref=e63]:
+            - /placeholder: Иван Иванов
+        - generic [ref=e64]:
+          - generic [ref=e65]: Телефон *
+          - textbox "Телефон *" [ref=e66]:
+            - /placeholder: +7 (999) 123-45-67
+        - generic [ref=e67]:
+          - generic [ref=e68]: Количество гостей *
+          - combobox "Количество гостей *" [ref=e69]:
+            - option "Выберите количество" [disabled] [selected]
+            - option "1 гость"
+            - option "2 гостя"
+            - option "3 гостя"
+            - option "4 гостя"
+            - option "5 гостей"
+            - option "6+ гостей"
+        - generic [ref=e70]:
+          - generic [ref=e71]: Email для связи
+          - textbox "Email для связи" [ref=e72]:
+            - /placeholder: example@mail.ru
+        - generic [ref=e73]:
+          - generic [ref=e74]: Тип номера
+          - combobox "Тип номера" [ref=e75]:
+            - option "Не выбрано" [selected]
+            - option "Комфорт 2-х местный (от 2500 ₽)"
+            - option "Комфорт 3-х местный (от 3200 ₽)"
+            - option "Улучшенный 4-х местный (от 4500 ₽)"
+            - option "Улучшенный 5-ти местный (от 5200 ₽)"
+        - generic [ref=e76]:
+          - generic [ref=e77]: Дополнительные пожелания
+          - textbox "Дополнительные пожелания" [ref=e78]:
+            - /placeholder: Особые требования, вопросы, пожелания...
+      - generic [ref=e79]:
+        - button " Забронировать номер" [ref=e80] [cursor=pointer]:
+          - generic [ref=e81]: 
+          - text: Забронировать номер
+        - paragraph [ref=e82]:
+          - generic [ref=e83]: 
+          - text: Нажимая кнопку, вы соглашаетесь с обработкой персональных данных
+  - link " Подробнее об условиях бронирования" [ref=e85] [cursor=pointer]:
+    - /url: booking-info.html
+    - generic [ref=e86]: 
+    - text: Подробнее об условиях бронирования
+  - link "🔥 Акция! Раннее бронирование на лето 2026 — скидка до 15% Торопитесь, количество мест ограничено! Узнать условия → • 🔥 Акция! Раннее бронирование на лето 2026 — скидка до 15% Торопитесь, количество мест ограничено! Узнать условия → • 🔥 Акция! Раннее бронирование на лето 2026 — скидка до 15% Торопитесь, количество мест ограничено! Узнать условия → • 🔥 Акция! Раннее бронирование на лето 2026 — скидка до 15% Торопитесь, количество мест ограничено! Узнать условия → •" [ref=e88] [cursor=pointer]:
+    - /url: booking-info.html
+    - generic [ref=e90]:
+      - generic [ref=e91]:
+        - generic [ref=e92]: 🔥 Акция! Раннее бронирование на лето 2026 — скидка до 15%
+        - text: Торопитесь, количество мест ограничено!
+        - generic [ref=e93]: Узнать условия →
+        - text: •
+      - generic [ref=e94]:
+        - generic [ref=e95]: 🔥 Акция! Раннее бронирование на лето 2026 — скидка до 15%
+        - text: Торопитесь, количество мест ограничено!
+        - generic [ref=e96]: Узнать условия →
+        - text: •
+      - generic [ref=e97]:
+        - generic [ref=e98]: 🔥 Акция! Раннее бронирование на лето 2026 — скидка до 15%
+        - text: Торопитесь, количество мест ограничено!
+        - generic [ref=e99]: Узнать условия →
+        - text: •
+      - generic [ref=e100]:
+        - generic [ref=e101]: 🔥 Акция! Раннее бронирование на лето 2026 — скидка до 15%
+        - text: Торопитесь, количество мест ограничено!
+        - generic [ref=e102]: Узнать условия →
+        - text: •
+  - generic [ref=e103]:
+    - heading "Наши номера" [level=2] [ref=e104]
+    - paragraph [ref=e105]: Выберите подходящий вариант для вашего отдыха
+    - generic [ref=e106]:
+      - generic [ref=e107]:
+        - heading "Комфорт" [level=3] [ref=e108]
+        - paragraph [ref=e109]: 2-х и 3-х местные номера с современным ремонтом
+        - generic [ref=e110]:
+          - generic [ref=e111] [cursor=pointer]:
+            - generic [ref=e112]:
+              - img "2-х местный номер комфорт гостиница Версаль Новофёдоровка" [ref=e113]
+              - generic [ref=e114]:
+                - generic [ref=e115]: 2-х местный
+                - heading "Комфорт 2-х местный" [level=4] [ref=e116]
+                - paragraph [ref=e117]: • Кондиционер • Wi-Fi
+            - generic [ref=e118]:
+              - generic [ref=e119]:
+                - generic [ref=e120]:
+                  - generic [ref=e121]: 
+                  - text: 2 человека
+                - generic [ref=e122]:
+                  - generic [ref=e123]: 
+                  - text: Кондиционер
+              - button "Смотреть фото" [ref=e124]
+          - generic [ref=e125] [cursor=pointer]:
+            - generic [ref=e126]:
+              - img "3-х местный номер комфорт отель Версаль Крым" [ref=e127]
+              - generic [ref=e128]:
+                - generic [ref=e129]: 3-х местный
+                - heading "Комфорт 3-х местный" [level=4] [ref=e130]
+                - paragraph [ref=e131]: • Две кровати • Балкон
+            - generic [ref=e132]:
+              - generic [ref=e133]:
+                - generic [ref=e134]:
+                  - generic [ref=e135]: 
+                  - text: 3 человека
+                - generic [ref=e136]:
+                  - generic [ref=e137]: 
+                  - text: Балкон
+              - button "Смотреть фото" [ref=e138]
+      - generic [ref=e139]:
+        - heading "Улучшенные" [level=3] [ref=e140]
+        - paragraph [ref=e141]: 4-х и 5-ти местные номера с дополнительным комфортом
+        - generic [ref=e142]:
+          - generic [ref=e143] [cursor=pointer]:
+            - generic [ref=e144]:
+              - img "4-х местный улучшенный номер гостиница Версаль" [ref=e145]
+              - generic [ref=e146]:
+                - generic [ref=e147]: 4-х местный
+                - heading "Улучшенный 4-х местный" [level=4] [ref=e148]
+            - generic [ref=e149]:
+              - generic [ref=e150]:
+                - generic [ref=e151]:
+                  - generic [ref=e152]: 
+                  - text: 4 человека
+                - generic [ref=e153]:
+                  - generic [ref=e154]: 
+                  - text: Кондиционер
+              - button "Смотреть фото" [ref=e155]
+          - generic [ref=e156] [cursor=pointer]:
+            - generic [ref=e157]:
+              - img "5-ти местный улучшенный номер отель Версаль" [ref=e158]
+              - generic [ref=e159]:
+                - generic [ref=e160]: 5-ти местный
+                - heading "Улучшенный 5-ти местный" [level=4] [ref=e161]
+                - paragraph [ref=e162]: • 2 комнаты •
+            - generic [ref=e163]:
+              - generic [ref=e164]:
+                - generic [ref=e165]:
+                  - generic [ref=e166]: 
+                  - text: 5 человек
+                - generic [ref=e167]:
+                  - generic [ref=e168]: 
+                  - text: Балкон
+              - button "Смотреть фото" [ref=e169]
+  - generic [ref=e170]:
+    - heading "О гостинице" [level=2] [ref=e171]
+    - generic [ref=e172]:
+      - generic [ref=e174]:
+        - img "Территория гостиницы Версаль" [ref=e176] [cursor=pointer]
+        - img "гостиницы Версаль" [ref=e178] [cursor=pointer]
+        - img "Беседка и мангал гостиница Версаль" [ref=e180] [cursor=pointer]
+        - img "Детская площадка отель Версаль" [ref=e182] [cursor=pointer]
+        - generic [ref=e186] [cursor=pointer]: 
+        - generic [ref=e190] [cursor=pointer]: 
+      - generic [ref=e192]:
+        - heading "Отдых в Крыму, который запомнится надолго" [level=3] [ref=e193]
+        - generic [ref=e194]:
+          - paragraph [ref=e195]: Приглашаем вас в гостиницу «Версаль» — идеальное место для комфортного отдыха в Новофёдоровке.
+          - paragraph [ref=e196]:
+            - text: Наш гостевой дом расположен в
+            - strong [ref=e197]: 350 метрах
+            - text: от пляжа — всего 5 минут неспешной прогулки до моря. Территория полностью ограждена и ухожена, что обеспечивает безопасность и приватность для наших гостей.
+          - paragraph [ref=e198]: Мы создали все условия для отдыха с детьми — безопасная территория, игровая площадка и внимательное отношение к нашим маленьким гостям.
+          - paragraph [ref=e200]:
+            - strong [ref=e201]: Приезжайте в «Версаль» — здесь ваш отдых будет по-настоящему комфортным!
+    - generic [ref=e204]:
+      - generic [ref=e205]:
+        - generic [ref=e207]: 
+        - heading "Близость к морю" [level=4] [ref=e208]
+        - paragraph [ref=e209]:
+          - strong [ref=e210]: 350 метров
+          - text: до пляжа, удобный пеший доступ в любое время
+      - generic [ref=e211]:
+        - generic [ref=e213]: 
+        - heading "Уютные беседки" [level=4] [ref=e214]
+        - paragraph [ref=e215]: Несколько оборудованных зон для отдыха на свежем воздухе
+      - generic [ref=e216]:
+        - generic [ref=e218]: 
+        - heading "Гостевая кухня" [level=4] [ref=e219]
+        - paragraph [ref=e220]: Полностью оборудованная кухня для самостоятельного приготовления
+      - generic [ref=e221]:
+        - generic [ref=e223]: 
+        - heading "Детская площадка" [level=4] [ref=e224]
+        - paragraph [ref=e225]: Безопасная игровая зона с качелями для наших маленьких гостей
+      - generic [ref=e226]:
+        - generic [ref=e228]: 
+        - heading "Зона барбекю" [level=4] [ref=e229]
+        - paragraph [ref=e230]: Мангал и всё необходимое для приготовления шашлыка
+      - generic [ref=e231]:
+        - generic [ref=e233]: 
+        - heading "Бесплатный Wi-Fi" [level=4] [ref=e234]
+        - paragraph [ref=e235]: Высокоскоростной интернет на всей территории гостиницы
+  - generic [ref=e236]:
+    - heading "Виртуальный тур" [level=2] [ref=e237]
+    - paragraph [ref=e238]: Прогуляйтесь по территории гостиницы онлайн
+    - iframe [ref=e241]:
+      - generic [active] [ref=f5e1]:
+        - link "Версаль" [ref=f5e2] [cursor=pointer]:
+          - /url: https://yandex.ru/maps/org/versal/66358236287/
+        - link "Гостевой дом" [ref=f5e3] [cursor=pointer]:
+          - /url: https://yandex.ru/maps/977/republic-of-crimea/category/guest_house/131994109947/
+        - generic [ref=f5e5]:
+          - iframe [ref=f5e7]:
+            
+          - generic [ref=f5e9]:
+            - generic [ref=f5e10]: Гостиница Версаль
+            - button [ref=f5e12] [cursor=pointer]:
+              - generic:
+                - generic:
+                  - img
+          - generic [ref=f5e15]:
+            - button "Приблизить" [ref=f5e17] [cursor=pointer]:
+              - generic:
+                - generic:
+                  - img
+            - button "Отдалить" [disabled] [ref=f5e19]:
+              - generic:
+                - generic:
+                  - img
+          - button "Открыть в Яндекс Картах" [ref=f5e21] [cursor=pointer]:
+            - generic:
+              - generic:
+                - img
+            - generic [ref=f5e22]: Открыть в Яндекс Картах
+          - link "Условия использования" [ref=f5e23] [cursor=pointer]:
+            - /url: https://yandex.ru/legal/maps_termsofuse/
+  - generic [ref=e242]:
+    - heading "Новофёдоровка" [level=2] [ref=e243]
+    - paragraph [ref=e244]: Жемчужина западного побережья Крыма
+    - generic [ref=e245]:
+      - generic [ref=e247]:
+        - generic [ref=e248] [cursor=pointer]:
+          - img "Пляж Новофёдоровки" [ref=e249]
+          - generic [ref=e250]:
+            - generic [ref=e251]: 
+            - generic [ref=e252]: Пляж Новофёдоровки
+        - generic [ref=e253] [cursor=pointer]:
+          - img "Ресторан Палуба в Новофёдоровке" [ref=e254]
+          - generic [ref=e255]:
+            - generic [ref=e256]: 
+            - generic [ref=e257]: Ресторан "Палуба"
+        - generic [ref=e258] [cursor=pointer]:
+          - img "Чертово колесо Новофёдоровка" [ref=e259]
+          - generic [ref=e260]:
+            - generic [ref=e261]: 
+            - generic [ref=e262]: Чертово колесо
+        - generic [ref=e263] [cursor=pointer]:
+          - img "Закат в Новофёдоровке" [ref=e264]
+          - generic [ref=e265]:
+            - generic [ref=e266]: 
+            - generic [ref=e267]: Морской закат
+        - generic [ref=e268] [cursor=pointer]:
+          - img "Причал Новофёдоровка" [ref=e269]
+          - generic [ref=e270]:
+            - generic [ref=e271]: 
+            - generic [ref=e272]: Счастье
+        - generic [ref=e273] [cursor=pointer]:
+          - img "Рестораны Новофёдоровки" [ref=e274]
+          - generic [ref=e275]:
+            - generic [ref=e276]: 
+            - generic [ref=e277]: Ресторан "У моря"
+      - generic [ref=e279]:
+        - heading "Отдых, который запомнится" [level=3] [ref=e280]
+        - generic [ref=e281]:
+          - paragraph [ref=e282]: Новофёдоровка — уютный курортный поселок на западном побережье Крыма, идеально подходящий как для семейного отдыха, так и для романтических путешествий.
+          - generic [ref=e283]:
+            - heading " Пляжный отдых" [level=4] [ref=e284]:
+              - generic [ref=e285]: 
+              - text: Пляжный отдых
+            - paragraph [ref=e286]: Широкий песчаный пляж протяженностью более 2 км с пологим заходом в море — абсолютно безопасен для детей!
+          - generic [ref=e287]:
+            - heading " Гастрономические впечатления" [level=4] [ref=e288]:
+              - generic [ref=e289]: 
+              - text: Гастрономические впечатления
+            - paragraph [ref=e290]:
+              - text: Обязательно посетите уникальное заведение
+              - strong [ref=e291]: "\"Палуба\""
+              - text: — ресторан в виде настоящего корабля с панорамным видом на море.
+          - paragraph [ref=e293]:
+            - strong [ref=e294]: Откройте для себя Новофёдоровку
+            - text: — идеальное место для отдыха, где современный комфорт встречается с природной красотой Крыма.
+  - generic [ref=e295]:
+    - heading "Контакты" [level=2] [ref=e296]
+    - paragraph [ref=e297]: Свяжитесь с нами удобным способом
+    - generic [ref=e298]:
+      - link " Адрес Прибрежная ул., 3, п. г. т. Новофёдоровка, Республика Крым Открыть на карте →" [ref=e299] [cursor=pointer]:
+        - /url: https://yandex.ru/maps/-/CLcDzF2x
+        - generic [ref=e301]: 
+        - generic [ref=e302]:
+          - heading "Адрес" [level=3] [ref=e303]
+          - paragraph [ref=e304]: Прибрежная ул., 3, п. г. т. Новофёдоровка, Республика Крым
+          - generic [ref=e305]: Открыть на карте →
+      - generic [ref=e306]:
+        - generic [ref=e308]: 
+        - generic [ref=e309]:
+          - heading "Телефоны" [level=3] [ref=e310]
+          - link "+7 (978) 759-81-34" [ref=e311] [cursor=pointer]:
+            - /url: tel:+79787598134
+          - link "+7 (978) 759-81-33" [ref=e312] [cursor=pointer]:
+            - /url: tel:+79787598133
+      - generic [ref=e313]:
+        - generic [ref=e315]: 
+        - generic [ref=e316]:
+          - heading "Email" [level=3] [ref=e317]
+          - link "hotel-versal-crimea@mail.ru" [ref=e318] [cursor=pointer]:
+            - /url: mailto:hotel-versal-crimea@mail.ru
+  - generic [ref=e319]:
+    - heading "Отзывы гостей" [level=2] [ref=e320]
+    - iframe [ref=e322]:
+      - generic [ref=f6e2]:
+        - generic [ref=f6e3]:
+          - link "Версаль" [ref=f6e4] [cursor=pointer]:
+            - /url: https://yandex.ru/maps/org/versal/66358236287?utm_source=maps-reviews-widget&utm_medium=reviews&utm_content=org-name
+          - generic [ref=f6e5]:
+            - paragraph [ref=f6e6]: 4,9
+            - generic [ref=f6e7]:
+              - list [ref=f6e9]:
+                - listitem [ref=f6e10]
+                - listitem [ref=f6e11]
+                - listitem [ref=f6e12]
+                - listitem [ref=f6e13]
+                - listitem [ref=f6e14]
+              - link "71 отзыв • 147 оценок" [ref=f6e15] [cursor=pointer]:
+                - /url: https://yandex.ru/maps/org/versal/66358236287/reviews?utm_source=maps-reviews-widget&utm_medium=reviews&utm_content=rating
+          - link [ref=f6e17] [cursor=pointer]:
+            - /url: https://yandex.ru/maps?utm_source=maps-reviews-widget&utm_medium=reviews&utm_content=logo
+        - generic [ref=f6e18]:
+          - paragraph [ref=f6e19]: Поставьте нам оценку
+          - link "Оставить отзыв" [ref=f6e20] [cursor=pointer]:
+            - /url: https://yandex.ru/maps/org/versal/66358236287/reviews?utm_source=maps-reviews-widget&utm_medium=reviews&utm_content=add_review&add-review
+        - generic [ref=f6e21]:
+          - generic [ref=f6e22]:
+            - generic [ref=f6e24]:
+              - paragraph [ref=f6e25]: Елена Р.
+              - paragraph [ref=f6e26]: 25 июля 2024
+            - list [ref=f6e28]:
+              - listitem [ref=f6e29]
+              - listitem [ref=f6e30]
+              - listitem [ref=f6e31]
+              - listitem [ref=f6e32]
+              - listitem [ref=f6e33]
+            - paragraph [ref=f6e34]:
+              - text: Впервые открыли для себя гостевой дом "Версаль" отдыхали 2 недели в июле 2024 года, все замечательно, соответствует описанию, фотографиям. Здесь очень красиво, комфортно, уютно и идеально чисто! Огромное спасибо Эдему и Диляре за гостеприимство, доброжелательность и отзывчивость в любых вопросах. Отдельное спасибо феям чистоты Галине и Людмиле, вы волшебные! Обязательно приедем в следующем году!
+              - paragraph [ref=f6e35]:
+                - text: ...
+                - link "ещё" [ref=f6e36] [cursor=pointer]:
+                  - /url: https://yandex.ru/maps/org/versal/66358236287/reviews?utm_source=maps-reviews-widget&utm_medium=reviews&utm_content=read-more
+          - generic [ref=f6e37]:
+            - generic [ref=f6e39]:
+              - paragraph [ref=f6e40]: Ника Евдокимова
+              - paragraph [ref=f6e41]: 25 июля 2023
+            - list [ref=f6e43]:
+              - listitem [ref=f6e44]
+              - listitem [ref=f6e45]
+              - listitem [ref=f6e46]
+              - listitem [ref=f6e47]
+              - listitem [ref=f6e48]
+            - paragraph [ref=f6e49]:
+              - text: "Очень красивая территория, в гостевом доме чисто. Все было супер удобно! Обстановка в номере хорошо продумана: есть столик на колёсиках, тумбочки и розетки у кровати, сетки от комаров, табуретки, посуда. Добродушные хозяева, откликается на любые просьбы) По вечерам сидели во дворе на скамейке-качеле и смотрели на звёздное небо) Очень понравилось, с удовольствием ещё вернёмся!"
+              - paragraph [ref=f6e50]:
+                - text: ...
+                - link "ещё" [ref=f6e51] [cursor=pointer]:
+                  - /url: https://yandex.ru/maps/org/versal/66358236287/reviews?utm_source=maps-reviews-widget&utm_medium=reviews&utm_content=read-more
+          - generic [ref=f6e52]:
+            - generic [ref=f6e54]:
+              - paragraph [ref=f6e55]: Марина Агеева
+              - paragraph [ref=f6e56]: 23 июня 2024
+            - list [ref=f6e58]:
+              - listitem [ref=f6e59]
+              - listitem [ref=f6e60]
+              - listitem [ref=f6e61]
+              - listitem [ref=f6e62]
+              - listitem [ref=f6e63]
+            - paragraph [ref=f6e64]:
+              - text: Новофедоровку любим. Отличный галечный пляж. Любим приезжать с ночёвкой, Выбор места проживания происходит спонтанно. Этим летом мы для себя открыли гостиницу "Версаль" . Здесь уютно, чисто. В номерах новая мебель, кондиционер, холодильник, посуда, чайник. В ванной комнате фен, гель для душа, шампунь. Есть мангальная зона, летняя кухня. На кухне есть всё необходимое для приготовления пищи. Дворик гостиницы также ухожен. Есть фонтан, несколько беседок. Хозяева очень доброжелательная и милая супружеская пара. Встречали как родных! Мы остались довольны на все 100%!
+              - paragraph [ref=f6e65]:
+                - text: ...
+                - link "ещё" [ref=f6e66] [cursor=pointer]:
+                  - /url: https://yandex.ru/maps/org/versal/66358236287/reviews?utm_source=maps-reviews-widget&utm_medium=reviews&utm_content=read-more
+          - generic [ref=f6e67]:
+            - generic [ref=f6e69]:
+              - paragraph [ref=f6e70]: Евгений Белов
+              - paragraph [ref=f6e71]: 6 декабря 2025
+            - list [ref=f6e73]:
+              - listitem [ref=f6e74]
+              - listitem [ref=f6e75]
+              - listitem [ref=f6e76]
+              - listitem [ref=f6e77]
+              - listitem [ref=f6e78]
+            - paragraph [ref=f6e79]:
+              - text: По служебным делам, в компании, состоящей из трех джельтменов ( один помоложе, два постарше), по счастливой случайности( а если честно по отзывам Инете), нашли этот уютный отель и проживаем в нем уже вторую неделю (сейчас за окном конец октября).Номера люкс и полулюкс. Что сказать.. Да просто офигительно! ... Это не просто слова, поверьте.. Отель свежий, чистый, ухоженный, уютный. Есть все необходимое для жизни ( стиралки, сушилки, беседки, мангальная зона , кухня с плитой , и холодильником( в номерах тоже есть) плитой и посудой) балкон, где можно посидеть з а чашечкой чая, кофе, виски, сигаретой , сигарой.. Плиточка в коридорах блестит. Сантехника такая же. Вода теплая - без проблем. Отпление (осень же ведь) не дает замерзнуть даже с открытым балконом. Территория ухоженная, фонтанчик, клумбы... Улица на которой расположен отель вымощена оч.. приличной плиткой... Чистота ... Пыли с улицы никакой...... Живем и наслаждаемся комфортом, уютом, чистотой , осенней тишиной.... И еще...Заселившись в этот отель вы ощутите заботу и душеную теплоту его хозяев Эдема и Диляры.... Так приятно это ощущать. Дай Бог им благополучия и процветания бизнеса.... Недостатки? Есть один. Уезжать отсюда не хочется. Сразу говорю.. Отзыв не заказной, а от Души. Второй мой отзыв. Прошло чуть более года.... Начало декабря 2025 г. И опять служебные дела привели меня в Новофедоровку. Угадайте с трех раз к кому мы с коллегами обратились, чтобы найти ночлег на недельку? Конечно к Эдему и Диляре :). Версаль встретил нас также тепло и заботливо как и в прошлом году. Как будто в родной дом вернулись. Все также чисто, уютно и комфортно. Все те же гостеприимные хозяева. Кайф! Когда хорошо- тогда хорошо. Поверьте, выдастся еще раз приехать в Новофедоровку, лучшего искать не буду. Эдем... Диляра... и конечно... Версаль.
+              - paragraph [ref=f6e80]:
+                - text: ...
+                - link "ещё" [ref=f6e81] [cursor=pointer]:
+                  - /url: https://yandex.ru/maps/org/versal/66358236287/reviews?utm_source=maps-reviews-widget&utm_medium=reviews&utm_content=read-more
+          - generic [ref=f6e82]:
+            - generic [ref=f6e84]:
+              - paragraph [ref=f6e85]: Ольга Трифонова
+              - paragraph [ref=f6e86]: 8 августа 2023
+            - list [ref=f6e88]:
+              - listitem [ref=f6e89]
+              - listitem [ref=f6e90]
+              - listitem [ref=f6e91]
+              - listitem [ref=f6e92]
+              - listitem [ref=f6e93]
+            - paragraph [ref=f6e94]:
+              - text: "!🏩Очень хороший отель 🏩! Комфортабельные и уютные номера (мы занимали два), в который есть всё (даже☝️пляжные полотенца ). До пляжа минут 5-7 и выходишь прямо в центр набережной. До столовой минут 5. Территория ухоженная , есть мангальная зона, микроволновая печь,беседки , качели . Отдельно хочется сказать о людях ,которые содержат этот отель🏩- это Диляра и Эдэм, ❤️ это настолько позитивная пара💕, всегда с прекрасным настроением, с улыбкой на лице. А на любой вопрос или просьбу ответят 💯% отдачей ❤️ Приезжайте, не пожалеете 💯❤️🏩🫶💕💝"
+              - paragraph [ref=f6e95]:
+                - text: ...
+                - link "ещё" [ref=f6e96] [cursor=pointer]:
+                  - /url: https://yandex.ru/maps/org/versal/66358236287/reviews?utm_source=maps-reviews-widget&utm_medium=reviews&utm_content=read-more
+        - link "Больше отзывов на Яндекс Картах" [ref=f6e98] [cursor=pointer]:
+          - /url: https://yandex.ru/maps/org/versal/66358236287/reviews?utm_source=maps-reviews-widget&utm_medium=reviews&utm_content=more-reviews
+  - contentinfo [ref=e323]:
+    - generic [ref=e324]:
+      - generic [ref=e325]:
+        - heading "Гостиница Версаль" [level=3] [ref=e326]
+        - paragraph [ref=e327]: Незабываемый отдых в Крыму для всей семьи. Комфортабельные номера, ухоженная территория, близость к морю.
+        - generic [ref=e328]:
+          - link "Instagram" [ref=e329] [cursor=pointer]:
+            - /url: "#"
+            - generic [ref=e330]: 
+          - link "ВКонтакте" [ref=e331] [cursor=pointer]:
+            - /url: "#"
+            - generic [ref=e332]: 
+          - link "Telegram" [ref=e333] [cursor=pointer]:
+            - /url: https://t.me/+79787598134
+            - generic [ref=e334]: 
+          - link "WhatsApp" [ref=e335] [cursor=pointer]:
+            - /url: https://wa.me/79787598134
+            - generic [ref=e336]: 
+      - generic [ref=e337]:
+        - heading "Быстрые ссылки" [level=3] [ref=e338]
+        - link "Номера" [ref=e339] [cursor=pointer]:
+          - /url: "#rooms"
+        - link "О гостинице" [ref=e340] [cursor=pointer]:
+          - /url: "#about"
+        - link "Новофёдоровка" [ref=e341] [cursor=pointer]:
+          - /url: "#novofedorovka"
+        - link "Виртуальный тур" [ref=e342] [cursor=pointer]:
+          - /url: "#virtual-tour"
+        - link "Бронирование" [ref=e343] [cursor=pointer]:
+          - /url: "#booking"
+        - link "💰 Цены на проживание" [ref=e344] [cursor=pointer]:
+          - /url: booking-info.html#prices
+        - link "Контакты" [ref=e345] [cursor=pointer]:
+          - /url: "#contacts"
+      - generic [ref=e346]:
+        - heading "Мы на карте" [level=3] [ref=e347]
+        - iframe [ref=e349]
+        - paragraph [ref=e350]:
+          - generic [ref=e351]: 
+          - text: Прибрежная ул., 3, Новофёдоровка
+    - generic [ref=e352]:
+      - paragraph [ref=e353]: © 2026 Гостиница "Версаль". Все права защищены.
+      - paragraph [ref=e354]: Официальный сайт гостиницы в Новофёдоровке, Крым

@@ -1,0 +1,63 @@
+[    1314ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/next-devtools/shared/forward-logs-shared.js:27
+[    1594ms] [LOG] [HMR] connected @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/next-devtools/shared/forward-logs-shared.js:27
+[    1771ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/next-devtools/shared/forward-logs-shared.js:27
+[    1933ms] [WARNING] Please ensure that the container has a non-static position, like 'relative', 'fixed', or 'absolute' to ensure scroll offset is calculated correctly. @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/next-devtools/shared/forward-logs-shared.js:27
+[    2922ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/next-devtools/shared/forward-logs-shared.js:27
+[    2927ms] [LOG] [Fast Refresh] done in 5ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/next-devtools/shared/forward-logs-shared.js:27
+[    2927ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/next-devtools/shared/forward-logs-shared.js:27
+[    3041ms] [WARNING] THREE.THREE.Clock: This module has been deprecated. Please use THREE.Timer instead. @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/next-devtools/shared/forward-logs-shared.js:27
+[    3816ms] [LOG] [Fast Refresh] done in 889ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/next-devtools/shared/forward-logs-shared.js:27
+[    3844ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/next-devtools/shared/forward-logs-shared.js:27
+[    4195ms] TypeError: Cannot read properties of null (reading 'alpha')
+    at EffectComposer.addPass (webpack-internal:///(app-pages-browser)/./node_modules/postprocessing/build/index.js:1194:67)
+    at eval (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/postprocessing/dist/index.js:165:34)
+    at Object.react_stack_bottom_frame (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:13273:44)
+    at B (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:7908:105)
+    at ca (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:10978:101)
+    at Pf (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:10966:32)
+    at yn (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11255:44)
+    at rt (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11634:73)
+    at yn (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11326:25)
+    at rt (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11634:73)
+    at yn (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11255:25)
+    at rt (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11634:73)
+    at yn (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11320:168)
+    at rt (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11634:73)
+    at yn (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11314:25)
+    at rt (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11634:73)
+    at yn (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11258:29)
+    at rt (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11634:73)
+    at yn (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11326:25)
+    at rt (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11634:73)
+    at yn (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11326:25)
+    at rt (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11634:73)
+    at yn (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11326:25)
+    at rt (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11634:73)
+    at yn (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11326:25)
+    at rt (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11634:73)
+    at yn (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11326:25)
+    at rt (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11634:73)
+    at yn (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11326:25)
+    at rt (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11634:73)
+    at yn (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11326:25)
+    at rt (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11634:73)
+    at yn (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11326:25)
+    at rt (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11634:73)
+    at yn (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11326:25)
+    at rt (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11634:73)
+    at yn (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11326:25)
+    at rt (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11634:73)
+    at yn (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11326:25)
+    at rt (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11634:73)
+    at yn (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11326:25)
+    at rt (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11634:73)
+    at yn (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11326:25)
+    at rt (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11634:73)
+    at yn (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11258:29)
+    at rt (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11634:73)
+    at yn (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11255:25)
+    at rt (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11634:73)
+    at yn (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11255:25)
+    at rt (webpack-internal:///(app-pages-browser)/./node_modules/@react-three/fiber/dist/events-5a94e5eb.esm.js:11634:73)
+[    4196ms] [LOG] THREE.WebGLRenderer: Context Lost. @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/next-devtools/shared/forward-logs-shared.js:27
+[    4221ms] [WARNING] [Fast Refresh] performing full reload because your application had an unrecoverable error @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/next-devtools/shared/forward-logs-shared.js:27

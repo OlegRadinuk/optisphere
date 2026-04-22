@@ -1,5 +1,6 @@
 'use client';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import SectionIntro from '@/components/hud/SectionIntro';
 
 const TILES = [
@@ -45,14 +46,48 @@ function ProofTile({ t }: { t: typeof TILES[0] }) {
   );
 }
 
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.08 } },
+};
+const itemVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 0.61, 0.36, 1] as const } },
+};
+
 export default function ProofSection() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-80px' });
+
   return (
     <section id="proof" style={{ padding:'96px 0', background:'var(--op-surface)', borderTop:'1px solid var(--op-border)', borderBottom:'1px solid var(--op-border)' }}>
       <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px' }}>
-        <SectionIntro code="05" cmd="clients.list()" title="Мы работали с" sub="Показываем без логотипов — клиенты ценят приватность. Наведите, чтобы увидеть нишу."/>
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gridAutoRows:'120px', gap:12 }} className="proof-collage">
-          {TILES.map((t,i) => <ProofTile key={i} t={t}/>)}
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.55, ease: [0.22, 0.61, 0.36, 1] }}
+        >
+          <SectionIntro code="05" cmd="clients.list()" title="Мы работали с" sub="Показываем без логотипов — клиенты ценят приватность. Наведите, чтобы увидеть нишу."/>
+        </motion.div>
+        <motion.div
+          ref={ref}
+          variants={containerVariants}
+          initial="hidden"
+          animate={inView ? 'visible' : 'hidden'}
+          style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gridAutoRows:'120px', gap:12 }}
+          className="proof-collage"
+        >
+          {TILES.map((t,i) => {
+            const spanStyle: React.CSSProperties =
+              t.span === 'tall' ? { gridRow:'span 2' } :
+              t.span === 'wide' ? { gridColumn:'span 2' } : {};
+            return (
+              <motion.div key={i} variants={itemVariants} style={spanStyle}>
+                <ProofTile t={t}/>
+              </motion.div>
+            );
+          })}
+        </motion.div>
       </div>
       <style>{`
         @media(max-width:900px){.proof-collage{grid-template-columns:repeat(2,1fr)!important;}}

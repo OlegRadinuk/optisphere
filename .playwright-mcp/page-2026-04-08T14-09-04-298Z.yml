@@ -1,0 +1,162 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic "Видео территории гостиницы Deniz" [ref=e4]: Ваш браузер не поддерживает видео.
+    - generic [ref=e5]:
+      - link "Логотип гостиницы Deniz" [ref=e7] [cursor=pointer]:
+        - /url: /
+        - img "Логотип гостиницы Deniz" [ref=e8]
+      - navigation "Основная навигация" [ref=e9]:
+        - list [ref=e10]:
+          - listitem [ref=e11]:
+            - link "3D Тур" [ref=e12] [cursor=pointer]:
+              - /url: "#virtual-tour"
+          - listitem [ref=e13]:
+            - link "Номера" [ref=e14] [cursor=pointer]:
+              - /url: "#rooms"
+          - listitem [ref=e15]:
+            - link "Об отеле" [ref=e16] [cursor=pointer]:
+              - /url: "#about-amenities"
+          - listitem [ref=e17]:
+            - link "Контакты" [ref=e18] [cursor=pointer]:
+              - /url: "#contact"
+      - generic [ref=e19]:
+        - heading "DENIZ" [level=1] [ref=e20]
+        - generic [ref=e22]: Ваше море спокойствия в Крыму
+        - link "Забронировать номер через WhatsApp" [ref=e24] [cursor=pointer]:
+          - /url: https://wa.me/79788499950?text=Привет! Пишу с сайта гостиницы Deniz, хочу забронировать номер 🏖️
+          - text: Забронировать номер
+  - generic [ref=e27]:
+    - generic [ref=e29]:
+      - heading "Виртуальный тур по гостинице Deniz" [level=2] [ref=e30]
+      - paragraph [ref=e31]: Исследуйте территорию отеля Deniz в 360°
+      - generic [ref=e32]: 🖱️ Перетаскивайте для осмотра • Перемещайтесь по стрелочкам ➢
+    - iframe [ref=e37]:
+      - generic [ref=f1e3]:
+        - iframe [ref=f1e5]:
+          
+        - generic [ref=f1e7]:
+          - generic [ref=f1e8]: Гостиница "Дениз"
+          - button [ref=f1e10] [cursor=pointer]:
+            - generic:
+              - generic:
+                - img
+        - generic [ref=f1e13]:
+          - button "Приблизить" [ref=f1e15] [cursor=pointer]:
+            - generic:
+              - generic:
+                - img
+          - button "Отдалить" [disabled] [ref=f1e17]:
+            - generic:
+              - generic:
+                - img
+        - button "Открыть в Яндекс Картах" [ref=f1e19] [cursor=pointer]:
+          - generic:
+            - generic:
+              - img
+          - generic [ref=f1e20]: Открыть в Яндекс Картах
+        - link "Условия использования" [ref=f1e21] [cursor=pointer]:
+          - /url: https://yandex.ru/legal/maps_termsofuse/
+    - img [ref=e41] [cursor=pointer]
+  - generic [ref=e44]:
+    - heading "Наши номера в гостинице Deniz" [level=2] [ref=e45]
+    - generic [ref=e46]:
+      - generic [ref=e47]:
+        - generic [ref=e48]:
+          - img "2-местный номер Люкс в гостинице Deniz Новофёдоровка" [ref=e49]
+          - generic [ref=e50]: 2-местный
+        - generic [ref=e51]:
+          - heading "\"Люкс\" 2-местный" [level=3] [ref=e52]:
+            - text: "\"Люкс\""
+            - text: 2-местный
+          - button "Посмотреть фото 2-местный номер Люкс в гостинице Deniz Новофёдоровка" [ref=e53] [cursor=pointer]: Посмотреть фото
+      - generic [ref=e54]:
+        - generic [ref=e55]:
+          - img "3-местный номер Люкс в гостинице Deniz Крым" [ref=e56]
+          - generic [ref=e57]: 3-местный
+        - generic [ref=e58]:
+          - heading "\"Люкс\" 3-местный" [level=3] [ref=e59]:
+            - text: "\"Люкс\""
+            - text: 3-местный
+          - button "Посмотреть фото 3-местный номер Люкс в гостинице Deniz Крым" [ref=e60] [cursor=pointer]: Посмотреть фото
+      - generic [ref=e61]:
+        - generic [ref=e62]:
+          - img "4-местный номер Люкс в гостинице Deniz у моря" [ref=e63]
+          - generic [ref=e64]: 4-местный
+        - generic [ref=e65]:
+          - heading "\"Люкс\" 4-местный" [level=3] [ref=e66]:
+            - text: "\"Люкс\""
+            - text: 4-местный
+          - button "Посмотреть фото 4-местный номер Люкс в гостинице Deniz у моря" [ref=e67] [cursor=pointer]: Посмотреть фото
+      - generic [ref=e68]:
+        - generic [ref=e69]:
+          - img "2-комнатный номер Люкс в гостинице Deniz Новофёдоровка" [ref=e70]
+          - generic [ref=e71]: 2-комнатный
+        - generic [ref=e72]:
+          - heading "\"Люкс\" 2-комнатный" [level=3] [ref=e73]:
+            - text: "\"Люкс\""
+            - text: 2-комнатный
+          - button "Посмотреть фото 2-комнатный номер Люкс в гостинице Deniz Новофёдоровка" [ref=e74] [cursor=pointer]: Посмотреть фото
+  - generic [ref=e76]:
+    - heading "Гостиница Deniz в Новофёдоровке" [level=2] [ref=e77]
+    - generic [ref=e78]:
+      - generic [ref=e80]:
+        - img "Территория гостиницы Deniz в Новофёдоровке" [ref=e82]
+        - img "Зона отдыха гостиницы Deniz" [ref=e84]
+        - img "Номер категории Люкс в гостинице Deniz" [ref=e86]
+        - img "Вид на море из гостиницы Deniz" [ref=e88]
+      - generic [ref=e91]:
+        - paragraph [ref=e92]:
+          - strong [ref=e93]: Гостиница Deniz в Новофёдоровке
+          - text: — это уютный уголок спокойствия в самом сердце Крыма, всего в 200 метрах от живописного побережья Чёрного моря. Мы создали пространство, где современный комфорт встречается с природной гармонией.
+        - paragraph [ref=e94]:
+          - text: Наша гостиница предлагает
+          - strong [ref=e95]: номера категории "Люкс" в Крыму
+          - text: ", оформленные в светлых тонах с использованием натуральных материалов. Каждый номер — это просторное помещение с выходом на балкон, кондиционером и всем необходимым для комфортного проживания."
+        - paragraph [ref=e96]: На территории гостиницы вас ждут уютные беседки для отдыха, мангальная зона для вечерних посиделок, общая кухня и парковка. Мы позаботились о каждой детали, чтобы ваш отдых стал по-настоящему незабываемым.
+        - paragraph [ref=e97]:
+          - strong [ref=e98]: Deniz — ваш идеальный выбор для спокойного семейного отдыха и романтического путешествия в Крыму.
+    - generic [ref=e99]:
+      - generic [ref=e100]:
+        - generic [ref=e101]: Мангальная зона
+        - generic [ref=e102]: Море в 200 метрах
+      - generic [ref=e103]:
+        - generic [ref=e104]: Парковка
+        - generic [ref=e105]: Кухня
+  - generic [ref=e107]:
+    - heading "Забронируйте отдых в гостинице Deniz" [level=2] [ref=e108]
+    - generic [ref=e109]:
+      - generic [ref=e110]:
+        - heading "Контакты гостиницы" [level=3] [ref=e111]
+        - generic [ref=e112]:
+          - generic [ref=e113]: 📞
+          - link "+7 (978) 849-99-50" [ref=e114] [cursor=pointer]:
+            - /url: tel:+79788499950
+        - generic [ref=e115]:
+          - generic [ref=e116]: 📧
+          - link "denizmore@mail.ru" [ref=e117] [cursor=pointer]:
+            - /url: mailto:denizmore@mail.ru
+        - generic [ref=e118]:
+          - generic [ref=e119]: 📍
+          - generic [ref=e120]:
+            - text: Крым, п. г. т. Новофёдоровка,
+            - text: Прибрежная ул., 6
+        - generic [ref=e121]:
+          - link "Написать в WhatsApp для бронирования" [ref=e122] [cursor=pointer]:
+            - /url: https://wa.me/79788499950?text=Привет! Пишу с сайта гостиницы Deniz, хочу забронировать номер 🏖️
+            - text: 📱 Написать в WhatsApp
+          - link "Позвонить в гостиницу Deniz" [ref=e123] [cursor=pointer]:
+            - /url: tel:+79788499950
+            - text: 📞 Позвонить
+      - iframe [ref=e126]
+    - generic [ref=e127]:
+      - heading "Отзывы о гостинице Deniz" [level=3] [ref=e128]
+      - generic [ref=e130]:
+        - iframe [ref=e131]
+        - link "Гостиница Deniz на карте Республики Крым — Яндекс Карты" [ref=e132] [cursor=pointer]:
+          - /url: https://yandex.ru/maps/org/deniz/237774711735/
+  - generic [ref=e133]:
+    - button "Наверх к началу страницы" [ref=e134] [cursor=pointer]:
+      - img [ref=e135]
+    - link "Написать в WhatsApp для бронирования номера" [ref=e137] [cursor=pointer]:
+      - /url: https://wa.me/79788499950?text=Привет! Пишу с сайта гостиницы Deniz, хочу забронировать номер 🏖️
+      - img [ref=e138]

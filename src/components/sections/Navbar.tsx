@@ -29,6 +29,24 @@ function Brand() {
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+
+  useEffect(() => {
+    const saved = localStorage.getItem('op-theme');
+    if (saved === 'light') setTheme('light');
+  }, []);
+
+  const toggleTheme = () => {
+    const next = theme === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+    if (next === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+      localStorage.setItem('op-theme', 'light');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('op-theme', 'dark');
+    }
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -70,6 +88,23 @@ export default function Navbar() {
         <div style={{ marginLeft:'auto', display:'flex', alignItems:'center', gap:12 }}>
           <span style={{ font:"400 11px/1 'JetBrains Mono',monospace", color:'var(--op-text-muted)', letterSpacing:'.12em' }}
                 className="nav-price-desktop">ОТ 90 000 ₽</span>
+          <button
+            onClick={toggleTheme}
+            title={theme === 'dark' ? 'Светлая тема' : 'Тёмная тема'}
+            style={{
+              width: 36, height: 36,
+              borderRadius: 8,
+              background: 'transparent',
+              border: '1px solid var(--op-border-strong)',
+              color: 'var(--op-text-secondary)',
+              cursor: 'pointer',
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: 16,
+              transition: 'all 180ms ease',
+            }}
+          >
+            {theme === 'dark' ? '☀' : '🌙'}
+          </button>
           <button
             onClick={() => window.dispatchEvent(new CustomEvent('yura-open'))}
             style={{

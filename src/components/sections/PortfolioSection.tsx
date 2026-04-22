@@ -1,13 +1,14 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
+import { useRef } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import Image from 'next/image';
 import { PORTFOLIO } from '@/lib/portfolio';
 
 // ─── Portfolio Card ───────────────────────────────────────────────────────────
 
-function PortfolioCard({ item, index }: { item: typeof PORTFOLIO[number]; index: number }) {
+function PortfolioCard({ item, index, inView }: { item: typeof PORTFOLIO[number]; index: number; inView: boolean }) {
   const locale = useLocale();
   const isRu = locale === 'ru';
 
@@ -18,8 +19,8 @@ function PortfolioCard({ item, index }: { item: typeof PORTFOLIO[number]; index:
       rel="noopener noreferrer"
       layout
       initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+      transition={{ duration: 0.4, delay: inView ? index * 0.06 : 0, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ y: -6 }}
       style={{
         display: 'block',
@@ -118,6 +119,8 @@ function PortfolioCard({ item, index }: { item: typeof PORTFOLIO[number]; index:
 
 export default function PortfolioSection() {
   const t = useTranslations('portfolio');
+  const gridRef = useRef(null);
+  const inView = useInView(gridRef, { once: true, margin: '-80px' });
 
   return (
     <section
@@ -168,6 +171,7 @@ export default function PortfolioSection() {
 
         {/* Grid */}
         <div
+          ref={gridRef}
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(1, 1fr)',
@@ -176,7 +180,7 @@ export default function PortfolioSection() {
           className="portfolio-grid"
         >
           {PORTFOLIO.map((item, index) => (
-            <PortfolioCard key={item.id} item={item} index={index} />
+            <PortfolioCard key={item.id} item={item} index={index} inView={inView} />
           ))}
         </div>
       </div>

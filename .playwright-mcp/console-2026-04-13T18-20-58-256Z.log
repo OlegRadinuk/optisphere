@@ -1,0 +1,48 @@
+[     158ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[     204ms] [LOG] [HMR] connected @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[     309ms] [LOG] 📌 [Header] mode: hero @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[     309ms] [LOG] 📌 [Header] searchParams: null @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[     310ms] [LOG] 📌 [Header] pathname: / @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[     310ms] [LOG] 📌 [Header] isApartmentPage: false @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[     311ms] [LOG] 📌 [Header] activeApartment: null @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[     784ms] [ERROR] Error fetching hero slides: Error: no slides
+    at Hero.useEffect.fetchSlides (http://localhost:3001/_next/static/chunks/_8e68ed5e._.js:99:35) @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[   26347ms] [LOG] 📌 [Header] mode: apartment @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   26347ms] [LOG] 📌 [Header] searchParams: null @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   26347ms] [LOG] 📌 [Header] pathname: / @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   26347ms] [LOG] 📌 [Header] isApartmentPage: false @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   26348ms] [LOG] 📌 [Header] activeApartment: {id: ls-lux-sweet-caramel, title:  Art Sweet Caramel, image: /panoramas/LS-Art-Sweet-Caramel.webp, maxGuests: 4, meta: Array(4)} @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   35682ms] [LOG] 📌 [Header] mode: dark @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   35682ms] [LOG] 📌 [Header] searchParams: null @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   35682ms] [LOG] 📌 [Header] pathname: / @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   35683ms] [LOG] 📌 [Header] isApartmentPage: false @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   35683ms] [LOG] 📌 [Header] activeApartment: {id: ls-lux-sweet-caramel, title:  Art Sweet Caramel, image: /panoramas/LS-Art-Sweet-Caramel.webp, maxGuests: 4, meta: Array(4)} @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  333833ms] [LOG] 📌 [Header] mode: apartment @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  333833ms] [LOG] 📌 [Header] searchParams: null @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  333833ms] [LOG] 📌 [Header] pathname: / @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  333833ms] [LOG] 📌 [Header] isApartmentPage: false @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  333834ms] [LOG] 📌 [Header] activeApartment: {id: ls-lux-sweet-caramel, title:  Art Sweet Caramel, image: /panoramas/LS-Art-Sweet-Caramel.webp, maxGuests: 4, meta: Array(4)} @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  334314ms] [LOG] 📌 [Header] mode: hero @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  334314ms] [LOG] 📌 [Header] searchParams: null @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  334314ms] [LOG] 📌 [Header] pathname: / @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  334315ms] [LOG] 📌 [Header] isApartmentPage: false @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  334315ms] [LOG] 📌 [Header] activeApartment: {id: ls-lux-sweet-caramel, title:  Art Sweet Caramel, image: /panoramas/LS-Art-Sweet-Caramel.webp, maxGuests: 4, meta: Array(4)} @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  335860ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  335893ms] [LOG] [HMR] connected @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  335946ms] [LOG] 📌 [Header] mode: hero @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  335946ms] [LOG] 📌 [Header] searchParams: null @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  335946ms] [LOG] 📌 [Header] pathname: / @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  335947ms] [LOG] 📌 [Header] isApartmentPage: false @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  335947ms] [LOG] 📌 [Header] activeApartment: null @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  336304ms] [ERROR] Error fetching hero slides: Error: no slides
+    at Hero.useEffect.fetchSlides (http://localhost:3001/_next/static/chunks/_8e68ed5e._.js:99:35) @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  340891ms] [LOG] 📌 [Header] mode: apartment @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  340891ms] [LOG] 📌 [Header] searchParams: null @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  340891ms] [LOG] 📌 [Header] pathname: / @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  340891ms] [LOG] 📌 [Header] isApartmentPage: false @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  340892ms] [LOG] 📌 [Header] activeApartment: {id: ls-lux-sweet-caramel, title:  Art Sweet Caramel, image: /panoramas/LS-Art-Sweet-Caramel.webp, maxGuests: 4, meta: Array(4)} @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  342283ms] [LOG] 📌 [Header] mode: dark @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  342283ms] [LOG] 📌 [Header] searchParams: null @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  342284ms] [LOG] 📌 [Header] pathname: / @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  342284ms] [LOG] 📌 [Header] isApartmentPage: false @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  342284ms] [LOG] 📌 [Header] activeApartment: {id: ls-lux-sweet-caramel, title:  Art Sweet Caramel, image: /panoramas/LS-Art-Sweet-Caramel.webp, maxGuests: 4, meta: Array(4)} @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297

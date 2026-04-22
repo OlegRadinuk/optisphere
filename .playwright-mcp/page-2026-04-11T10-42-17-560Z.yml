@@ -1,0 +1,544 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e5]:
+      - link "Optisphere — главная страница" [ref=e6] [cursor=pointer]:
+        - /url: /ru
+        - generic [ref=e7]: OPTISPHERE
+      - navigation "Основная навигация" [ref=e8]:
+        - link "Услуги" [ref=e9] [cursor=pointer]:
+          - /url: "#services"
+        - link "Портфолио" [ref=e10] [cursor=pointer]:
+          - /url: "#portfolio"
+        - link "Цены" [ref=e11] [cursor=pointer]:
+          - /url: "#pricing"
+        - link "Контакт" [ref=e12] [cursor=pointer]:
+          - /url: "#contact"
+      - generic [ref=e13]:
+        - generic [ref=e14]:
+          - button "Переключить на русский" [ref=e15] [cursor=pointer]: RU
+          - generic [ref=e16]: /
+          - button "Switch to English" [ref=e17] [cursor=pointer]: EN
+        - link "Обсудить проект" [ref=e18] [cursor=pointer]:
+          - /url: "#contact"
+    - generic [ref=e21]:
+      - generic [ref=e22]:
+        - generic [ref=e24]: AI WEB STUDIO
+        - heading "Ваш первый AI-продавец уже работает" [level=1] [ref=e26]:
+          - generic [ref=e27]: Ваш первый
+          - generic [ref=e28]: AI-продавец
+          - generic [ref=e29]: уже работает
+        - paragraph [ref=e30]: Создаём сайты с цифровым ассистентом внутри. Юра закрывает клиентов пока вы занимаетесь бизнесом.
+        - generic [ref=e31]:
+          - link "Рассчитать стоимость" [ref=e32] [cursor=pointer]:
+            - /url: "#calculator"
+          - link "Смотреть работы" [ref=e33] [cursor=pointer]:
+            - /url: "#portfolio"
+        - generic [ref=e34]:
+          - generic [ref=e36]:
+            - generic [ref=e37]: "47"
+            - generic [ref=e38]: сайтов
+          - generic [ref=e41]:
+            - generic [ref=e42]: 1200+
+            - generic [ref=e43]: лидов поймал Юра
+          - generic [ref=e46]:
+            - generic [ref=e47]: 7 дней
+            - generic [ref=e48]: в среднем
+      - generic:
+        - generic:
+          - img
+          - generic:
+            - generic: AI КОНВЕРСИЯ
+            - generic: +340%
+            - generic: средний рост трафика
+          - generic:
+            - generic:
+              - generic: ЮРА ОНЛАЙН
+            - generic: 1 200+
+            - generic: лидов поймано
+    - generic [ref=e51]:
+      - generic [ref=e54]:
+        - generic [ref=e55]:
+          - img [ref=e57]
+          - generic [ref=e62]: сайтов запущено
+        - generic [ref=e63]: "0"
+      - generic [ref=e66]:
+        - generic [ref=e67]:
+          - img [ref=e69]
+          - generic [ref=e73]: лидов поймал Юра
+        - generic [ref=e75]: 0+
+      - generic [ref=e78]:
+        - generic [ref=e79]:
+          - img [ref=e81]
+          - generic [ref=e84]: дней в среднем
+        - generic [ref=e85]: "0"
+    - generic [ref=e86]:
+      - generic [ref=e87]:
+        - generic [ref=e88]: Что мы делаем
+        - heading "Три способа вырасти" [level=2] [ref=e89]
+      - generic [ref=e91]:
+        - generic [ref=e93]:
+          - generic [ref=e98]:
+            - generic [ref=e99]: 🔒
+            - generic [ref=e100]: yourclient.ru
+          - generic [ref=e101]:
+            - generic [ref=e111]: Оставить заявку
+            - generic [ref=e112]:
+              - generic [ref=e114]: 47 сайтов
+              - generic [ref=e116]: 7 дней
+              - generic [ref=e118]: SEO
+            - generic [ref=e120]: Юра онлайн
+          - generic [ref=e122]:
+            - generic [ref=e123]:
+              - generic [ref=e124]: 1.4K
+              - generic [ref=e125]: Визиты
+            - generic [ref=e126]:
+              - generic [ref=e127]: "38"
+              - generic [ref=e128]: Лиды
+            - generic [ref=e129]:
+              - generic [ref=e130]: 2.7%
+              - generic [ref=e131]: Конверсия
+        - generic [ref=e132]:
+          - generic [ref=e133]: AI-САЙТ
+          - heading "AI-Сайт" [level=3] [ref=e134]
+          - paragraph [ref=e135]: Сайт с цифровым продавцом внутри. Юра отвечает на вопросы, квалифицирует клиентов и запрашивает контакт — круглосуточно.
+          - list [ref=e136]:
+            - listitem [ref=e137]:
+              - img [ref=e138]
+              - generic [ref=e141]: Юра как часть сайта
+            - listitem [ref=e142]:
+              - img [ref=e143]
+              - generic [ref=e146]: Адаптивный дизайн
+            - listitem [ref=e147]:
+              - img [ref=e148]
+              - generic [ref=e151]: SEO-оптимизация
+            - listitem [ref=e152]:
+              - img [ref=e153]
+              - generic [ref=e156]: Готово за 5–10 дней
+      - generic [ref=e158]:
+        - generic [ref=e160]:
+          - generic [ref=e161]:
+            - generic [ref=e164]: 360° VIRTUAL TOUR
+            - generic [ref=e165]:
+              - generic [ref=e166]: VR
+              - generic [ref=e167]: HD
+              - generic [ref=e168]: 🔊
+          - generic [ref=e169]:
+            - img [ref=e171]:
+              - generic [ref=e178]: 360°
+              - generic [ref=e179]: ‹
+              - generic [ref=e180]: ›
+            - generic [ref=e185]: Гостиница «Нова» · Люкс 301
+          - generic [ref=e186]:
+            - generic [ref=e187]:
+              - button "🏨 Ресепшн" [ref=e188] [cursor=pointer]
+              - button "🛏 Люкс" [ref=e189] [cursor=pointer]
+              - button "🏊 SPA" [ref=e190] [cursor=pointer]
+            - generic [ref=e191]: 8/20 объектов
+        - generic [ref=e192]:
+          - generic [ref=e193]: ПРИСУТСТВИЕ
+          - heading "Присутствие" [level=3] [ref=e194]
+          - paragraph [ref=e195]: 360-панорамы и визуальный контент. Клиент «приходит» к вам до первого звонка — видит всё изнутри.
+          - list [ref=e196]:
+            - listitem [ref=e197]:
+              - img [ref=e198]
+              - generic [ref=e201]: 360° туры по объекту
+            - listitem [ref=e202]:
+              - img [ref=e203]
+              - generic [ref=e206]: Интеграция на сайт
+            - listitem [ref=e207]:
+              - img [ref=e208]
+              - generic [ref=e211]: Виртуальный просмотр
+            - listitem [ref=e212]:
+              - img [ref=e213]
+              - generic [ref=e216]: От 8 000 ₽/объект
+      - generic [ref=e218]:
+        - generic [ref=e220]:
+          - generic [ref=e221]:
+            - generic [ref=e222]:
+              - generic [ref=e223]: Продвижение · Аналитика
+              - generic [ref=e224]: Органический трафик / 6 мес
+            - generic [ref=e225]:
+              - generic [ref=e226]: 1М
+              - generic [ref=e227]: 3М
+              - generic [ref=e228]: 6М
+          - generic [ref=e229]:
+            - generic [ref=e230]:
+              - generic [ref=e231]: 8.2K
+              - generic [ref=e232]: 6K
+              - generic [ref=e233]: 4K
+              - generic [ref=e234]: 2K
+              - generic [ref=e235]: "0"
+            - img [ref=e236]
+          - generic [ref=e240]:
+            - generic [ref=e241]:
+              - generic [ref=e244]: SEO трафик
+              - generic [ref=e245]: +340%
+              - generic [ref=e246]: +2 840 визит/мес
+            - generic [ref=e247]:
+              - generic [ref=e250]: ROI Директ
+              - generic [ref=e251]: 4.2×
+              - generic [ref=e252]: ₽ 14 → ₽ 59 лид
+            - generic [ref=e253]:
+              - generic [ref=e256]: Конверсия
+              - generic [ref=e257]: +28%
+              - generic [ref=e258]: 1.8% → 2.3%
+        - generic [ref=e259]:
+          - generic [ref=e260]: РОСТ
+          - heading "Рост" [level=3] [ref=e261]
+          - paragraph [ref=e262]: SEO + Яндекс.Директ + аналитика. AI анализирует аудиторию, сайт конвертирует, вы получаете заявки.
+          - list [ref=e263]:
+            - listitem [ref=e264]:
+              - img [ref=e265]
+              - generic [ref=e268]: SEO с первого месяца
+            - listitem [ref=e269]:
+              - img [ref=e270]
+              - generic [ref=e273]: Яндекс.Директ
+            - listitem [ref=e274]:
+              - img [ref=e275]
+              - generic [ref=e278]: Ежемесячные отчёты
+            - listitem [ref=e279]:
+              - img [ref=e280]
+              - generic [ref=e283]: Подписка Орбита
+    - generic [ref=e285]:
+      - generic [ref=e286]:
+        - generic [ref=e287]: Наши работы
+        - heading "Сайты которые продают" [level=2] [ref=e288]
+      - group "Portfolio filter" [ref=e289]:
+        - button "Все" [pressed] [ref=e290] [cursor=pointer]
+        - button "Сайты" [ref=e291] [cursor=pointer]
+        - button "Панорамы" [ref=e292] [cursor=pointer]
+        - button "Продвижение" [ref=e293] [cursor=pointer]
+      - generic [ref=e294]:
+        - article [ref=e295]:
+          - generic [ref=e299]:
+            - generic [ref=e300]:
+              - generic [ref=e301]: hotel-nova.ru
+              - generic [ref=e302]: ↗
+            - img [ref=e304]
+            - generic [ref=e313]:
+              - generic [ref=e314]: Next.js
+              - generic [ref=e315]: Three.js
+          - generic [ref=e316]:
+            - generic [ref=e317]: САЙТ
+            - heading "Отель Nova" [level=3] [ref=e318]
+            - paragraph [ref=e319]: Продающий сайт для бутик-отеля с онлайн бронированием и виртуальным туром
+            - generic [ref=e321]:
+              - generic [ref=e322]:
+                - text: Такой сайт от
+                - strong [ref=e323]: от 120 000 ₽
+              - generic [ref=e324]: Открыть сайт
+            - generic [ref=e325]:
+              - generic [ref=e326]: Next.js
+              - generic [ref=e327]: Three.js
+              - generic [ref=e328]: Booking
+        - article [ref=e329]:
+          - generic [ref=e333]:
+            - generic [ref=e334]:
+              - generic [ref=e335]: clinic-med.ru
+              - generic [ref=e336]: ↗
+            - img [ref=e338]
+            - generic [ref=e347]:
+              - generic [ref=e348]: Next.js
+              - generic [ref=e349]: CMS
+          - generic [ref=e350]:
+            - generic [ref=e351]: САЙТ
+            - heading "Клиника MedPro" [level=3] [ref=e352]
+            - paragraph [ref=e353]: Корпоративный сайт медицинской клиники с онлайн-записью к врачам
+            - generic [ref=e355]:
+              - generic [ref=e356]:
+                - text: Такой сайт от
+                - strong [ref=e357]: от 90 000 ₽
+              - generic [ref=e358]: Открыть сайт
+            - generic [ref=e359]:
+              - generic [ref=e360]: Next.js
+              - generic [ref=e361]: CMS
+              - generic [ref=e362]: SEO
+        - article [ref=e363]:
+          - generic [ref=e367]:
+            - generic [ref=e368]:
+              - generic [ref=e369]: build-pro.ru
+              - generic [ref=e370]: ↗
+            - img [ref=e372]
+            - generic [ref=e381]:
+              - generic [ref=e382]: Next.js
+              - generic [ref=e383]: Calculator
+          - generic [ref=e384]:
+            - generic [ref=e385]: САЙТ
+            - heading "СтройПро" [level=3] [ref=e386]
+            - paragraph [ref=e387]: Сайт строительной компании с портфолио объектов и калькулятором
+            - generic [ref=e389]:
+              - generic [ref=e390]:
+                - text: Такой сайт от
+                - strong [ref=e391]: от 80 000 ₽
+              - generic [ref=e392]: Открыть сайт
+            - generic [ref=e393]:
+              - generic [ref=e394]: Next.js
+              - generic [ref=e395]: Calculator
+              - generic [ref=e396]: Gallery
+        - article [ref=e397]:
+          - generic [ref=e401]:
+            - generic [ref=e402]:
+              - generic [ref=e403]: restaurant-pano.ru
+              - generic [ref=e404]: ↗
+            - img [ref=e406]:
+              - generic [ref=e411]: 360°
+            - generic [ref=e412]:
+              - generic [ref=e413]: 360°
+              - generic [ref=e414]: WebGL
+          - generic [ref=e415]:
+            - generic [ref=e416]: ПАНОРАМА
+            - heading "Ресторан Le Grand" [level=3] [ref=e417]
+            - paragraph [ref=e418]: Виртуальный тур по ресторану — 8 локаций, встроен в Google Maps
+            - generic [ref=e420]:
+              - generic [ref=e421]:
+                - text: Такой сайт от
+                - strong [ref=e422]: от 45 000 ₽
+              - generic [ref=e423]: Открыть сайт
+            - generic [ref=e424]:
+              - generic [ref=e425]: 360°
+              - generic [ref=e426]: WebGL
+              - generic [ref=e427]: Google Maps
+        - article [ref=e428]:
+          - generic [ref=e432]:
+            - generic [ref=e433]:
+              - generic [ref=e434]: apartment-pano.ru
+              - generic [ref=e435]: ↗
+            - img [ref=e437]:
+              - generic [ref=e442]: 360°
+            - generic [ref=e443]:
+              - generic [ref=e444]: 360°
+              - generic [ref=e445]: VR
+          - generic [ref=e446]:
+            - generic [ref=e447]: ПАНОРАМА
+            - heading "ЖК Горизонт" [level=3] [ref=e448]
+            - paragraph [ref=e449]: Интерактивный тур по квартирам ЖК — 24 панорамы, VR-режим
+            - generic [ref=e451]:
+              - generic [ref=e452]:
+                - text: Такой сайт от
+                - strong [ref=e453]: от 80 000 ₽
+              - generic [ref=e454]: Открыть сайт
+            - generic [ref=e455]:
+              - generic [ref=e456]: 360°
+              - generic [ref=e457]: VR
+              - generic [ref=e458]: Real estate
+        - article [ref=e459]:
+          - generic [ref=e463]:
+            - generic [ref=e464]:
+              - generic [ref=e465]: seo-auto.ru
+              - generic [ref=e466]: ↗
+            - img [ref=e468]:
+              - generic [ref=e471]: +>200%
+            - generic [ref=e472]:
+              - generic [ref=e473]: SEO
+              - generic [ref=e474]: Яндекс.Директ
+          - generic [ref=e475]:
+            - generic [ref=e476]: ПРОДВИЖЕНИЕ
+            - heading "Автосалон AutoMax" [level=3] [ref=e477]
+            - paragraph [ref=e478]: SEO + Яндекс.Директ. За 3 месяца +220% органического трафика
+            - generic [ref=e480]:
+              - generic [ref=e481]:
+                - text: Такой сайт от
+                - strong [ref=e482]: от 15 000 ₽/мес
+              - generic [ref=e483]: Открыть сайт
+            - generic [ref=e484]:
+              - generic [ref=e485]: SEO
+              - generic [ref=e486]: Яндекс.Директ
+              - generic [ref=e487]: +220% трафик
+    - generic [ref=e489]:
+      - generic [ref=e490]:
+        - generic [ref=e491]: Стоимость
+        - heading "Прозрачные цены" [level=2] [ref=e492]
+        - paragraph [ref=e493]: Точная цена — после разговора с Юрой. Здесь — ориентиры.
+      - generic [ref=e494]:
+        - generic [ref=e495]:
+          - generic [ref=e496]: START
+          - generic [ref=e497]:
+            - generic [ref=e498]: от 50 000 ₽
+            - paragraph [ref=e499]: 3–5 дней
+          - paragraph [ref=e500]: Лендинг для быстрого старта
+          - list [ref=e502]:
+            - listitem [ref=e503]:
+              - generic [ref=e504]: ✓
+              - text: Адаптивный дизайн
+            - listitem [ref=e505]:
+              - generic [ref=e506]: ✓
+              - text: Одна страница (лендинг)
+            - listitem [ref=e507]:
+              - generic [ref=e508]: ✓
+              - text: Форма заявки
+            - listitem [ref=e509]:
+              - generic [ref=e510]: ✓
+              - text: Базовое SEO
+            - listitem [ref=e511]:
+              - generic [ref=e512]: —
+              - text: AI-ассистент Юра
+          - link "Обсудить" [ref=e513] [cursor=pointer]:
+            - /url: "#contact"
+        - generic [ref=e514]:
+          - generic [ref=e515]: Популярный
+          - generic [ref=e516]: PRO
+          - generic [ref=e517]:
+            - generic [ref=e518]: от 120 000 ₽
+            - paragraph [ref=e519]: 5–10 дней
+          - paragraph [ref=e520]: Продающий сайт + SEO
+          - list [ref=e522]:
+            - listitem [ref=e523]:
+              - generic [ref=e524]: ✓
+              - text: Адаптивный дизайн
+            - listitem [ref=e525]:
+              - generic [ref=e526]: ✓
+              - text: До 10 страниц
+            - listitem [ref=e527]:
+              - generic [ref=e528]: ✓
+              - text: AI-ассистент Юра
+            - listitem [ref=e529]:
+              - generic [ref=e530]: ✓
+              - text: SEO-оптимизация
+            - listitem [ref=e531]:
+              - generic [ref=e532]: ✓
+              - text: Аналитика и отчёты
+          - link "Рассчитать стоимость" [ref=e533] [cursor=pointer]:
+            - /url: "#calculator"
+        - generic [ref=e534]:
+          - generic [ref=e535]: PREMIUM
+          - generic [ref=e536]:
+            - generic [ref=e537]: от 180 000 ₽
+            - paragraph [ref=e538]: 10–20 дней
+          - paragraph [ref=e539]: Кастом + 3D + маркетинг
+          - list [ref=e541]:
+            - listitem [ref=e542]:
+              - generic [ref=e543]: ✓
+              - text: Всё из PRO
+            - listitem [ref=e544]:
+              - generic [ref=e545]: ✓
+              - text: 3D / кастом-анимации
+            - listitem [ref=e546]:
+              - generic [ref=e547]: ✓
+              - text: Маркетинговая упаковка
+            - listitem [ref=e548]:
+              - generic [ref=e549]: ✓
+              - text: 360° панорамы
+            - listitem [ref=e550]:
+              - generic [ref=e551]: ✓
+              - text: Приоритетная поддержка
+          - link "Обсудить" [ref=e552] [cursor=pointer]:
+            - /url: "#contact"
+      - generic [ref=e553]:
+        - generic [ref=e554]:
+          - generic [ref=e555]: Подписка
+          - heading "Орбита" [level=3] [ref=e556]
+          - paragraph [ref=e557]: Ежемесячное обслуживание и развитие вашего сайта
+        - generic [ref=e558]:
+          - generic [ref=e559]:
+            - generic [ref=e560]:
+              - text: START
+              - generic [ref=e561]: 10 000 ₽/мес
+            - list [ref=e562]:
+              - listitem [ref=e563]:
+                - generic [ref=e564]: ✓
+                - text: Хостинг + домен
+              - listitem [ref=e565]:
+                - generic [ref=e566]: ✓
+                - text: Мониторинг 24/7
+              - listitem [ref=e567]:
+                - generic [ref=e568]: ✓
+                - text: 5 правок в месяц
+          - generic [ref=e569]:
+            - generic [ref=e570]:
+              - text: PRO
+              - generic [ref=e571]: 15 000 ₽/мес
+            - list [ref=e572]:
+              - listitem [ref=e573]:
+                - generic [ref=e574]: ✓
+                - text: Всё из START
+              - listitem [ref=e575]:
+                - generic [ref=e576]: ✓
+                - text: SEO + позиции
+              - listitem [ref=e577]:
+                - generic [ref=e578]: ✓
+                - text: Конверсия + отчёты
+              - listitem [ref=e579]:
+                - generic [ref=e580]: ✓
+                - text: Юра обновления
+          - generic [ref=e581]:
+            - generic [ref=e582]:
+              - text: MAX
+              - generic [ref=e583]: 25 000 ₽/мес
+            - list [ref=e584]:
+              - listitem [ref=e585]:
+                - generic [ref=e586]: ✓
+                - text: Всё из PRO
+              - listitem [ref=e587]:
+                - generic [ref=e588]: ✓
+                - text: Яндекс.Директ
+              - listitem [ref=e589]:
+                - generic [ref=e590]: ✓
+                - text: Безлимит правок
+              - listitem [ref=e591]:
+                - generic [ref=e592]: ✓
+                - text: Приоритетная поддержка
+        - link "Подключить подписку" [ref=e593] [cursor=pointer]:
+          - /url: "#contact"
+    - generic [ref=e595]:
+      - generic [ref=e596]:
+        - generic [ref=e597]: Калькулятор
+        - heading "Узнайте стоимость" [level=2] [ref=e598]
+      - generic [ref=e600]:
+        - generic [ref=e618]:
+          - paragraph [ref=e619]: Тип бизнеса
+          - generic [ref=e620]:
+            - button "🏨 Гостиница / апартаменты" [ref=e621] [cursor=pointer]:
+              - generic [ref=e622]: 🏨
+              - generic [ref=e623]: Гостиница / апартаменты
+            - button "🏗️ Строительство" [ref=e624] [cursor=pointer]:
+              - generic [ref=e625]: 🏗️
+              - generic [ref=e626]: Строительство
+            - button "🏥 Медицина / клиника" [ref=e627] [cursor=pointer]:
+              - generic [ref=e628]: 🏥
+              - generic [ref=e629]: Медицина / клиника
+            - button "💼 Другой бизнес" [ref=e630] [cursor=pointer]:
+              - generic [ref=e631]: 💼
+              - generic [ref=e632]: Другой бизнес
+        - button "Далее" [disabled] [ref=e634]
+    - generic [ref=e637]:
+      - generic [ref=e639]: Готовы начать?
+      - heading "Готовы запустить?" [level=2] [ref=e641]
+      - paragraph [ref=e642]: Расскажите о проекте — Юра задаст пару вопросов и даст точную цену
+      - generic [ref=e643]:
+        - button "Начать разговор" [ref=e644] [cursor=pointer]
+        - link "@optisphere" [ref=e645] [cursor=pointer]:
+          - /url: https://t.me/optisphere
+          - img [ref=e646]
+          - text: "@optisphere"
+      - generic [ref=e648]:
+        - generic [ref=e649]:
+          - generic [ref=e650]: ⚡
+          - text: Ответ за 15 минут
+        - generic [ref=e651]:
+          - generic [ref=e652]: 🛡
+          - text: Договор и гарантии
+        - generic [ref=e653]:
+          - generic [ref=e654]: 🔄
+          - text: Правки без доп. оплаты
+    - generic [ref=e655]:
+      - generic [ref=e656]:
+        - generic [ref=e657]:
+          - link "Optisphere — главная страница" [ref=e658] [cursor=pointer]:
+            - /url: /ru
+            - generic [ref=e659]: OPTISPHERE
+          - paragraph [ref=e660]: AI-нативная веб-студия · AI Web Studio
+        - navigation "Навигация в подвале" [ref=e661]:
+          - link "Услуги" [ref=e662] [cursor=pointer]:
+            - /url: "#services"
+          - link "Портфолио" [ref=e663] [cursor=pointer]:
+            - /url: "#portfolio"
+          - link "Цены" [ref=e664] [cursor=pointer]:
+            - /url: "#pricing"
+          - link "Калькулятор" [ref=e665] [cursor=pointer]:
+            - /url: "#calculator"
+          - link "Контакт" [ref=e666] [cursor=pointer]:
+            - /url: "#contact"
+        - paragraph [ref=e667]: Сделано с умом · 2026
+      - paragraph [ref=e670]: © 2025 Optisphere. Все права защищены.
+  - button "Open Next.js Dev Tools" [ref=e676] [cursor=pointer]:
+    - img [ref=e677]

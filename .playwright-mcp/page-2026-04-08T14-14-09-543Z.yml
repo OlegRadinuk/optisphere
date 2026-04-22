@@ -1,0 +1,212 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - button "Меню" [ref=e3] [cursor=pointer]:
+      - img [ref=e4]
+      - generic [ref=e8]: Меню
+    - generic [ref=e9]:
+      - generic [ref=e10]:
+        - generic [ref=e11]:
+          - generic: Заезд
+          - textbox "ДД.ММ.ГГГГ" [ref=e12] [cursor=pointer]
+        - generic [ref=e13]:
+          - generic: Выезд
+          - textbox "ДД.ММ.ГГГГ" [ref=e14] [cursor=pointer]
+        - generic [ref=e15]:
+          - generic: Гости
+          - combobox [ref=e16] [cursor=pointer]:
+            - option "1 гость"
+            - option "2 гостя" [selected]
+            - option "3 гостя"
+            - option "4 гостя"
+            - option "5 гостя"
+      - button "Выбрать апартаменты" [ref=e17] [cursor=pointer]
+  - generic [ref=e20]:
+    - img "Life Style Crimea" [ref=e22]
+    - generic [ref=e23]:
+      - generic [ref=e24]: С
+      - generic [ref=e25]: т
+      - generic [ref=e26]: и
+      - generic [ref=e27]: л
+      - generic [ref=e28]: ь
+      - generic [ref=e29]: Ж
+      - generic [ref=e30]: и
+      - generic [ref=e31]: з
+      - generic [ref=e32]: н
+      - generic [ref=e33]: и
+    - generic [ref=e34]:
+      - generic [ref=e35]: А
+      - generic [ref=e36]: л
+      - generic [ref=e37]: у
+      - generic [ref=e38]: ш
+      - generic [ref=e39]: т
+      - generic [ref=e40]: а
+      - generic [ref=e41]: ·
+      - generic [ref=e42]: с
+      - generic [ref=e43]: л
+      - generic [ref=e44]: ю
+      - generic [ref=e45]: б
+      - generic [ref=e46]: о
+      - generic [ref=e47]: в
+      - generic [ref=e48]: ь
+      - generic [ref=e49]: ю
+    - paragraph [ref=e52]: Проходим на ресепшн
+  - generic [ref=e55]:
+    - generic [ref=e57]:
+      - img
+      - button "‹" [ref=e62] [cursor=pointer]
+      - button "›" [ref=e63] [cursor=pointer]
+      - generic:
+        - generic [ref=e64]:
+          - heading "Стиль жизни с л ю б о в ь ю . . ." [level=1] [ref=e65]:
+            - text: Стиль жизни
+            - generic [ref=e66]:
+              - generic [ref=e67]: с
+              - generic [ref=e69]: л
+              - generic [ref=e70]: ю
+              - generic [ref=e71]: б
+              - generic [ref=e72]: о
+              - generic [ref=e73]: в
+              - generic [ref=e74]: ь
+              - generic [ref=e75]: ю
+              - generic [ref=e76]: .
+              - generic [ref=e77]: .
+              - generic [ref=e78]: .
+          - paragraph [ref=e79]: Премиальные апартаменты в Алуште
+        - generic [ref=e80]:
+          - button "01" [ref=e81] [cursor=pointer]
+          - button "02" [ref=e82] [cursor=pointer]
+          - button "03" [ref=e83] [cursor=pointer]
+    - generic [ref=e85]:
+      - generic [ref=e88]:
+        - generic [ref=e89]: Lifestyle · Luxury
+        - heading "Art Sweet Caramel" [level=2] [ref=e90]
+        - paragraph [ref=e91]: Просторные премиальные апартаменты с панорамным видом на Чёрное море.
+        - list [ref=e92]:
+          - listitem [ref=e93]: До 4 гостей
+          - listitem [ref=e94]: 85 м²
+          - listitem [ref=e95]: Панорамные окна
+          - listitem [ref=e96]: Терраса
+        - generic [ref=e97]:
+          - link "Перейти в апартамент" [ref=e98] [cursor=pointer]:
+            - /url: /apartments/ls-lux-sweet-caramel
+          - button "Смотреть фото" [ref=e99] [cursor=pointer]
+      - generic [ref=e100]:
+        - button "← Вернуться к Art Dream Vacation" [ref=e101] [cursor=pointer]:
+          - generic [ref=e102]: ←
+          - generic [ref=e103]: Вернуться к Art Dream Vacation
+        - button "Смотреть следующий Art Flower Kiss →" [ref=e119] [cursor=pointer]:
+          - generic [ref=e120]: Смотреть следующий Art Flower Kiss
+          - generic [ref=e121]: →
+    - generic [ref=e123]:
+      - generic [ref=e124]:
+        - heading "Отзывы наших гостей" [level=2] [ref=e125]
+        - generic [ref=e127]:
+          - generic [ref=e128] [cursor=pointer]:
+            - text: ←
+            - paragraph [ref=e129]: Номер полностью соответствует фото. Вид на море шикарный, комфорт на уровне.
+            - generic [ref=e130]: Виктория
+          - generic [ref=e131]:
+            - paragraph [ref=e132]: Приятные апартаменты. Прожили 9 дней, остались в восторге. Красивый вид на море, стильный интерьер и чистота.
+            - generic [ref=e133]: Татьяна
+          - generic [ref=e134] [cursor=pointer]:
+            - text: →
+            - paragraph [ref=e135]: Лучше не придумать. Есть всё необходимое, полный набор техники и отличный ремонт.
+            - generic [ref=e136]: Радик
+        - link "Смотреть все отзывы на Яндекс Картах" [ref=e137] [cursor=pointer]:
+          - /url: https://yandex.ru/maps/org/stil_zhizni/82645925123/
+      - generic [ref=e140]:
+        - generic [ref=e141]:
+          - heading "Комплекс апартаментов «Стиль Жизни»" [level=3] [ref=e142]
+          - paragraph [ref=e143]: Современные апартаменты с видом на море в Алуште. Комфорт, сервис и эстетика для отдыха и жизни.
+          - generic [ref=e144]:
+            - link "+7 (978) 503-63-63" [ref=e145] [cursor=pointer]:
+              - /url: tel:+79785036363
+            - link "+7 (978) 696-45-10" [ref=e146] [cursor=pointer]:
+              - /url: tel:+79786964510
+            - generic [ref=e147]: Алушта, Западная ул., 4, корп. 3
+          - generic [ref=e148]: © 2026 Стиль Жизни
+        - iframe [ref=e150]:
+          - generic [ref=f21e2]:
+            - generic:
+              - generic:
+                - generic [ref=f21e7] [cursor=pointer]:
+                  - img [ref=f21e8]
+                  - img [ref=f21e14]
+                  - generic [ref=f21e16]: Стиль Жизни
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic [ref=f21e17]:
+                        - generic [ref=f21e18]:
+                          - button [ref=f21e21] [cursor=pointer]:
+                            - generic:
+                              - generic:
+                                - img
+                          - button [ref=f21e23] [cursor=pointer]:
+                            - generic [ref=f21e24]:
+                              - generic:
+                                - img
+                        - iframe [ref=f21e26]:
+                          
+                      - generic [ref=f21e27]:
+                        - generic [ref=f21e30]:
+                          - button "Приблизить" [ref=f21e32] [cursor=pointer]:
+                            - generic:
+                              - generic:
+                                - img
+                          - button "Отдалить" [ref=f21e34] [cursor=pointer]:
+                            - generic:
+                              - generic:
+                                - img
+                        - iframe [ref=f21e35]:
+                          
+                      - generic [ref=f21e36]:
+                        - button "Моё местоположение" [ref=f21e39] [cursor=pointer]:
+                          - generic:
+                            - generic:
+                              - img
+                        - iframe [ref=f21e40]:
+                          
+                      - generic:
+                        - generic:
+                          - generic:
+                            - button "Открыть в Яндекс Картах":
+                              - generic:
+                                - generic:
+                                  - img
+                              - generic: Открыть в Яндекс Картах
+                        - iframe [ref=f21e41]:
+                          
+                      - generic:
+                        - generic:
+                          - generic:
+                            - button "Открыть в Картах":
+                              - generic:
+                                - generic:
+                                  - img
+                              - generic: Открыть в Картах
+                        - iframe [ref=f21e42]:
+                          
+                      - generic [ref=f21e43]:
+                        - button [ref=f21e46] [cursor=pointer]:
+                          - generic:
+                            - generic:
+                              - img
+                        - iframe [ref=f21e47]:
+                          
+                    - generic:
+                      - generic:
+                        - contentinfo:
+                          - generic [ref=f21e49]:
+                            - generic [ref=f21e50]: © Яндекс
+                            - link "Условия использования" [ref=f21e51] [cursor=pointer]:
+                              - /url: https://yandex.ru/legal/maps_termsofuse/?lang=ru
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: 30 м
+                    - iframe [ref=f21e52]:
+                      
+                - iframe [ref=f21e53]:
+                  
+  - alert [ref=e151]

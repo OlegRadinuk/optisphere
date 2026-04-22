@@ -1,0 +1,518 @@
+- generic [active] [ref=e1]:
+  - generic:
+    - generic:
+      - link "Перейти к основному контенту" [ref=e2] [cursor=pointer]
+      - link "Справка по использованию специальных возможностей" [ref=e3] [cursor=pointer]:
+        - /url: https://support.google.com/websearch/answer/181196?hl=ru
+      - link "Оставить отзыв о специальных возможностях" [ref=e4] [cursor=pointer]
+  - generic [ref=e9]:
+    - search [ref=e10]:
+      - generic [ref=e13]:
+        - link "Главная страница Google" [ref=e14] [cursor=pointer]:
+          - /url: https://www.google.com/webhp?hl=ru&ictx=0&sa=X&ved=0ahUKEwihl4jNgeSTAxXAUaQEHcnXEqkQpYkNCAs
+          - img "Главная страница Google" [ref=e15]
+        - generic [ref=e20]:
+          - combobox "Найти" [ref=e23]: spline 3d scene embed atom sphere cosmic "prod.spline.design" spline 3d scene embed atom sphere cosmic "prod.spline.design"
+          - generic [ref=e24]:
+            - button "Очистить" [ref=e26] [cursor=pointer]:
+              - img [ref=e28]
+            - generic [ref=e31]:
+              - button "Экранная клавиатура" [ref=e32] [cursor=pointer]:
+                - img [ref=e34]
+              - button "Голосовой поиск" [ref=e36] [cursor=pointer]:
+                - img [ref=e37]
+              - button "Поиск по картинке" [ref=e39] [cursor=pointer]:
+                - img [ref=e40]
+        - button "Поиск" [ref=e42] [cursor=pointer]:
+          - img [ref=e45]
+    - generic [ref=e47]:
+      - button "Настройки" [ref=e49] [cursor=pointer]:
+        - img [ref=e52]
+      - generic [ref=e55]:
+        - button "Приложения Google" [ref=e57] [cursor=pointer]:
+          - img [ref=e58]
+        - link "Войти" [ref=e62] [cursor=pointer]:
+          - /url: https://accounts.google.com/ServiceLogin?hl=ru&passive=true&continue=https://www.google.com/search%3Fq%3Dspline%2B3d%2Bscene%2Bembed%2Batom%2Bsphere%2Bcosmic%2B%2522prod.spline.design%2522&ec=futura_srp_og_si_72236_p
+  - generic [ref=e64]:
+    - navigation [ref=e70]:
+      - generic [ref=e76]:
+        - list [ref=e77]:
+          - listitem [ref=e78]:
+            - link "Все" [disabled] [ref=e79]:
+              - generic [ref=e81]: Все
+          - listitem [ref=e82]:
+            - link "Картинки" [ref=e83] [cursor=pointer]:
+              - /url: /search?sca_esv=954a16bda8dfd6ee&udm=2&fbs=ADc_l-bs2zYa4_vOddERTHH0rF8C7_ChZqWONWWy5LtBNbmRH6GisklX7YOmIuZ-of61Zr2S7RpmtY3UbGXQh878VE-ebI-xVgU1oBAna885mAInegUvtX87CVgQOhN3fojehGlIa_A2bXji3MKrl1r7MDRfBATyjumDV0pinIkKg2W1vjwsWtEevvqGeKjX4ShPFlHaW9rN15Hqqn_AUJwl9G57v6Tpf65b8X9rrHUEPyS-Q1fd9dw&q=spline+3d+scene+embed+atom+sphere+cosmic+prod.spline.design&sa=X&ved=2ahUKEwihl4jNgeSTAxXAUaQEHcnXEqkQtKgLegQIFxAB
+              - generic [ref=e85]: Картинки
+          - listitem [ref=e86]:
+            - link "Видео" [ref=e87] [cursor=pointer]:
+              - /url: /search?sca_esv=954a16bda8dfd6ee&udm=7&fbs=ADc_l-bs2zYa4_vOddERTHH0rF8C7_ChZqWONWWy5LtBNbmRH6GisklX7YOmIuZ-of61Zr2S7RpmtY3UbGXQh878VE-ebI-xVgU1oBAna885mAInegUvtX87CVgQOhN3fojehGlIa_A2bXji3MKrl1r7MDRfBATyjumDV0pinIkKg2W1vjwsWtEevvqGeKjX4ShPFlHaW9rN15Hqqn_AUJwl9G57v6Tpf65b8X9rrHUEPyS-Q1fd9dw&q=spline+3d+scene+embed+atom+sphere+cosmic+prod.spline.design&sa=X&ved=2ahUKEwihl4jNgeSTAxXAUaQEHcnXEqkQtKgLegQIFhAB
+              - generic [ref=e89]: Видео
+          - listitem [ref=e90]:
+            - link "Короткие видео" [ref=e91] [cursor=pointer]:
+              - /url: /search?sca_esv=954a16bda8dfd6ee&udm=39&fbs=ADc_l-bs2zYa4_vOddERTHH0rF8C7_ChZqWONWWy5LtBNbmRH6GisklX7YOmIuZ-of61Zr2S7RpmtY3UbGXQh878VE-ebI-xVgU1oBAna885mAInegUvtX87CVgQOhN3fojehGlIa_A2bXji3MKrl1r7MDRfBATyjumDV0pinIkKg2W1vjwsWtEevvqGeKjX4ShPFlHaW9rN15Hqqn_AUJwl9G57v6Tpf65b8X9rrHUEPyS-Q1fd9dw&q=spline+3d+scene+embed+atom+sphere+cosmic+prod.spline.design&sa=X&ved=2ahUKEwihl4jNgeSTAxXAUaQEHcnXEqkQs6gLegQIFRAB
+              - generic [ref=e93]: Короткие видео
+          - listitem [ref=e94]:
+            - link "Веб-версия" [ref=e95] [cursor=pointer]:
+              - /url: /search?sca_esv=954a16bda8dfd6ee&udm=web&fbs=ADc_l-bs2zYa4_vOddERTHH0rF8C7_ChZqWONWWy5LtBNbmRH6GisklX7YOmIuZ-of61Zr2S7RpmtY3UbGXQh878VE-ebI-xVgU1oBAna885mAInegUvtX87CVgQOhN3fojehGlIa_A2bXji3MKrl1r7MDRfBATyjumDV0pinIkKg2W1vjwsWtEevvqGeKjX4ShPFlHaW9rN15Hqqn_AUJwl9G57v6Tpf65b8X9rrHUEPyS-Q1fd9dw&q=spline+3d+scene+embed+atom+sphere+cosmic+prod.spline.design&sa=X&ved=2ahUKEwihl4jNgeSTAxXAUaQEHcnXEqkQs6gLegQIFBAB
+              - generic [ref=e97]: Веб-версия
+          - listitem [ref=e98]:
+            - link "Новости" [ref=e99] [cursor=pointer]:
+              - /url: /search?sca_esv=954a16bda8dfd6ee&q=spline+3d+scene+embed+atom+sphere+cosmic+prod.spline.design&tbm=nws&source=lnms&fbs=ADc_l-bs2zYa4_vOddERTHH0rF8C7_ChZqWONWWy5LtBNbmRH6GisklX7YOmIuZ-of61Zr2S7RpmtY3UbGXQh878VE-ebI-xVgU1oBAna885mAInegUvtX87CVgQOhN3fojehGlIa_A2bXji3MKrl1r7MDRfBATyjumDV0pinIkKg2W1vjwsWtEevvqGeKjX4ShPFlHaW9rN15Hqqn_AUJwl9G57v6Tpf65b8X9rrHUEPyS-Q1fd9dw&sa=X&ved=2ahUKEwihl4jNgeSTAxXAUaQEHcnXEqkQ0pQJegQIEhAB
+              - generic [ref=e101]: Новости
+          - listitem [ref=e102]:
+            - link "Книги" [ref=e103] [cursor=pointer]:
+              - /url: /search?sca_esv=954a16bda8dfd6ee&q=spline+3d+scene+embed+atom+sphere+cosmic+prod.spline.design&udm=36&source=lnms&fbs=ADc_l-bs2zYa4_vOddERTHH0rF8C7_ChZqWONWWy5LtBNbmRH6GisklX7YOmIuZ-of61Zr2S7RpmtY3UbGXQh878VE-ebI-xVgU1oBAna885mAInegUvtX87CVgQOhN3fojehGlIa_A2bXji3MKrl1r7MDRfBATyjumDV0pinIkKg2W1vjwsWtEevvqGeKjX4ShPFlHaW9rN15Hqqn_AUJwl9G57v6Tpf65b8X9rrHUEPyS-Q1fd9dw&sa=X&ved=2ahUKEwihl4jNgeSTAxXAUaQEHcnXEqkQ0pQJegQIExAB
+              - generic [ref=e105]: Книги
+          - listitem [ref=e106]:
+            - button "Ещё фильтры" [ref=e107] [cursor=pointer]:
+              - generic "Ещё фильтры" [ref=e108]:
+                - generic [ref=e109]:
+                  - generic [ref=e110]: Ещё
+                  - img [ref=e112]
+        - button "Инструменты" [ref=e115] [cursor=pointer]:
+          - generic [ref=e117]:
+            - generic [ref=e118]: Инструменты
+            - img [ref=e120]
+    - heading "Результаты поиска" [level=1] [ref=e122]
+    - main [ref=e128]:
+      - generic [ref=e129]:
+        - generic [ref=e133]:
+          - heading "Нет результатов для spline 3d scene embed atom sphere cosmic \"prod.spline.design\"." [level=2] [ref=e134]
+          - text: Результаты для
+          - link "spline 3d scene embed atom sphere cosmic prod.spline.design" [ref=e135] [cursor=pointer]:
+            - /url: /search?sca_esv=954a16bda8dfd6ee&q=spline+3d+scene+embed+atom+sphere+cosmic+prod.spline.design&sa=X&ved=2ahUKEwihl4jNgeSTAxXAUaQEHcnXEqkQgwN6BAgPEAE
+          - text: "(без кавычек):"
+        - generic [ref=e138]:
+          - generic [ref=e142]:
+            - generic [ref=e144]:
+              - heading "Видео" [level=2] [ref=e145]
+              - button "Об этом результате" [ref=e146] [cursor=pointer]:
+                - img [ref=e149]
+            - generic [ref=e152]:
+              - generic [ref=e158]:
+                - generic [ref=e159]:
+                  - generic [ref=e160]:
+                    - link "How to Embed Interactive 3D into Your Website Using Spline ... YouTube Spline 15 нояб. 2024 г." [ref=e162] [cursor=pointer]:
+                      - /url: https://www.youtube.com/watch?v=ncoSN9mgWe8
+                      - heading "How to Embed Interactive 3D into Your Website Using Spline ... YouTube Spline 15 нояб. 2024 г." [level=3] [ref=e163]:
+                        - generic [ref=e166]: How to Embed Interactive 3D into Your Website Using Spline ...
+                        - generic [ref=e168]:
+                          - generic [ref=e169]:
+                            - text: YouTube
+                            - generic [ref=e170]: · Spline
+                          - generic [ref=e171]: 15 нояб. 2024 г.
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - text: YouTube
+                              - generic: · Spline
+                        - button "Об этом результате" [ref=e172] [cursor=pointer]:
+                          - img [ref=e175]
+                  - button "Видео \"How to Embed Interactive 3D into Your Website Using Spline ...\" пользователя Spline, YouTube. Воспроизвести в Google. 5:21" [ref=e177] [cursor=pointer]:
+                    - generic [ref=e178]:
+                      - img [ref=e184]
+                      - generic [ref=e187]:
+                        - generic [ref=e188]: 5:21
+                        - img [ref=e191]
+                - generic [ref=e196]:
+                  - button "В этом видео 5 ключевых моментов" [expanded] [ref=e197] [cursor=pointer]:
+                    - generic [ref=e200]:
+                      - generic [ref=e203]: В этом видео 5 ключевых моментов
+                      - img [ref=e205]
+                  - list [ref=e211]:
+                    - generic [ref=e212]:
+                      - link "Optimizing 3D Scenes for Web. 1 из 5, 0 секунд." [ref=e213] [cursor=pointer]:
+                        - /url: https://www.youtube.com/watch?v=ncoSN9mgWe8&t=0
+                        - generic [ref=e216]:
+                          - generic [ref=e217]:
+                            - text: Фрагмент с
+                            - generic [ref=e218]: 00:00
+                          - generic [ref=e219]: Optimizing 3D Scenes for Web
+                      - link "Adding Interactivity with Events. 2 из 5, 1 минута 40 секунд." [ref=e220] [cursor=pointer]:
+                        - /url: https://www.youtube.com/watch?v=ncoSN9mgWe8&t=100
+                        - generic [ref=e223]:
+                          - generic [ref=e224]:
+                            - text: Фрагмент с
+                            - generic [ref=e225]: 01:40
+                          - generic [ref=e226]: Adding Interactivity with Events
+                      - link "Exporting and Embedding in Wix. 3 из 5, 1 минута 59 секунд." [ref=e227] [cursor=pointer]:
+                        - /url: https://www.youtube.com/watch?v=ncoSN9mgWe8&t=119
+                        - generic [ref=e230]:
+                          - generic [ref=e231]:
+                            - text: Фрагмент с
+                            - generic [ref=e232]: 01:59
+                          - generic [ref=e233]: Exporting and Embedding in Wix
+                      - link "Using Wix Studio. 4 из 5, 3 минуты 52 секунды." [ref=e234] [cursor=pointer]:
+                        - /url: https://www.youtube.com/watch?v=ncoSN9mgWe8&t=232
+                        - generic [ref=e237]:
+                          - generic [ref=e238]:
+                            - text: Фрагмент с
+                            - generic [ref=e239]: 03:52
+                          - generic [ref=e240]: Using Wix Studio
+                      - link "Final Remarks and Resources. 5 из 5, 4 минуты 45 секунд." [ref=e241] [cursor=pointer]:
+                        - /url: https://www.youtube.com/watch?v=ncoSN9mgWe8&t=285
+                        - generic [ref=e244]:
+                          - generic [ref=e245]:
+                            - text: Фрагмент с
+                            - generic [ref=e246]: 04:45
+                          - generic [ref=e247]: Final Remarks and Resources
+              - generic [ref=e253]:
+                - generic [ref=e254]:
+                  - generic [ref=e255]:
+                    - link "How To Embed a Spline Scene in Webflow 2025 ... YouTube Jack Redley Design 3 дек. 2025 г." [ref=e257] [cursor=pointer]:
+                      - /url: https://www.youtube.com/watch?v=_FPef7Hp0IU
+                      - heading "How To Embed a Spline Scene in Webflow 2025 ... YouTube Jack Redley Design 3 дек. 2025 г." [level=3] [ref=e258]:
+                        - generic [ref=e261]: How To Embed a Spline Scene in Webflow 2025 ...
+                        - generic [ref=e263]:
+                          - generic [ref=e264]:
+                            - text: YouTube
+                            - generic [ref=e265]: · Jack Redley Design
+                          - generic [ref=e266]: 3 дек. 2025 г.
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - text: YouTube
+                              - generic: · Jack Redley Design
+                        - button "Об этом результате" [ref=e267] [cursor=pointer]:
+                          - img [ref=e270]
+                  - button "Видео \"How To Embed a Spline Scene in Webflow 2025 ...\" пользователя Jack Redley Design, YouTube. Воспроизвести в Google. 34:01" [ref=e272] [cursor=pointer]:
+                    - generic [ref=e273]:
+                      - img [ref=e276]
+                      - generic [ref=e279]:
+                        - generic [ref=e280]: 34:01
+                        - img [ref=e283]
+                - button "В этом видео 19 ключевых моментов" [ref=e289] [cursor=pointer]:
+                  - generic [ref=e292]:
+                    - generic [ref=e295]: В этом видео 19 ключевых моментов
+                    - img [ref=e297]
+              - generic [ref=e304]:
+                - generic [ref=e305]:
+                  - generic [ref=e306]:
+                    - link "How to Create a Tech-Inspired Reactive 3D Orb in Spline YouTube Spline 19 авг. 2025 г." [ref=e308] [cursor=pointer]:
+                      - /url: https://www.youtube.com/watch?v=ol3f-vwZhBI
+                      - heading "How to Create a Tech-Inspired Reactive 3D Orb in Spline YouTube Spline 19 авг. 2025 г." [level=3] [ref=e309]:
+                        - generic [ref=e312]: How to Create a Tech-Inspired Reactive 3D Orb in Spline
+                        - generic [ref=e314]:
+                          - generic [ref=e315]:
+                            - text: YouTube
+                            - generic [ref=e316]: · Spline
+                          - generic [ref=e317]: 19 авг. 2025 г.
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - text: YouTube
+                              - generic: · Spline
+                        - button "Об этом результате" [ref=e318] [cursor=pointer]:
+                          - img [ref=e321]
+                  - button "Видео \"How to Create a Tech-Inspired Reactive 3D Orb in Spline\" пользователя Spline, YouTube. Воспроизвести в Google. 6:35" [ref=e323] [cursor=pointer]:
+                    - generic [ref=e324]:
+                      - img [ref=e330]
+                      - generic [ref=e333]:
+                        - generic [ref=e334]: 6:35
+                        - img [ref=e337]
+                - button "В этом видео 10 ключевых моментов" [ref=e343] [cursor=pointer]:
+                  - generic [ref=e352]:
+                    - generic [ref=e355]: В этом видео 10 ключевых моментов
+                    - img [ref=e357]
+              - generic [ref=e364]:
+                - generic [ref=e365]:
+                  - generic [ref=e366]:
+                    - link "How to use 3D Shape Blending in Spline YouTube Spline 20 дек. 2024 г." [ref=e368] [cursor=pointer]:
+                      - /url: https://www.youtube.com/watch?v=JIcnI0kUnFM
+                      - heading "How to use 3D Shape Blending in Spline YouTube Spline 20 дек. 2024 г." [level=3] [ref=e369]:
+                        - generic [ref=e372]: How to use 3D Shape Blending in Spline
+                        - generic [ref=e374]:
+                          - generic [ref=e375]:
+                            - text: YouTube
+                            - generic [ref=e376]: · Spline
+                          - generic [ref=e377]: 20 дек. 2024 г.
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - text: YouTube
+                              - generic: · Spline
+                        - button "Об этом результате" [ref=e378] [cursor=pointer]:
+                          - img [ref=e381]
+                  - button "Видео \"How to use 3D Shape Blending in Spline\" пользователя Spline, YouTube. Воспроизвести в Google. 25:54" [ref=e383] [cursor=pointer]:
+                    - generic [ref=e384]:
+                      - img [ref=e390]
+                      - generic [ref=e393]:
+                        - generic [ref=e394]: 25:54
+                        - img [ref=e397]
+                - button "В этом видео 12 ключевых моментов" [ref=e403] [cursor=pointer]:
+                  - generic [ref=e412]:
+                    - generic [ref=e415]: В этом видео 12 ключевых моментов
+                    - img [ref=e417]
+            - link "Посмотреть все видео" [ref=e421] [cursor=pointer]:
+              - /url: /search?sca_esv=954a16bda8dfd6ee&udm=7&q=spline+3d+scene+embed+atom+sphere+cosmic+prod.spline.design&sa=X&ved=2ahUKEwihl4jNgeSTAxXAUaQEHcnXEqkQ8ccDKAJ6BAgcEAQ
+              - separator [ref=e422]
+              - generic [ref=e423]:
+                - generic [ref=e424]: Ещё
+                - img [ref=e426]
+          - generic [ref=e430]:
+            - heading "Web results" [level=2] [ref=e431]
+            - generic [ref=e432]:
+              - generic [ref=e435]:
+                - link "Spline - 3D Design tool in the browser with real-time ... Spline https://spline.design" [ref=e437] [cursor=pointer]:
+                  - /url: https://spline.design/
+                  - heading "Spline - 3D Design tool in the browser with real-time ..." [level=3] [ref=e438]
+                  - generic [ref=e443]:
+                    - generic [ref=e445]: Spline
+                    - generic [ref=e447]: https://spline.design
+                - generic [ref=e448]:
+                  - generic [ref=e449]: ·
+                  - link "Перевести эту страницу" [ref=e450] [cursor=pointer]:
+                    - /url: https://spline.design/
+                - button "Об этом результате" [ref=e451] [cursor=pointer]:
+                  - img [ref=e454]
+              - generic [ref=e458]:
+                - text: The all-in-one platform for 3D and design.
+                - emphasis [ref=e459]: Spline is a design platform
+                - text: to create and collaborate on interactive production-ready experiences in real-time.
+              - generic [ref=e461]: "Не найдено: atom ‎sphere ‎cosmic"
+          - generic [ref=e465]:
+            - generic [ref=e468]:
+              - link "Spline Viewer - Easily embed 3D in your website Spline Viewer https://viewer.spline.design" [ref=e470] [cursor=pointer]:
+                - /url: https://viewer.spline.design/
+                - heading "Spline Viewer - Easily embed 3D in your website" [level=3] [ref=e471]
+                - generic [ref=e476]:
+                  - generic [ref=e478]: Spline Viewer
+                  - generic [ref=e480]: https://viewer.spline.design
+              - generic [ref=e481]:
+                - generic [ref=e482]: ·
+                - link "Перевести эту страницу" [ref=e483] [cursor=pointer]:
+                  - /url: https://viewer.spline.design/
+              - button "Об этом результате" [ref=e484] [cursor=pointer]:
+                - img [ref=e487]
+            - generic [ref=e491]:
+              - emphasis [ref=e492]: Spline is a free, real-time collaborative 3D design tool
+              - text: to create interactive experiences within the browser. Easy 3d animations, models, textures, ...
+            - generic [ref=e494]: "Не найдено: atom ‎sphere ‎cosmic"
+          - generic [ref=e498]:
+            - generic [ref=e501]:
+              - link "ATOM Spline Community https://community.spline.design › ..." [ref=e503] [cursor=pointer]:
+                - /url: https://community.spline.design/tag/ATOM
+                - heading "ATOM" [level=3] [ref=e504]
+                - generic [ref=e509]:
+                  - generic [ref=e511]: Spline Community
+                  - generic [ref=e513]: https://community.spline.design › ...
+              - generic [ref=e514]:
+                - generic [ref=e515]: ·
+                - link "Перевести эту страницу" [ref=e516] [cursor=pointer]:
+                  - /url: https://community.spline.design/tag/ATOM
+              - button "Об этом результате" [ref=e517] [cursor=pointer]:
+                - img [ref=e520]
+            - generic [ref=e524]:
+              - text: The platform to discover, remix, and showcase
+              - emphasis [ref=e525]: 3D
+              - text: "creations #MadeInSpline. Publish"
+              - emphasis [ref=e526]: Spline
+              - text: designs directly to the community. Create your profile today!
+            - generic [ref=e528]: "Не найдено: embed ‎sphere ‎cosmic"
+          - generic [ref=e532]:
+            - generic [ref=e535]:
+              - link "3D Design tool in the browser with real-time collaboration Spline https://spline.design › 3d-design" [ref=e537] [cursor=pointer]:
+                - /url: https://spline.design/3d-design
+                - heading "3D Design tool in the browser with real-time collaboration" [level=3] [ref=e538]
+                - generic [ref=e543]:
+                  - generic [ref=e545]: Spline
+                  - generic [ref=e547]: https://spline.design › 3d-design
+              - generic [ref=e548]:
+                - generic [ref=e549]: ·
+                - link "Перевести эту страницу" [ref=e550] [cursor=pointer]:
+                  - /url: https://spline.design/3d-design
+              - button "Об этом результате" [ref=e551] [cursor=pointer]:
+                - img [ref=e554]
+            - generic [ref=e558]:
+              - emphasis [ref=e559]: Spline is a free 3D design software
+              - text: with real-time collaboration to create web interactive experiences in the browser. Easy 3d modeling, animation, ...
+            - generic [ref=e561]: "Не найдено: embed ‎atom ‎sphere"
+          - generic [ref=e565]:
+            - generic [ref=e568]:
+              - link "3D Web Experiences Spline https://spline.design › solutions" [ref=e570] [cursor=pointer]:
+                - /url: https://spline.design/solutions/3d-web-experiences
+                - heading "3D Web Experiences" [level=3] [ref=e571]
+                - generic [ref=e576]:
+                  - generic [ref=e578]: Spline
+                  - generic [ref=e580]: https://spline.design › solutions
+              - generic [ref=e581]:
+                - generic [ref=e582]: ·
+                - link "Перевести эту страницу" [ref=e583] [cursor=pointer]:
+                  - /url: https://spline.design/solutions/3d-web-experiences
+              - button "Об этом результате" [ref=e584] [cursor=pointer]:
+                - img [ref=e587]
+            - generic [ref=e591]:
+              - text: Create interactive 3D web experiences with ease.
+              - emphasis [ref=e592]: Easily design and embed interactive 3D content into any website
+              - text: . Fully responsive and optimized for the web ...
+            - generic [ref=e594]: "Не найдено: atom ‎sphere ‎cosmic"
+          - generic [ref=e598]:
+            - heading "Вопросы по теме" [level=2] [ref=e600]
+            - generic [ref=e601]:
+              - button "How to model a 3D scene in spline?" [ref=e607] [cursor=pointer]:
+                - generic [ref=e609]: How to model a 3D scene in spline?
+                - img [ref=e612]
+              - button "What is spline 3D design?" [ref=e621] [cursor=pointer]:
+                - generic [ref=e623]: What is spline 3D design?
+                - img [ref=e626]
+              - button "Is spline 3D free?" [ref=e635] [cursor=pointer]:
+                - generic [ref=e637]: Is spline 3D free?
+                - img [ref=e640]
+              - button "How to embed spline into HTML?" [ref=e649] [cursor=pointer]:
+                - generic [ref=e651]: How to embed spline into HTML?
+                - img [ref=e654]
+          - generic [ref=e659]:
+            - heading "Web results" [level=2] [ref=e660]
+            - generic [ref=e661]:
+              - generic [ref=e664]:
+                - link "Creating Interactive/Reactive Spheres in 3D Spline Academy https://academy.spline.design › tutorials › creating-interac..." [ref=e666] [cursor=pointer]:
+                  - /url: https://academy.spline.design/tutorials/creating-interactivereactive-spheres-in-3d
+                  - heading "Creating Interactive/Reactive Spheres in 3D" [level=3] [ref=e667]
+                  - generic [ref=e672]:
+                    - generic [ref=e674]: Spline Academy
+                    - generic [ref=e676]: https://academy.spline.design › tutorials › creating-interac...
+                - button "Об этом результате" [ref=e677] [cursor=pointer]:
+                  - img [ref=e680]
+              - generic [ref=e684]:
+                - emphasis [ref=e685]: Learn 3D design and interactivity
+                - text: ", from fundamentals to advanced techniques. Master Spline with tutorials, collections, and hands-on learning."
+          - generic [ref=e689]:
+            - generic [ref=e692]:
+              - link "Animating a 3D Scene with Spline's New Timeline Tool Codrops https://tympanus.net › codrops" [ref=e694] [cursor=pointer]:
+                - /url: https://tympanus.net/codrops/2025/11/05/animating-a-3d-scene-with-splines-new-timeline-tool/
+                - heading "Animating a 3D Scene with Spline's New Timeline Tool" [level=3] [ref=e695]
+                - generic [ref=e700]:
+                  - generic [ref=e702]: Codrops
+                  - generic [ref=e704]: https://tympanus.net › codrops
+              - generic [ref=e705]:
+                - generic [ref=e706]: ·
+                - link "Перевести эту страницу" [ref=e707] [cursor=pointer]:
+                  - /url: https://tympanus.net/codrops/2025/11/05/animating-a-3d-scene-with-splines-new-timeline-tool/
+              - button "Об этом результате" [ref=e708] [cursor=pointer]:
+                - img [ref=e711]
+            - generic [ref=e714]:
+              - generic [ref=e715]: 5 нояб. 2025 г. —
+              - generic [ref=e716]:
+                - emphasis [ref=e717]: Learn how to create smooth, realistic 3D animations in Spline
+                - text: using the new Timeline feature — from keyframes and curves to exporting your scene ...
+          - generic [ref=e721]:
+            - generic [ref=e724]:
+              - 'link "Create a 3D scene for your website with Spline Medium · Miroslav Šlapka Лайков: более 40 · 5 лет назад" [ref=e726] [cursor=pointer]':
+                - /url: https://medium.com/design-bootcamp/create-a-3d-scene-for-your-website-with-spline-f7c7af1ddc2c
+                - heading "Create a 3D scene for your website with Spline" [level=3] [ref=e727]
+                - generic [ref=e732]:
+                  - generic [ref=e734]: Medium · Miroslav Šlapka
+                  - generic [ref=e736]: "Лайков: более 40 · 5 лет назад"
+              - button "Об этом результате" [ref=e737] [cursor=pointer]:
+                - img [ref=e740]
+            - generic [ref=e744]:
+              - text: The
+              - emphasis [ref=e745]: Spline
+              - text: program provides us with a graphical interface where we can create various
+              - emphasis [ref=e746]: 3D
+              - text: objects and adjust their properties with a few clicks.
+          - generic [ref=e750]:
+            - heading "Картинки" [level=2] [ref=e754]
+            - generic [ref=e758]:
+              - generic [ref=e762] [cursor=pointer]:
+                - 'link "Spline Textures Tutorial: Matcap, Bump, Depth & Image Layers YouTube"':
+                  - /url: https://www.youtube.com/watch?v=L3ncxa2XFP4
+                - 'button "Spline Textures Tutorial: Matcap, Bump, Depth & Image Layers" [ref=e764]':
+                  - 'img "Spline Textures Tutorial: Matcap, Bump, Depth & Image Layers" [ref=e766]'
+                - generic [ref=e768]:
+                  - generic [ref=e770]: "Spline Textures Tutorial: Matcap, Bump, Depth & Image Layers"
+                  - generic [ref=e771]:
+                    - generic [ref=e778]: YouTube
+                    - button "Об этом результате" [ref=e781]:
+                      - img [ref=e784]
+              - generic [ref=e789] [cursor=pointer]:
+                - link "How to use 3D Shape Blending in Spline YouTube":
+                  - /url: https://www.youtube.com/watch?v=JIcnI0kUnFM
+                - button "How to use 3D Shape Blending in Spline" [ref=e791]:
+                  - img "How to use 3D Shape Blending in Spline" [ref=e793]
+                - generic [ref=e795]:
+                  - generic [ref=e797]: How to use 3D Shape Blending in Spline
+                  - generic [ref=e798]:
+                    - generic [ref=e805]: YouTube
+                    - button "Об этом результате" [ref=e808]:
+                      - img [ref=e811]
+              - generic [ref=e816] [cursor=pointer]:
+                - link "How To Embed a Spline Scene in Webflow 2025 (Comprehensive Tutorial) YouTube":
+                  - /url: https://www.youtube.com/watch?v=_FPef7Hp0IU
+                - button "How To Embed a Spline Scene in Webflow 2025 (Comprehensive Tutorial)" [ref=e818]:
+                  - img "How To Embed a Spline Scene in Webflow 2025 (Comprehensive Tutorial)" [ref=e820]
+                - generic [ref=e822]:
+                  - generic [ref=e824]: How To Embed a Spline Scene in Webflow 2025 (Comprehensive Tutorial)
+                  - generic [ref=e825]:
+                    - generic [ref=e832]: YouTube
+                    - button "Об этом результате" [ref=e835]:
+                      - img [ref=e838]
+            - button "Другие изображения" [ref=e841] [cursor=pointer]:
+              - separator [ref=e842]
+              - generic [ref=e843]:
+                - generic [ref=e844]: Другие изображения
+                - img [ref=e846]
+      - navigation [ref=e850]:
+        - heading "Навигация по страницам" [level=1] [ref=e851]
+        - text: "1"
+        - link "Page 2" [ref=e854] [cursor=pointer]:
+          - /url: /search?q=spline+3d+scene+embed+atom+sphere+cosmic+prod.spline.design&sca_esv=954a16bda8dfd6ee&ei=u07ZaeHNNMCjkdUPya_LyAo&start=10&sa=N&sstk=Af77f_fmPG1GE42qltVzF-CLVjs69b93zV0sRO0C_BhYjpaL_uFI31dabjD0nwuIGa9N0ozeobdkQVzQQyRhXZiZFMDemMAupJmMZA&ved=2ahUKEwihl4jNgeSTAxXAUaQEHcnXEqkQ8tMDegQICBAE
+          - text: "2"
+        - link "Page 3" [ref=e856] [cursor=pointer]:
+          - /url: /search?q=spline+3d+scene+embed+atom+sphere+cosmic+prod.spline.design&sca_esv=954a16bda8dfd6ee&ei=u07ZaeHNNMCjkdUPya_LyAo&start=20&sa=N&sstk=Af77f_fmPG1GE42qltVzF-CLVjs69b93zV0sRO0C_BhYjpaL_uFI31dabjD0nwuIGa9N0ozeobdkQVzQQyRhXZiZFMDemMAupJmMZA&ved=2ahUKEwihl4jNgeSTAxXAUaQEHcnXEqkQ8tMDegQICBAG
+          - text: "3"
+        - link "Page 4" [ref=e858] [cursor=pointer]:
+          - /url: /search?q=spline+3d+scene+embed+atom+sphere+cosmic+prod.spline.design&sca_esv=954a16bda8dfd6ee&ei=u07ZaeHNNMCjkdUPya_LyAo&start=30&sa=N&sstk=Af77f_fmPG1GE42qltVzF-CLVjs69b93zV0sRO0C_BhYjpaL_uFI31dabjD0nwuIGa9N0ozeobdkQVzQQyRhXZiZFMDemMAupJmMZA&ved=2ahUKEwihl4jNgeSTAxXAUaQEHcnXEqkQ8tMDegQICBAI
+          - text: "4"
+        - link "Page 5" [ref=e860] [cursor=pointer]:
+          - /url: /search?q=spline+3d+scene+embed+atom+sphere+cosmic+prod.spline.design&sca_esv=954a16bda8dfd6ee&ei=u07ZaeHNNMCjkdUPya_LyAo&start=40&sa=N&sstk=Af77f_fmPG1GE42qltVzF-CLVjs69b93zV0sRO0C_BhYjpaL_uFI31dabjD0nwuIGa9N0ozeobdkQVzQQyRhXZiZFMDemMAupJmMZA&ved=2ahUKEwihl4jNgeSTAxXAUaQEHcnXEqkQ8tMDegQICBAK
+          - text: "5"
+        - link "Page 6" [ref=e862] [cursor=pointer]:
+          - /url: /search?q=spline+3d+scene+embed+atom+sphere+cosmic+prod.spline.design&sca_esv=954a16bda8dfd6ee&ei=u07ZaeHNNMCjkdUPya_LyAo&start=50&sa=N&sstk=Af77f_fmPG1GE42qltVzF-CLVjs69b93zV0sRO0C_BhYjpaL_uFI31dabjD0nwuIGa9N0ozeobdkQVzQQyRhXZiZFMDemMAupJmMZA&ved=2ahUKEwihl4jNgeSTAxXAUaQEHcnXEqkQ8tMDegQICBAM
+          - text: "6"
+        - link "Page 7" [ref=e864] [cursor=pointer]:
+          - /url: /search?q=spline+3d+scene+embed+atom+sphere+cosmic+prod.spline.design&sca_esv=954a16bda8dfd6ee&ei=u07ZaeHNNMCjkdUPya_LyAo&start=60&sa=N&sstk=Af77f_fmPG1GE42qltVzF-CLVjs69b93zV0sRO0C_BhYjpaL_uFI31dabjD0nwuIGa9N0ozeobdkQVzQQyRhXZiZFMDemMAupJmMZA&ved=2ahUKEwihl4jNgeSTAxXAUaQEHcnXEqkQ8tMDegQICBAO
+          - text: "7"
+        - link "Page 8" [ref=e866] [cursor=pointer]:
+          - /url: /search?q=spline+3d+scene+embed+atom+sphere+cosmic+prod.spline.design&sca_esv=954a16bda8dfd6ee&ei=u07ZaeHNNMCjkdUPya_LyAo&start=70&sa=N&sstk=Af77f_fmPG1GE42qltVzF-CLVjs69b93zV0sRO0C_BhYjpaL_uFI31dabjD0nwuIGa9N0ozeobdkQVzQQyRhXZiZFMDemMAupJmMZA&ved=2ahUKEwihl4jNgeSTAxXAUaQEHcnXEqkQ8tMDegQICBAQ
+          - text: "8"
+        - link "Page 9" [ref=e868] [cursor=pointer]:
+          - /url: /search?q=spline+3d+scene+embed+atom+sphere+cosmic+prod.spline.design&sca_esv=954a16bda8dfd6ee&ei=u07ZaeHNNMCjkdUPya_LyAo&start=80&sa=N&sstk=Af77f_fmPG1GE42qltVzF-CLVjs69b93zV0sRO0C_BhYjpaL_uFI31dabjD0nwuIGa9N0ozeobdkQVzQQyRhXZiZFMDemMAupJmMZA&ved=2ahUKEwihl4jNgeSTAxXAUaQEHcnXEqkQ8tMDegQICBAS
+          - text: "9"
+        - link "Page 10" [ref=e870] [cursor=pointer]:
+          - /url: /search?q=spline+3d+scene+embed+atom+sphere+cosmic+prod.spline.design&sca_esv=954a16bda8dfd6ee&ei=u07ZaeHNNMCjkdUPya_LyAo&start=90&sa=N&sstk=Af77f_fmPG1GE42qltVzF-CLVjs69b93zV0sRO0C_BhYjpaL_uFI31dabjD0nwuIGa9N0ozeobdkQVzQQyRhXZiZFMDemMAupJmMZA&ved=2ahUKEwihl4jNgeSTAxXAUaQEHcnXEqkQ8tMDegQICBAU
+          - text: "10"
+        - heading "Следующая" [level=2] [ref=e872]:
+          - link "Следующая" [ref=e873] [cursor=pointer]:
+            - /url: /search?q=spline+3d+scene+embed+atom+sphere+cosmic+prod.spline.design&sca_esv=954a16bda8dfd6ee&ei=u07ZaeHNNMCjkdUPya_LyAo&start=10&sa=N&sstk=Af77f_fmPG1GE42qltVzF-CLVjs69b93zV0sRO0C_BhYjpaL_uFI31dabjD0nwuIGa9N0ozeobdkQVzQQyRhXZiZFMDemMAupJmMZA&ved=2ahUKEwihl4jNgeSTAxXAUaQEHcnXEqkQ8NMDegQICBAW
+            - generic [ref=e875]: Следующая
+      - navigation
+    - contentinfo [ref=e876]:
+      - heading "Ссылки в нижнем колонтитуле" [level=1] [ref=e877]
+      - generic [ref=e881]:
+        - generic [ref=e885]:
+          - button "Судак - Определено по IP-адресу" [ref=e887] [cursor=pointer]:
+            - generic [ref=e888]: Судак
+            - generic [ref=e890]:
+              - text: "-"
+              - generic [ref=e891]: Определено по IP-адресу
+          - text: "-"
+          - button "Обновить" [ref=e893] [cursor=pointer]: Обновить
+        - generic [ref=e896]:
+          - link "Справка" [ref=e897] [cursor=pointer]:
+            - /url: https://support.google.com/websearch/?p=ws_results_help&hl=ru&fg=1
+          - link "Отправить отзыв" [ref=e898] [cursor=pointer]:
+            - /url: "#"
+          - link "Конфиденциальность" [ref=e899] [cursor=pointer]:
+            - /url: https://policies.google.com/privacy?hl=ru&fg=1
+          - link "Условия" [ref=e900] [cursor=pointer]:
+            - /url: https://policies.google.com/terms?hl=ru&fg=1

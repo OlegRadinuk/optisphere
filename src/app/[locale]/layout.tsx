@@ -72,7 +72,15 @@ export default async function LocaleLayout({ children, params }: Props) {
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className={`${oxanium.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
+    <html lang={locale} className={`${oxanium.variable} ${inter.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: `
+  try {
+    var t = localStorage.getItem('op-theme');
+    if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
+  } catch(e) {}
+` }} />
+      </head>
       <body style={{ background: "var(--op-base)", color: "var(--op-text)" }}>
         <NextIntlClientProvider messages={messages}>
           <HeroChatProvider>

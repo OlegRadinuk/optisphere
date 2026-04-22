@@ -55,6 +55,37 @@
   --amber-dim: rgba(245,158,11,0.08);
 }
 
+[data-theme="light"] {
+  --op-base:              #ffffff;
+  --op-surface:           #f5f5f5;
+  --op-surface-elevated:  #ebebeb;
+  --op-surface-overlay:   #e0e0e0;
+  --op-text:              #0a0a0a;
+  --op-text-secondary:    #444444;
+  --op-text-muted:        #888888;
+  --op-text-faint:        #cccccc;
+  --op-text-on-accent:    #ffffff;
+  --op-border:            rgba(0, 0, 0, 0.1);
+  --op-border-strong:     rgba(0, 0, 0, 0.18);
+  --op-shadow-sm:  0 1px 2px rgba(0,0,0,0.12);
+  --op-shadow-md:  0 4px 12px rgba(0,0,0,0.1), 0 0 0 1px var(--op-border);
+  --op-shadow-lg:  0 12px 32px rgba(0,0,0,0.12), 0 0 0 1px var(--op-border);
+  --op-divider:           rgba(0, 0, 0, 0.07);
+  --op-rim: inset 0 1px 0 rgba(255,255,255,0.8);
+
+  /* aliases */
+  --base: var(--op-base);
+  --surface: var(--op-surface);
+  --surface-high: var(--op-surface-elevated);
+  --text: var(--op-text);
+  --text-muted: var(--op-text-secondary);
+}
+
+[data-theme="light"] body {
+  background: var(--op-base);
+  color: var(--op-text);
+}
+
 /* Override font tokens with actual Next.js loaded fonts when variables are available */
 html {
   --op-font-display: var(--font-oxanium, 'Oxanium'), system-ui, sans-serif;

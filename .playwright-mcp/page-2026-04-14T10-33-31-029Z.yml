@@ -1,0 +1,301 @@
+- generic [active] [ref=e1]:
+  - button "Наверх":
+    - img
+  - img "Владен" [ref=e3]
+  - banner [ref=e5]:
+    - generic [ref=e7]:
+      - link "Владен ВЛАДЕН Строительная компания" [ref=e8]:
+        - /url: /
+        - img "Владен" [ref=e9]
+        - generic [ref=e10]:
+          - generic [ref=e11]: ВЛАДЕН
+          - generic [ref=e12]: Строительная компания
+      - navigation [ref=e13]:
+        - link "Главная" [ref=e14]:
+          - /url: /
+        - link "Услуги" [ref=e15]:
+          - /url: /services
+        - link "Модульные дома / Бани new" [ref=e16]:
+          - /url: /modular
+          - text: Модульные дома / Бани
+          - generic [ref=e17]: new
+        - link "Проекты" [ref=e18]:
+          - /url: /projects
+        - link "О компании" [ref=e19]:
+          - /url: /about
+        - link "Контакты" [ref=e20]:
+          - /url: /contacts
+      - generic [ref=e22]:
+        - img
+        - button "Получить консультацию" [ref=e23]
+  - main [ref=e24]:
+    - generic [ref=e26]:
+      - heading "Наши проекты" [level=1] [ref=e27]
+      - paragraph [ref=e28]: Более 200 реализованных объектов по всему Крыму. Каждый проект — это история доверия и качества.
+      - generic [ref=e29]:
+        - generic [ref=e30]:
+          - generic [ref=e31]: 200+
+          - generic [ref=e32]: Объектов
+        - generic [ref=e33]:
+          - generic [ref=e34]: "18"
+          - generic [ref=e35]: Лет опыта
+        - generic [ref=e36]:
+          - generic [ref=e37]: "6"
+          - generic [ref=e38]: Городов
+    - generic [ref=e41]:
+      - generic [ref=e43]:
+        - generic [ref=e45]:
+          - img [ref=e46]
+          - generic [ref=e49]: Двухэтажный дом в Евпатории
+        - generic [ref=e50]:
+          - generic [ref=e51]:
+            - generic [ref=e52]: Индивидуальный проект
+            - generic [ref=e53]: "2025"
+          - heading "Двухэтажный дом в Евпатории" [level=3] [ref=e54]
+          - paragraph [ref=e55]: Стены из природного камня ракушка, металлочерепица, декоративная штукатурка. Баня, кухня-гостиная 38 м², две спальни. Сдан в декабре 2025.
+          - paragraph [ref=e56]: 165 м²
+      - generic [ref=e58]:
+        - generic [ref=e60]:
+          - img [ref=e61]
+          - generic [ref=e64]: Одноэтажный дом в с. Мирное
+        - generic [ref=e65]:
+          - generic [ref=e66]:
+            - generic [ref=e67]: Под ключ · Предчистовая
+            - generic [ref=e68]: "2025"
+          - heading "Одноэтажный дом в с. Мирное" [level=3] [ref=e69]
+          - paragraph [ref=e70]: Ракушечник, битумная черепица, тёплый пол, электрокотёл + бойлер. Забор, откатные ворота, все центральные коммуникации.
+          - paragraph [ref=e71]: 81 м²
+      - generic [ref=e73]:
+        - generic [ref=e75]:
+          - img [ref=e76]
+          - generic [ref=e79]: Посёлок «Крымская Палитра»
+        - generic [ref=e80]:
+          - generic [ref=e81]:
+            - generic [ref=e82]: Коттеджный посёлок
+            - generic [ref=e83]: "2025"
+          - heading "Посёлок «Крымская Палитра»" [level=3] [ref=e84]
+          - paragraph [ref=e85]: 6 одноэтажных домов по типовому проекту. Четыре комнаты, терраса, центральное отопление, газ. Планировка участка 6 соток.
+          - paragraph [ref=e86]: 6 × 107 м²
+      - generic [ref=e88]:
+        - generic [ref=e90]:
+          - img [ref=e91]
+          - generic [ref=e94]: Ремонт квартиры в Симферополе
+        - generic [ref=e95]:
+          - generic [ref=e96]:
+            - generic [ref=e97]: Ремонт под ключ
+            - generic [ref=e98]: "2024"
+          - heading "Ремонт квартиры в Симферополе" [level=3] [ref=e99]
+          - paragraph [ref=e100]: Трёхкомнатная квартира, чистовая отделка. Тёплый пол в ванной, натяжные потолки, новая электропроводка, встроенная кухня.
+          - paragraph [ref=e101]: 74 м²
+      - generic [ref=e103]:
+        - generic [ref=e105]:
+          - img [ref=e106]
+          - generic [ref=e109]: Одноэтажный дом в Бахчисарае
+        - generic [ref=e110]:
+          - generic [ref=e111]:
+            - generic [ref=e112]: Строительство под ключ
+            - generic [ref=e113]: "2024"
+          - heading "Одноэтажный дом в Бахчисарае" [level=3] [ref=e114]
+          - paragraph [ref=e115]: Дом из ракушечника с мансардой. Три спальни, кухня-гостиная с террасой. Полная чистовая отделка, отопление, скважина.
+          - paragraph [ref=e116]: 112 м²
+      - generic [ref=e118]:
+        - generic [ref=e120]:
+          - img [ref=e121]
+          - generic [ref=e124]: Ремонт офиса в Симферополе
+        - generic [ref=e125]:
+          - generic [ref=e126]:
+            - generic [ref=e127]: Коммерческий ремонт
+            - generic [ref=e128]: "2024"
+          - heading "Ремонт офиса в Симферополе" [level=3] [ref=e129]
+          - paragraph [ref=e130]: "Офисное помещение под ключ: перепланировка, стяжка, натяжные потолки, новая электрика, сантехника, покраска фасада."
+          - paragraph [ref=e131]: 135 м²
+    - generic [ref=e134]:
+      - generic [ref=e135]:
+        - paragraph [ref=e136]: Свяжитесь с нами
+        - heading "Обсудим ваш проект" [level=2] [ref=e137]
+        - paragraph [ref=e138]: Оставьте заявку — перезвоним в течение 30 минут. Консультация бесплатна. Выезд специалиста для оценки объёма работ — тоже.
+        - generic [ref=e139]:
+          - link "Телефон +7 (978) 717-44-47" [ref=e140]:
+            - /url: tel:+79787174447
+            - img [ref=e142]
+            - generic [ref=e144]:
+              - generic [ref=e145]: Телефон
+              - generic [ref=e146]: +7 (978) 717-44-47
+          - link "Email vladen2026@mail.ru" [ref=e147]:
+            - /url: mailto:vladen2026@mail.ru
+            - img [ref=e149]
+            - generic [ref=e151]:
+              - generic [ref=e152]: Email
+              - generic [ref=e153]: vladen2026@mail.ru
+          - generic [ref=e154]:
+            - img [ref=e156]
+            - generic [ref=e159]:
+              - generic [ref=e160]: Офис
+              - link "г. Симферополь, ул. Киевская 41, офис 727" [ref=e161]:
+                - /url: https://yandex.com/maps/org/vladen/111586244168/?ll=80.925822%2C47.800786&z=3
+      - generic [ref=e162]:
+        - heading "Оставить заявку" [level=3] [ref=e163]
+        - generic [ref=e164]:
+          - generic [ref=e165]:
+            - generic [ref=e166]: Ваше имя
+            - textbox "Иван Иванов" [ref=e167]
+          - generic [ref=e168]:
+            - generic [ref=e169]: Телефон
+            - textbox "+7 (978) 123-45-67" [ref=e170]
+          - button "Отправить заявку" [ref=e171]
+          - paragraph [ref=e172]:
+            - text: Нажимая кнопку, вы соглашаетесь с
+            - link "обработкой персональных данных" [ref=e173]:
+              - /url: /privacy
+  - contentinfo [ref=e174]:
+    - generic [ref=e176]:
+      - generic [ref=e177]:
+        - generic [ref=e178]:
+          - generic [ref=e179]:
+            - img "Владен" [ref=e180]
+            - generic [ref=e181]:
+              - generic [ref=e182]: ВЛАДЕН
+              - generic [ref=e183]: Строительная компания
+          - paragraph [ref=e184]:
+            - text: Строительная компания в Крыму.
+            - text: Ремонт квартир и домов, строительство под ключ с 2014 года.
+          - link "4,8 на Яндекс Картах" [ref=e185]:
+            - /url: https://yandex.com/maps/org/vladen/111586244168/reviews/
+            - generic [ref=e186]:
+              - img [ref=e187]
+              - img [ref=e189]
+              - img [ref=e191]
+              - img [ref=e193]
+              - img [ref=e195]
+            - generic [ref=e197]: 4,8 на Яндекс Картах
+        - generic [ref=e198]:
+          - generic [ref=e199]:
+            - heading "Навигация" [level=3] [ref=e200]
+            - list [ref=e201]:
+              - listitem [ref=e202]:
+                - link "Услуги" [ref=e203]:
+                  - /url: /services
+                  - text: Услуги
+              - listitem [ref=e205]:
+                - link "Проекты" [ref=e206]:
+                  - /url: /projects
+                  - text: Проекты
+              - listitem [ref=e208]:
+                - link "О компании" [ref=e209]:
+                  - /url: /about
+                  - text: О компании
+              - listitem [ref=e211]:
+                - link "Контакты" [ref=e212]:
+                  - /url: /contacts
+                  - text: Контакты
+          - generic [ref=e214]:
+            - heading "Контакты" [level=3] [ref=e215]
+            - list [ref=e216]:
+              - listitem [ref=e217]:
+                - link "+7 (978) 717-44-47" [ref=e218]:
+                  - /url: tel:+79787174447
+                  - img [ref=e220]
+                  - generic [ref=e222]: +7 (978) 717-44-47
+              - listitem [ref=e223]:
+                - link "vladen2026@mail.ru" [ref=e224]:
+                  - /url: mailto:vladen2026@mail.ru
+                  - img [ref=e226]
+                  - generic [ref=e228]: vladen2026@mail.ru
+              - listitem [ref=e229]:
+                - link "г. Симферополь, ул. Киевская 41, офис 727" [ref=e230]:
+                  - /url: https://yandex.com/maps/org/vladen/111586244168/?ll=80.925822%2C47.800786&z=3
+                  - img [ref=e232]
+                  - generic [ref=e235]:
+                    - text: г. Симферополь,
+                    - text: ул. Киевская 41, офис 727
+        - generic [ref=e236]:
+          - heading "Мы на карте" [level=3] [ref=e237]
+          - iframe [ref=e239]:
+            - generic [ref=f11e2]:
+              - generic:
+                - generic:
+                  - generic [ref=f11e7] [cursor=pointer]:
+                    - img [ref=f11e8]
+                    - generic [ref=f11e13]: ООО "Владен"
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic [ref=f11e14]:
+                          - generic [ref=f11e15]:
+                            - button [ref=f11e18] [cursor=pointer]:
+                              - generic:
+                                - generic:
+                                  - img
+                            - button [ref=f11e20] [cursor=pointer]:
+                              - generic [ref=f11e21]:
+                                - generic:
+                                  - img
+                          - iframe [ref=f11e23]:
+                            
+                        - generic [ref=f11e24]:
+                          - generic [ref=f11e27]:
+                            - button "Приблизить" [ref=f11e29] [cursor=pointer]:
+                              - generic:
+                                - generic:
+                                  - img
+                            - button "Отдалить" [ref=f11e31] [cursor=pointer]:
+                              - generic:
+                                - generic:
+                                  - img
+                          - iframe [ref=f11e32]:
+                            
+                        - generic [ref=f11e33]:
+                          - button "Моё местоположение" [ref=f11e36] [cursor=pointer]:
+                            - generic:
+                              - generic:
+                                - img
+                          - iframe [ref=f11e37]:
+                            
+                        - generic:
+                          - generic:
+                            - generic:
+                              - button "Открыть в Яндекс Картах":
+                                - generic:
+                                  - generic:
+                                    - img
+                                - generic: Открыть в Яндекс Картах
+                          - iframe [ref=f11e38]:
+                            
+                        - generic:
+                          - generic:
+                            - generic:
+                              - button "Открыть в Картах":
+                                - generic:
+                                  - generic:
+                                    - img
+                                - generic: Открыть в Картах
+                          - iframe [ref=f11e39]:
+                            
+                        - generic [ref=f11e40]:
+                          - button [ref=f11e43] [cursor=pointer]:
+                            - generic:
+                              - generic:
+                                - img
+                          - iframe [ref=f11e44]:
+                            
+                      - generic:
+                        - generic:
+                          - contentinfo:
+                            - link "Условия использования" [ref=f11e47] [cursor=pointer]:
+                              - /url: https://yandex.com/legal/maps_termsofuse/?lang=ru
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: 60 м
+                      - iframe [ref=f11e48]:
+                        
+                  - iframe [ref=f11e49]:
+                    
+      - generic [ref=e240]:
+        - paragraph [ref=e241]: © 2026 Владен. Все права защищены.
+        - generic [ref=e242]:
+          - generic [ref=e243]: "ООО «ВЛАДЕН» | ИНН: 2317074414"
+          - link "Политика конфиденциальности" [ref=e244]:
+            - /url: /privacy
+  - button "Открыть чат с консультантом":
+    - img

@@ -1,0 +1,117 @@
+- generic [active] [ref=e1]:
+  - button "Перейти к основному контенту" [ref=e5] [cursor=pointer]:
+    - generic [ref=e7]: Перейти к основному контенту
+  - banner [ref=e8]:
+    - generic [ref=e9]:
+      - link "Настройки аккаунта Google" [ref=e13] [cursor=pointer]:
+        - /url: /?tab=kk
+        - generic [ref=e15]: Аккаунт
+      - generic [ref=e23]:
+        - button "Справка" [ref=e24] [cursor=pointer]:
+          - img [ref=e27]
+        - tooltip [ref=e30]: Справка
+      - generic [ref=e32]:
+        - button "Приложения Google" [ref=e36] [cursor=pointer]:
+          - img [ref=e37]
+        - 'button "Аккаунт Google: Олег Радинюк (radinuko@gmail.com)" [ref=e42] [cursor=pointer]':
+          - img [ref=e44]
+  - generic [ref=e52]:
+    - navigation "Меню навигации" [ref=e57]:
+      - menubar [ref=e59]:
+        - menuitem "Главная" [ref=e62] [cursor=pointer]:
+          - generic [ref=e63]:
+            - generic [ref=e72]: Главная
+            - generic:
+              - generic: Главная
+        - menuitem "Личная информация" [ref=e75] [cursor=pointer]:
+          - generic [ref=e76]:
+            - generic [ref=e85]: Личная информация
+            - generic:
+              - generic: Личная информация
+        - menuitem "Безопасность и вход в аккаунт" [ref=e88] [cursor=pointer]:
+          - generic [ref=e89]:
+            - generic [ref=e98]: Безопасность и вход в аккаунт
+            - generic:
+              - generic: Безопасность и вход в аккаунт
+        - menuitem "Пароль аккаунта Google" [ref=e101] [cursor=pointer]:
+          - generic [ref=e102]:
+            - generic [ref=e111]: Пароль аккаунта Google
+            - generic:
+              - generic: Пароль аккаунта Google
+        - menuitem "Сторонние приложения и сервисы" [ref=e114] [cursor=pointer]:
+          - generic [ref=e115]:
+            - generic [ref=e124]: Сторонние приложения и сервисы
+            - generic:
+              - generic: Сторонние приложения и сервисы
+        - menuitem "Данные и конфиденциальность" [ref=e127] [cursor=pointer]:
+          - generic [ref=e128]:
+            - generic [ref=e137]: Данные и конфиденциальность
+            - generic:
+              - generic: Данные и конфиденциальность
+        - menuitem "Настройки доступа" [ref=e140] [cursor=pointer]:
+          - generic [ref=e141]:
+            - generic [ref=e150]: Настройки доступа
+            - generic:
+              - generic: Настройки доступа
+        - menuitem "Платежи и подписки" [ref=e153] [cursor=pointer]:
+          - generic [ref=e154]:
+            - generic [ref=e163]: Платежи и подписки
+            - generic:
+              - generic: Платежи и подписки
+    - main [ref=e164]:
+      - generic [ref=e165]:
+        - generic [ref=e166]:
+          - button "Сменить фото профиля" [ref=e169]:
+            - img [ref=e172]
+          - generic [ref=e174]:
+            - heading "Олег Радинюк" [level=1] [ref=e175]
+            - generic [ref=e176]: radinuko@gmail.com
+        - generic [ref=e177]:
+          - generic [ref=e178]:
+            - generic [ref=e180]: search
+            - generic [ref=e182]:
+              - textbox [disabled] [ref=e183]: Поиск в аккаунте Google
+              - combobox "Поиск в аккаунте Google" [ref=e184]
+          - toolbar [ref=e185]:
+            - link "Мой пароль" [ref=e189] [cursor=pointer]:
+              - /url: signinoptions/password?continue=https%3A%2F%2Fmyaccount.google.com%2F%3Fpli%3D1
+              - generic [ref=e191]: Мой пароль
+            - link "Устройства" [ref=e195] [cursor=pointer]:
+              - /url: device-activity?continue=https%3A%2F%2Fmyaccount.google.com%2F%3Fpli%3D1
+              - generic [ref=e197]: Устройства
+            - link "Менеджер паролей" [ref=e201] [cursor=pointer]:
+              - /url: https://passwords.google.com/?standalone=false&hl=ru&utm_source=google-account&utm_medium=web&continue=https%3A%2F%2Fmyaccount.google.com%2F%3Fpli%3D1
+              - generic [ref=e203]: Менеджер паролей
+            - link "Мои действия" [ref=e207] [cursor=pointer]:
+              - /url: https://myactivity.google.com/myactivity?hl=ru&utm_source=google-account&utm_medium=web
+              - generic [ref=e209]: Мои действия
+            - link "Электронная почта" [ref=e213] [cursor=pointer]:
+              - /url: email?continue=https%3A%2F%2Fmyaccount.google.com%2F%3Fpli%3D1
+              - generic [ref=e215]: Электронная почта
+        - generic [ref=e219]:
+          - generic [ref=e220]: Укажите домашний адрес в аккаунте Google
+          - generic [ref=e221]: Получайте более подходящие прогнозы погоды, маршруты и результаты поиска.
+          - generic [ref=e222]:
+            - button "Закрыть" [ref=e225] [cursor=pointer]:
+              - generic [ref=e227]: Закрыть
+            - generic [ref=e229] [cursor=pointer]:
+              - generic [ref=e230]: Указать домашний адрес
+              - link "Указать домашний адрес" [ref=e231]:
+                - /url: address/home?continue=https%3A%2F%2Fmyaccount.google.com%2F%3Fpli%3D1
+        - paragraph [ref=e234]:
+          - text: Эти настройки видны только вам. Рекомендуем также проверить настройки в Картах, Поиске и других сервисах Google, которыми вы пользуетесь чаще всего. Google обеспечивает защиту и конфиденциальность ваших данных.
+          - link "Подробнее о настройках конфиденциальности и безопасности" [ref=e235] [cursor=pointer]:
+            - /url: https://privacy.google.com?utm_source=google&utm_medium=referral&utm_campaign=myaccount&hl=ru
+            - text: Подробнее…
+  - contentinfo [ref=e237]:
+    - link "Открыть Политику конфиденциальности Google" [ref=e238] [cursor=pointer]:
+      - /url: https://policies.google.com/privacy
+      - text: Конфиденциальность
+    - link "Открыть Условия использования Google" [ref=e239] [cursor=pointer]:
+      - /url: https://policies.google.com/terms
+      - text: Условия
+    - link "Справка" [ref=e240] [cursor=pointer]:
+      - /url: https://support.google.com/accounts
+    - link "Подробнее об аккаунте Google…" [ref=e241] [cursor=pointer]:
+      - /url: https://www.google.com/account/about
+      - text: О себе

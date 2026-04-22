@@ -1,5 +1,6 @@
 'use client';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import SectionIntro from '@/components/hud/SectionIntro';
 
 const PATHS = [
@@ -45,14 +46,43 @@ function PathCard({ p }: { p: typeof PATHS[0] }) {
   );
 }
 
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.08 } },
+};
+const itemVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 0.61, 0.36, 1] as const } },
+};
+
 export default function ThreePathsSection() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-80px' });
+
   return (
     <section id="paths" style={{ padding:'96px 0' }}>
       <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px' }}>
-        <SectionIntro code="03" cmd="paths.list()" title="Что нужно вашему бизнесу?" sub="Можно одно. Можно всё вместе — со скидкой."/>
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:16 }} className="paths-grid">
-          {PATHS.map((p,i) => <PathCard key={i} p={p}/>)}
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.55, ease: [0.22, 0.61, 0.36, 1] }}
+        >
+          <SectionIntro code="03" cmd="paths.list()" title="Что нужно вашему бизнесу?" sub="Можно одно. Можно всё вместе — со скидкой."/>
+        </motion.div>
+        <motion.div
+          ref={ref}
+          variants={containerVariants}
+          initial="hidden"
+          animate={inView ? 'visible' : 'hidden'}
+          style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:16 }}
+          className="paths-grid"
+        >
+          {PATHS.map((p,i) => (
+            <motion.div key={i} variants={itemVariants}>
+              <PathCard p={p}/>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
       <style>{`@media(max-width:900px){.paths-grid{grid-template-columns:1fr!important;}}`}</style>
     </section>
