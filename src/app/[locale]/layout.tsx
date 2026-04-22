@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Orbitron } from "next/font/google";
+import { Oxanium, Inter } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -8,17 +8,17 @@ import YuraWidgetLoader from "@/components/ai/YuraWidgetLoader";
 import { HeroChatProvider } from "@/components/ai/HeroChatContext";
 import "../globals.css";
 
-const geist = Geist({
-  variable: "--font-geist-sans",
+const oxanium = Oxanium({
+  variable: "--font-oxanium",
   subsets: ["latin"],
   display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
 });
 
-const orbitron = Orbitron({
-  variable: "--font-orbitron",
-  subsets: ["latin"],
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin", "cyrillic"],
   display: "swap",
-  weight: ["400", "500", "700"],
 });
 
 type Props = {
@@ -65,7 +65,7 @@ export default async function LocaleLayout({ children, params }: Props) {
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className={`${geist.variable} ${orbitron.variable}`}>
+    <html lang={locale} className={`${oxanium.variable} ${inter.variable}`}>
       <body className="bg-base text-text">
         <NextIntlClientProvider messages={messages}>
           <HeroChatProvider>

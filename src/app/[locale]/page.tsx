@@ -1,26 +1,34 @@
 import Navbar from '@/components/sections/Navbar';
 import HeroSection from '@/components/sections/HeroSection';
-import AIHookSection from '@/components/sections/AIHookSection';
-import ServicesSection from '@/components/sections/ServicesSection';
-import PortfolioSection from '@/components/sections/PortfolioSection';
+import LiveDemoSection from '@/components/sections/LiveDemoSection';
+import ThreePathsSection from '@/components/sections/ThreePathsSection';
+import CasesSection from '@/components/sections/CasesSection';
+import ProofSection from '@/components/sections/ProofSection';
+import TeamSection from '@/components/sections/TeamSection';
 import PricingSection from '@/components/sections/PricingSection';
-import CalcSection from '@/components/sections/CalcSection';
-import CTASection from '@/components/sections/CTASection';
+import FaqSection from '@/components/sections/FaqSection';
+import FinalCtaSection from '@/components/sections/FinalCtaSection';
 import Footer from '@/components/sections/Footer';
+import { HudStatusBar, HudCorners, HudRail, HudLogTicker } from '@/components/hud/HudChrome';
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-base">
+    <main style={{ minHeight:'100vh', background:'var(--op-base)' }}>
+      <HudStatusBar />
+      <HudCorners />
+      <HudRail />
       <Navbar />
       <HeroSection />
-      <AIHookSection />
-      <ServicesSection />
-      <PortfolioSection />
+      <LiveDemoSection />
+      <ThreePathsSection />
+      <CasesSection />
+      <ProofSection />
+      <TeamSection />
       <PricingSection />
-      <CalcSection />
-      <CTASection />
+      <FaqSection />
+      <FinalCtaSection />
       <Footer />
-      {/* YuraWidgetLoader will be added separately */}
+      <HudLogTicker />
     </main>
   );
 }

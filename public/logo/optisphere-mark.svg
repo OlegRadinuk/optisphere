@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="Optisphere mark">
+  <defs>
+    
+  </defs>
+  <circle class="op-mark" cx="24" cy="24" r="22"></circle>
+  <path class="op-mark-accent" d="M 24 2 A 22 12 0 0 1 24 46"></path>
+  <path class="op-mark-faint" d="M 2 24 L 46 24"></path>
+</svg>

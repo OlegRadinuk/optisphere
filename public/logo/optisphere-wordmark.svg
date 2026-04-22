@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 64" width="320" height="64" role="img" aria-label="Optisphere">
+  <defs>
+    
+  </defs>
+  
+  <g transform="translate(12,12)">
+    <circle class="op-mark" cx="20" cy="20" r="19"></circle>
+    <path class="op-mark-accent" d="M 20 1 A 19 11 0 0 1 20 39"></path>
+    <path class="op-mark" d="M 1 20 L 39 20" opacity="0.35"></path>
+  </g>
+  <text class="op-word" x="64" y="40">Optisphere</text>
+</svg>

@@ -115,7 +115,10 @@ export async function POST(
     if (detectedUrl) urlFetchPromise = fetchPage(detectedUrl)
   }
 
-  const baseURL = (client.base_url || process.env.AI_BASE_URL || "https://aiprime.store")
+  const PROXY_HOSTS = ["aiprime.store", "aiprimetech.io"]
+  const rawBaseURL = client.base_url || process.env.AI_BASE_URL || ""
+  const isProxy = PROXY_HOSTS.some((h) => rawBaseURL.includes(h))
+  const baseURL = (isProxy || !rawBaseURL ? "https://api.anthropic.com" : rawBaseURL)
     .replace(/\/v1\/?$/, "")
 
   const ai = new Anthropic({
