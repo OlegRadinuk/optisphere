@@ -724,7 +724,7 @@ export default function HeroInlineChat({
       >
         <div
           style={{
-            fontFamily: 'var(--font-orbitron), monospace',
+            fontFamily: 'var(--font-jetbrains), monospace',
             fontSize: '0.62rem',
             letterSpacing: '0.12em',
             textTransform: 'uppercase',

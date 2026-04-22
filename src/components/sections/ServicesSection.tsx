@@ -56,7 +56,7 @@ function ServicePanel({ accent, accentDim, label, title, desc, features, visual,
         >
           <span style={{
             display: 'inline-block',
-            fontFamily: 'var(--font-orbitron), monospace',
+            fontFamily: 'var(--font-jetbrains), monospace',
             fontSize: '0.63rem', fontWeight: 600,
             letterSpacing: '0.2em', textTransform: 'uppercase',
             color: accent, marginBottom: '1.25rem',
@@ -482,7 +482,7 @@ export function ServicesSection() {
       }}>
         <span style={{
           display: 'inline-block',
-          fontFamily: 'var(--font-orbitron), monospace',
+          fontFamily: 'var(--font-jetbrains), monospace',
           fontSize: '0.63rem', fontWeight: 500,
           letterSpacing: '0.2em', textTransform: 'uppercase',
           color: 'var(--text-muted)', marginBottom: '1rem',

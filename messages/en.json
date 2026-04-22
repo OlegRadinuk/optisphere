@@ -4,7 +4,7 @@
     "portfolio": "Portfolio",
     "pricing": "Pricing",
     "contact": "Contact",
-    "cta": "Discuss a project"
+    "cta": "Ask Yura"
   },
   "hero": {
     "badge": "AI WEB STUDIO",
@@ -18,8 +18,8 @@
       "line3": "while you sleep"
     },
     "cta": {
-      "primary": "Discuss a project",
-      "secondary": "View our work"
+      "primary": "View pricing →",
+      "secondary": "How it works"
     }
   },
   "hook": {
@@ -79,20 +79,20 @@
     "tiers": {
       "start": {
         "name": "START",
-        "price": "from ₽50,000",
+        "price": "from ₽90,000",
         "days": "3–5 days",
         "desc": "Landing page for a quick start"
       },
       "pro": {
         "name": "PRO",
-        "price": "from ₽120,000",
+        "price": "from ₽180,000",
         "days": "5–10 days",
         "desc": "Sales website + SEO",
         "badge": "Popular"
       },
       "premium": {
         "name": "PREMIUM",
-        "price": "from ₽180,000",
+        "price": "from ₽350,000",
         "days": "10–20 days",
         "desc": "Custom + 3D + marketing"
       }
@@ -130,7 +130,7 @@
   },
   "cta": {
     "title": "Ready to launch?",
-    "subtitle": "Tell us about the project — Yura will ask a couple of questions and give you an exact price",
+    "subtitle": "Tell us about the project — Yura will ask a couple of questions and give you a realistic price range",
     "button": "Start a conversation",
     "ready_label": "Ready to start?",
     "trust": {
@@ -144,12 +144,18 @@
     "name": "Yura",
     "subtitle": "Optisphere AI consultant",
     "placeholder": "Write about your project...",
-    "greeting": "Hi! I'm Yura, Optisphere's AI consultant. Tell me — what's your business and what do you want to get from a website?",
+    "greeting": "Hi. I'm Yura — I help figure out what your site needs to bring in clients. Tell me: what's your business and what isn't working right now?",
     "online": "Online",
     "close": "Close",
     "send": "Send",
-    "bubble_hint": "Hi, I'm Yura",
-    "lead_confirm": "Got it! Oleg will reach out personally within the day.",
+    "bubble_hint": "I'll tell you honestly what's stopping your site from selling",
+    "bubble_hints": [
+      "I'll tell you honestly what's stopping your site from selling",
+      "Why is your competitor on top and you're not? I know the answer",
+      "Most sites lose a visitor in 8 seconds. Let me check yours"
+    ],
+    "lead_confirm": "Request received. Oleg will personally reach out — usually within a few hours.",
+    "lead_submitted": "✓ Request sent — Oleg will reach out to you personally.",
     "error": "Something went wrong. Please try again.",
     "mic_start": "Start voice input",
     "mic_stop": "Stop recording",
@@ -166,11 +172,62 @@
       "v1": "I find where a website loses money. We have three departments: marketing, development, quality — every project goes through all three. Do you already have a site, or building from scratch?",
       "v2": "I'm Yura. Most sites lose visitors in the first 8 seconds — we build so they stay. Do you already have a site, or building from scratch?",
       "v3": "I help figure out why competitors get leads while you get traffic. Straight talk, no fluff. Do you already have a site, or building from scratch?"
+    },
+    "lead_form": {
+      "consent": "By clicking 'Send', I agree to the",
+      "consent_link": "personal data processing policy"
     }
+  },
+  "privacy": {
+    "title": "Personal Data Processing Policy",
+    "meta_desc": "Optisphere personal data processing policy in accordance with Russian Federal Law No. 152-FZ",
+    "operator_title": "Data Controller",
+    "operator_text": "The data controller is Optisphere (sole proprietorship). Personal data is processed in accordance with Russian Federal Law No. 152-FZ of 27.07.2006 'On Personal Data'.",
+    "data_title": "What data we collect",
+    "data_text": "When you contact us via the website form or chat assistant, we collect the following personal data:",
+    "data_items": ["Name (first name and patronymic if provided)", "Phone number", "Telegram handle or other messenger contact", "Preferred contact time (if provided)"],
+    "purpose_title": "Purposes of processing",
+    "purpose_text": "Collected data is used solely for:",
+    "purpose_items": ["Responding to user enquiries", "Providing consultation on studio services", "Preparing a commercial proposal"],
+    "basis_title": "Legal basis",
+    "basis_text": "Personal data is processed on the basis of the data subject's consent (Art. 6, para. 1, sub-para. 1 of Law No. 152-FZ), expressed by completing the form and clicking the submit button.",
+    "retention_title": "Retention period",
+    "retention_text": "Personal data is stored for no more than 3 (three) years from the date of consent or until consent is withdrawn, whichever is earlier.",
+    "transfer_title": "Third-party transfers",
+    "transfer_text": "Personal data is not transferred to third parties except as required by Russian law. Telegram Bot API is used for notification delivery — data is transmitted in encrypted form and is not stored on the messenger's servers.",
+    "rights_title": "Data subject rights",
+    "rights_text": "You have the right at any time to:",
+    "rights_items": ["Withdraw consent to personal data processing", "Request information about data being processed", "Request correction or deletion of your data"],
+    "rights_contact": "To exercise your rights, send a request to: hello@optisphere.ru",
+    "revoke_title": "Withdrawal of consent",
+    "revoke_text": "Consent may be withdrawn by sending a written request to hello@optisphere.ru. Data will be deleted within 30 (thirty) days of receiving the request.",
+    "security_title": "Data security",
+    "security_text": "Organisational and technical measures are in place to protect personal data: data is transmitted over encrypted HTTPS, and database access is restricted.",
+    "updated": "Last updated: April 2026"
+  },
+  "cookies": {
+    "title": "Cookie Policy",
+    "meta_desc": "Cookie policy for the Optisphere website",
+    "what_title": "What are cookies",
+    "what_text": "Cookies are small text files that a website saves in your browser. They help the site function correctly and improve the user experience.",
+    "types_title": "What cookies we use",
+    "technical_title": "Technical (essential)",
+    "technical_text": "Required for the website to function. Cannot be disabled.",
+    "technical_items": ["Chat assistant Yura session identifier (sessionStorage)", "Cookie policy consent flag (localStorage)"],
+    "analytics_title": "Analytical",
+    "analytics_text": "Used to understand how visitors interact with the site. Data is anonymised.",
+    "analytics_items": ["Page view counters (no personal data transmitted)"],
+    "no_trackers_title": "Third-party trackers",
+    "no_trackers_text": "No advertising or marketing trackers from third parties are installed on this website (Facebook Pixel, Google Analytics, Yandex.Metrica or similar). Your data is not shared with advertising networks.",
+    "control_title": "Cookie management",
+    "control_text": "You can disable cookies in your browser settings. Disabling technical cookies may affect the chat and other site features.",
+    "contact_title": "Contact",
+    "contact_text": "For questions about cookies: hello@optisphere.ru",
+    "updated": "Last updated: April 2026"
   },
   "footer": {
     "tagline": "AI-native web studio",
-    "rights": "© 2025 Optisphere. All rights reserved.",
+    "rights": "© 2026 Optisphere. All rights reserved.",
     "desc": "We build websites that bring in clients — with an AI assistant built in.",
     "nav_label": "Navigation",
     "services_label": "Services",

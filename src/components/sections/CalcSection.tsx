@@ -116,7 +116,7 @@ function ProgressBar({ step, total }: { step: number; total: number }) {
                   <span style={{
                     fontSize: '0.65rem', fontWeight: 700,
                     color: i === step ? '#fff' : 'var(--text-muted)',
-                    fontFamily: 'var(--font-orbitron), monospace',
+                    fontFamily: 'var(--font-jetbrains), monospace',
                   }}>
                     {i + 1}
                   </span>
@@ -157,7 +157,7 @@ function ProgressBar({ step, total }: { step: number; total: number }) {
           <div key={i} style={{ flex: 1, display: 'flex' }}>
             <span style={{
               fontSize: '0.6rem',
-              fontFamily: 'var(--font-orbitron), monospace',
+              fontFamily: 'var(--font-jetbrains), monospace',
               letterSpacing: '0.08em',
               textTransform: 'uppercase',
               color: i === step ? 'var(--indigo)' : i < step ? 'rgba(99,102,241,0.5)' : 'var(--text-muted)',
@@ -381,7 +381,7 @@ function ResultCard({ result, onYura }: { result: CalcResult; onYura: () => void
         </span>
         <span
           style={{
-            fontFamily: 'var(--font-orbitron), monospace',
+            fontFamily: 'var(--font-jetbrains), monospace',
             fontSize: '0.75rem',
             fontWeight: 600,
             letterSpacing: '0.1em',

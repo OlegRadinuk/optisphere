@@ -295,6 +295,9 @@ export async function POST(request: NextRequest): Promise<Response> {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 })
   }
 
+  const MAX_MESSAGES = 20
+  const MAX_MSG_LENGTH = 2000
+
   if (!Array.isArray(body.messages) || body.messages.length === 0) {
     return NextResponse.json(
       { error: "messages array required and non-empty" },
@@ -302,10 +305,26 @@ export async function POST(request: NextRequest): Promise<Response> {
     )
   }
 
+  if (body.messages.length > MAX_MESSAGES) {
+    return NextResponse.json({ error: "Too many messages" }, { status: 400 })
+  }
+
+  // Validate each message length
+  for (const msg of body.messages) {
+    if (typeof msg.content !== "string" || msg.content.length > MAX_MSG_LENGTH) {
+      return NextResponse.json({ error: "Message too long" }, { status: 400 })
+    }
+  }
+
+  // Sanitize calcResult before inserting into system prompt
+  const safeCalcResult = body.calcResult
+    ? String(body.calcResult).slice(0, 500).replace(/[<>]/g, "")
+    : null
+
   // Build system prompt
   let systemPrompt = YURA_SYSTEM
-  if (body.calcResult) {
-    systemPrompt += `\n\nКонтекст: клиент прошёл калькулятор, результат: ${body.calcResult}. Учти это при ответах.`
+  if (safeCalcResult) {
+    systemPrompt += `\n\nКонтекст: клиент прошёл калькулятор, результат: ${safeCalcResult}. Учти это при ответах.`
   }
 
   // Detect URL in last user message — fetch in parallel with AI call

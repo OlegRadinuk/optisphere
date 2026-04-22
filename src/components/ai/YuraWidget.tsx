@@ -26,16 +26,23 @@ function LeadFormBubble({
   onSubmit,
   isSubmitting,
   submitted,
+  consentText,
+  consentLinkText,
+  submittedText,
 }: {
   onSubmit: (data: LeadFormData) => void
   isSubmitting: boolean
   submitted: boolean
+  consentText: string
+  consentLinkText: string
+  submittedText: string
 }) {
   const [data, setData] = useState<LeadFormData>({ name: "", phone: "", time: "" })
+  const [consentChecked, setConsentChecked] = useState(false)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (!data.name.trim() || !data.phone.trim()) return
+    if (!data.name.trim() || !data.phone.trim() || !consentChecked) return
     onSubmit(data)
   }
 
@@ -55,7 +62,7 @@ function LeadFormBubble({
           fontWeight: 500,
         }}
       >
-        ✓ Заявка отправлена — Олег свяжется с вами лично.
+        {submittedText}
       </motion.div>
     )
   }
@@ -108,23 +115,55 @@ function LeadFormBubble({
           value={data.time}
           onChange={(e) => setData((d) => ({ ...d, time: e.target.value }))}
         />
+        <label
+          style={{
+            display: "flex",
+            alignItems: "flex-start",
+            gap: 8,
+            marginBottom: 10,
+            cursor: "pointer",
+          }}
+        >
+          <input
+            type="checkbox"
+            required
+            checked={consentChecked}
+            onChange={(e) => setConsentChecked(e.target.checked)}
+            style={{
+              marginTop: 2,
+              accentColor: "#6366F1",
+              flexShrink: 0,
+            }}
+          />
+          <span style={{ fontSize: 11, color: "rgba(240,240,255,0.55)", lineHeight: 1.5 }}>
+            {consentText}{" "}
+            <a
+              href="/privacy"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "#a5b4fc", textDecoration: "underline" }}
+            >
+              {consentLinkText}
+            </a>
+          </span>
+        </label>
         <button
           type="submit"
-          disabled={isSubmitting || !data.name.trim() || !data.phone.trim()}
+          disabled={isSubmitting || !data.name.trim() || !data.phone.trim() || !consentChecked}
           style={{
             width: "100%",
             padding: "10px",
             borderRadius: 10,
             border: "none",
             background:
-              isSubmitting || !data.name.trim() || !data.phone.trim()
+              isSubmitting || !data.name.trim() || !data.phone.trim() || !consentChecked
                 ? "rgba(99,102,241,0.3)"
                 : "linear-gradient(135deg, #6366F1, #06B6D4)",
             color: "#fff",
             fontSize: 13,
             fontWeight: 600,
             cursor:
-              isSubmitting || !data.name.trim() || !data.phone.trim()
+              isSubmitting || !data.name.trim() || !data.phone.trim() || !consentChecked
                 ? "not-allowed"
                 : "pointer",
             transition: "opacity 0.2s",
@@ -272,6 +311,9 @@ function MessageBubble({ msg }: { msg: ChatMessage }) {
 export default function YuraWidget() {
   const t = useTranslations("ai")
   const { heroChatOpen } = useHeroChat()
+
+  const hints = t.raw("bubble_hints") as string[]
+  const [bubbleHint] = useState<string>(() => hints[Math.floor(Math.random() * hints.length)])
 
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState<ChatMessage[]>([])
@@ -804,6 +846,9 @@ export default function YuraWidget() {
                     onSubmit={handleLeadFormSubmit}
                     isSubmitting={leadFormSubmitting}
                     submitted={leadFormSubmitted}
+                    consentText={t("lead_form.consent")}
+                    consentLinkText={t("lead_form.consent_link")}
+                    submittedText={t("lead_submitted")}
                   />
                 )}
                 <div ref={messagesEndRef} />
@@ -921,8 +966,10 @@ export default function YuraWidget() {
                 gap: "0.5rem",
               }}
             >
-              <span style={{ fontSize: "1rem" }}>👋</span>
-              {t("bubble_hint")}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+              </svg>
+              {bubbleHint}
             </motion.button>
           )}
         </AnimatePresence>

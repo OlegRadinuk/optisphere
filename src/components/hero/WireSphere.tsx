@@ -14,7 +14,7 @@ export default function WireSphere({ state }: { state: SphereState }) {
   const pulseDur = state === 'thinking' ? '1s' : state === 'speaking' ? '1.4s' : '3.2s';
 
   return (
-    <div style={{ position:'relative', width:size, height:size, flexShrink:0 }}>
+    <div style={{ position:'relative', width:'100%', maxWidth:size, height:'auto', aspectRatio:'1/1', flexShrink:0 }}>
       <style>{`
         @keyframes wsRot { to { transform: rotate(360deg); } }
         @keyframes wsPulse { 0% { transform: scale(.6); opacity:.9; } 100% { transform: scale(2.4); opacity:0; } }
@@ -23,7 +23,7 @@ export default function WireSphere({ state }: { state: SphereState }) {
         @keyframes wsCenterSpeak { 0%,100% { opacity:.85; transform:scale(1); } 50% { opacity:1; transform:scale(1.3); } }
         @keyframes wsBar { 0% { transform: scaleY(.3); } 100% { transform: scaleY(1.3); } }
       `}</style>
-      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ display:'block' }}>
+      <svg width="100%" height="100%" viewBox={`0 0 ${size} ${size}`} style={{ display:'block' }}>
         <defs>
           <linearGradient id="ringStroke" x1="0" x2="1" y1="0" y2="0">
             <stop offset="0%"  stopColor="rgba(201,166,95,0)"/>

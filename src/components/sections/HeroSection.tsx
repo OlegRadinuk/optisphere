@@ -38,18 +38,24 @@ export default function HeroSection() {
           </p>
 
           <div style={{ display:'flex', gap:12, flexWrap:'wrap' }}>
-            <button style={{ display:'inline-flex', alignItems:'center', justifyContent:'center', gap:8, height:48, padding:'0 26px', borderRadius:8, background:'var(--op-accent)', color:'var(--op-text-on-accent)', border:'none', cursor:'pointer', font:"500 15px/1 'Inter',sans-serif" }}>
+            <button
+              onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
+              style={{ display:'inline-flex', alignItems:'center', justifyContent:'center', gap:8, height:48, padding:'0 26px', borderRadius:8, background:'var(--op-accent)', color:'var(--op-text-on-accent)', border:'none', cursor:'pointer', font:"500 15px/1 'Inter',sans-serif" }}
+            >
               Посмотреть тарифы →
             </button>
-            <button style={{ display:'inline-flex', alignItems:'center', justifyContent:'center', gap:8, height:48, padding:'0 26px', borderRadius:8, background:'transparent', color:'var(--op-text)', border:'1px solid var(--op-border-strong)', cursor:'pointer', font:"500 15px/1 'Inter',sans-serif" }}>
+            <button
+              onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+              style={{ display:'inline-flex', alignItems:'center', justifyContent:'center', gap:8, height:48, padding:'0 26px', borderRadius:8, background:'transparent', color:'var(--op-text)', border:'1px solid var(--op-border-strong)', cursor:'pointer', font:"500 15px/1 'Inter',sans-serif" }}
+            >
               Как это работает
             </button>
           </div>
 
           <div style={{ display:'flex', gap:10, alignItems:'center', flexWrap:'wrap', marginTop:8, font:"500 10px/1.4 'JetBrains Mono',monospace", color:'var(--op-text-muted)', letterSpacing:'.12em', textTransform:'uppercase' }}>
-            <span>150+ проектов</span>
+            <span>47+ проектов</span>
             <span style={{ width:3, height:3, background:'var(--op-text-faint)', display:'inline-block' }}/>
-            <span>25 AI-агентов</span>
+            <span>1 200+ лидов поймал Юра</span>
             <span style={{ width:3, height:3, background:'var(--op-text-faint)', display:'inline-block' }}/>
             <span>РФ-хостинг</span>
           </div>

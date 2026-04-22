@@ -147,7 +147,7 @@ export default function AIHookSection() {
                     <StatIcon index={i} />
                     <span style={{
                       fontSize: '0.6rem', fontWeight: 500,
-                      fontFamily: 'var(--font-orbitron), monospace',
+                      fontFamily: 'var(--font-jetbrains), monospace',
                       letterSpacing: '0.15em', textTransform: 'uppercase',
                       color: 'var(--text-muted)',
                     }}>

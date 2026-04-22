@@ -147,7 +147,7 @@ export default function CTASection() {
           >
             <span style={{
               display: 'inline-flex', alignItems: 'center', gap: '0.45rem',
-              fontFamily: 'var(--font-orbitron), monospace',
+              fontFamily: 'var(--font-jetbrains), monospace',
               fontSize: '0.63rem', fontWeight: 500,
               letterSpacing: '0.2em', textTransform: 'uppercase',
               color: 'var(--text-muted)',
@@ -236,15 +236,36 @@ export default function CTASection() {
             }}
           >
             {[
-              { icon: '⚡', label: t('trust.response') },
-              { icon: '🛡', label: t('trust.contract') },
-              { icon: '🔄', label: t('trust.revisions') },
+              {
+                icon: (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                  </svg>
+                ),
+                label: t('trust.response'),
+              },
+              {
+                icon: (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  </svg>
+                ),
+                label: t('trust.contract'),
+              },
+              {
+                icon: (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                ),
+                label: t('trust.revisions'),
+              },
             ].map(b => (
               <div key={b.label} style={{
                 display: 'flex', alignItems: 'center', gap: '0.4rem',
                 fontSize: '0.8rem', color: 'var(--text-muted)',
               }}>
-                <span style={{ fontSize: '0.9rem' }}>{b.icon}</span>
+                {b.icon}
                 {b.label}
               </div>
             ))}

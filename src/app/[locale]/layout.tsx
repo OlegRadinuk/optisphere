@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Oxanium, Inter } from "next/font/google";
+import { Oxanium, Inter, JetBrains_Mono } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -19,6 +19,13 @@ const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin", "cyrillic"],
   display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains",
+  subsets: ["latin", "cyrillic"],
+  display: "swap",
+  weight: ["400", "500"],
 });
 
 type Props = {
@@ -65,7 +72,7 @@ export default async function LocaleLayout({ children, params }: Props) {
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className={`${oxanium.variable} ${inter.variable}`}>
+    <html lang={locale} className={`${oxanium.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
       <body className="bg-base text-text">
         <NextIntlClientProvider messages={messages}>
           <HeroChatProvider>
