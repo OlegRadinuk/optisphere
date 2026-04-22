@@ -83,7 +83,8 @@ export async function POST(
       }
     }
 
-    await sendTelegram(client.tg_token, client.tg_chat_id, fullText)
+    const chatIds = client.tg_chat_id.split(",").map((id: string) => id.trim()).filter(Boolean)
+    await Promise.all(chatIds.map((chatId: string) => sendTelegram(client.tg_token, chatId, fullText)))
   }
 
   return NextResponse.json({ ok: true }, { headers: cors })
