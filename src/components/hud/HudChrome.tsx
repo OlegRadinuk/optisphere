@@ -34,7 +34,7 @@ export function HudStatusBar() {
         }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, textTransform: 'uppercase' }}>
             <span style={{ display:'inline-block', width:6, height:6, background:'var(--op-accent-2)', boxShadow:'0 0 8px var(--op-accent-2)', animation:'hudPulse 1.8s ease-in-out infinite' }}/>
-            <span style={{ opacity: .65 }}>YURA.KERNEL</span>
+            <span style={{ opacity: .65 }}>OPTI.KERNEL</span>
             <span style={{ color: 'var(--op-text-secondary)' }}>v4.2.1 · ONLINE</span>
           </div>
           <div style={{ display:'inline-flex', alignItems:'center', gap:14, justifyContent:'center', textTransform:'uppercase' }} className="hud-status-center">
@@ -160,10 +160,10 @@ export function HudRail() {
 }
 
 const BOOT_MESSAGES = [
-  'YURA.KERNEL INITIALIZING...',
+  'OPTI.KERNEL INITIALIZING...',
   'AGENT READY · WAITING FOR INPUT',
-  'ВЫ ТЕРЯЕТЕ ЗАЯВКИ ПОКА ВАС НЕТ ОНЛАЙН — ЮРА НЕТ',
-  'КОНКУРЕНТ В ТОПЕ? ЗНАЮ ПОЧЕМУ — СПРОСИ ЮРУ',
+  'ВЫ ТЕРЯЕТЕ ЗАЯВКИ ПОКА ВАС НЕТ ОНЛАЙН — ОПТИ НЕТ',
+  'КОНКУРЕНТ В ТОПЕ? ЗНАЮ ПОЧЕМУ — СПРОСИ ОПТИ',
   'САЙТ БЕЗ AI = МЕНЕДЖЕР КОТОРЫЙ СПИТ 16 ЧАСОВ В СУТКИ',
 ];
 

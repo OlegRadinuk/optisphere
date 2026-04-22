@@ -123,7 +123,7 @@ export default function FloatCard({ card, index }: { card: Card; index: number }
       background:'rgba(18,22,30,.65)', border:'1px solid var(--op-border)', backdropFilter:'blur(10px)',
       clipPath:'polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px)',
     }}>
-      <span style={{ font:"500 9px/1 'JetBrains Mono',monospace", color:'var(--op-text-muted)', letterSpacing:'.16em', textTransform:'uppercase', marginBottom:6 }}>▸ Юра уточнит</span>
+      <span style={{ font:"500 9px/1 'JetBrains Mono',monospace", color:'var(--op-text-muted)', letterSpacing:'.16em', textTransform:'uppercase', marginBottom:6 }}>▸ Опти уточнит</span>
       {[card.q1, card.q2, card.q3].map((q, i) => (
         <div key={i} style={{ display:'flex', alignItems:'center', gap:10, font:"400 13px/1.4 'Inter',sans-serif", color:'var(--op-text-secondary)' }}>
           <span style={{ width:20, height:20, background:'rgba(201,166,95,.12)', color:'var(--op-accent)', display:'flex', alignItems:'center', justifyContent:'center', font:"500 10px/1 'JetBrains Mono',monospace", flexShrink:0 }}>{i+1}</span>

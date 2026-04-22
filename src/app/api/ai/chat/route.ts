@@ -15,7 +15,7 @@ const TODAY = new Date().toLocaleDateString("ru-RU", {
   timeZone: "Europe/Moscow",
 })
 
-const YURA_SYSTEM = `Ты — Юра, AI-консультант веб-студии Optisphere.
+const YURA_SYSTEM = `Ты — Опти, AI-консультант веб-студии Optisphere.
 Сегодня: ${TODAY}.
 Ты встроен прямо в этот сайт и сам являешься живым примером того, что студия продаёт клиентам: AI-ассистент, который продаёт, консультирует и собирает заявки 24/7.
 
@@ -190,7 +190,7 @@ async function fetchPageContent(url: string): Promise<string | null> {
       signal: controller.signal,
       headers: {
         "User-Agent":
-          "Mozilla/5.0 (compatible; Optisphere-Yura/1.0; +https://optisphere.ru)",
+          "Mozilla/5.0 (compatible; Optisphere-Opti/1.0; +https://optisphere.ru)",
         Accept: "text/html,application/xhtml+xml",
       },
     })

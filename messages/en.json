@@ -4,14 +4,14 @@
     "portfolio": "Portfolio",
     "pricing": "Pricing",
     "contact": "Contact",
-    "cta": "Ask Yura"
+    "cta": "Ask Opti"
   },
   "hero": {
     "badge": "AI WEB STUDIO",
     "title_line1": "Websites that",
     "title_line2": "sell on their own",
     "title_line3": "while you sleep",
-    "subtitle": "We build websites, add AI assistants and promote via SEO & Yandex Direct. Yura qualifies leads 24/7.",
+    "subtitle": "We build websites, add AI assistants and promote via SEO & Yandex Direct. Opti qualifies leads 24/7.",
     "headline": {
       "line1": "Websites that",
       "line2": "sell on their own",
@@ -22,13 +22,13 @@
       "secondary": "How it works"
     },
     "meet_title_line1": "Meet",
-    "meet_title_yura": "Yura",
+    "meet_title_yura": "Opti",
     "meet_subtitle": "He sells, consults and works 24/7. Ask a question on the right — see his thinking live. No forms, no \"leave a request\".",
     "hosting": "RU hosting"
   },
   "hook": {
     "sites": { "value": "47", "label": "sites launched" },
-    "leads": { "value": "1,200+", "label": "leads captured by Yura" },
+    "leads": { "value": "1,200+", "label": "leads captured by Opti" },
     "days": { "value": "7", "label": "days on average" }
   },
   "services": {
@@ -38,8 +38,8 @@
     "ai_site": {
       "label": "AI WEBSITE",
       "title": "Website with an AI salesperson inside",
-      "desc": "Yura answers questions, qualifies visitors and captures contacts — while you focus on your business. No online manager needed, no missed leads.",
-      "features": ["AI assistant Yura built into the site", "Responsive design for all devices", "SEO optimisation from day one", "Ready to launch in 5–10 days"]
+      "desc": "Opti answers questions, qualifies visitors and captures contacts — while you focus on your business. No online manager needed, no missed leads.",
+      "features": ["AI assistant Opti built into the site", "Responsive design for all devices", "SEO optimisation from day one", "Ready to launch in 5–10 days"]
     },
     "presence": {
       "label": "PRESENCE",
@@ -51,7 +51,7 @@
       "label": "GROWTH",
       "title": "Steady flow of leads",
       "desc": "SEO + Yandex.Direct + analytics. We set up a client acquisition system, monitor metrics and report results every month.",
-      "features": ["SEO from month one — organic traffic", "Yandex.Direct — paid traffic with ROI", "Monthly reports on leads and conversion", "Orbit subscription — everything included"]
+      "features": ["SEO from month one — organic traffic", "Yandex.Direct — paid traffic with ROI", "Monthly reports on leads and conversion", "Satellite subscription — everything included"]
     }
   },
   "portfolio": {
@@ -69,46 +69,46 @@
   "pricing": {
     "label": "Pricing",
     "title": "Transparent pricing",
-    "subtitle": "Exact price — after a chat with Yura. These are starting points.",
+    "subtitle": "Exact price — after a chat with Opti. These are starting points.",
     "cta": {
       "discuss": "Discuss",
       "calculate": "Calculate price",
       "subscribe": "Get subscription"
     },
     "features": {
-      "start": ["Responsive design", "Single page (landing)", "Application form", "Basic SEO", "AI assistant Yura"],
-      "pro": ["Responsive design", "Up to 10 pages", "AI assistant Yura", "SEO optimisation", "Analytics & reports"],
+      "start": ["Responsive design", "Single page (landing)", "Application form", "Basic SEO", "AI assistant Opti"],
+      "pro": ["Responsive design", "Up to 10 pages", "AI assistant Opti", "SEO optimisation", "Analytics & reports"],
       "premium": ["Everything in PRO", "3D / custom animations", "Marketing package", "360° panoramas", "Priority support"]
     },
     "tiers": {
       "start": {
         "name": "START",
-        "price": "from ₽90,000",
+        "price": "from ₽50,000",
         "days": "3–5 days",
         "desc": "Landing page for a quick start"
       },
       "pro": {
         "name": "PRO",
-        "price": "from ₽180,000",
+        "price": "from ₽120,000",
         "days": "5–10 days",
         "desc": "Sales website + SEO",
         "badge": "Popular"
       },
       "premium": {
         "name": "PREMIUM",
-        "price": "from ₽350,000",
+        "price": "from ₽250,000",
         "days": "10–20 days",
         "desc": "Custom + 3D + marketing"
       }
     },
     "orbit": {
       "label": "Subscription",
-      "title": "Orbit",
+      "title": "Satellite",
       "desc": "Monthly maintenance and development of your website",
       "tiers": {
-        "start": { "name": "START", "price": "₽10,000/mo", "features": ["Hosting + domain", "24/7 monitoring", "5 edits per month"] },
-        "pro": { "name": "PRO", "price": "₽15,000/mo", "features": ["Everything in START", "SEO + rankings", "Conversion + reports", "Yura updates"] },
-        "max": { "name": "MAX", "price": "₽25,000/mo", "features": ["Everything in PRO", "Yandex.Direct", "Unlimited edits", "Priority support"] }
+        "start": { "name": "START", "price": "₽7,000/mo", "features": ["Hosting + domain", "24/7 monitoring", "5 edits per month"] },
+        "pro": { "name": "PRO", "price": "₽12,000/mo", "features": ["Everything in START", "SEO + rankings", "Conversion + reports", "Opti updates"] },
+        "max": { "name": "MAX", "price": "₽18,000/mo", "features": ["Everything in PRO", "Yandex.Direct", "Unlimited edits", "Priority support"] }
       }
     }
   },
@@ -118,12 +118,12 @@
     "steps": {
       "business": { "title": "Business type", "options": ["Hotel / apartments", "Construction", "Medicine / clinic", "Other business"] },
       "type": { "title": "What you need", "options": ["Landing page (1 page)", "Multi-page website", "Online store"] },
-      "features": { "title": "Features you need", "options": ["AI assistant (Yura)", "Application form", "Services / products catalogue", "SEO optimisation"] },
+      "features": { "title": "Features you need", "options": ["AI assistant (Opti)", "Application form", "Services / products catalogue", "SEO optimisation"] },
       "timeline": { "title": "When do you need it", "options": ["Urgent (up to 5 days)", "Normal (up to 14 days)", "No rush (up to 30 days)"] }
     },
     "result": {
       "title": "Your price range",
-      "cta": "Clarify details with Yura →",
+      "cta": "Clarify details with Opti →",
       "tier_label": "Recommended tier"
     },
     "nav": {
@@ -134,8 +134,8 @@
   },
   "cta": {
     "title": "First leads in 7 days",
-    "subtitle": "Tell us about the project — Yura will ask a couple of questions and give you a realistic price range",
-    "button": "Discuss project with Yura",
+    "subtitle": "Tell us about the project — Opti will ask a couple of questions and give you a realistic price range",
+    "button": "Discuss project with Opti",
     "ready_label": "Ready to start?",
     "trust": {
       "response": "Reply in 15 minutes",
@@ -144,11 +144,11 @@
     }
   },
   "ai": {
-    "trigger": "Ask Yura",
-    "name": "Yura",
+    "trigger": "Ask Opti",
+    "name": "Opti",
     "subtitle": "Optisphere AI consultant",
     "placeholder": "Write about your project...",
-    "greeting": "Hi. I'm Yura — I help figure out what your site needs to bring in clients. Tell me: what's your business and what isn't working right now?",
+    "greeting": "Hi. I'm Opti — I help figure out what your site needs to bring in clients. Tell me: what's your business and what isn't working right now?",
     "online": "Online",
     "close": "Close",
     "send": "Send",
@@ -174,7 +174,7 @@
     },
     "first_messages": {
       "v1": "I find where a website loses money. We have three departments: marketing, development, quality — every project goes through all three. Do you already have a site, or building from scratch?",
-      "v2": "I'm Yura. Most sites lose visitors in the first 8 seconds — we build so they stay. Do you already have a site, or building from scratch?",
+      "v2": "I'm Opti. Most sites lose visitors in the first 8 seconds — we build so they stay. Do you already have a site, or building from scratch?",
       "v3": "I help figure out why competitors get leads while you get traffic. Straight talk, no fluff. Do you already have a site, or building from scratch?"
     },
     "lead_form": {
@@ -217,7 +217,7 @@
     "types_title": "What cookies we use",
     "technical_title": "Technical (essential)",
     "technical_text": "Required for the website to function. Cannot be disabled.",
-    "technical_items": ["Chat assistant Yura session identifier (sessionStorage)", "Cookie policy consent flag (localStorage)"],
+    "technical_items": ["Chat assistant Opti session identifier (sessionStorage)", "Cookie policy consent flag (localStorage)"],
     "analytics_title": "Analytical",
     "analytics_text": "Used to understand how visitors interact with the site. Data is anonymised.",
     "analytics_items": ["Page view counters (no personal data transmitted)"],
@@ -302,7 +302,7 @@
       { "q": "How long does a project take?", "a": "Quick start — 3 days. Standard — 5–7 days. Pro — 2–4 weeks. Deadlines are fixed in the contract." },
       { "q": "What if the AI assistant says something wrong to a client?", "a": "The assistant is trained on your knowledge base and works only within defined scenarios. Edge cases are escalated to a human." },
       { "q": "How is data protected under Russian law?", "a": "Hosting — Yandex Cloud with Russian localisation. We sign an NDA and a personal data processing agreement. Cookie banner with detailed consent." },
-      { "q": "Can I get just a website without an assistant?", "a": "Yes, any plan — with or without the assistant. Quick start without assistant — ₽90,000." },
+      { "q": "Can I get just a website without an assistant?", "a": "Yes, any plan — with or without the assistant. Quick start without assistant — ₽30,000." },
       { "q": "What hosting is used?", "a": "By default — Yandex Cloud (Russian localisation, 152-FZ). On request — Selectel or your own." },
       { "q": "Why are you 10–30x cheaper than others?", "a": "A team of 25 AI agents does the work of 10–15 people. We pay for compute resources, not hours." },
       { "q": "What if I need changes after delivery?", "a": "All changes within the scope — free. New features — by price list with a fixed estimate before work starts." },
@@ -389,11 +389,11 @@
     "made_with": "Made with care",
     "features": {
       "speed": "Website in 5–10 days",
-      "ai": "AI assistant Yura",
+      "ai": "AI assistant Opti",
       "pano": "360° Panoramas",
       "seo": "SEO & promotion"
     },
-    "desc_short": "Websites that bring in clients. AI assistant Yura — 24/7, no days off.",
+    "desc_short": "Websites that bring in clients. AI assistant Opti — 24/7, no days off.",
     "col_services": "SERVICES",
     "col_company": "COMPANY",
     "col_legal": "LEGAL",
@@ -403,7 +403,7 @@
     "svc_sites": "Websites",
     "svc_seo": "SEO",
     "svc_direct": "Yandex.Direct",
-    "svc_orbit": "Orbit subscription",
+    "svc_orbit": "Satellite subscription",
     "company_about": "About us",
     "company_cases": "Cases",
     "company_blog": "Blog",
