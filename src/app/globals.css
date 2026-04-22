@@ -1,35 +1,35 @@
 @import "tailwindcss";
 
 :root {
-  --op-base:              #0a0e14;
-  --op-surface:           #12161e;
-  --op-surface-elevated:  #1a1f28;
-  --op-surface-overlay:   #232832;
-  --op-accent:            #c9a65f;
-  --op-accent-hover:      #d9b874;
-  --op-accent-press:      #b8954d;
-  --op-accent-subtle:     rgba(201, 166, 95, 0.15);
-  --op-accent-faint:      rgba(201, 166, 95, 0.06);
-  --op-accent-ring:       rgba(201, 166, 95, 0.40);
-  --op-accent-2:          #e8574a;
-  --op-accent-2-hover:    #f2695c;
-  --op-accent-2-subtle:   rgba(232, 87, 74, 0.14);
-  --op-accent-2-faint:    rgba(232, 87, 74, 0.06);
-  --op-accent-2-ring:     rgba(232, 87, 74, 0.40);
-  --op-text:              #e8e6e3;
-  --op-text-secondary:    #9a9590;
-  --op-text-muted:        #5a5550;
-  --op-text-faint:        #3a3631;
-  --op-text-on-accent:    #0a0e14;
+  --op-base:              #060606;
+  --op-surface:           #111111;
+  --op-surface-elevated:  #1a1a1a;
+  --op-surface-overlay:   #242424;
+  --op-accent:            #e82020;
+  --op-accent-hover:      #f52525;
+  --op-accent-press:      #cc1515;
+  --op-accent-subtle:     rgba(232, 32, 32, 0.12);
+  --op-accent-faint:      rgba(232, 32, 32, 0.06);
+  --op-accent-ring:       rgba(232, 32, 32, 0.40);
+  --op-accent-2:          #ff4a4a;
+  --op-accent-2-hover:    #ff6666;
+  --op-accent-2-subtle:   rgba(255, 74, 74, 0.12);
+  --op-accent-2-faint:    rgba(255, 74, 74, 0.06);
+  --op-accent-2-ring:     rgba(255, 74, 74, 0.40);
+  --op-text:              #ffffff;
+  --op-text-secondary:    #888888;
+  --op-text-muted:        #555555;
+  --op-text-faint:        #2f2f2f;
+  --op-text-on-accent:    #ffffff;
   --op-border:            rgba(255, 255, 255, 0.08);
-  --op-border-strong:     rgba(255, 255, 255, 0.14);
-  --op-border-accent:     rgba(201, 166, 95, 0.35);
+  --op-border-strong:     rgba(255, 255, 255, 0.16);
+  --op-border-accent:     rgba(232, 32, 32, 0.40);
   --op-divider:           rgba(255, 255, 255, 0.05);
-  --op-shadow-sm:  0 1px 2px rgba(0,0,0,0.4);
-  --op-shadow-md:  0 4px 12px rgba(0,0,0,0.25), 0 0 0 1px var(--op-border);
-  --op-shadow-lg:  0 12px 32px rgba(0,0,0,0.35), 0 0 0 1px var(--op-border);
-  --op-shadow-glow: 0 0 0 1px var(--op-border-accent), 0 8px 24px rgba(201,166,95,0.12);
-  --op-rim: inset 0 1px 0 rgba(255,255,255,0.04);
+  --op-shadow-sm:  0 1px 2px rgba(0,0,0,0.6);
+  --op-shadow-md:  0 4px 12px rgba(0,0,0,0.4), 0 0 0 1px var(--op-border);
+  --op-shadow-lg:  0 12px 32px rgba(0,0,0,0.5), 0 0 0 1px var(--op-border);
+  --op-shadow-glow: 0 0 0 1px var(--op-border-accent), 0 8px 24px rgba(232,32,32,0.20);
+  --op-rim: inset 0 1px 0 rgba(255,255,255,0.06);
   --op-ease:          cubic-bezier(0.22, 0.61, 0.36, 1);
   --op-ease-swift:    cubic-bezier(0.4, 0, 0.2, 1);
   --op-dur-fast:      140ms;
@@ -39,11 +39,27 @@
   --op-font-display:  'Oxanium', system-ui, sans-serif;
   --op-font-body:     'Inter', system-ui, sans-serif;
   --op-font-mono:     'JetBrains Mono', ui-monospace, monospace;
+
+  /* Aliases for ServicesSection legacy tokens — НЕ УДАЛЯТЬ */
+  --base: var(--op-base);
+  --surface: var(--op-surface);
+  --surface-high: var(--op-surface-elevated);
+  --text: var(--op-text);
+  --text-muted: var(--op-text-secondary);
+  /* Эти цвета остаются — они используются ВНУТРИ UI-мокапов клиентских сайтов */
+  --indigo: #6366f1;
+  --indigo-dim: rgba(99,102,241,0.08);
+  --cyan: #06b6d4;
+  --cyan-dim: rgba(6,182,212,0.08);
+  --amber: #f59e0b;
+  --amber-dim: rgba(245,158,11,0.08);
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+/* Override font tokens with actual Next.js loaded fonts when variables are available */
 html {
+  --op-font-display: var(--font-oxanium, 'Oxanium'), system-ui, sans-serif;
+  --op-font-body:    var(--font-inter, 'Inter'), system-ui, sans-serif;
+  --op-font-mono:    var(--font-jetbrains, 'JetBrains Mono'), ui-monospace, monospace;
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   background: var(--op-base);
@@ -51,12 +67,26 @@ html {
   font-family: var(--op-font-body);
 }
 
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
 body {
   background: var(--op-base);
   color: var(--op-text);
   font-family: var(--op-font-body);
   overflow-x: hidden;
 }
+
+/* Restore list styles for prose content (privacy, cookies pages) */
+article ul, article ol {
+  padding-left: 1.5em;
+  margin: 0.75em 0;
+}
+article li {
+  margin-bottom: 0.4em;
+  line-height: 1.6;
+}
+article ul { list-style: disc; }
+article ol { list-style: decimal; }
 
 ::selection { background: var(--op-accent-subtle); color: var(--op-text); }
 
@@ -67,3 +97,30 @@ body {
 
 @keyframes hudPulse { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
 @keyframes hudCaret { 50% { opacity: 0; } }
+
+/* ── Scroll reveal keyframes ─────────────────────────────── */
+@keyframes fadeInUp   { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
+@keyframes fadeInLeft { from { opacity:0; transform:translateX(-28px); } to { opacity:1; transform:translateX(0); } }
+@keyframes fadeInRight{ from { opacity:0; transform:translateX(28px);  } to { opacity:1; transform:translateX(0); } }
+@keyframes scaleIn    { from { opacity:0; transform:scale(0.94); }        to { opacity:1; transform:scale(1); }    }
+
+/* ── Global button system ─────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 8px; height: 48px; padding: 0 26px;
+  border-radius: 8px; cursor: pointer;
+  font: 500 15px/1 'Inter', sans-serif;
+  transition: all 160ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  text-decoration: none; white-space: nowrap;
+}
+.btn-primary { background: var(--op-accent); color: #fff; border: none; }
+.btn-primary:hover { background: var(--op-accent-hover); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(232,32,32,0.4); }
+.btn-primary:active { background: var(--op-accent-press); transform: translateY(0); box-shadow: none; }
+.btn-ghost { background: transparent; color: var(--op-text); border: 1px solid var(--op-border-strong); }
+.btn-ghost:hover { border-color: rgba(232,32,32,0.5); color: var(--op-accent); }
+
+/* ── Scrollbar ────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--op-base); }
+::-webkit-scrollbar-thumb { background: var(--op-border-strong); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--op-accent); }

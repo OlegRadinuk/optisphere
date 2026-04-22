@@ -40,27 +40,27 @@ function RingField() {
         const alpha   = (1 - phase) * 0.18;
         ctx!.beginPath();
         ctx!.arc(cx, cy, radius, 0, Math.PI * 2);
-        ctx!.strokeStyle = `rgba(99,102,241,${alpha})`;
+        ctx!.strokeStyle = `rgba(232,32,32,${alpha})`;
         ctx!.lineWidth = 1.5;
         ctx!.stroke();
       }
 
-      // Cyan inner ring pulses (offset timing)
+      // Inner ring pulses (offset timing)
       for (let i = 0; i < 3; i++) {
         const phase   = ((t * 0.6 + i * 0.33) % 1);
         const radius  = phase * Math.min(w, h) * 0.4;
         const alpha   = (1 - phase) * 0.12;
         ctx!.beginPath();
         ctx!.arc(cx, cy, radius, 0, Math.PI * 2);
-        ctx!.strokeStyle = `rgba(6,182,212,${alpha})`;
+        ctx!.strokeStyle = `rgba(232,80,80,${alpha})`;
         ctx!.lineWidth = 1;
         ctx!.stroke();
       }
 
       // Central glow
       const gr = ctx!.createRadialGradient(cx, cy, 0, cx, cy, 160);
-      gr.addColorStop(0,   'rgba(99,102,241,0.12)');
-      gr.addColorStop(0.5, 'rgba(6,182,212,0.05)');
+      gr.addColorStop(0,   'rgba(232,32,32,0.12)');
+      gr.addColorStop(0.5, 'rgba(232,80,80,0.05)');
       gr.addColorStop(1,   'rgba(0,0,0,0)');
       ctx!.beginPath(); ctx!.arc(cx, cy, 160, 0, Math.PI*2);
       ctx!.fillStyle = gr; ctx!.fill();
@@ -119,7 +119,7 @@ export default function CTASection() {
       {/* Deep bg radial gradient */}
       <div aria-hidden="true" style={{
         position: 'absolute', inset: 0,
-        background: 'radial-gradient(ellipse 80% 70% at 50% 50%, rgba(99,102,241,0.1) 0%, rgba(6,182,212,0.04) 45%, transparent 75%)',
+        background: 'radial-gradient(ellipse 80% 70% at 50% 50%, rgba(232,32,32,0.1) 0%, rgba(200,20,20,0.04) 45%, transparent 75%)',
         pointerEvents: 'none',
       }} />
 

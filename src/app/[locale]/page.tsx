@@ -6,6 +6,7 @@ import CasesSection from '@/components/sections/CasesSection';
 import ProofSection from '@/components/sections/ProofSection';
 import TeamSection from '@/components/sections/TeamSection';
 import PricingSection from '@/components/sections/PricingSection';
+import CalcSection from '@/components/sections/CalcSection';
 import FaqSection from '@/components/sections/FaqSection';
 import FinalCtaSection from '@/components/sections/FinalCtaSection';
 import Footer from '@/components/sections/Footer';
@@ -25,6 +26,7 @@ export default function Home() {
       <ProofSection />
       <TeamSection />
       <PricingSection />
+      <CalcSection />
       <FaqSection />
       <FinalCtaSection />
       <Footer />

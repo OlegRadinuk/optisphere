@@ -13,7 +13,7 @@ export default function FinalCtaSection() {
         <p style={{ font:"400 19px/1.55 'Inter',sans-serif", color:'var(--op-text-secondary)', margin:0, maxWidth:620 }}>
           Наш ассистент за 5 минут поймёт задачу и даст конкретные цифры по срокам и стоимости.
         </p>
-        <button style={{ marginTop:8, height:56, padding:'0 32px', fontSize:16, display:'inline-flex', alignItems:'center', justifyContent:'center', gap:8, borderRadius:8, background:'var(--op-accent)', color:'var(--op-text-on-accent)', border:'none', cursor:'pointer', font:"500 16px/1 'Inter',sans-serif" }}>
+        <button onClick={() => window.dispatchEvent(new CustomEvent('yura-open'))} style={{ marginTop:8, height:56, padding:'0 32px', fontSize:16, display:'inline-flex', alignItems:'center', justifyContent:'center', gap:8, borderRadius:8, background:'var(--op-accent)', color:'var(--op-text-on-accent)', border:'none', cursor:'pointer', font:"500 16px/1 'Inter',sans-serif" }}>
           Открыть чат с ассистентом →
         </button>
         <div style={{ marginTop:16, display:'flex', gap:28, flexWrap:'wrap', justifyContent:'center', font:"400 13px/1.4 'Inter',sans-serif", color:'var(--op-text-muted)' }}>

@@ -16,7 +16,7 @@ function Brand() {
     <div style={{ display:'flex', alignItems:'center', gap:10 }}>
       <svg width={26} height={26} viewBox="0 0 48 48" aria-label="Optisphere">
         <circle cx="24" cy="24" r="22" fill="none" stroke="#e8e6e3" strokeWidth="1.5"/>
-        <path d="M 24 2 A 22 12 0 0 1 24 46" fill="none" stroke="#c9a65f" strokeWidth="1.5"/>
+        <path d="M 24 2 A 22 12 0 0 1 24 46" fill="none" stroke="#e82020" strokeWidth="1.5"/>
         <path d="M 2 24 L 46 24" stroke="#e8e6e3" strokeWidth="1.5" opacity="0.35" fill="none"/>
       </svg>
       <span style={{ font:"500 17px/1 'Oxanium',sans-serif", color:'var(--op-text)', letterSpacing:'-0.015em' }}>
@@ -31,7 +31,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => setScrolled(window.scrollY > 20);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
@@ -49,9 +49,9 @@ export default function Navbar() {
         display: 'flex', alignItems: 'center', gap: 24,
         padding: '14px 32px',
         borderBottom: scrolled ? '1px solid var(--op-border)' : '1px solid transparent',
-        background: scrolled ? 'rgba(10,14,20,0.85)' : 'transparent',
+        background: scrolled ? 'rgba(6,6,6,0.85)' : 'transparent',
         backdropFilter: scrolled ? 'blur(12px)' : 'none',
-        transition: 'background 220ms, border-color 220ms',
+        transition: 'all 220ms ease',
       }}>
         <Brand/>
         <div style={{ display:'flex', gap:22, marginLeft:16 }} className="nav-links-desktop">
@@ -69,8 +69,9 @@ export default function Navbar() {
         </div>
         <div style={{ marginLeft:'auto', display:'flex', alignItems:'center', gap:12 }}>
           <span style={{ font:"400 11px/1 'JetBrains Mono',monospace", color:'var(--op-text-muted)', letterSpacing:'.12em' }}
-                className="nav-price-desktop">ОТ 120 000 ₽</span>
+                className="nav-price-desktop">ОТ 90 000 ₽</span>
           <button
+            onClick={() => window.dispatchEvent(new CustomEvent('yura-open'))}
             style={{
               display:'inline-flex', alignItems:'center', justifyContent:'center', gap:8,
               height:36, padding:'0 14px',
@@ -85,7 +86,7 @@ export default function Navbar() {
             style={{
               width:44, height:44, border:'1px solid var(--op-border-strong)',
               background: open ? 'var(--op-accent)' : 'transparent',
-              color: open ? '#0a0e14' : 'var(--op-text)',
+              color: 'var(--op-text)',
               cursor:'pointer', display:'none', alignItems:'center', justifyContent:'center', flexDirection:'column', gap:5,
               clipPath:'polygon(6px 0,100% 0,100% calc(100% - 6px),calc(100% - 6px) 100%,0 100%,0 6px)',
               transition:'background .2s,color .2s',
@@ -99,7 +100,7 @@ export default function Navbar() {
 
       <div style={{
         position:'fixed', inset:0, zIndex:100,
-        background:'rgba(7,9,13,.97)', backdropFilter:'blur(20px)',
+        background:'rgba(6,6,6,.97)', backdropFilter:'blur(20px)',
         display:'flex', flexDirection:'column', gap:4, padding:'96px 24px 40px',
         transform: open ? 'translateY(0)' : 'translateY(-100%)',
         transition:'transform .35s var(--op-ease)',
@@ -112,11 +113,14 @@ export default function Navbar() {
             borderBottom:'1px solid var(--op-border)', letterSpacing:'-0.01em', textTransform:'uppercase',
           }}>{l}</a>
         ))}
-        <button style={{ marginTop:24, height:48, padding:'0 26px', background:'var(--op-accent-2)', color:'#fff', border:'none', borderRadius:8, cursor:'pointer', font:"500 15px/1 'Inter',sans-serif" }}>
+        <button
+          onClick={e => { e.stopPropagation(); window.dispatchEvent(new CustomEvent('yura-open')); setOpen(false); }}
+          style={{ marginTop:24, height:48, padding:'0 26px', background:'var(--op-accent)', color:'#fff', border:'none', borderRadius:8, cursor:'pointer', font:"500 15px/1 'Inter',sans-serif" }}
+        >
           Обсудить проект →
         </button>
         <div style={{ marginTop:20, font:"400 11px/1.5 'JetBrains Mono',monospace", color:'var(--op-text-muted)', letterSpacing:'.12em' }}>
-          ОТ 120 000 ₽ · hi@optisphere.ru
+          ОТ 90 000 ₽ · hi@optisphere.ru
         </div>
       </div>
 

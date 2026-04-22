@@ -73,7 +73,7 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <html lang={locale} className={`${oxanium.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
-      <body className="bg-base text-text">
+      <body style={{ background: "var(--op-base)", color: "var(--op-text)" }}>
         <NextIntlClientProvider messages={messages}>
           <HeroChatProvider>
             {children}

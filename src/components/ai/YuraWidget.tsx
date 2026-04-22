@@ -199,12 +199,16 @@ function getSessionId(): string {
 
 function TypingDots() {
   return (
-    <div className="flex items-center gap-1 px-4 py-3">
+    <div style={{ display: "flex", alignItems: "center", gap: 4, padding: "12px 16px" }}>
       {[0, 1, 2].map((i) => (
         <span
           key={i}
-          className="block w-2 h-2 rounded-full bg-text-muted"
           style={{
+            display: "block",
+            width: 8,
+            height: 8,
+            borderRadius: "50%",
+            background: "var(--op-text-muted)",
             animation: `yuraDot 1.2s ease-in-out ${i * 0.2}s infinite`,
           }}
         />
@@ -279,7 +283,12 @@ function MessageBubble({ msg }: { msg: ChatMessage }) {
       initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.18 }}
-      className={`flex gap-2 ${isUser ? "flex-row-reverse" : "flex-row"} items-end`}
+      style={{
+        display: "flex",
+        gap: 8,
+        flexDirection: isUser ? "row-reverse" : "row",
+        alignItems: "flex-end",
+      }}
     >
       {!isUser && <YuraAvatar size={28} />}
       <div
@@ -293,7 +302,7 @@ function MessageBubble({ msg }: { msg: ChatMessage }) {
           border: isUser
             ? "1px solid rgba(99,102,241,0.35)"
             : "1px solid rgba(255,255,255,0.08)",
-          color: "var(--text)",
+          color: "var(--op-text)",
           fontSize: "0.875rem",
           lineHeight: 1.6,
           wordBreak: "break-word",
@@ -720,7 +729,7 @@ export default function YuraWidget() {
                     style={{
                       fontWeight: 700,
                       fontSize: "0.9375rem",
-                      color: "var(--text)",
+                      color: "var(--op-text)",
                       lineHeight: 1.2,
                     }}
                   >
@@ -729,7 +738,7 @@ export default function YuraWidget() {
                   <div
                     style={{
                       fontSize: "0.7rem",
-                      color: "var(--text-muted)",
+                      color: "var(--op-text-muted)",
                       marginTop: 2,
                       overflow: "hidden",
                       textOverflow: "ellipsis",
@@ -774,7 +783,7 @@ export default function YuraWidget() {
                     background: "rgba(255,255,255,0.06)",
                     border: "1px solid rgba(255,255,255,0.08)",
                     cursor: "pointer",
-                    color: "var(--text-muted)",
+                    color: "var(--op-text-muted)",
                     lineHeight: 1,
                     borderRadius: "50%",
                     width: 28,
@@ -787,11 +796,11 @@ export default function YuraWidget() {
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.background = "rgba(255,255,255,0.12)"
-                    e.currentTarget.style.color = "var(--text)"
+                    e.currentTarget.style.color = "var(--op-text)"
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.background = "rgba(255,255,255,0.06)"
-                    e.currentTarget.style.color = "var(--text-muted)"
+                    e.currentTarget.style.color = "var(--op-text-muted)"
                   }}
                 >
                   <svg
@@ -879,7 +888,7 @@ export default function YuraWidget() {
                     border: "1px solid rgba(255,255,255,0.1)",
                     borderRadius: "12px",
                     padding: "0.625rem 0.875rem",
-                    color: "var(--text)",
+                    color: "var(--op-text)",
                     fontSize: "0.875rem",
                     lineHeight: 1.5,
                     resize: "none",
@@ -954,7 +963,7 @@ export default function YuraWidget() {
                 borderRadius: "12px 12px 4px 12px",
                 padding: "0.625rem 1rem",
                 fontSize: "0.8125rem",
-                color: "var(--text)",
+                color: "var(--op-text)",
                 whiteSpace: "nowrap",
                 backdropFilter: "blur(16px)",
                 WebkitBackdropFilter: "blur(16px)",

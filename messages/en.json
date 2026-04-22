@@ -29,25 +29,25 @@
   },
   "services": {
     "label": "What we do",
-    "header": "Three ways to grow",
-    "title": "Three ways to grow",
+    "header": "Three tools. One result — clients.",
+    "title": "Three tools. One result — clients.",
     "ai_site": {
       "label": "AI WEBSITE",
-      "title": "AI Website",
-      "desc": "A website with a digital salesperson inside. Yura answers questions, qualifies leads and requests contact — around the clock.",
-      "features": ["Yura as part of the site", "Responsive design", "SEO optimisation", "Ready in 5–10 days"]
+      "title": "Website with an AI salesperson inside",
+      "desc": "Yura answers questions, qualifies visitors and captures contacts — while you focus on your business. No online manager needed, no missed leads.",
+      "features": ["AI assistant Yura built into the site", "Responsive design for all devices", "SEO optimisation from day one", "Ready to launch in 5–10 days"]
     },
     "presence": {
       "label": "PRESENCE",
-      "title": "Presence",
-      "desc": "360° panoramas and visual content. The client 'visits' you before the first call — sees everything from the inside.",
-      "features": ["360° object tours", "Website integration", "Virtual viewing", "From ₽8,000/object"]
+      "title": "Virtual 360° presence",
+      "desc": "Clients see inside your property before their first call. Hotel, clinic, showroom — an interactive tour increases booking conversion.",
+      "features": ["360° object tours", "Embed on website and social media", "Virtual viewing without a visit", "From ₽8,000/object"]
     },
     "growth": {
       "label": "GROWTH",
-      "title": "Growth",
-      "desc": "SEO + Yandex.Direct + analytics. AI analyses the audience, the site converts, you get leads.",
-      "features": ["SEO from month one", "Yandex.Direct", "Monthly reports", "Orbit subscription"]
+      "title": "Steady flow of leads",
+      "desc": "SEO + Yandex.Direct + analytics. We set up a client acquisition system, monitor metrics and report results every month.",
+      "features": ["SEO from month one — organic traffic", "Yandex.Direct — paid traffic with ROI", "Monthly reports on leads and conversion", "Orbit subscription — everything included"]
     }
   },
   "portfolio": {
@@ -110,16 +110,16 @@
   },
   "calculator": {
     "label": "Calculator",
-    "title": "Find out the cost",
+    "title": "Find out the cost of your website",
     "steps": {
       "business": { "title": "Business type", "options": ["Hotel / apartments", "Construction", "Medicine / clinic", "Other business"] },
       "type": { "title": "What you need", "options": ["Landing page (1 page)", "Multi-page website", "Online store"] },
-      "features": { "title": "Features", "options": ["AI assistant (Yura)", "Application form", "Services / products catalogue", "SEO optimisation"] },
-      "timeline": { "title": "Timeline", "options": ["Urgent (up to 5 days)", "Normal (up to 14 days)", "No rush (up to 30 days)"] }
+      "features": { "title": "Features you need", "options": ["AI assistant (Yura)", "Application form", "Services / products catalogue", "SEO optimisation"] },
+      "timeline": { "title": "When do you need it", "options": ["Urgent (up to 5 days)", "Normal (up to 14 days)", "No rush (up to 30 days)"] }
     },
     "result": {
-      "title": "Your range",
-      "cta": "Discuss with Yura",
+      "title": "Your price range",
+      "cta": "Clarify details with Yura →",
       "tier_label": "Recommended tier"
     },
     "nav": {
@@ -129,9 +129,9 @@
     }
   },
   "cta": {
-    "title": "Ready to launch?",
+    "title": "First leads in 7 days",
     "subtitle": "Tell us about the project — Yura will ask a couple of questions and give you a realistic price range",
-    "button": "Start a conversation",
+    "button": "Discuss project with Yura",
     "ready_label": "Ready to start?",
     "trust": {
       "response": "Reply in 15 minutes",

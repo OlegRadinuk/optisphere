@@ -16,9 +16,10 @@ interface ServicePanelProps {
   visual: React.ReactNode;
   reverse?: boolean;
   bg: string;
+  cta: string;
 }
 
-function ServicePanel({ accent, accentDim, label, title, desc, features, visual, reverse = false, bg }: ServicePanelProps) {
+function ServicePanel({ accent, accentDim, label, title, desc, features, visual, reverse = false, bg, cta }: ServicePanelProps) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: '-40px' });
 
@@ -95,6 +96,23 @@ function ServicePanel({ accent, accentDim, label, title, desc, features, visual,
               </li>
             ))}
           </ul>
+          <button
+            onClick={() => window.dispatchEvent(new CustomEvent('yura-open'))}
+            style={{
+              marginTop: '2rem',
+              display: 'inline-flex', alignItems: 'center', gap: 8,
+              height: 44, padding: '0 20px', borderRadius: 8,
+              background: 'transparent', color: accent,
+              border: `1px solid ${accent}55`,
+              cursor: 'pointer',
+              font: "500 14px/1 'Inter',sans-serif",
+              transition: 'background 180ms ease, border-color 180ms ease',
+            }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = accentDim; (e.currentTarget as HTMLButtonElement).style.borderColor = accent; }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = 'transparent'; (e.currentTarget as HTMLButtonElement).style.borderColor = `${accent}55`; }}
+          >
+            {cta}
+          </button>
         </motion.div>
       </div>
     </div>
@@ -504,6 +522,7 @@ export function ServicesSection() {
         label={t('ai_site.label')} title={t('ai_site.title')} desc={t('ai_site.desc')}
         features={ai_features} visual={<BrowserMockup />}
         reverse={false} bg="var(--base)"
+        cta="Обсудить мой сайт →"
       />
 
       {/* Panel 2 — Присутствие */}
@@ -512,6 +531,7 @@ export function ServicesSection() {
         label={t('presence.label')} title={t('presence.title')} desc={t('presence.desc')}
         features={pres_features} visual={<PanoramaMockup />}
         reverse={true} bg="var(--surface)"
+        cta="Заказать 360° тур →"
       />
 
       {/* Panel 3 — Рост */}
@@ -520,6 +540,7 @@ export function ServicesSection() {
         label={t('growth.label')} title={t('growth.title')} desc={t('growth.desc')}
         features={growth_features} visual={<GrowthChart />}
         reverse={false} bg="var(--base)"
+        cta="Обсудить продвижение →"
       />
 
       <style>{`

@@ -26,21 +26,21 @@ export default function WireSphere({ state }: { state: SphereState }) {
       <svg width="100%" height="100%" viewBox={`0 0 ${size} ${size}`} style={{ display:'block' }}>
         <defs>
           <linearGradient id="ringStroke" x1="0" x2="1" y1="0" y2="0">
-            <stop offset="0%"  stopColor="rgba(201,166,95,0)"/>
-            <stop offset="30%" stopColor="rgba(201,166,95,.4)"/>
-            <stop offset="50%" stopColor="rgba(201,166,95,.9)"/>
-            <stop offset="70%" stopColor="rgba(201,166,95,.4)"/>
-            <stop offset="100%" stopColor="rgba(201,166,95,0)"/>
+            <stop offset="0%"  stopColor="rgba(232,32,32,0)"/>
+            <stop offset="30%" stopColor="rgba(232,32,32,.4)"/>
+            <stop offset="50%" stopColor="rgba(232,32,32,.9)"/>
+            <stop offset="70%" stopColor="rgba(232,32,32,.4)"/>
+            <stop offset="100%" stopColor="rgba(232,32,32,0)"/>
           </linearGradient>
           <radialGradient id="coreGlow" cx="50%" cy="50%">
-            <stop offset="0%"  stopColor="rgba(201,166,95,.35)"/>
-            <stop offset="40%" stopColor="rgba(201,166,95,.08)"/>
+            <stop offset="0%"  stopColor="rgba(232,32,32,.35)"/>
+            <stop offset="40%" stopColor="rgba(232,32,32,.08)"/>
             <stop offset="100%" stopColor="transparent"/>
           </radialGradient>
         </defs>
 
         <circle cx={c} cy={c} r="90" fill="url(#coreGlow)"/>
-        <circle cx={c} cy={c} r="155" fill="none" stroke="rgba(201,166,95,.14)" strokeWidth="0.75" strokeDasharray="2 6"/>
+        <circle cx={c} cy={c} r="155" fill="none" stroke="rgba(232,32,32,.14)" strokeWidth="0.75" strokeDasharray="2 6"/>
         <circle cx={c} cy={c} r="110" fill="none" stroke="rgba(255,255,255,.04)" strokeWidth="0.75"/>
 
         {[0,90,180,270].map(a => {
@@ -50,7 +50,7 @@ export default function WireSphere({ state }: { state: SphereState }) {
             <line key={a}
               x1={c + Math.cos(rad)*r1} y1={c + Math.sin(rad)*r1}
               x2={c + Math.cos(rad)*r2} y2={c + Math.sin(rad)*r2}
-              stroke="rgba(201,166,95,.4)" strokeWidth="1"
+              stroke="rgba(232,32,32,.4)" strokeWidth="1"
             />
           );
         })}
@@ -71,8 +71,8 @@ export default function WireSphere({ state }: { state: SphereState }) {
                 return (
                   <g key={k}>
                     <circle cx={nx} cy={ny} r={isHot ? 3 : 1.6}
-                      fill={isHot ? 'var(--op-accent)' : 'rgba(232,230,227,.6)'}
-                      style={{ filter: isHot ? 'drop-shadow(0 0 6px rgba(201,166,95,.9))' : 'none' }}
+                      fill={isHot ? 'var(--op-accent)' : 'rgba(255,255,255,.6)'}
+                      style={{ filter: isHot ? 'drop-shadow(0 0 6px rgba(232,32,32,.9))' : 'none' }}
                     />
                     {isHot && (
                       <circle cx={nx} cy={ny} r="6" fill="none" stroke="var(--op-accent)" strokeWidth="0.8" opacity="0.6"
@@ -89,9 +89,9 @@ export default function WireSphere({ state }: { state: SphereState }) {
           </g>
         ))}
 
-        <line x1={c} y1={c-35} x2={c} y2={c+35} stroke="rgba(201,166,95,.5)" strokeWidth="0.75"/>
-        <line x1={c-35} y1={c} x2={c+35} y2={c} stroke="rgba(201,166,95,.5)" strokeWidth="0.75"/>
-        <circle cx={c} cy={c} r="5" fill="#0a0e14" stroke="var(--op-accent)" strokeWidth="1.5"/>
+        <line x1={c} y1={c-35} x2={c} y2={c+35} stroke="rgba(232,32,32,.5)" strokeWidth="0.75"/>
+        <line x1={c-35} y1={c} x2={c+35} y2={c} stroke="rgba(232,32,32,.5)" strokeWidth="0.75"/>
+        <circle cx={c} cy={c} r="5" fill="#060606" stroke="var(--op-accent)" strokeWidth="1.5"/>
         <circle cx={c} cy={c} r="2" fill="var(--op-accent)"
           style={{
             animation: state === 'speaking'
@@ -117,7 +117,7 @@ export default function WireSphere({ state }: { state: SphereState }) {
           </g>
         )}
 
-        <g style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:9, fill:'rgba(232,230,227,.5)', letterSpacing:'0.12em' }}>
+        <g style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:9, fill:'rgba(255,255,255,.5)', letterSpacing:'0.12em' }}>
           <text x="10" y="18">YURA · v3.1</text>
           <text x={size-86} y="18">42°N · OPT</text>
           <text x="10" y={size-10}>MODE · {state==='thinking' ? 'THINK' : state==='speaking' ? 'SPEAK' : 'READY'}</text>

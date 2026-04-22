@@ -6,7 +6,7 @@ function Brand() {
     <div style={{ display:'flex', alignItems:'center', gap:10 }}>
       <svg width={28} height={28} viewBox="0 0 48 48">
         <circle cx="24" cy="24" r="22" fill="none" stroke="#e8e6e3" strokeWidth="1.5"/>
-        <path d="M 24 2 A 22 12 0 0 1 24 46" fill="none" stroke="#c9a65f" strokeWidth="1.5"/>
+        <path d="M 24 2 A 22 12 0 0 1 24 46" fill="none" stroke="#e82020" strokeWidth="1.5"/>
         <path d="M 2 24 L 46 24" stroke="#e8e6e3" strokeWidth="1.5" opacity="0.35" fill="none"/>
       </svg>
       <span style={{ font:"500 17px/1 'Oxanium',sans-serif", color:'var(--op-text)', letterSpacing:'-0.015em' }}>Optisphere</span>
@@ -77,7 +77,7 @@ export default function Footer() {
             <div style={{ display:'flex', flexDirection:'column', gap:16, maxWidth:320 }}>
               <Brand/>
               <p style={{ font:"400 14px/1.55 'Inter',sans-serif", color:'var(--op-text-secondary)', margin:0 }}>
-                AI-first веб-студия. 25 AI-агентов. Сайты, AI-сотрудники, SEO, реклама — полный цифровой цикл.
+                Сайты, которые приносят клиентов. AI-ассистент Юра — 24/7 без выходных.
               </p>
             </div>
             <Col title="УСЛУГИ" items={[
@@ -107,7 +107,6 @@ export default function Footer() {
           </div>
           <div style={{ display:'flex', justifyContent:'space-between', gap:16, paddingTop:24, borderTop:'1px solid var(--op-border)', flexWrap:'wrap', font:"400 12px/1.4 'JetBrains Mono',monospace", color:'var(--op-text-muted)', letterSpacing:'.06em' }}>
             <span>© 2026 OPTISPHERE · ВСЕ ПРАВА ЗАЩИЩЕНЫ</span>
-            <span>ИНН уточняется</span>
             <div style={{ display:'flex', gap:16 }}>
               <a href="/privacy" style={{ color:'inherit', textDecoration:'none', cursor:'pointer' }}>/privacy</a>
               <a href="/cookies" style={{ color:'inherit', textDecoration:'none', cursor:'pointer' }}>/cookies</a>
