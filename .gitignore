@@ -42,3 +42,8 @@ next-env.d.ts
 
 # local agent artifacts (credentials, etc.)
 agents/artifacts/
+
+# Claude Code / Playwright MCP artifacts
+.playwright-mcp/
+.claude/worktrees/
+.claude/settings.local.json
