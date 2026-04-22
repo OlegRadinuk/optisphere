@@ -1,3 +1,5 @@
+'use client';
+
 export default function FinalCtaSection() {
   return (
     <section id="cta" style={{ padding:'120px 0', position:'relative', overflow:'hidden' }}>
