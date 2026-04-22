@@ -1,5 +1,5 @@
 'use client';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import WireSphere from './WireSphere';
 import { useHeroChat } from '@/components/ai/HeroChatContext';
 import type { ChatMessage } from '@/components/ai/HeroChatContext';
@@ -16,7 +16,24 @@ export default function HeroStage() {
   const [streamingText, setStreamingText] = useState('');
   const [input, setInput] = useState('');
   const [busy, setBusy] = useState(false);
+  const [greetingTyped, setGreetingTyped] = useState('');
   const abortRef = useRef<AbortController | null>(null);
+
+  // Typewriter effect for greeting — only when no messages yet
+  useEffect(() => {
+    if (sharedMessages.length > 0) return;
+    let i = 0;
+    // Small initial delay so page loads first
+    const start = setTimeout(() => {
+      const timer = setInterval(() => {
+        i++;
+        setGreetingTyped(GREETING.slice(0, i));
+        if (i >= GREETING.length) clearInterval(timer);
+      }, 22);
+      return () => clearInterval(timer);
+    }, 600);
+    return () => clearTimeout(start);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const send = async (text: string) => {
     if (!text.trim() || busy) return;
@@ -89,7 +106,10 @@ export default function HeroStage() {
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10, minHeight: 160, paddingLeft: 4 }}>
         {displayedMessages.length === 0 && !streamingText && (
           <p style={{ font: "400 14px/1.6 'Inter',sans-serif", color: 'var(--op-text-secondary)', maxWidth: 460, margin: 0 }}>
-            {GREETING}
+            {greetingTyped}
+            {greetingTyped.length < GREETING.length && (
+              <span style={{ display: 'inline-block', width: 2, height: 13, background: 'var(--op-accent)', marginLeft: 1, animation: 'hudCaret 0.8s step-end infinite', verticalAlign: 'text-bottom' }} />
+            )}
           </p>
         )}
         {displayedMessages.map((m, i) => (

@@ -54,7 +54,7 @@ export default function HeroSection() {
             variants={fadeUp(0.05)}
             style={{ font:"700 clamp(44px,7vw,104px)/.98 'Oxanium',sans-serif", letterSpacing:'-0.025em', margin:0, color:'var(--op-text)', textTransform:'uppercase' }}
           >
-            {t('meet_title_line1')}<br/><span style={{ color:'var(--op-accent)' }}>{t('meet_title_yura')}</span><span style={{ color:'var(--op-accent-2)' }}>.</span>
+            {t('meet_title_line1')} <span style={{ color:'var(--op-accent)' }}>{t('meet_title_yura')}</span><span style={{ color:'var(--op-accent-2)' }}>.</span>
           </motion.h1>
 
           <motion.p

@@ -85,7 +85,7 @@ function LeadFormBubble({
         border: "1px solid rgba(232,32,32,0.2)",
       }}
     >
-      <p style={{ color: "var(--op-text-secondary)", fontSize: 13, marginBottom: 12, fontWeight: 500 }}>
+      <p style={{ color: "rgba(160,165,200,0.85)", fontSize: 13, marginBottom: 12, fontWeight: 500 }}>
         Оставьте контакт — Олег свяжется лично:
       </p>
       <form onSubmit={handleSubmit}>
@@ -294,7 +294,7 @@ function MessageBubble({ msg }: { msg: ChatMessage }) {
           border: isUser
             ? '1px solid rgba(232,32,32,0.35)'
             : '1px solid rgba(255,255,255,0.08)',
-          color: "var(--op-text)",
+          color: "#F0F0FF",
           fontSize: "0.875rem",
           lineHeight: 1.6,
           wordBreak: "break-word",
@@ -713,7 +713,7 @@ export default function YuraWidget() {
                     style={{
                       fontWeight: 700,
                       fontSize: "0.9375rem",
-                      color: "var(--op-text)",
+                      color: "#F0F0FF",
                       lineHeight: 1.2,
                     }}
                   >
@@ -722,7 +722,7 @@ export default function YuraWidget() {
                   <div
                     style={{
                       fontSize: "0.7rem",
-                      color: "var(--op-text-muted)",
+                      color: "rgba(160,165,200,0.85)",
                       marginTop: 2,
                       overflow: "hidden",
                       textOverflow: "ellipsis",
@@ -767,7 +767,7 @@ export default function YuraWidget() {
                     background: 'rgba(255,255,255,0.06)',
                     border: '1px solid rgba(255,255,255,0.08)',
                     cursor: "pointer",
-                    color: "var(--op-text-muted)",
+                    color: "rgba(160,165,200,0.85)",
                     lineHeight: 1,
                     borderRadius: "50%",
                     width: 28,
@@ -780,11 +780,11 @@ export default function YuraWidget() {
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.background = 'rgba(255,255,255,0.12)'
-                    e.currentTarget.style.color = "var(--op-text)"
+                    e.currentTarget.style.color = "#F0F0FF"
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.background = 'rgba(255,255,255,0.06)'
-                    e.currentTarget.style.color = "var(--op-text-muted)"
+                    e.currentTarget.style.color = "rgba(160,165,200,0.85)"
                   }}
                 >
                   <svg
@@ -872,7 +872,7 @@ export default function YuraWidget() {
                     border: '1px solid rgba(255,255,255,0.1)',
                     borderRadius: "12px",
                     padding: "0.625rem 0.875rem",
-                    color: "var(--op-text)",
+                    color: "#F0F0FF",
                     fontSize: "0.875rem",
                     lineHeight: 1.5,
                     resize: "none",
@@ -947,7 +947,7 @@ export default function YuraWidget() {
                 borderRadius: "12px 12px 4px 12px",
                 padding: "0.625rem 1rem",
                 fontSize: "0.8125rem",
-                color: "var(--op-text)",
+                color: "#F0F0FF",
                 whiteSpace: "nowrap",
                 backdropFilter: "blur(16px)",
                 WebkitBackdropFilter: "blur(16px)",
