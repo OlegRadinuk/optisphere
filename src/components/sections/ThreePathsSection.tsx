@@ -1,13 +1,10 @@
 'use client';
 import { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import SectionIntro from '@/components/hud/SectionIntro';
 
-const PATHS = [
-  { eb:'ПУТЬ 01', title:'Хочу AI-ассистента', desc:'Продажник, администратор или индивидуальный. Работает в Telegram, на сайте, WhatsApp.', price:'от 50 000 ₽', icon:'bot' },
-  { eb:'ПУТЬ 02', title:'Хочу новый сайт', desc:'Лендинг за 3 дня или многостраничник с CMS. Всё с AI-ассистентом внутри.', price:'от 120 000 ₽', icon:'layout' },
-  { eb:'ПУТЬ 03', title:'Хочу продвижение', desc:'SEO, Яндекс.Директ, аналитика. С гарантией результата.', price:'от 30 000 ₽/мес', icon:'bar-chart' },
-];
+const PATH_ICONS = ['bot', 'layout', 'bar-chart'] as const;
 
 const ICONS: Record<string, React.ReactNode> = {
   bot: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M12 11V7"/><circle cx="12" cy="5" r="2"/><path d="M8 15h.01M16 15h.01"/></svg>,
@@ -15,7 +12,15 @@ const ICONS: Record<string, React.ReactNode> = {
   'bar-chart': <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>,
 };
 
-function PathCard({ p }: { p: typeof PATHS[0] }) {
+interface PathItem {
+  eb: string;
+  title: string;
+  desc: string;
+  price: string;
+  icon: typeof PATH_ICONS[number];
+}
+
+function PathCard({ p, more }: { p: PathItem; more: string }) {
   const [hover, setHover] = useState(false);
   return (
     <article onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} style={{
@@ -38,7 +43,7 @@ function PathCard({ p }: { p: typeof PATHS[0] }) {
       <div style={{ marginTop:'auto', display:'flex', alignItems:'center', justifyContent:'space-between', paddingTop:16, borderTop:'1px solid var(--op-border)' }}>
         <span style={{ font:"500 15px/1 'Oxanium',sans-serif", color:'var(--op-accent)', letterSpacing:'-0.01em' }}>{p.price}</span>
         <span style={{ display:'inline-flex', alignItems:'center', gap:6, font:"500 13px/1 'Inter',sans-serif", color: hover?'var(--op-accent)':'var(--op-text-secondary)', transition:'color 220ms' }}>
-          Подробнее
+          {more}
           <span style={{ transform: hover?'translateX(3px)':'translateX(0)', transition:'transform 220ms', display:'inline-flex' }}>→</span>
         </span>
       </div>
@@ -56,8 +61,15 @@ const itemVariants = {
 };
 
 export default function ThreePathsSection() {
+  const t = useTranslations('paths');
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-80px' });
+  const inView = useInView(ref, { once: true, margin: '0px' });
+
+  const PATHS: PathItem[] = [
+    { eb: t('items.0.eb'), title: t('items.0.title'), desc: t('items.0.desc'), price: t('items.0.price'), icon: 'bot' },
+    { eb: t('items.1.eb'), title: t('items.1.title'), desc: t('items.1.desc'), price: t('items.1.price'), icon: 'layout' },
+    { eb: t('items.2.eb'), title: t('items.2.title'), desc: t('items.2.desc'), price: t('items.2.price'), icon: 'bar-chart' },
+  ];
 
   return (
     <section id="paths" style={{ padding:'96px 0' }}>
@@ -67,7 +79,7 @@ export default function ThreePathsSection() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
         >
-          <SectionIntro code="03" cmd="paths.list()" title="Что нужно вашему бизнесу?" sub="Можно одно. Можно всё вместе — со скидкой."/>
+          <SectionIntro code="03" cmd="paths.list()" title={t('title')} sub={t('sub')}/>
         </motion.div>
         <motion.div
           ref={ref}
@@ -79,7 +91,7 @@ export default function ThreePathsSection() {
         >
           {PATHS.map((p,i) => (
             <motion.div key={i} variants={itemVariants}>
-              <PathCard p={p}/>
+              <PathCard p={p} more={t('more')}/>
             </motion.div>
           ))}
         </motion.div>

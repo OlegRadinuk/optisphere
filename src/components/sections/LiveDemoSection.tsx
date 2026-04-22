@@ -1,20 +1,19 @@
 'use client';
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import SectionIntro from '@/components/hud/SectionIntro';
 
-const FRAMES = [
-  { pct:'0%',   label:'AI видит вашу задачу' },
-  { pct:'25%',  label:'Строит структуру' },
-  { pct:'50%',  label:'Подбирает стиль' },
-  { pct:'75%',  label:'Ставит продажника' },
-  { pct:'100%', label:'Вы получаете готовую систему' },
-];
-
-function FrameVisual({ idx }: { idx: number }) {
+function FrameVisual({ idx, briefPlaceholder, salesmanConnected, readySystem, readyTags }: {
+  idx: number;
+  briefPlaceholder: string;
+  salesmanConnected: string;
+  readySystem: string;
+  readyTags: string;
+}) {
   const base: React.CSSProperties = { position:'absolute', inset:0, display:'flex', padding:48, gap:16 };
   if (idx === 0) return (
     <div style={{...base, alignItems:'center', justifyContent:'center'}}>
-      <div style={{ width:'52%', aspectRatio:'4/3', borderRadius:14, border:'1px dashed var(--op-border-strong)', display:'flex', alignItems:'center', justifyContent:'center', font:"400 13px 'JetBrains Mono',monospace", color:'var(--op-text-muted)', letterSpacing:'.1em' }}>— пустой бриф —</div>
+      <div style={{ width:'52%', aspectRatio:'4/3', borderRadius:14, border:'1px dashed var(--op-border-strong)', display:'flex', alignItems:'center', justifyContent:'center', font:"400 13px 'JetBrains Mono',monospace", color:'var(--op-text-muted)', letterSpacing:'.1em' }}>{briefPlaceholder}</div>
     </div>
   );
   if (idx === 1) return (
@@ -43,7 +42,7 @@ function FrameVisual({ idx }: { idx: number }) {
       </div>
       <div style={{ padding:'12px 20px', borderRadius:999, background:'var(--op-accent-subtle)', border:'1px solid var(--op-border-accent)', color:'var(--op-accent)', font:"500 13px 'Oxanium',sans-serif", display:'flex', gap:8, alignItems:'center' }}>
         <span style={{ width:8, height:8, borderRadius:'50%', background:'var(--op-accent)', boxShadow:'0 0 0 4px rgba(201,166,95,.25)', display:'inline-block' }}/>
-        Продажник подключён
+        {salesmanConnected}
       </div>
     </div>
   );
@@ -52,23 +51,44 @@ function FrameVisual({ idx }: { idx: number }) {
       <div style={{ width:'70%', height:10, background:'var(--op-surface-overlay)', borderRadius:999, overflow:'hidden' }}>
         <div style={{ width:'100%', height:'100%', background:'var(--op-accent)' }}/>
       </div>
-      <span style={{ font:"500 28px 'Oxanium',sans-serif", color:'var(--op-text)', letterSpacing:'-0.02em' }}>Готовая система</span>
+      <span style={{ font:"500 28px 'Oxanium',sans-serif", color:'var(--op-text)', letterSpacing:'-0.02em' }}>{readySystem}</span>
       <div style={{ display:'flex', gap:16, font:"400 12px 'JetBrains Mono',monospace", color:'var(--op-text-muted)', letterSpacing:'.1em' }}>
-        <span>САЙТ</span><span>·</span><span>AI-ПРОДАЖНИК</span><span>·</span><span>SEO</span>
+        {readyTags.split(' · ').map((tag, i, arr) => (
+          <>
+            <span key={tag}>{tag}</span>
+            {i < arr.length - 1 && <span key={`sep-${i}`}>·</span>}
+          </>
+        ))}
       </div>
     </div>
   );
 }
 
 export default function LiveDemoSection() {
+  const t = useTranslations('demo');
   const [idx, setIdx] = useState(0);
+
+  const FRAMES = [
+    { pct:'0%',   label: t('frames.f0') },
+    { pct:'25%',  label: t('frames.f1') },
+    { pct:'50%',  label: t('frames.f2') },
+    { pct:'75%',  label: t('frames.f3') },
+    { pct:'100%', label: t('frames.f4') },
+  ];
+
   return (
     <section id="demo" style={{ padding:'96px 0', background:'var(--op-surface)', borderTop:'1px solid var(--op-border)', borderBottom:'1px solid var(--op-border)' }}>
       <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px' }}>
-        <SectionIntro code="02" cmd="yura.trace()" title="Как AI-команда собирает вашу систему" sub="Реальный процесс внутри студии — в пяти кадрах. Покажем, как 25 AI-агентов передают друг другу задачи." crimson/>
+        <SectionIntro code="02" cmd="yura.trace()" title={t('title')} sub={t('sub')} crimson/>
         <div style={{ display:'grid', gridTemplateColumns:'minmax(0,1fr) 320px', gap:48, alignItems:'stretch' }} className="demo-grid">
           <div style={{ position:'relative', aspectRatio:'16/9', background:'var(--op-surface-elevated)', borderRadius:16, border:'1px solid var(--op-border)', overflow:'hidden' }}>
-            <FrameVisual idx={idx}/>
+            <FrameVisual
+              idx={idx}
+              briefPlaceholder={t('brief_placeholder')}
+              salesmanConnected={t('salesman_connected')}
+              readySystem={t('ready_system')}
+              readyTags={t('ready_tags')}
+            />
             <div style={{ position:'absolute', top:24, left:24, display:'flex', alignItems:'center', gap:12, padding:'10px 16px', borderRadius:10, background:'rgba(10,14,20,.65)', backdropFilter:'blur(10px)', border:'1px solid var(--op-border)' }}>
               <span style={{ font:"500 11px 'JetBrains Mono',monospace", color:'var(--op-accent)', letterSpacing:'.14em' }}>{FRAMES[idx].pct}</span>
               <span style={{ width:1, height:14, background:'var(--op-border-strong)', display:'inline-block' }}/>

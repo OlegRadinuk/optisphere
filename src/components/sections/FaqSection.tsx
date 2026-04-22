@@ -1,18 +1,8 @@
 'use client';
 import { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import SectionIntro from '@/components/hud/SectionIntro';
-
-const FAQS = [
-  { q:'Сколько времени занимает проект?', a:'«Быстрый старт» — 3 дня. «Стандарт» — 5–7 дней. «Про» — 2–4 недели. Сроки фиксируются в договоре.' },
-  { q:'Что если AI-ассистент скажет клиенту что-то не то?', a:'Ассистент обучен на вашей базе знаний и работает только внутри заданных сценариев. На граничные случаи — эскалация на человека.' },
-  { q:'Как защищены данные по 152-ФЗ?', a:'Хостинг — Яндекс.Облако с РФ-локализацией. Подписываем NDA и договор поручения обработки ПД. Cookie-баннер с детальным согласием.' },
-  { q:'Можно ли просто сайт без ассистента?', a:'Да, любой тариф — с ассистентом или без. «Быстрый старт» без ассистента — 90 000 ₽.' },
-  { q:'Какой хостинг используется?', a:'По умолчанию — Яндекс.Облако (РФ-локализация, 152-ФЗ). По запросу — Selectel или ваш собственный.' },
-  { q:'Почему вы дешевле других в 10–30 раз?', a:'Команда из 25 AI-агентов выполняет работу 10–15 человек. Мы платим за вычислительные ресурсы, а не за часы.' },
-  { q:'Что если нужны правки после сдачи?', a:'Все правки в рамках ТЗ — бесплатно. Новые фичи — по прайсу, с фиксированной оценкой до начала работы.' },
-  { q:'Как начать работать?', a:'Откройте чат с ассистентом вверху страницы или нажмите «Поговорить с ассистентом». За 5 минут он уточнит задачу и даст конкретные цифры.' },
-];
 
 function FaqItem({ q, a, open, onClick }: { q: string; a: string; open: boolean; onClick: () => void }) {
   return (
@@ -39,10 +29,13 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] as const } },
 };
 
+const FAQ_INDICES = [0, 1, 2, 3, 4, 5, 6, 7];
+
 export default function FaqSection() {
+  const t = useTranslations('faq');
   const [open, setOpen] = useState(0);
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-80px' });
+  const inView = useInView(ref, { once: true, margin: '0px' });
 
   return (
     <section id="faq" style={{ padding:'96px 0' }}>
@@ -52,7 +45,7 @@ export default function FaqSection() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
         >
-          <SectionIntro code="08" cmd="faq.search()" title="Частые вопросы"/>
+          <SectionIntro code="08" cmd="faq.search()" title={t('title')}/>
         </motion.div>
         <motion.div
           ref={ref}
@@ -61,9 +54,14 @@ export default function FaqSection() {
           animate={inView ? 'visible' : 'hidden'}
           style={{ display:'flex', flexDirection:'column', gap:10, maxWidth:860 }}
         >
-          {FAQS.map((f,i) => (
+          {FAQ_INDICES.map((i) => (
             <motion.div key={i} variants={itemVariants}>
-              <FaqItem q={f.q} a={f.a} open={open===i} onClick={() => setOpen(open===i ? -1 : i)}/>
+              <FaqItem
+                q={t(`items.${i}.q`)}
+                a={t(`items.${i}.a`)}
+                open={open === i}
+                onClick={() => setOpen(open === i ? -1 : i)}
+              />
             </motion.div>
           ))}
         </motion.div>

@@ -270,14 +270,7 @@ function YuraAvatar({ size = 36 }: { size?: number }) {
 
 // ── Message bubble ─────────────────────────────────────────────────────────────
 
-interface MsgBubbleColors {
-  msgUserBg: string
-  msgUserBorder: string
-  msgAiBg: string
-  msgAiBorder: string
-}
-
-function MessageBubble({ msg, colors }: { msg: ChatMessage; colors: MsgBubbleColors }) {
+function MessageBubble({ msg }: { msg: ChatMessage }) {
   const isUser = msg.role === "user"
   return (
     <motion.div
@@ -297,10 +290,10 @@ function MessageBubble({ msg, colors }: { msg: ChatMessage; colors: MsgBubbleCol
           maxWidth: "78%",
           padding: "10px 14px",
           borderRadius: isUser ? "16px 16px 4px 16px" : "16px 16px 16px 4px",
-          background: isUser ? colors.msgUserBg : colors.msgAiBg,
+          background: isUser ? 'rgba(232,32,32,0.18)' : 'rgba(255,255,255,0.04)',
           border: isUser
-            ? `1px solid ${colors.msgUserBorder}`
-            : `1px solid ${colors.msgAiBorder}`,
+            ? '1px solid rgba(232,32,32,0.35)'
+            : '1px solid rgba(255,255,255,0.08)',
           color: "var(--op-text)",
           fontSize: "0.875rem",
           lineHeight: 1.6,
@@ -334,7 +327,6 @@ export default function YuraWidget() {
   const [leadFormSubmitting, setLeadFormSubmitting] = useState(false)
   const [leadFormSubmitted, setLeadFormSubmitted] = useState(false)
   const [scrolledPastHero, setScrolledPastHero] = useState(false)
-  const [isLight, setIsLight] = useState(false)
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const messagesContainerRef = useRef<HTMLDivElement>(null)
@@ -439,15 +431,6 @@ export default function YuraWidget() {
       setShowBubble(false)
     }
   }, [isOpen])
-
-  // Theme detection — watch data-theme attribute on <html>
-  useEffect(() => {
-    const checkTheme = () => setIsLight(document.documentElement.getAttribute('data-theme') === 'light')
-    checkTheme()
-    const obs = new MutationObserver(checkTheme)
-    obs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
-    return () => obs.disconnect()
-  }, [])
 
   // Auto-grow textarea
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -636,46 +619,6 @@ export default function YuraWidget() {
     setHasUnread(false)
   }
 
-  const colors = isLight ? {
-    panelBg: 'rgba(255, 255, 255, 0.97)',
-    panelBorder: 'rgba(0,0,0,0.12)',
-    panelShadow: '0 8px 48px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.08)',
-    headerBorder: 'rgba(0,0,0,0.08)',
-    msgUserBg: 'rgba(232,32,32,0.1)',
-    msgUserBorder: 'rgba(232,32,32,0.25)',
-    msgAiBg: 'rgba(0,0,0,0.04)',
-    msgAiBorder: 'rgba(0,0,0,0.08)',
-    inputBg: 'rgba(0,0,0,0.04)',
-    inputBorder: 'rgba(0,0,0,0.1)',
-    inputFooterBg: 'rgba(0,0,0,0.02)',
-    closeBtn: 'rgba(0,0,0,0.06)',
-    closeBtnBorder: 'rgba(0,0,0,0.08)',
-    closeBtnHover: 'rgba(0,0,0,0.12)',
-    progressTrack: 'rgba(0,0,0,0.08)',
-    typingBubbleBg: 'rgba(0,0,0,0.04)',
-    typingBubbleBorder: 'rgba(0,0,0,0.08)',
-    scrollbarColor: 'rgba(0,0,0,0.1)',
-  } : {
-    panelBg: 'rgba(10,10,10,0.96)',
-    panelBorder: 'rgba(255,255,255,0.1)',
-    panelShadow: '0 8px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(232,32,32,0.12), inset 0 1px 0 rgba(255,255,255,0.06)',
-    headerBorder: 'rgba(255,255,255,0.07)',
-    msgUserBg: 'rgba(232,32,32,0.18)',
-    msgUserBorder: 'rgba(232,32,32,0.35)',
-    msgAiBg: 'rgba(255,255,255,0.04)',
-    msgAiBorder: 'rgba(255,255,255,0.08)',
-    inputBg: 'rgba(255,255,255,0.06)',
-    inputBorder: 'rgba(255,255,255,0.1)',
-    inputFooterBg: 'rgba(0,0,0,0.12)',
-    closeBtn: 'rgba(255,255,255,0.06)',
-    closeBtnBorder: 'rgba(255,255,255,0.08)',
-    closeBtnHover: 'rgba(255,255,255,0.12)',
-    progressTrack: 'rgba(255,255,255,0.06)',
-    typingBubbleBg: 'rgba(255,255,255,0.04)',
-    typingBubbleBorder: 'rgba(255,255,255,0.08)',
-    scrollbarColor: 'rgba(255,255,255,0.1)',
-  }
-
   return (
     <>
       {/* Keyframe styles */}
@@ -737,11 +680,11 @@ export default function YuraWidget() {
                 display: "flex",
                 flexDirection: "column",
                 overflow: "hidden",
-                background: colors.panelBg,
-                border: `1px solid ${colors.panelBorder}`,
+                background: 'rgba(10,10,10,0.96)',
+                border: '1px solid rgba(255,255,255,0.1)',
                 backdropFilter: "blur(32px)",
                 WebkitBackdropFilter: "blur(32px)",
-                boxShadow: colors.panelShadow,
+                boxShadow: '0 8px 48px rgba(0,0,0,0.55), 0 0 0 1px rgba(232,32,32,0.12), inset 0 1px 0 rgba(255,255,255,0.06)',
               }}
             >
               {/* Gradient accent top strip */}
@@ -757,7 +700,7 @@ export default function YuraWidget() {
               <div
                 style={{
                   padding: "0.875rem 1.25rem",
-                  borderBottom: `1px solid ${colors.headerBorder}`,
+                  borderBottom: '1px solid rgba(255,255,255,0.07)',
                   display: "flex",
                   alignItems: "center",
                   gap: "0.75rem",
@@ -821,8 +764,8 @@ export default function YuraWidget() {
                   onClick={() => setIsOpen(false)}
                   aria-label={t("close")}
                   style={{
-                    background: colors.closeBtn,
-                    border: `1px solid ${colors.closeBtnBorder}`,
+                    background: 'rgba(255,255,255,0.06)',
+                    border: '1px solid rgba(255,255,255,0.08)',
                     cursor: "pointer",
                     color: "var(--op-text-muted)",
                     lineHeight: 1,
@@ -836,11 +779,11 @@ export default function YuraWidget() {
                     transition: "background 0.15s ease, color 0.15s ease",
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.background = colors.closeBtnHover
+                    e.currentTarget.style.background = 'rgba(255,255,255,0.12)'
                     e.currentTarget.style.color = "var(--op-text)"
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.background = colors.closeBtn
+                    e.currentTarget.style.background = 'rgba(255,255,255,0.06)'
                     e.currentTarget.style.color = "var(--op-text-muted)"
                   }}
                 >
@@ -871,19 +814,19 @@ export default function YuraWidget() {
                   flexDirection: "column",
                   gap: "0.75rem",
                   scrollbarWidth: "thin",
-                  scrollbarColor: `${colors.scrollbarColor} transparent`,
+                  scrollbarColor: 'rgba(255,255,255,0.1) transparent',
                 }}
               >
                 {sharedMessages.map((msg, i) => (
-                  <MessageBubble key={i} msg={msg} colors={colors} />
+                  <MessageBubble key={i} msg={msg} />
                 ))}
                 {isTyping && (
                   <div style={{ display: "flex", alignItems: "end", gap: 8 }}>
                     <YuraAvatar size={28} />
                     <div
                       style={{
-                        background: colors.typingBubbleBg,
-                        border: `1px solid ${colors.typingBubbleBorder}`,
+                        background: 'rgba(255,255,255,0.04)',
+                        border: '1px solid rgba(255,255,255,0.08)',
                         borderRadius: "16px 16px 16px 4px",
                       }}
                     >
@@ -907,13 +850,13 @@ export default function YuraWidget() {
               {/* Input area */}
               <div
                 style={{
-                  borderTop: `1px solid ${colors.headerBorder}`,
+                  borderTop: '1px solid rgba(255,255,255,0.07)',
                   padding: "0.75rem 1rem",
                   display: "flex",
                   gap: "0.5rem",
                   alignItems: "flex-end",
                   flexShrink: 0,
-                  background: colors.inputFooterBg,
+                  background: 'rgba(0,0,0,0.12)',
                 }}
               >
                 <textarea
@@ -925,8 +868,8 @@ export default function YuraWidget() {
                   rows={1}
                   style={{
                     flex: 1,
-                    background: colors.inputBg,
-                    border: `1px solid ${colors.inputBorder}`,
+                    background: 'rgba(255,255,255,0.06)',
+                    border: '1px solid rgba(255,255,255,0.1)',
                     borderRadius: "12px",
                     padding: "0.625rem 0.875rem",
                     color: "var(--op-text)",
@@ -943,7 +886,7 @@ export default function YuraWidget() {
                     e.currentTarget.style.borderColor = "rgba(232,32,32,0.5)"
                   }}
                   onBlur={(e) => {
-                    e.currentTarget.style.borderColor = colors.inputBorder
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'
                   }}
                 />
                 <button

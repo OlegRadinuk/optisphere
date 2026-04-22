@@ -20,7 +20,11 @@
     "cta": {
       "primary": "View pricing →",
       "secondary": "How it works"
-    }
+    },
+    "meet_title_line1": "Meet",
+    "meet_title_yura": "Yura",
+    "meet_subtitle": "He sells, consults and works 24/7. Ask a question on the right — see his thinking live. No forms, no \"leave a request\".",
+    "hosting": "RU hosting"
   },
   "hook": {
     "sites": { "value": "47", "label": "sites launched" },
@@ -225,6 +229,156 @@
     "contact_text": "For questions about cookies: hello@optisphere.ru",
     "updated": "Last updated: April 2026"
   },
+  "demo": {
+    "title": "How the AI team builds your system",
+    "sub": "The real process inside the studio — in five frames. See how 25 AI agents pass tasks to each other.",
+    "frames": {
+      "f0": "AI sees your task",
+      "f1": "Builds the structure",
+      "f2": "Picks the style",
+      "f3": "Connects the salesperson",
+      "f4": "You get a ready system"
+    },
+    "brief_placeholder": "— empty brief —",
+    "salesman_connected": "Salesperson connected",
+    "ready_system": "Ready system",
+    "ready_tags": "WEBSITE · AI SALESPERSON · SEO"
+  },
+  "cases": {
+    "title": "What happens in practice",
+    "sub": "Anonymous but accurate. Full cases with names — under NDA, we'll share in a conversation.",
+    "made_label": "Done: ",
+    "niches": {
+      "clinic": "Medical clinic",
+      "shop": "Online store",
+      "legal": "Law firm",
+      "restaurant": "Restaurant",
+      "barbershop": "Barbershop · 5 locations",
+      "school": "Online school"
+    },
+    "cities": {
+      "moscow": "Moscow",
+      "spb": "St. Petersburg",
+      "ekb": "Yekaterinburg",
+      "kazan": "Kazan",
+      "novosibirsk": "Novosibirsk",
+      "rostov": "Rostov-on-Don"
+    },
+    "made": {
+      "clinic": "Website + SEO + AI admin",
+      "shop": "Website with AI salesperson",
+      "legal": "Landing page + SEO",
+      "restaurant": "Website + AI booking",
+      "barbershop": "Website + AI scheduling",
+      "school": "Website + SEO + AI consultant"
+    },
+    "metrics": {
+      "leads_per_month": "leads/month",
+      "lead_price": "lead price",
+      "ai_handled": "handled by AI",
+      "conversion": "conversion",
+      "avg_check": "average order",
+      "ai_support": "AI support",
+      "in_yandex": "in Yandex",
+      "online_bookings": "online bookings",
+      "cancellations": "cancellations",
+      "online_booking_rate": "online booking",
+      "no_show": "no-show",
+      "repeat_visits": "repeat visits",
+      "registrations": "registrations",
+      "ai_questions": "AI questions"
+    },
+    "footers": {
+      "m6": "in 6 months",
+      "m4": "in 4 months",
+      "m5": "in 5 months",
+      "m3": "in 3 months",
+      "m7": "in 7 months"
+    }
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "items": [
+      { "q": "How long does a project take?", "a": "Quick start — 3 days. Standard — 5–7 days. Pro — 2–4 weeks. Deadlines are fixed in the contract." },
+      { "q": "What if the AI assistant says something wrong to a client?", "a": "The assistant is trained on your knowledge base and works only within defined scenarios. Edge cases are escalated to a human." },
+      { "q": "How is data protected under Russian law?", "a": "Hosting — Yandex Cloud with Russian localisation. We sign an NDA and a personal data processing agreement. Cookie banner with detailed consent." },
+      { "q": "Can I get just a website without an assistant?", "a": "Yes, any plan — with or without the assistant. Quick start without assistant — ₽90,000." },
+      { "q": "What hosting is used?", "a": "By default — Yandex Cloud (Russian localisation, 152-FZ). On request — Selectel or your own." },
+      { "q": "Why are you 10–30x cheaper than others?", "a": "A team of 25 AI agents does the work of 10–15 people. We pay for compute resources, not hours." },
+      { "q": "What if I need changes after delivery?", "a": "All changes within the scope — free. New features — by price list with a fixed estimate before work starts." },
+      { "q": "How do I get started?", "a": "Open the chat with the assistant at the top of the page or click 'Talk to assistant'. In 5 minutes it will clarify your task and give you specific numbers." }
+    ]
+  },
+  "proof": {
+    "title": "We've worked with",
+    "sub": "Shown without logos — clients value privacy. Hover to see the niche.",
+    "niches": {
+      "jewelry": "Jewelry store",
+      "clinic": "Medical clinic",
+      "fitness": "Fitness studio",
+      "hotel": "Premium hotel",
+      "construction": "Construction company",
+      "realty": "Real estate agency",
+      "autoservice": "Auto service",
+      "kids": "Children's center",
+      "restaurant": "Restaurant",
+      "cafe_chain": "Coffee shop · chain",
+      "legal": "Law firm",
+      "school": "Online school"
+    }
+  },
+  "paths": {
+    "title": "What does your business need?",
+    "sub": "Pick one. Or all together — with a discount.",
+    "more": "Learn more",
+    "items": [
+      { "eb": "PATH 01", "title": "I want an AI assistant", "desc": "Salesperson, admin or custom. Works in Telegram, on the website, WhatsApp.", "price": "from ₽50,000" },
+      { "eb": "PATH 02", "title": "I want a new website", "desc": "Landing page in 3 days or a multi-page site with CMS. All with an AI assistant inside.", "price": "from ₽120,000" },
+      { "eb": "PATH 03", "title": "I want promotion", "desc": "SEO, Yandex.Direct, analytics. With a guaranteed result.", "price": "from ₽30,000/mo" }
+    ]
+  },
+  "team": {
+    "title_line1": "Why we're faster",
+    "title_line2": "and",
+    "title_highlight": "cheaper",
+    "desc1": "Instead of a manager, designer, copywriter and developer billing human hours — we have a team of AI agents. The architect thinks about structure, the marketer defines CTAs, the designer assembles visuals, the developer writes code, the lawyer checks the law.",
+    "desc2_prefix": "Humans only at key control points. Result: ",
+    "desc2_highlight": "same quality, 10–30x faster and cheaper",
+    "desc2_suffix": ".",
+    "stat_agents_value": "25",
+    "stat_agents_label": "specialised agents",
+    "stat_speed_value": "10–30×",
+    "stat_speed_label": "faster than an agency",
+    "stat_depts_value": "8",
+    "stat_depts_label": "departments",
+    "agent_descriptions": {
+      "planner": "Breaks the task into stages",
+      "architect": "Designs the structure",
+      "devil-advocate": "Finds weak spots",
+      "conversion": "Sets up CTAs and funnel",
+      "copywriter": "Writes texts per segment",
+      "seo": "Builds semantics",
+      "analytics": "Metrics, events",
+      "ads": "Yandex.Direct, targeting",
+      "designer": "Layouts and visuals",
+      "frontend": "Markup, animation",
+      "backend": "API, CMS, integrations",
+      "db-engineer": "Schema, migrations",
+      "reviewer": "Code review",
+      "unit-test": "Unit coverage",
+      "e2e-test": "Browser scenarios",
+      "perf": "Lighthouse, CWV",
+      "a11y": "Accessibility AA",
+      "security": "Vulnerability audit",
+      "compliance": "Law compliance, consent",
+      "deps-audit": "Dependency checks",
+      "devops": "Hosting, monitoring",
+      "controller": "Final control",
+      "studio-hr": "Agent rotation",
+      "memory": "Long-term memory",
+      "docs": "Documentation"
+    }
+  },
   "footer": {
     "tagline": "AI-native web studio",
     "rights": "© 2026 Optisphere. All rights reserved.",
@@ -238,6 +392,29 @@
       "ai": "AI assistant Yura",
       "pano": "360° Panoramas",
       "seo": "SEO & promotion"
-    }
+    },
+    "desc_short": "Websites that bring in clients. AI assistant Yura — 24/7, no days off.",
+    "col_services": "SERVICES",
+    "col_company": "COMPANY",
+    "col_legal": "LEGAL",
+    "col_contacts": "CONTACTS",
+    "copyright": "© 2026 OPTISPHERE · ALL RIGHTS RESERVED",
+    "svc_ai": "AI assistants",
+    "svc_sites": "Websites",
+    "svc_seo": "SEO",
+    "svc_direct": "Yandex.Direct",
+    "svc_orbit": "Orbit subscription",
+    "company_about": "About us",
+    "company_cases": "Cases",
+    "company_blog": "Blog",
+    "company_enterprise": "Enterprise",
+    "legal_privacy": "Privacy policy",
+    "legal_cookies": "Cookies",
+    "legal_offer": "Terms",
+    "cookie_text": "We use cookies for analytics and the chat. By continuing, you agree to the",
+    "cookie_link": "cookie policy",
+    "cookie_essential": "Essential only",
+    "cookie_configure": "Configure",
+    "cookie_accept": "Accept all"
   }
 }

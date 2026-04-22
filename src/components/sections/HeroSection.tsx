@@ -1,5 +1,6 @@
 'use client';
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import HeroStage from '@/components/hero/HeroStage';
 
 const fadeUp = (delay = 0) => ({
@@ -8,6 +9,9 @@ const fadeUp = (delay = 0) => ({
 });
 
 export default function HeroSection() {
+  const t = useTranslations('hero');
+  const th = useTranslations('hook');
+
   return (
     <section
       id="hero"
@@ -50,14 +54,14 @@ export default function HeroSection() {
             variants={fadeUp(0.05)}
             style={{ font:"700 clamp(44px,7vw,104px)/.98 'Oxanium',sans-serif", letterSpacing:'-0.025em', margin:0, color:'var(--op-text)', textTransform:'uppercase' }}
           >
-            Познакомьтесь<br/>с <span style={{ color:'var(--op-accent)' }}>Юрой</span><span style={{ color:'var(--op-accent-2)' }}>.</span>
+            {t('meet_title_line1')}<br/><span style={{ color:'var(--op-accent)' }}>{t('meet_title_yura')}</span><span style={{ color:'var(--op-accent-2)' }}>.</span>
           </motion.h1>
 
           <motion.p
             variants={fadeUp(0.1)}
             style={{ font:"400 20px/1.55 'Inter',sans-serif", color:'var(--op-text-secondary)', margin:0, maxWidth:480 }}
           >
-            Он продаёт, консультирует и работает 24/7. Задайте вопрос справа — увидите его мышление вживую. Без анкет, без «оставьте заявку».
+            {t('meet_subtitle')}
           </motion.p>
 
           <motion.div variants={fadeUp(0.15)} style={{ display:'flex', gap:12, flexWrap:'wrap' }}>
@@ -65,13 +69,13 @@ export default function HeroSection() {
               onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
               className="btn btn-primary"
             >
-              Посмотреть тарифы →
+              {t('cta.primary')}
             </button>
             <button
               onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
               className="btn btn-ghost"
             >
-              Как это работает
+              {t('cta.secondary')}
             </button>
           </motion.div>
 
@@ -79,11 +83,11 @@ export default function HeroSection() {
             variants={fadeUp(0.2)}
             style={{ display:'flex', gap:10, alignItems:'center', flexWrap:'wrap', marginTop:8, font:"500 10px/1.4 'JetBrains Mono',monospace", color:'var(--op-text-muted)', letterSpacing:'.12em', textTransform:'uppercase' }}
           >
-            <span>47+ проектов</span>
+            <span>{th('sites.value')}+ {th('sites.label')}</span>
             <span style={{ width:3, height:3, background:'var(--op-text-faint)', display:'inline-block' }}/>
-            <span>1 200+ лидов поймал Юра</span>
+            <span>{th('leads.value')} {th('leads.label')}</span>
             <span style={{ width:3, height:3, background:'var(--op-text-faint)', display:'inline-block' }}/>
-            <span>РФ-хостинг</span>
+            <span>{t('hosting')}</span>
           </motion.div>
         </motion.div>
 
