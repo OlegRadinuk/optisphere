@@ -51,8 +51,8 @@ const containerVariants = {
   visible: { transition: { staggerChildren: 0.08 } },
 };
 const itemVariants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 0.61, 0.36, 1] as const } },
+  hidden: { opacity: 0, scale: 0.92, y: 20 },
+  visible: { opacity: 1, scale: 1, y: 0, transition: { type: 'spring' as const, stiffness: 200, damping: 20 } },
 };
 
 export default function ThreePathsSection() {
@@ -65,7 +65,7 @@ export default function ThreePathsSection() {
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.55, ease: [0.22, 0.61, 0.36, 1] }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
         >
           <SectionIntro code="03" cmd="paths.list()" title="Что нужно вашему бизнесу?" sub="Можно одно. Можно всё вместе — со скидкой."/>
         </motion.div>

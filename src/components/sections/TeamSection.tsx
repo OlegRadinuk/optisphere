@@ -65,8 +65,8 @@ const containerVariants = {
   visible: { transition: { staggerChildren: 0.05 } },
 };
 const itemVariants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 0.61, 0.36, 1] as const } },
+  hidden: { opacity: 0, scale: 0.85, rotate: -2 },
+  visible: { opacity: 1, scale: 1, rotate: 0, transition: { type: 'spring' as const, stiffness: 280, damping: 22 } },
 };
 
 export default function TeamSection() {
@@ -83,7 +83,7 @@ export default function TeamSection() {
             ref={headingRef}
             initial={{ opacity: 0, y: 28 }}
             animate={headingInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.55, ease: [0.22, 0.61, 0.36, 1] }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
             style={{ display:'flex', flexDirection:'column', gap:20 }}
           >
             <div style={{ display:'inline-flex', alignItems:'center', gap:14, font:"500 11px/1 'JetBrains Mono',monospace", letterSpacing:'0.14em', textTransform:'uppercase', marginBottom:4 }}>

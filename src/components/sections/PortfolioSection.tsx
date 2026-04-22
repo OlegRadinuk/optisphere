@@ -18,9 +18,9 @@ function PortfolioCard({ item, index, inView }: { item: typeof PORTFOLIO[number]
       target="_blank"
       rel="noopener noreferrer"
       layout
-      initial={{ opacity: 0, y: 24 }}
-      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-      transition={{ duration: 0.4, delay: inView ? index * 0.06 : 0, ease: [0.22, 1, 0.36, 1] }}
+      initial={{ opacity: 0, y: 32, filter: 'blur(8px)' }}
+      animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : { opacity: 0, y: 32, filter: 'blur(8px)' }}
+      transition={{ duration: 0.5, delay: inView ? index * 0.06 : 0, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ y: -6 }}
       style={{
         display: 'block',

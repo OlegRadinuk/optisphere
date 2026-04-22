@@ -1,6 +1,8 @@
 'use client';
 import { useState, useRef } from 'react';
 import WireSphere from './WireSphere';
+import { useHeroChat } from '@/components/ai/HeroChatContext';
+import type { ChatMessage } from '@/components/ai/HeroChatContext';
 
 type SphereState = 'idle' | 'thinking' | 'speaking';
 
@@ -9,19 +11,18 @@ const GREETING = "Опишите ваш бизнес — подберу похо
 const QUICK_PROMPTS = ['Стоматология', 'Гостиница', 'Магазин', 'Строительство'];
 
 export default function HeroStage() {
+  const { sharedMessages, setSharedMessages, sharedSessionId } = useHeroChat();
   const [state, setState] = useState<SphereState>('idle');
-  const [messages, setMessages] = useState<Array<{ role: 'user' | 'assistant'; content: string }>>([]);
   const [streamingText, setStreamingText] = useState('');
   const [input, setInput] = useState('');
   const [busy, setBusy] = useState(false);
-  const sessionId = useRef(Math.random().toString(36).slice(2));
   const abortRef = useRef<AbortController | null>(null);
 
   const send = async (text: string) => {
     if (!text.trim() || busy) return;
-    const userMsg = { role: 'user' as const, content: text.trim() };
-    const newMessages = [...messages, userMsg];
-    setMessages(newMessages);
+    const userMsg: ChatMessage = { role: 'user', content: text.trim() };
+    const newMessages = [...sharedMessages, userMsg];
+    setSharedMessages(newMessages);
     setInput('');
     setBusy(true);
     setState('thinking');
@@ -29,10 +30,10 @@ export default function HeroStage() {
 
     try {
       abortRef.current = new AbortController();
-      const res = await fetch('/api/ai/chat', {
+      const res = await fetch('/api/bots/yura/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: newMessages, sessionId: sessionId.current }),
+        body: JSON.stringify({ messages: newMessages, sessionId: sharedSessionId }),
         signal: abortRef.current.signal,
       });
 
@@ -51,7 +52,7 @@ export default function HeroStage() {
         setStreamingText(full.replace(/\[SHOW_FORM\]/g, ''));
       }
 
-      setMessages(prev => [...prev, { role: 'assistant', content: full.replace(/\[SHOW_FORM\]/g, '') }]);
+      setSharedMessages(prev => [...prev, { role: 'assistant', content: full.replace(/\[SHOW_FORM\]/g, '') }]);
       setStreamingText('');
     } catch (e: unknown) {
       if ((e as Error)?.name !== 'AbortError') {
@@ -63,7 +64,7 @@ export default function HeroStage() {
     }
   };
 
-  const displayedMessages = messages.length > 0 ? messages.slice(-4) : [];
+  const displayedMessages = sharedMessages.length > 0 ? sharedMessages.slice(-4) : [];
 
   return (
     <div style={{ position: 'relative', minHeight: 520, display: 'flex', flexDirection: 'column', gap: 20 }}>

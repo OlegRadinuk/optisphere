@@ -51,8 +51,8 @@ const containerVariants = {
   visible: { transition: { staggerChildren: 0.08 } },
 };
 const itemVariants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 0.61, 0.36, 1] as const } },
+  hidden: { opacity: 0, scale: 0.88 },
+  visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as const } },
 };
 
 export default function ProofSection() {
@@ -63,9 +63,9 @@ export default function ProofSection() {
     <section id="proof" style={{ padding:'96px 0', background:'var(--op-surface)', borderTop:'1px solid var(--op-border)', borderBottom:'1px solid var(--op-border)' }}>
       <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px' }}>
         <motion.div
-          initial={{ opacity: 0, y: 28 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.55, ease: [0.22, 0.61, 0.36, 1] }}
+          initial={{ opacity: 0, clipPath: 'inset(100% 0 0 0)' }}
+          animate={inView ? { opacity: 1, clipPath: 'inset(0% 0 0 0)' } : {}}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
           <SectionIntro code="05" cmd="clients.list()" title="Мы работали с" sub="Показываем без логотипов — клиенты ценят приватность. Наведите, чтобы увидеть нишу."/>
         </motion.div>

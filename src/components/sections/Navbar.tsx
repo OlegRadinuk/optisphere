@@ -1,5 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { useLocale } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 
 const LINKS = ['AI-сотрудники','Сайты','SEO','Реклама','Кейсы','Тарифы'];
 const LINK_HREFS: Record<string, string> = {
@@ -30,10 +32,20 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [isLight, setIsLight] = useState(false);
+  const locale = useLocale();
 
   useEffect(() => {
     const saved = localStorage.getItem('op-theme');
     if (saved === 'light') setTheme('light');
+  }, []);
+
+  useEffect(() => {
+    const checkTheme = () => setIsLight(document.documentElement.getAttribute('data-theme') === 'light');
+    checkTheme();
+    const obs = new MutationObserver(checkTheme);
+    obs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    return () => obs.disconnect();
   }, []);
 
   const toggleTheme = () => {
@@ -67,7 +79,7 @@ export default function Navbar() {
         display: 'flex', alignItems: 'center', gap: 24,
         padding: '14px 32px',
         borderBottom: scrolled ? '1px solid var(--op-border)' : '1px solid transparent',
-        background: scrolled ? 'rgba(6,6,6,0.85)' : 'transparent',
+        background: scrolled ? (isLight ? 'rgba(255,255,255,0.92)' : 'rgba(6,6,6,0.85)') : 'transparent',
         backdropFilter: scrolled ? 'blur(12px)' : 'none',
         transition: 'all 220ms ease',
       }}>
@@ -88,6 +100,10 @@ export default function Navbar() {
         <div style={{ marginLeft:'auto', display:'flex', alignItems:'center', gap:12 }}>
           <span style={{ font:"400 11px/1 'JetBrains Mono',monospace", color:'var(--op-text-muted)', letterSpacing:'.12em' }}
                 className="nav-price-desktop">ОТ 90 000 ₽</span>
+          <div className="locale-switcher" style={{ display: 'flex', alignItems: 'center', borderRadius: 8, overflow: 'hidden', border: '1px solid var(--op-border-strong)', fontSize: 11, fontFamily: "'JetBrains Mono', monospace", letterSpacing: '0.08em' }}>
+            <Link href="/" locale="ru" style={{ padding: '0 10px', height: 36, display: 'inline-flex', alignItems: 'center', background: locale === 'ru' ? 'var(--op-accent)' : 'transparent', color: locale === 'ru' ? '#fff' : 'var(--op-text-secondary)', textDecoration: 'none', transition: 'all 140ms' }}>RU</Link>
+            <Link href="/" locale="en" style={{ padding: '0 10px', height: 36, display: 'inline-flex', alignItems: 'center', background: locale === 'en' ? 'var(--op-accent)' : 'transparent', color: locale === 'en' ? '#fff' : 'var(--op-text-secondary)', textDecoration: 'none', transition: 'all 140ms' }}>EN</Link>
+          </div>
           <button
             onClick={toggleTheme}
             title={theme === 'dark' ? 'Светлая тема' : 'Тёмная тема'}
@@ -164,6 +180,9 @@ export default function Navbar() {
           .nav-links-desktop { display: none !important; }
           .nav-price-desktop { display: none !important; }
           .nav-burger { display: inline-flex !important; }
+        }
+        @media (max-width: 640px) {
+          .locale-switcher { display: none !important; }
         }
       `}</style>
     </>

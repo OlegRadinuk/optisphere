@@ -23,8 +23,8 @@ const containerVariants = {
   visible: { transition: { staggerChildren: 0.08 } },
 };
 const itemVariants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 0.61, 0.36, 1] as const } },
+  hidden: (i: number) => ({ opacity: 0, x: i % 2 === 0 ? -40 : 40 }),
+  visible: { opacity: 1, x: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as const } },
 };
 
 export default function CasesSection() {
@@ -35,9 +35,9 @@ export default function CasesSection() {
     <section id="cases" style={{ padding:'96px 0' }}>
       <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px' }}>
         <motion.div
-          initial={{ opacity: 0, y: 28 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.55, ease: [0.22, 0.61, 0.36, 1] }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
         >
           <SectionIntro code="04" cmd="cases.query({hot:true})" title="Что получается на практике" sub="Анонимно, но точно. Полные кейсы с названиями — под NDA, покажем в разговоре." crimson/>
         </motion.div>
@@ -50,7 +50,7 @@ export default function CasesSection() {
           className="cases-grid"
         >
           {CASES.map((c,i) => (
-            <motion.article key={i} variants={itemVariants} style={{ background:'var(--op-surface-elevated)', border:'1px solid var(--op-border)', borderRadius:12, padding:24, display:'flex', flexDirection:'column', gap:20 }}>
+            <motion.article key={i} variants={itemVariants} custom={i} style={{ background:'var(--op-surface-elevated)', border:'1px solid var(--op-border)', borderRadius:12, padding:24, display:'flex', flexDirection:'column', gap:20 }}>
               <div style={{ display:'flex', gap:12, alignItems:'center' }}>
                 <div style={{ display:'flex', flexDirection:'column', gap:2 }}>
                   <span style={{ font:"500 15px/1.2 'Inter',sans-serif", color:'var(--op-text)', letterSpacing:'-0.01em' }}>{c.niche}</span>
