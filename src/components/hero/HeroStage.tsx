@@ -7,6 +7,7 @@ import type { ChatMessage } from '@/components/ai/HeroChatContext';
 type SphereState = 'idle' | 'thinking' | 'speaking';
 
 const GREETING = "Опишите ваш бизнес — подберу похожий кейс, рассчитаю бюджет и покажу что именно вам нужно. Прямо здесь, за минуту.";
+const PROGRESS_STEPS = 3;
 
 const QUICK_PROMPTS = ['Стоматология', 'Гостиница', 'Магазин', 'Строительство'];
 
@@ -82,6 +83,12 @@ export default function HeroStage() {
   };
 
   const displayedMessages = sharedMessages.length > 0 ? sharedMessages.slice(-4) : [];
+  const answeredSteps = Math.min(
+    sharedMessages.filter(m => m.role === 'assistant').length,
+    PROGRESS_STEPS
+  );
+  const progressDone = answeredSteps >= PROGRESS_STEPS;
+  const showProgress = sharedMessages.length > 0;
 
   return (
     <div style={{ position: 'relative', minHeight: 520, display: 'flex', flexDirection: 'column', gap: 20 }}>
@@ -101,6 +108,23 @@ export default function HeroStage() {
           </span>
         </div>
       </div>
+
+      {/* Progress bar */}
+      {showProgress && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span style={{ font: "500 10px/1 'JetBrains Mono',monospace", color: progressDone ? 'var(--op-accent)' : 'var(--op-text-muted)', letterSpacing: '.12em', textTransform: 'uppercase' }}>
+              {progressDone ? '✓ Расчёт готовится' : `Шаг ${answeredSteps}/${PROGRESS_STEPS} — до расчёта стоимости`}
+            </span>
+            <span style={{ font: "500 10px/1 'JetBrains Mono',monospace", color: progressDone ? 'var(--op-accent)' : 'var(--op-text-faint)' }}>
+              {Math.round((answeredSteps / PROGRESS_STEPS) * 100)}%
+            </span>
+          </div>
+          <div style={{ height: 2, background: 'var(--op-border)', borderRadius: 1, overflow: 'hidden' }}>
+            <div style={{ height: '100%', width: `${(answeredSteps / PROGRESS_STEPS) * 100}%`, background: progressDone ? 'var(--op-accent)' : 'var(--op-accent)', borderRadius: 1, transition: 'width 600ms ease' }} />
+          </div>
+        </div>
+      )}
 
       {/* Chat area */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10, minHeight: 160, paddingLeft: 4 }}>
