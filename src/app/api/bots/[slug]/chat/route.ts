@@ -102,8 +102,9 @@ export async function POST(
   }
 
   // Build system prompt with today's date
-  const today = new Date().toLocaleDateString("ru-RU", {
-    day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Moscow",
+  const now = new Date()
+  const today = now.toLocaleDateString("ru-RU", {
+    weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Moscow",
   })
   let systemPrompt = client.system_prompt + `\n\nСегодня: ${today}.`
 
