@@ -129,6 +129,24 @@ export async function POST(
 
   let systemPrompt = client.system_prompt + calendarCtx
 
+  // Fetch external context (availability, hot deals, etc.)
+  if (client.context_url) {
+    try {
+      const ctxRes = await fetch(client.context_url, {
+        signal: AbortSignal.timeout(3000),
+        headers: { "User-Agent": "Optisphere-Bot/1.0" },
+      })
+      if (ctxRes.ok) {
+        const ctxText = await ctxRes.text()
+        if (ctxText.trim()) {
+          systemPrompt += "\n\n" + ctxText.trim()
+        }
+      }
+    } catch {
+      // Silent fail — bot works without context
+    }
+  }
+
   // URL detection
   let urlFetchPromise: Promise<string | null> = Promise.resolve(null)
   let detectedUrl: string | null = null

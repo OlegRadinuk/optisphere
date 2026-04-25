@@ -37,6 +37,7 @@ function initSchema(db: Database.Database) {
       widget_placeholder TEXT DEFAULT 'Напишите вопрос…',
       rate_limit  INTEGER DEFAULT 30,
       active      INTEGER DEFAULT 1,
+      context_url TEXT    DEFAULT '',
       created_at  TEXT    DEFAULT (datetime('now'))
     );
 
@@ -63,6 +64,13 @@ function initSchema(db: Database.Database) {
     CREATE INDEX IF NOT EXISTS idx_messages_session ON messages(client_id, session_id);
     CREATE INDEX IF NOT EXISTS idx_leads_client    ON leads(client_id);
   `)
+
+  // Migrations — safe to run on every start
+  try {
+    db.exec(`ALTER TABLE clients ADD COLUMN context_url TEXT DEFAULT ''`)
+  } catch {
+    // Column already exists — ignore
+  }
 }
 
 // ── Types ──────────────────────────────────────────────────────────────────────
@@ -83,6 +91,7 @@ export type Client = {
   widget_placeholder: string
   rate_limit: number
   active: number
+  context_url: string
   created_at: string
 }
 

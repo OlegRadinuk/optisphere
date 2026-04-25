@@ -82,6 +82,7 @@ export async function POST(request: NextRequest): Promise<Response> {
       widget_placeholder: data.widget_placeholder ?? "Напишите вопрос…",
       rate_limit: data.rate_limit ?? 30,
       active: data.active ?? 1,
+      context_url: data.context_url ?? "",
     })
     return NextResponse.json(client, { status: 201 })
   } catch (err: unknown) {

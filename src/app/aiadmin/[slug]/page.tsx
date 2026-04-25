@@ -29,6 +29,7 @@ type ClientData = {
   widget_placeholder: string
   rate_limit: number
   active: number
+  context_url: string
 }
 
 export default function EditClientPage() {
@@ -131,6 +132,14 @@ export default function EditClientPage() {
               </Field>
               <Field label="Описание">
                 <input style={styles.input} value={form.description} onChange={(e) => set("description", e.target.value)} />
+              </Field>
+              <Field label="URL контекста (доступность)">
+                <input
+                  style={styles.input}
+                  value={form.context_url}
+                  onChange={(e) => set("context_url", e.target.value)}
+                  placeholder="https://example.com/context.txt"
+                />
               </Field>
               <Field label="Активен">
                 <select style={styles.input} value={form.active} onChange={(e) => set("active", Number(e.target.value))}>
