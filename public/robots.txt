@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://optisphere.tech/sitemap.xml
+Host: https://optisphere.tech
