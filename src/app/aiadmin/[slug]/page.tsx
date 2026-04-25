@@ -13,6 +13,21 @@ type Lead = {
   created_at: string
 }
 
+type SessionSummary = {
+  session_id: string
+  message_count: number
+  last_message_at: string
+  has_lead: number
+}
+
+type ChatMessage = {
+  id: number
+  session_id: string
+  role: "user" | "assistant"
+  content: string
+  created_at: string
+}
+
 type ClientData = {
   id: number
   slug: string
@@ -41,7 +56,10 @@ export default function EditClientPage() {
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
   const [err, setErr] = useState("")
-  const [tab, setTab] = useState<"settings" | "leads">("settings")
+  const [tab, setTab] = useState<"settings" | "leads" | "dialogs">("settings")
+  const [sessions, setSessions] = useState<SessionSummary[]>([])
+  const [expandedSession, setExpandedSession] = useState<string | null>(null)
+  const [sessionMessages, setSessionMessages] = useState<Record<string, ChatMessage[]>>({})
 
   useEffect(() => {
     fetch(`/api/admin/clients?slug=${slug}`)
@@ -57,6 +75,28 @@ export default function EditClientPage() {
         setLeads(d.leads)
       })
   }, [slug, router])
+
+  useEffect(() => {
+    if (tab !== "dialogs") return
+    fetch(`/api/admin/clients/${slug}/sessions`)
+      .then((r) => r.ok ? r.json() : [])
+      .then((d: SessionSummary[]) => setSessions(d))
+      .catch(() => {})
+  }, [tab, slug])
+
+  async function loadSession(sessionId: string) {
+    if (expandedSession === sessionId) {
+      setExpandedSession(null)
+      return
+    }
+    setExpandedSession(sessionId)
+    if (sessionMessages[sessionId]) return
+    const r = await fetch(`/api/admin/clients/${slug}/sessions/${encodeURIComponent(sessionId)}`)
+    if (r.ok) {
+      const msgs: ChatMessage[] = await r.json()
+      setSessionMessages((prev) => ({ ...prev, [sessionId]: msgs }))
+    }
+  }
 
   function set(field: string, value: string | number) {
     setForm((f) => f ? { ...f, [field]: value } : f)
@@ -120,6 +160,7 @@ export default function EditClientPage() {
       <div style={styles.tabs}>
         <button onClick={() => setTab("settings")} style={{ ...styles.tab, ...(tab === "settings" ? styles.tabActive : {}) }}>Настройки</button>
         <button onClick={() => setTab("leads")} style={{ ...styles.tab, ...(tab === "leads" ? styles.tabActive : {}) }}>Заявки ({stats.leads})</button>
+        <button onClick={() => setTab("dialogs")} style={{ ...styles.tab, ...(tab === "dialogs" ? styles.tabActive : {}) }}>Диалоги ({stats.sessions})</button>
       </div>
 
       <main style={styles.main}>
@@ -247,6 +288,65 @@ export default function EditClientPage() {
             )}
           </div>
         )}
+
+        {tab === "dialogs" && (
+          <div>
+            {sessions.length === 0 ? (
+              <div style={styles.empty}>Диалогов пока нет</div>
+            ) : (
+              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                {sessions.map((s) => (
+                  <div key={s.session_id} style={styles.sessionCard}>
+                    <button
+                      onClick={() => loadSession(s.session_id)}
+                      style={styles.sessionHeader}
+                    >
+                      <div style={{ display: "flex", alignItems: "center", gap: 10, flex: 1, minWidth: 0 }}>
+                        <span style={s.has_lead ? styles.leadDot : styles.noLeadDot} title={s.has_lead ? "Есть заявка" : "Без заявки"} />
+                        <span style={styles.sessionDate}>
+                          {new Date(s.last_message_at).toLocaleString("ru-RU")}
+                        </span>
+                        <span style={styles.sessionMsgCount}>{s.message_count} сообщ.</span>
+                        {s.has_lead ? <span style={styles.leadBadge}>Заявка</span> : null}
+                      </div>
+                      <span style={{ color: "#64748b", fontSize: 12 }}>
+                        {expandedSession === s.session_id ? "▲" : "▼"}
+                      </span>
+                    </button>
+
+                    {expandedSession === s.session_id && (
+                      <div style={styles.messagesThread}>
+                        {!sessionMessages[s.session_id] ? (
+                          <div style={{ color: "#64748b", fontSize: 13, padding: 12 }}>Загрузка…</div>
+                        ) : sessionMessages[s.session_id].length === 0 ? (
+                          <div style={{ color: "#64748b", fontSize: 13, padding: 12 }}>Нет сообщений</div>
+                        ) : (
+                          sessionMessages[s.session_id].map((m) => (
+                            <div
+                              key={m.id}
+                              style={{
+                                ...styles.msgBubble,
+                                alignSelf: m.role === "user" ? "flex-start" : "flex-end",
+                                background: m.role === "user" ? "#1e293b" : "#1e3a5f",
+                                borderColor: m.role === "user" ? "#334155" : "#1d4ed8",
+                              }}
+                            >
+                              <div style={styles.msgRole}>{m.role === "user" ? "Гость" : "Яна"}</div>
+                              <div style={styles.msgContent}>{m.content}</div>
+                              <div style={styles.msgTime}>
+                                {new Date(m.created_at).toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" })}
+                              </div>
+                            </div>
+                          ))
+                        )}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </main>
     </div>
   )
@@ -302,4 +402,16 @@ const styles: Record<string, React.CSSProperties> = {
   tr: { borderBottom: "1px solid #1e293b" },
   td: { padding: "12px 14px", fontSize: 13, color: "#cbd5e1", verticalAlign: "top" as const },
   empty: { color: "#64748b", padding: "40px 0", textAlign: "center" as const },
+  sessionCard: { border: "1px solid #334155", borderRadius: 10, overflow: "hidden" as const, background: "#0f172a" },
+  sessionHeader: { width: "100%", display: "flex", alignItems: "center", gap: 10, padding: "12px 16px", background: "transparent", border: "none", cursor: "pointer", color: "#e2e8f0", textAlign: "left" as const },
+  sessionDate: { fontSize: 13, color: "#94a3b8" },
+  sessionMsgCount: { fontSize: 12, color: "#64748b", marginLeft: 4 },
+  leadDot: { width: 8, height: 8, borderRadius: "50%", background: "#22c55e", flexShrink: 0 },
+  noLeadDot: { width: 8, height: 8, borderRadius: "50%", background: "#475569", flexShrink: 0 },
+  leadBadge: { fontSize: 11, fontWeight: 600, padding: "2px 8px", borderRadius: 12, background: "#14532d", color: "#86efac" },
+  messagesThread: { display: "flex", flexDirection: "column" as const, gap: 8, padding: "12px 16px", borderTop: "1px solid #1e293b", maxHeight: 500, overflowY: "auto" as const },
+  msgBubble: { maxWidth: "80%", padding: "10px 14px", borderRadius: 10, border: "1px solid", display: "flex", flexDirection: "column" as const, gap: 4 },
+  msgRole: { fontSize: 11, fontWeight: 700, color: "#64748b", textTransform: "uppercase" as const },
+  msgContent: { fontSize: 13, color: "#e2e8f0", whiteSpace: "pre-wrap" as const, wordBreak: "break-word" as const },
+  msgTime: { fontSize: 11, color: "#475569", alignSelf: "flex-end" as const },
 }

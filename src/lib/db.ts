@@ -229,3 +229,36 @@ export function getMessagesBySession(clientId: number, sessionId: string, limit 
     )
     .all(clientId, sessionId, limit) as Message[]
 }
+
+export type SessionSummary = {
+  session_id: string
+  message_count: number
+  last_message_at: string
+  has_lead: number
+}
+
+export function getSessions(clientId: number, limit = 100): SessionSummary[] {
+  return getDb()
+    .prepare(
+      `SELECT
+         m.session_id,
+         COUNT(m.id)      AS message_count,
+         MAX(m.created_at) AS last_message_at,
+         CASE WHEN l.session_id IS NOT NULL THEN 1 ELSE 0 END AS has_lead
+       FROM messages m
+       LEFT JOIN leads l ON l.client_id = m.client_id AND l.session_id = m.session_id
+       WHERE m.client_id = ?
+       GROUP BY m.session_id
+       ORDER BY last_message_at DESC
+       LIMIT ?`
+    )
+    .all(clientId, limit) as SessionSummary[]
+}
+
+export function getSessionMessages(clientId: number, sessionId: string): Message[] {
+  return getDb()
+    .prepare(
+      "SELECT * FROM messages WHERE client_id = ? AND session_id = ? ORDER BY created_at ASC"
+    )
+    .all(clientId, sessionId) as Message[]
+}

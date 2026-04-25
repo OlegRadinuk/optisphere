@@ -1,6 +1,19 @@
 import { NextRequest, NextResponse } from "next/server"
 import Anthropic from "@anthropic-ai/sdk"
-import { getClientBySlug, saveMessage } from "@/lib/db"
+import { getClientBySlug, saveMessage, getMessagesBySession, getDb } from "@/lib/db"
+
+// ── Telegram helper (same proxy as lead route) ────────────────────────────────
+async function sendTelegram(token: string, chatId: string, text: string) {
+  try {
+    await fetch(`https://tg-proxy.radinuko.workers.dev/bot${token}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: chatId, text, parse_mode: "HTML" }),
+    })
+  } catch (err) {
+    console.error("[chat/telegram]", err)
+  }
+}
 
 // ── Rate limiter (per ip+slug) ─────────────────────────────────────────────────
 const rateLimitMap = new Map<string, number[]>()
@@ -199,6 +212,43 @@ export async function POST(
         // Persist assistant reply
         if (assistantReply) {
           try { saveMessage(client.id, sessionId, "assistant", assistantReply) } catch {}
+        }
+
+        // Engaged session notification — send once when session reaches exactly 6 messages
+        // (3 user + 3 assistant exchanges) and no lead was captured yet
+        if (assistantReply && client.tg_token && client.tg_chat_id) {
+          try {
+            const db = getDb()
+            const totalMessages = (db
+              .prepare("SELECT COUNT(*) as n FROM messages WHERE client_id = ? AND session_id = ?")
+              .get(client.id, sessionId) as { n: number }).n
+
+            if (totalMessages === 6) {
+              const hasLead = (db
+                .prepare("SELECT COUNT(*) as n FROM leads WHERE client_id = ? AND session_id = ?")
+                .get(client.id, sessionId) as { n: number }).n > 0
+
+              if (!hasLead) {
+                const recentMsgs = getMessagesBySession(client.id, sessionId, 4).reverse()
+                const history = recentMsgs
+                  .map((m) => `${m.role === "user" ? "Гость" : "Яна"}: ${m.content.slice(0, 300)}`)
+                  .join("\n")
+
+                const text = [
+                  `💬 <b>Активный диалог — ${client.name}</b>`,
+                  "",
+                  history,
+                  "",
+                  "Лид пока не оставил",
+                ].join("\n")
+
+                const chatIds = client.tg_chat_id.split(",").map((id: string) => id.trim()).filter(Boolean)
+                await Promise.all(chatIds.map((chatId: string) => sendTelegram(client.tg_token, chatId, text)))
+              }
+            }
+          } catch (notifyErr) {
+            console.error("[chat/engaged-notify]", notifyErr)
+          }
         }
       } catch (err) {
         console.error(`[bots/${slug}/chat]`, err)

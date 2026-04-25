@@ -61,27 +61,38 @@ export async function POST(
 
   // Telegram notification
   if (client.tg_token && client.tg_chat_id) {
-    const lines = [
-      `🤖 <b>Новая заявка — ${client.name}</b>`,
-      name && `👤 Имя: ${name}`,
-      phone && `📞 Телефон: ${phone}`,
-      email && `✉️ Email: ${email}`,
-      message && `💬 ${message}`,
-    ]
-      .filter(Boolean)
-      .join("\n")
+    const mskTime = new Date().toLocaleString("ru-RU", {
+      timeZone: "Europe/Moscow",
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    })
 
-    // Append recent conversation context
-    let fullText = lines
+    const header = [
+      `🔔 <b>Новая заявка — ${client.name}</b>`,
+      "",
+      `👤 ${name || "—"}`,
+      ...(phone ? [`📞 ${phone}`] : []),
+      ...(email ? [`✉️ ${email}`] : []),
+      ...(message ? [`💬 ${message}`] : []),
+    ].join("\n")
+
+    let fullText = header
+
+    // Append last 5 messages from this session
     if (sessionId) {
-      const msgs = getMessagesBySession(client.id, sessionId, 20).reverse()
+      const msgs = getMessagesBySession(client.id, sessionId, 5).reverse()
       if (msgs.length > 0) {
         const history = msgs
-          .map((m) => `${m.role === "user" ? "👤" : "🤖"} ${m.content.slice(0, 300)}`)
+          .map((m) => `${m.role === "user" ? "Гость" : "Яна"}: ${m.content.slice(0, 300)}`)
           .join("\n")
-        fullText += `\n\n<b>Диалог:</b>\n${history}`
+        fullText += `\n\n<b>Последние сообщения:</b>\n${history}`
       }
     }
+
+    fullText += `\n\n⏱️ ${mskTime} МСК`
 
     const chatIds = client.tg_chat_id.split(",").map((id: string) => id.trim()).filter(Boolean)
     await Promise.all(chatIds.map((chatId: string) => sendTelegram(client.tg_token, chatId, fullText)))
