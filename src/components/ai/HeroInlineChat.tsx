@@ -4,19 +4,13 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { useVoice } from '@/hooks/useVoice';
+import LeadForm from '@/components/ai/LeadForm';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
 export interface ChatMessage {
   role: 'user' | 'assistant';
   content: string;
-}
-
-interface LeadFormData {
-  name: string;
-  phone: string;
-  telegram: string;
-  time: string;
 }
 
 const FORM_MARKER = '[SAVE_LEAD]';
@@ -137,130 +131,6 @@ function YuraAvatar({ size = 32 }: { size?: number }) {
   );
 }
 
-// ─── Lead form (compact) ────────────────────────────────────────────────────
-
-function LeadFormBubble({
-  onSubmit,
-  isSubmitting,
-  submitted,
-}: {
-  onSubmit: (data: LeadFormData) => void;
-  isSubmitting: boolean;
-  submitted: boolean;
-}) {
-  const [data, setData] = useState<LeadFormData>({ name: '', phone: '', telegram: '', time: '' });
-
-  if (submitted) {
-    return (
-      <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        style={{
-          margin: '4px 0 4px 36px',
-          padding: '14px 16px',
-          borderRadius: '16px 16px 16px 4px',
-          background: 'linear-gradient(135deg, rgba(16,185,129,0.15), rgba(6,182,212,0.1))',
-          border: '1px solid rgba(16,185,129,0.3)',
-          color: '#6ee7b7',
-          fontSize: 13.5,
-          fontWeight: 500,
-        }}
-      >
-        ✓ Заявка отправлена — Олег свяжется с вами лично.
-      </motion.div>
-    );
-  }
-
-  const inputStyle: React.CSSProperties = {
-    width: '100%',
-    padding: '10px 12px',
-    borderRadius: 10,
-    border: '1px solid rgba(255,255,255,0.1)',
-    background: 'rgba(255,255,255,0.06)',
-    color: '#F0F0FF',
-    fontSize: 13,
-    outline: 'none',
-    marginBottom: 8,
-    minHeight: 44,
-  };
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      style={{
-        margin: '4px 0 4px 36px',
-        padding: '14px',
-        borderRadius: '16px 16px 16px 4px',
-        background: 'rgba(99,102,241,0.08)',
-        border: '1px solid rgba(99,102,241,0.22)',
-      }}
-    >
-      <p style={{ color: '#c4b5fd', fontSize: 13, marginBottom: 12, fontWeight: 500 }}>
-        Оставьте контакт — Олег свяжется лично:
-      </p>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          if (!data.name.trim() || (!data.phone.trim() && !data.telegram.trim())) return;
-          onSubmit(data);
-        }}
-      >
-        <input
-          style={inputStyle}
-          placeholder="Ваше имя *"
-          value={data.name}
-          onChange={(e) => setData((d) => ({ ...d, name: e.target.value }))}
-          required
-        />
-        <input
-          style={inputStyle}
-          placeholder="+7 (___) ___ __ __ *"
-          type="tel"
-          value={data.phone}
-          onChange={(e) => setData((d) => ({ ...d, phone: e.target.value }))}
-        />
-        <input
-          style={inputStyle}
-          placeholder="Telegram @username (необязательно)"
-          value={data.telegram}
-          onChange={(e) => setData((d) => ({ ...d, telegram: e.target.value }))}
-        />
-        <input
-          style={{ ...inputStyle, marginBottom: 12 }}
-          placeholder="Удобное время для звонка"
-          value={data.time}
-          onChange={(e) => setData((d) => ({ ...d, time: e.target.value }))}
-        />
-        <button
-          type="submit"
-          disabled={isSubmitting || !data.name.trim() || (!data.phone.trim() && !data.telegram.trim())}
-          style={{
-            width: '100%',
-            padding: '12px',
-            borderRadius: 10,
-            border: 'none',
-            minHeight: 44,
-            background:
-              isSubmitting || !data.name.trim() || !data.phone.trim()
-                ? 'rgba(99,102,241,0.3)'
-                : 'linear-gradient(135deg, #6366F1, #06B6D4)',
-            color: '#fff',
-            fontSize: 13,
-            fontWeight: 600,
-            cursor:
-              isSubmitting || !data.name.trim() || !data.phone.trim()
-                ? 'not-allowed'
-                : 'pointer',
-          }}
-        >
-          {isSubmitting ? 'Отправляю...' : 'Отправить заявку →'}
-        </button>
-      </form>
-    </motion.div>
-  );
-}
-
 // ─── Message bubble ─────────────────────────────────────────────────────────
 
 function MessageBubble({ msg }: { msg: ChatMessage }) {
@@ -323,8 +193,6 @@ export default function HeroInlineChat({
   const [isTyping, setIsTyping] = useState(false);
   const [leadSent, setLeadSent] = useState(false);
   const [showLeadForm, setShowLeadForm] = useState(false);
-  const [leadFormSubmitting, setLeadFormSubmitting] = useState(false);
-  const [leadFormSubmitted, setLeadFormSubmitted] = useState(false);
   const [keyboardOffset, setKeyboardOffset] = useState(0);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -432,23 +300,6 @@ export default function HeroInlineChat({
     [leadSent],
   );
 
-  const handleLeadFormSubmit = useCallback(
-    async (data: LeadFormData) => {
-      setLeadFormSubmitting(true);
-      const contactStr = [data.phone.trim(), data.telegram.trim()].filter(Boolean).join(' / ');
-      const allMessages: ChatMessage[] = [
-        ...messages,
-        {
-          role: 'user',
-          content: `Имя: ${data.name}, контакт: ${contactStr}${data.time ? `, время: ${data.time}` : ''}`,
-        },
-      ];
-      await sendLead(contactStr, allMessages, data.name, data.time);
-      setLeadFormSubmitting(false);
-      setLeadFormSubmitted(true);
-    },
-    [messages, sendLead],
-  );
 
   // API call (shared)
   const sendToApi = useCallback(
@@ -798,15 +649,13 @@ export default function HeroInlineChat({
             </div>
           </div>
         )}
-        <AnimatePresence>
-          {showLeadForm && (
-            <LeadFormBubble
-              onSubmit={handleLeadFormSubmit}
-              isSubmitting={leadFormSubmitting}
-              submitted={leadFormSubmitted}
-            />
-          )}
-        </AnimatePresence>
+        {showLeadForm && (
+          <LeadForm
+            messages={messages}
+            accentColor="#6366F1"
+            onSubmitted={() => setShowLeadForm(false)}
+          />
+        )}
         <div ref={messagesEndRef} />
       </div>
 

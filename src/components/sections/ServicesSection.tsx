@@ -204,7 +204,7 @@ function BrowserMockup() {
           style={{ position: 'absolute', bottom: 36, left: 38, width: 2, height: 14, background: 'var(--indigo)', borderRadius: 1 }}
         />
 
-        {/* Юра widget */}
+        {/* Опти widget */}
         <motion.div
           animate={{ y: [0, -3, 0] }}
           transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
@@ -218,7 +218,7 @@ function BrowserMockup() {
           }}
         >
           <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#7fff7f', display: 'block', boxShadow: '0 0 5px #7fff7f' }} />
-          Юра онлайн
+          Опти онлайн
         </motion.div>
       </div>
 

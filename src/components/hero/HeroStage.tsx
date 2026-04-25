@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import WireSphere from './WireSphere';
 import { useHeroChat } from '@/components/ai/HeroChatContext';
 import type { ChatMessage } from '@/components/ai/HeroChatContext';
+import LeadForm from '@/components/ai/LeadForm';
 
 type SphereState = 'idle' | 'thinking' | 'speaking';
 
@@ -12,51 +13,6 @@ const SAVE_LEAD_MARKER = '[SAVE_LEAD]';
 
 const QUICK_PROMPTS = ['Стоматология', 'Гостиница', 'Магазин', 'Строительство'];
 
-function HeroLeadForm({ sessionId, messages, onSubmitted }: { sessionId: string; messages: ChatMessage[]; onSubmitted: () => void }) {
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [telegram, setTelegram] = useState('');
-  const [submitting, setSubmitting] = useState(false);
-  const [done, setDone] = useState(false);
-
-  const inputStyle: React.CSSProperties = { width: '100%', marginBottom: 8, padding: '9px 12px', background: 'rgba(255,255,255,0.05)', border: '1px solid var(--op-border)', borderRadius: 6, color: 'var(--op-text)', font: "400 13px/1 'Inter',sans-serif", outline: 'none', boxSizing: 'border-box' };
-
-  if (done) return (
-    <div style={{ padding: '12px 16px', borderRadius: 8, background: 'rgba(16,185,129,0.12)', border: '1px solid rgba(16,185,129,0.3)', color: '#6ee7b7', fontSize: 13 }}>
-      ✓ Заявка отправлена — Олег свяжется лично.
-    </div>
-  );
-
-  const contact = phone.trim() || telegram.trim();
-
-  return (
-    <div style={{ padding: '14px', borderRadius: 8, background: 'rgba(232,32,32,0.06)', border: '1px solid rgba(232,32,32,0.2)' }}>
-      <p style={{ font: "500 12px/1 'JetBrains Mono',monospace", color: 'var(--op-accent)', marginBottom: 10, textTransform: 'uppercase', letterSpacing: '.08em' }}>Оставьте контакт — Олег свяжется лично</p>
-      <input value={name} onChange={e => setName(e.target.value)} placeholder="Ваше имя *" style={inputStyle} />
-      <input value={phone} onChange={e => setPhone(e.target.value)} placeholder="+7 (___) ___ __ __ *" type="tel" style={inputStyle} />
-      <input value={telegram} onChange={e => setTelegram(e.target.value)} placeholder="Telegram @username (необязательно)" style={{ ...inputStyle, marginBottom: 10 }} />
-      <button
-        disabled={submitting || !name.trim() || !contact}
-        onClick={async () => {
-          setSubmitting(true);
-          const summary = messages.filter(m => m.role === 'user').map(m => m.content).slice(-3).join(' | ') || 'Нет данных';
-          const contactStr = [phone.trim(), telegram.trim()].filter(Boolean).join(' / ');
-          await fetch('/api/leads/telegram', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ contact: contactStr, name: name.trim(), intent: 'warm', summary, dialog: messages.slice(-6) }),
-          }).catch(() => {});
-          setSubmitting(false);
-          setDone(true);
-          onSubmitted();
-        }}
-        style={{ width: '100%', padding: '10px', background: submitting || !name.trim() || !contact ? 'rgba(232,32,32,0.3)' : 'var(--op-accent)', border: 'none', borderRadius: 6, color: '#fff', font: "600 11px/1 'JetBrains Mono',monospace", letterSpacing: '.1em', textTransform: 'uppercase', cursor: submitting || !name.trim() || !contact ? 'not-allowed' : 'pointer' }}
-      >
-        {submitting ? '···' : 'Отправить →'}
-      </button>
-    </div>
-  );
-}
 
 export default function HeroStage() {
   const { sharedMessages, setSharedMessages, sharedSessionId } = useHeroChat();
@@ -226,9 +182,9 @@ export default function HeroStage() {
 
       {/* Lead form */}
       {showLeadForm && (
-        <HeroLeadForm
-          sessionId={sharedSessionId}
+        <LeadForm
           messages={sharedMessages}
+          accentColor="var(--op-accent)"
           onSubmitted={() => setShowLeadForm(false)}
         />
       )}

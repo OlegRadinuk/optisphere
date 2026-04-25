@@ -139,7 +139,7 @@ export default function LiveDemoSection() {
           className="demo-sticky"
           style={{ position: 'sticky', top: '80px', height: 'calc(100vh - 80px)', display: 'flex', flexDirection: 'column', maxWidth: 1280, margin: '0 auto', padding: '32px 48px 48px' }}
         >
-          <SectionIntro code="02" cmd="yura.trace()" title={t('title')} sub={t('sub')} crimson />
+          <SectionIntro code="02" cmd="opti.trace()" title={t('title')} sub={t('sub')} crimson />
 
           {/* Progress bar */}
           <div style={{ height: 2, background: 'var(--op-border)', borderRadius: 1, marginBottom: 12, overflow: 'hidden' }}>
