@@ -15,6 +15,8 @@
   var TITLE    = script.getAttribute("data-title")    || null;
   var POSITION = script.getAttribute("data-position") || "right";
   var BOTTOM   = parseInt(script.getAttribute("data-bottom") || "24", 10);
+  var RIGHT    = parseInt(script.getAttribute("data-right")  || "20", 10);
+  var LEFT     = parseInt(script.getAttribute("data-left")   || "20", 10);
   var GREETING_DELAY = parseInt(script.getAttribute("data-greeting-delay") || "3000", 10);
 
   var COLOR     = PRIMARY || "#e85d04";
@@ -27,6 +29,7 @@
   var isStreaming   = false;
   var leadFormShown = false;
   var bubbleDismissed = false;
+  var quickRepliesShown = false;
 
   var STORAGE_KEY    = "yana_chat_" + BOT_SLUG;
   var SESSION_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
@@ -75,12 +78,14 @@
   // ── CSS ─────────────────────────────────────────────────────────────────────
   function injectCSS() {
     var isLeft = POSITION === "left";
+    var hEdge = isLeft ? ("left:" + LEFT + "px") : ("right:" + RIGHT + "px");
+    var hEdgeChat = isLeft ? ("left:" + (LEFT - 4) + "px") : ("right:" + (RIGHT - 4) + "px");
     var css = [
-      "#opsph-btn{position:fixed;bottom:" + BOTTOM + "px;" + (isLeft ? "left:20px" : "right:20px") + ";z-index:9999;height:" + PILL_H + "px;padding:0 18px 0 10px;border-radius:24px;background:" + COLOR + ";border:none;cursor:pointer;box-shadow:0 4px 18px rgba(0,0,0,.22);display:flex;align-items:center;gap:9px;transition:transform .2s,box-shadow .2s;}",
+      "#opsph-btn{position:fixed;bottom:" + BOTTOM + "px;" + hEdge + ";z-index:9999;height:" + PILL_H + "px;padding:0 18px 0 10px;border-radius:24px;background:" + COLOR + ";border:none;cursor:pointer;box-shadow:0 4px 18px rgba(0,0,0,.22);display:flex;align-items:center;gap:9px;transition:transform .2s,box-shadow .2s;}",
       "#opsph-btn:hover{transform:scale(1.05);box-shadow:0 6px 24px rgba(0,0,0,.3);}",
       "#opsph-btn-ava{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:#fff;font-family:system-ui,sans-serif;flex-shrink:0;}",
       "#opsph-btn-label{font-weight:700;font-size:14px;color:#fff;font-family:system-ui,sans-serif;letter-spacing:.2px;white-space:nowrap;}",
-      "#opsph-bubble{position:fixed;bottom:" + (BOTTOM + PILL_H + 10) + "px;" + (isLeft ? "left:20px" : "right:20px") + ";z-index:9998;background:#fff;border-radius:16px;border-bottom-" + (isLeft ? "left" : "right") + "-radius:4px;box-shadow:0 4px 20px rgba(0,0,0,.13);padding:14px 16px 14px 14px;max-width:260px;display:flex;flex-direction:column;gap:8px;animation:opsph-pop .3s ease;border:1.5px solid #f0f0f0;}",
+      "#opsph-bubble{position:fixed;bottom:" + (BOTTOM + PILL_H + 10) + "px;" + hEdge + ";z-index:9998;background:#fff;border-radius:16px;border-bottom-" + (isLeft ? "left" : "right") + "-radius:4px;box-shadow:0 4px 20px rgba(0,0,0,.13);padding:14px 16px 14px 14px;max-width:260px;display:flex;flex-direction:column;gap:8px;animation:opsph-pop .3s ease;border:1.5px solid #f0f0f0;}",
       "#opsph-bubble.hide{display:none;}",
       "@keyframes opsph-pop{from{opacity:0;transform:translateY(8px) scale(.96)}to{opacity:1;transform:none}}",
       "#opsph-bubble-head{display:flex;align-items:center;gap:8px;}",
@@ -90,7 +95,7 @@
       "#opsph-bubble-text{font-size:13px;color:#334155;font-family:system-ui,sans-serif;line-height:1.5;}",
       "#opsph-bubble-cta{background:" + COLOR + ";color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;font-family:system-ui,sans-serif;cursor:pointer;transition:opacity .15s;text-align:left;}",
       "#opsph-bubble-cta:hover{opacity:.88;}",
-      "#opsph-wrap{position:fixed;bottom:" + (BOTTOM + PILL_H + 12) + "px;" + (isLeft ? "left:16px" : "right:16px") + ";z-index:9997;width:368px;max-width:calc(100vw - 32px);height:530px;max-height:calc(100vh - 120px);background:#fff;border-radius:20px;box-shadow:0 12px 48px rgba(0,0,0,.16);display:flex;flex-direction:column;overflow:hidden;transition:opacity .22s,transform .22s;opacity:0;transform:translateY(14px) scale(.97);pointer-events:none;}",
+      "#opsph-wrap{position:fixed;bottom:" + (BOTTOM + PILL_H + 12) + "px;" + hEdgeChat + ";z-index:9997;width:368px;max-width:calc(100vw - 32px);height:530px;max-height:calc(100vh - 120px);background:#fff;border-radius:20px;box-shadow:0 12px 48px rgba(0,0,0,.16);display:flex;flex-direction:column;overflow:hidden;transition:opacity .22s,transform .22s;opacity:0;transform:translateY(14px) scale(.97);pointer-events:none;}",
       "#opsph-wrap.open{opacity:1;transform:none;pointer-events:all;}",
       "#opsph-head{background:" + COLOR + ";padding:14px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0;}",
       "#opsph-head-ava{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;color:#fff;font-family:system-ui,sans-serif;flex-shrink:0;}",
@@ -125,7 +130,10 @@
       "#opsph-input:focus{border-color:" + COLOR + ";background:#fff;}",
       "#opsph-send{width:38px;height:38px;border-radius:12px;border:none;background:" + COLOR + ";cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}",
       "#opsph-send:disabled{opacity:.45;cursor:default;}",
-      "@media(max-width:480px){#opsph-wrap{width:calc(100vw - 20px);}#opsph-btn{" + (POSITION==="left"?"left:12px":"right:12px") + "}#opsph-bubble{" + (POSITION==="left"?"left:12px":"right:12px") + ";max-width:calc(100vw - 40px);}}"
+      "@media(max-width:480px){#opsph-wrap{width:calc(100vw - 20px);}#opsph-btn{" + (POSITION==="left"?"left:12px":"right:12px") + "}#opsph-bubble{" + (POSITION==="left"?"left:12px":"right:12px") + ";max-width:calc(100vw - 40px);}}",
+      ".opsph-quick-replies{display:flex;flex-wrap:wrap;margin-top:8px;}",
+      ".opsph-qr-chip{display:inline-flex;align-items:center;padding:6px 14px;border-radius:20px;border:1px solid rgba(8,145,178,0.4);background:rgba(8,145,178,0.12);color:" + COLOR + ";font-size:13px;font-family:system-ui,sans-serif;cursor:pointer;margin:4px 4px 0 0;transition:background .15s;line-height:1.3;}",
+      ".opsph-qr-chip:hover{background:rgba(8,145,178,0.22);}"
     ].join("");
 
     var el = document.createElement("style");
@@ -235,6 +243,7 @@
   // ── Greeting message in chat ──────────────────────────────────────────────────
   function showGreeting() {
     appendBotRow("Здравствуйте! Я " + CHAR_NAME + ". Чем могу помочь?");
+    appendQuickReplies();
   }
 
   // ── Submit ────────────────────────────────────────────────────────────────────
@@ -246,6 +255,7 @@
     if (!text) return;
     inp.value = "";
     inp.style.height = "auto";
+    removeQuickReplies();
     messages.push({ role: "user", content: text });
     saveSession();
     appendUserMsg(text);
@@ -282,11 +292,11 @@
         function read() {
           reader.read().then(function (r) {
             if (r.done) {
-              var cleaned = full.replace(/\[SAVE_LEAD\]/g, "").trimEnd();
+              var cleaned = full.replace(/\[SAVE_LEAD\]/g, "").replace(/\[SHOW_FORM\]/g, "").trimEnd();
               bubble.innerHTML = linkify(cleaned);
               messages.push({ role: "assistant", content: cleaned });
               saveSession();
-              if (full.indexOf("[SAVE_LEAD]") !== -1 && !leadFormShown) showLeadForm();
+              if ((full.indexOf("[SAVE_LEAD]") !== -1 || full.indexOf("[SHOW_FORM]") !== -1) && !leadFormShown) showLeadForm();
               isStreaming = false;
               setSendDisabled(false);
               scrollToBottom();
@@ -294,7 +304,7 @@
             }
             var chunk = decoder.decode(r.value, { stream: true });
             full += chunk;
-            bubble.textContent = full.replace(/\[SAVE_LEAD\]/g, "");
+            bubble.textContent = full.replace(/\[SAVE_LEAD\]/g, "").replace(/\[SHOW_FORM\]/g, "");
             scrollToBottom();
             read();
           }).catch(function () {
@@ -362,6 +372,57 @@
     });
   }
 
+  // ── Quick replies ─────────────────────────────────────────────────────────────
+  var QUICK_REPLIES = [
+    { label: "Показать апартаменты", action: "send" },
+    { label: "Узнать цены",          action: "send" },
+    { label: "Свободные даты",       action: "send" },
+    { label: "Позвонить нам",        action: "tel",  href: "tel:+79785036363" }
+  ];
+
+  function appendQuickReplies() {
+    if (quickRepliesShown) return;
+    quickRepliesShown = true;
+
+    var container = document.createElement("div");
+    container.className = "opsph-quick-replies";
+    container.id = "opsph-quick-replies";
+
+    for (var i = 0; i < QUICK_REPLIES.length; i++) {
+      (function (item) {
+        var chip = document.createElement("button");
+        chip.className = "opsph-qr-chip";
+        chip.type = "button";
+        chip.textContent = item.label;
+        chip.addEventListener("click", function () {
+          removeQuickReplies();
+          if (item.action === "tel") {
+            window.location.href = item.href;
+          } else {
+            sendQuickReply(item.label);
+          }
+        });
+        container.appendChild(chip);
+      })(QUICK_REPLIES[i]);
+    }
+
+    msgs().appendChild(container);
+    scrollToBottom();
+  }
+
+  function removeQuickReplies() {
+    var el = document.getElementById("opsph-quick-replies");
+    if (el) el.remove();
+  }
+
+  function sendQuickReply(text) {
+    if (isStreaming) return;
+    messages.push({ role: "user", content: text });
+    saveSession();
+    appendUserMsg(text);
+    streamBot();
+  }
+
   // ── DOM helpers ──────────────────────────────────────────────────────────────
   function appendUserMsg(text) {
     var el = document.createElement("div");
@@ -385,9 +446,12 @@
   }
 
   function linkify(text) {
+    // Strip markdown bold/italic wrapping around URLs before escaping
+    text = text.replace(/\*{1,2}(https?:\/\/[^\s*]+)\*{1,2}/g, '$1');
+    text = text.replace(/_{1,2}(https?:\/\/[^\s_]+)_{1,2}/g, '$1');
     var escaped = escHtml(text);
     // Match full URLs (https://...) and bare domains (domain.ru/...)
-    return escaped.replace(/(https?:\/\/[^\s<]+|(?<!["\w])(?:[\w-]+\.(?:ru|com|tech|io|org|net)(?:\/[^\s<]*)?))(?=[.,!?)\s]|$)/g, function (match) {
+    return escaped.replace(/(https?:\/\/[^\s<*_]+|(?<!["\w])(?:[\w-]+\.(?:ru|com|tech|io|org|net)(?:\/[^\s<*_]*)?))(?=[.,!?)\s]|$)/g, function (match) {
       var href = match.startsWith("http") ? match : "https://" + match;
       return '<a href="' + href + '" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">' + match + '</a>';
     });
