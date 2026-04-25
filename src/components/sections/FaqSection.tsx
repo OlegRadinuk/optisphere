@@ -39,7 +39,7 @@ export default function FaqSection() {
 
   return (
     <section id="faq" style={{ padding:'96px 0' }}>
-      <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px' }}>
+      <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px' }} className="section-container">
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}

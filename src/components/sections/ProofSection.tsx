@@ -63,7 +63,7 @@ export default function ProofSection() {
 
   return (
     <section id="proof" style={{ padding:'96px 0', background:'var(--op-surface)', borderTop:'1px solid var(--op-border)', borderBottom:'1px solid var(--op-border)' }}>
-      <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px' }}>
+      <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px' }} className="section-container">
         <motion.div
           initial={{ opacity: 0, clipPath: 'inset(100% 0 0 0)' }}
           animate={inView ? { opacity: 1, clipPath: 'inset(0% 0 0 0)' } : {}}

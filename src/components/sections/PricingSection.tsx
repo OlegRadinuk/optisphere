@@ -35,7 +35,7 @@ export default function PricingSection() {
 
   return (
     <section id="pricing" style={{ padding: '96px 0' }}>
-      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 48px' }} ref={ref}>
+      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 48px' }} className="section-container" ref={ref}>
         <SectionIntro code="07" cmd="pricing.estimate()" title={t('title')} sub={t('subtitle')} />
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12 }} className="pricing-grid">
           {tiers.map((tier, index) => (

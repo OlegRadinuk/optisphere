@@ -103,7 +103,9 @@ export default function HeroSection() {
           .hero-chat { order: 1; }
         }
         @media (max-width: 640px) {
+          #hero { padding: 60px 0 40px !important; }
           .hero-container { padding: 0 20px !important; }
+          .hero-chat { max-height: 480px; overflow: hidden; }
         }
       `}</style>
     </section>

@@ -76,7 +76,7 @@ export default function Footer() {
   return (
     <>
       <footer style={{ borderTop:'1px solid var(--op-border)', padding:'72px 0 32px', background:'var(--op-surface)' }}>
-        <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px' }}>
+        <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px' }} className="section-container">
           <div style={{ display:'grid', gridTemplateColumns:'1.4fr 1fr 1fr 1fr 1fr', gap:40, marginBottom:56 }} className="footer-grid">
             <div style={{ display:'flex', flexDirection:'column', gap:16, maxWidth:320 }}>
               <Brand/>

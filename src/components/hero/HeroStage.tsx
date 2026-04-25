@@ -91,9 +91,12 @@ export default function HeroStage() {
   const showProgress = sharedMessages.length > 0;
 
   return (
-    <div style={{ position: 'relative', minHeight: 520, display: 'flex', flexDirection: 'column', gap: 20 }}>
+    <div className="hero-stage-wrap" style={{ position: 'relative', minHeight: 520, display: 'flex', flexDirection: 'column', gap: 20 }}>
       <style>{`
         @keyframes hudCaret { 50% { opacity: 0; } }
+        @media (max-width: 640px) {
+          .hero-stage-wrap { min-height: 400px !important; gap: 12px !important; }
+        }
       `}</style>
 
       {/* Header with sphere */}

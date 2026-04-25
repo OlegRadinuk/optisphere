@@ -183,7 +183,7 @@ export default function TeamSection() {
 
   return (
     <section id="team" style={{ padding: '96px 0' }}>
-      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 48px' }}>
+      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 48px' }} className="section-container">
         <div
           style={{ display: 'grid', gridTemplateColumns: 'minmax(0,2fr) minmax(0,3fr)', gap: 64, alignItems: 'flex-start' }}
           className="team-layout"

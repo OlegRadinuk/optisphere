@@ -23,7 +23,7 @@
     },
     "meet_title_line1": "Meet",
     "meet_title_yura": "Opti",
-    "meet_subtitle": "He sells, consults and works 24/7. Ask a question on the right — see his thinking live. No forms, no \"leave a request\".",
+    "meet_subtitle": "He sells, consults and works 24/7. Write to him — see his thinking live. No forms, no \"leave a request\".",
     "hosting": "RU hosting"
   },
   "hook": {
@@ -248,6 +248,15 @@
     "title": "What happens in practice",
     "sub": "Anonymous but accurate. Full cases with names — under NDA, we'll share in a conversation.",
     "made_label": "Done: ",
+    "view": "View",
+    "filters": {
+      "all": "All",
+      "medical": "Medical",
+      "hotel": "Hotels",
+      "construction": "Construction",
+      "restaurant": "Restaurants",
+      "auto": "Auto"
+    },
     "niches": {
       "clinic": "Medical clinic",
       "shop": "Online store",

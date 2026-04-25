@@ -4,7 +4,7 @@ export default function FinalCtaSection() {
   return (
     <section id="cta" style={{ padding:'120px 0', position:'relative', overflow:'hidden' }}>
       <div aria-hidden style={{ position:'absolute', inset:'-20% -20% auto -20%', height:'60%', pointerEvents:'none', background:'radial-gradient(ellipse at 50% 0%, rgba(201,166,95,.08), transparent 60%)' }}/>
-      <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px', position:'relative', textAlign:'center', display:'flex', flexDirection:'column', alignItems:'center', gap:24 }}>
+      <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px', position:'relative', textAlign:'center', display:'flex', flexDirection:'column', alignItems:'center', gap:24 }} className="section-container">
         <span style={{ display:'inline-flex', alignItems:'center', gap:12, font:"500 11px/1 'JetBrains Mono',monospace", color:'var(--op-accent)', letterSpacing:'0.14em', textTransform:'uppercase' }}>
           <span style={{ width:24, height:1, background:'var(--op-accent)', display:'inline-block' }}/>
           НАЧНЁМ С РАЗГОВОРА

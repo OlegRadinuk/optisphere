@@ -14,9 +14,12 @@ export default function WireSphere({ state }: { state: SphereState }) {
   const pulseDur = state === 'thinking' ? '1s' : state === 'speaking' ? '1.4s' : '3.2s';
 
   return (
-    <div style={{ position:'relative', width:'100%', maxWidth:size, height:'auto', aspectRatio:'1/1', flexShrink:0 }}>
+    <div className="wire-sphere-wrap" style={{ position:'relative', width:'100%', maxWidth:size, height:'auto', aspectRatio:'1/1', flexShrink:0 }}>
       <style>{`
         @keyframes wsRot { to { transform: rotate(360deg); } }
+        @media (max-width: 640px) {
+          .wire-sphere-wrap { max-width: 220px !important; margin: 0 auto; }
+        }
         @keyframes wsPulse { 0% { transform: scale(.6); opacity:.9; } 100% { transform: scale(2.4); opacity:0; } }
         @keyframes wsCenterIdle  { 0%,100% { opacity:.7; } 50% { opacity:1; } }
         @keyframes wsCenterThink { 0%,100% { opacity:.6; transform:scale(1); } 50% { opacity:1; transform:scale(1.6); } }

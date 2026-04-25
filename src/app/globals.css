@@ -155,3 +155,20 @@ article ol { list-style: decimal; }
 ::-webkit-scrollbar-track { background: var(--op-base); }
 ::-webkit-scrollbar-thumb { background: var(--op-border-strong); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--op-accent); }
+
+/* ── Mobile responsive padding ─────────────────────────────── */
+/* Section-level vertical padding */
+@media (max-width: 640px) {
+  #pricing, #calc, #cases, #faq, #proof, #team, #paths, #portfolio, #cta {
+    padding-top: 56px !important;
+    padding-bottom: 56px !important;
+  }
+}
+
+/* Inner container horizontal padding — covers all sections using padding:'0 48px' */
+@media (max-width: 640px) {
+  .section-container {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+}

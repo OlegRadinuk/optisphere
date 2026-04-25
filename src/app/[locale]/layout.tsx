@@ -43,8 +43,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     description:
       locale === "ru"
-        ? "Первая AI-нативная веб-студия. Сайт + цифровой продавец Юра."
-        : "First AI-native web studio. Website + digital salesperson Yura.",
+        ? "Первая AI-нативная веб-студия. Сайт + AI-ассистент Опти — продаёт 24/7."
+        : "First AI-native web studio. Website + AI assistant Opti — sells 24/7.",
     metadataBase: new URL("https://optisphere.tech"),
     alternates: {
       canonical: locale === "ru" ? "/" : "/en",
