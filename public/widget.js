@@ -18,10 +18,30 @@
   var RIGHT    = parseInt(script.getAttribute("data-right")  || "20", 10);
   var LEFT     = parseInt(script.getAttribute("data-left")   || "20", 10);
   var GREETING_DELAY = parseInt(script.getAttribute("data-greeting-delay") || "3000", 10);
+  var _cfg = (window._opsphCfg && window._opsphCfg[BOT_SLUG]) || {};
+  var AVATAR_URL = script.getAttribute("data-avatar") || _cfg.avatar || null;
 
   var COLOR     = PRIMARY || "#e85d04";
   var CHAR_NAME = TITLE   || "Ассистент";
   var AVA_LETTER = CHAR_NAME.charAt(0).toUpperCase();
+
+  function makeAvaHtml(size) {
+    if (AVATAR_URL) {
+      return '<img src="' + escHtml(AVATAR_URL) + '" style="width:' + size + 'px;height:' + size + 'px;border-radius:50%;object-fit:cover;display:block;" alt="">';
+    }
+    return escHtml(AVA_LETTER);
+  }
+  function makeAvaDom(size) {
+    if (AVATAR_URL) {
+      var img = document.createElement("img");
+      img.src = AVATAR_URL;
+      img.style.cssText = "width:" + size + "px;height:" + size + "px;border-radius:50%;object-fit:cover;display:block;";
+      img.alt = "";
+      return img;
+    }
+    var t = document.createTextNode(AVA_LETTER);
+    return t;
+  }
 
   var messages      = [];
   var sessionId     = "s-" + Math.random().toString(36).slice(2);
@@ -31,27 +51,27 @@
   var bubbleDismissed = false;
   var quickRepliesShown = false;
 
-  var STORAGE_KEY    = "yana_chat_" + BOT_SLUG;
-  var SESSION_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
+  var STORAGE_KEY    = "opsph_chat_" + BOT_SLUG;
+  var SESSION_FLAG   = "opsph_alive_" + BOT_SLUG; // sessionStorage flag — cleared on reload/new tab
   var MAX_MESSAGES   = 50;
 
   function loadSession() {
     try {
+      // Restore only if user is navigating within the same browser session (SPA).
+      // sessionStorage is wiped on page reload / new tab / new visit — so we start fresh.
+      if (!sessionStorage.getItem(SESSION_FLAG)) return;
       var raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return;
       var data = JSON.parse(raw);
-      if (!data || !data.sessionId || !data.messages || !data.savedAt) return;
-      if (Date.now() - data.savedAt > SESSION_TTL_MS) {
-        localStorage.removeItem(STORAGE_KEY);
-        return;
-      }
+      if (!data || !data.sessionId || !data.messages) return;
       sessionId = data.sessionId;
       messages  = data.messages;
-    } catch (e) { /* localStorage unavailable or JSON parse error */ }
+    } catch (e) { /* storage unavailable or JSON parse error */ }
   }
 
   function saveSession() {
     try {
+      sessionStorage.setItem(SESSION_FLAG, "1");
       var trimmed = messages.slice(-MAX_MESSAGES);
       localStorage.setItem(STORAGE_KEY, JSON.stringify({
         sessionId: sessionId,
@@ -147,7 +167,7 @@
     btn.id = "opsph-btn";
     btn.setAttribute("aria-label", "Чат с " + CHAR_NAME);
     btn.innerHTML =
-      '<div id="opsph-btn-ava">' + escHtml(AVA_LETTER) + '</div>' +
+      '<div id="opsph-btn-ava">' + makeAvaHtml(32) + '</div>' +
       '<span id="opsph-btn-label">' + escHtml(CHAR_NAME) + '</span>';
     btn.addEventListener("click", function () { hideBubble(); toggle(); });
     document.body.appendChild(btn);
@@ -159,7 +179,7 @@
     var placeholder = script.getAttribute("data-placeholder") || "Напишите вопрос…";
     wrap.innerHTML = [
       '<div id="opsph-head">',
-        '<div id="opsph-head-ava">' + escHtml(AVA_LETTER) + '</div>',
+        '<div id="opsph-head-ava">' + makeAvaHtml(36) + '</div>',
         '<div id="opsph-head-info">',
           '<div id="opsph-head-name">' + escHtml(CHAR_NAME) + '</div>',
           '<div id="opsph-head-sub">● Онлайн · ИИ-ассистент</div>',
@@ -196,7 +216,7 @@
     el.id = "opsph-bubble";
     el.innerHTML = [
       '<div id="opsph-bubble-head">',
-        '<div id="opsph-bubble-ava">' + escHtml(AVA_LETTER) + '</div>',
+        '<div id="opsph-bubble-ava">' + makeAvaHtml(30) + '</div>',
         '<span id="opsph-bubble-name">' + escHtml(CHAR_NAME) + '</span>',
         '<button id="opsph-bubble-close" aria-label="Закрыть">✕</button>',
       '</div>',
@@ -437,7 +457,7 @@
     row.className = "opsph-row";
     var av = document.createElement("div");
     av.className = "opsph-row-ava";
-    av.textContent = AVA_LETTER;
+    av.appendChild(makeAvaDom(26));
     var b = document.createElement("div");
     b.className = "opsph-msg opsph-bot";
     row.appendChild(av);
