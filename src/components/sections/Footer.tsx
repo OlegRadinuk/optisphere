@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
+import TransitionLink from '@/components/transitions/TransitionLink';
 
 function Brand() {
   return (
@@ -24,7 +25,11 @@ function Col({ title, items }: { title: string; items: { label: string; href?: s
         {items.map((it,i) => (
           <li key={i}>
             {it.href ? (
-              <a href={it.href} style={{ font:"400 14px/1.4 'Inter',sans-serif", color:'var(--op-text-secondary)', textDecoration:'none', cursor:'pointer' }}>{it.label}</a>
+              it.href.startsWith('/') ? (
+                <TransitionLink href={it.href} style={{ font:"400 14px/1.4 'Inter',sans-serif", color:'var(--op-text-secondary)', textDecoration:'none', cursor:'pointer' }}>{it.label}</TransitionLink>
+              ) : (
+                <a href={it.href} style={{ font:"400 14px/1.4 'Inter',sans-serif", color:'var(--op-text-secondary)', textDecoration:'none', cursor:'pointer' }}>{it.label}</a>
+              )
             ) : (
               <span style={{ font:"400 14px/1.4 'Inter',sans-serif", color:'var(--op-text-secondary)' }}>{it.label}</span>
             )}
@@ -60,7 +65,7 @@ function CookieBanner() {
     <div className="cookie-banner" style={{ position:'fixed', left:16, right:16, bottom:16, zIndex:100, background:'var(--op-surface-elevated)', border:'1px solid var(--op-border-strong)', borderRadius:12, padding:'16px 20px', display:'flex', gap:16, alignItems:'center', flexWrap:'wrap', boxShadow:'0 12px 32px rgba(0,0,0,.5)', maxWidth:920, margin:'0 auto' }}>
       <span style={{ font:"400 13px/1.5 'Inter',sans-serif", color:'var(--op-text-secondary)', flex:'1 1 280px' }}>
         {t('cookie_text')}{' '}
-        <a href="/cookies" style={{ color:'var(--op-text)', textDecoration:'underline', cursor:'pointer' }}>{t('cookie_link')}</a>.
+        <TransitionLink href="/cookies" style={{ color:'var(--op-text)', textDecoration:'underline', cursor:'pointer' }}>{t('cookie_link')}</TransitionLink>.
       </span>
       <div className="cookie-btns" style={{ display:'flex', gap:8, flexWrap:'wrap' }}>
         <button onClick={handleConfigure} style={{ height:36, padding:'0 14px', borderRadius:8, background:'transparent', color:'var(--op-text-secondary)', border:'none', cursor:'pointer', font:"500 13px/1 'Inter',sans-serif" }}>{t('cookie_essential')}</button>
@@ -113,8 +118,8 @@ export default function Footer() {
           <div style={{ display:'flex', justifyContent:'space-between', gap:16, paddingTop:24, borderTop:'1px solid var(--op-border)', flexWrap:'wrap', font:"400 12px/1.4 'JetBrains Mono',monospace", color:'var(--op-text-muted)', letterSpacing:'.06em' }}>
             <span>{t('copyright')}</span>
             <div style={{ display:'flex', gap:16 }}>
-              <Link href="/privacy" style={{ color:'inherit', textDecoration:'none', cursor:'pointer' }}>/privacy</Link>
-              <Link href="/cookies" style={{ color:'inherit', textDecoration:'none', cursor:'pointer' }}>/cookies</Link>
+              <TransitionLink href="/privacy" style={{ color:'inherit', textDecoration:'none', cursor:'pointer' }}>/privacy</TransitionLink>
+              <TransitionLink href="/cookies" style={{ color:'inherit', textDecoration:'none', cursor:'pointer' }}>/cookies</TransitionLink>
             </div>
           </div>
         </div>

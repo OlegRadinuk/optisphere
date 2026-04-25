@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import YuraWidgetLoader from "@/components/ai/YuraWidgetLoader";
 import { HeroChatProvider } from "@/components/ai/HeroChatContext";
+import TransitionProvider from "@/components/transitions/TransitionProvider";
 import "../globals.css";
 
 const oxanium = Oxanium({
@@ -158,8 +159,10 @@ export default async function LocaleLayout({ children, params }: Props) {
       <body style={{ background: "var(--op-base)", color: "var(--op-text)" }}>
         <NextIntlClientProvider messages={messages}>
           <HeroChatProvider>
-            {children}
-            <YuraWidgetLoader />
+            <TransitionProvider>
+              {children}
+              <YuraWidgetLoader />
+            </TransitionProvider>
           </HeroChatProvider>
         </NextIntlClientProvider>
       </body>

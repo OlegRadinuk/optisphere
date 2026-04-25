@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
-import Link from "next/link"
+import TransitionLink from "@/components/transitions/TransitionLink"
 
 type Props = {
   params: Promise<{ locale: string }>
@@ -35,7 +35,7 @@ export default async function PrivacyPage() {
           padding: "32px 24px 0",
         }}
       >
-        <Link
+        <TransitionLink
           href="/"
           style={{
             font: "400 13px/1 'JetBrains Mono', monospace",
@@ -48,7 +48,7 @@ export default async function PrivacyPage() {
           }}
         >
           ← Optisphere
-        </Link>
+        </TransitionLink>
       </div>
 
       {/* Content */}
