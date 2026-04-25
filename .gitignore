@@ -48,3 +48,4 @@ agents/artifacts/
 .claude/worktrees/
 .claude/settings.local.json
 scripts/get-gsc-token.js
+data/bots.db
