@@ -5,6 +5,19 @@
  */
 
 const https = require('https');
+const fs    = require('fs');
+const path  = require('path');
+
+// Load .env.local from project root
+const envFile = path.join(__dirname, '..', '.env.local');
+if (fs.existsSync(envFile)) {
+  fs.readFileSync(envFile, 'utf8').split('\n').forEach(line => {
+    const m = line.match(/^([^#=]+)=(.*)$/);
+    if (m && !process.env[m[1].trim()]) {
+      process.env[m[1].trim()] = m[2].trim().replace(/^["']|["']$/g, '');
+    }
+  });
+}
 
 // ── Config ────────────────────────────────────────────────────────────────────
 const GSC_SITE        = 'sc-domain:optisphere.tech';
