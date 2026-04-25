@@ -103,7 +103,7 @@ export default function HeroStage() {
       <div style={{ display: 'flex', alignItems: 'flex-start', gap: 20 }}>
         <WireSphere state={state} />
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8, flex: 1, paddingTop: 24 }}>
-          <span style={{ font: "500 10px/1 'JetBrains Mono',monospace", color: 'var(--op-accent)', letterSpacing: '.18em', textTransform: 'uppercase' }}>
+          <span style={{ font: "500 10px/1 'JetBrains Mono',monospace", color: 'var(--op-accent)', letterSpacing: '.18em', textTransform: 'uppercase', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
             ◆ Опти · AI-консультант
           </span>
           <span style={{ font: "600 20px/1.2 'Oxanium',sans-serif", color: 'var(--op-text)', letterSpacing: '-0.005em', textTransform: 'uppercase' }}>
@@ -184,7 +184,7 @@ export default function HeroStage() {
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && !e.shiftKey && send(input)}
-            placeholder="Опишите бизнес — Опти услышит…"
+            placeholder="Ниша, задача, вопрос — Опти разберётся…"
             disabled={busy}
             style={{ flex: 1, background: 'transparent', border: 0, outline: 0, color: 'var(--op-text)', font: "400 14px/1 'Inter',sans-serif", padding: '10px 0', minWidth: 0 }}
           />

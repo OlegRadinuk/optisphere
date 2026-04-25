@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 
 function Brand() {
   return (
@@ -56,12 +57,12 @@ function CookieBanner() {
 
   if (!show) return null;
   return (
-    <div style={{ position:'fixed', left:16, right:16, bottom:16, zIndex:100, background:'var(--op-surface-elevated)', border:'1px solid var(--op-border-strong)', borderRadius:12, padding:'16px 20px', display:'flex', gap:16, alignItems:'center', flexWrap:'wrap', boxShadow:'0 12px 32px rgba(0,0,0,.5)', maxWidth:920, margin:'0 auto' }}>
+    <div className="cookie-banner" style={{ position:'fixed', left:16, right:16, bottom:16, zIndex:100, background:'var(--op-surface-elevated)', border:'1px solid var(--op-border-strong)', borderRadius:12, padding:'16px 20px', display:'flex', gap:16, alignItems:'center', flexWrap:'wrap', boxShadow:'0 12px 32px rgba(0,0,0,.5)', maxWidth:920, margin:'0 auto' }}>
       <span style={{ font:"400 13px/1.5 'Inter',sans-serif", color:'var(--op-text-secondary)', flex:'1 1 280px' }}>
         {t('cookie_text')}{' '}
         <a href="/cookies" style={{ color:'var(--op-text)', textDecoration:'underline', cursor:'pointer' }}>{t('cookie_link')}</a>.
       </span>
-      <div style={{ display:'flex', gap:8, flexWrap:'wrap' }}>
+      <div className="cookie-btns" style={{ display:'flex', gap:8, flexWrap:'wrap' }}>
         <button onClick={handleConfigure} style={{ height:36, padding:'0 14px', borderRadius:8, background:'transparent', color:'var(--op-text-secondary)', border:'none', cursor:'pointer', font:"500 13px/1 'Inter',sans-serif" }}>{t('cookie_essential')}</button>
         <button onClick={handleConfigure} style={{ height:36, padding:'0 14px', borderRadius:8, background:'transparent', color:'var(--op-text)', border:'1px solid var(--op-border-strong)', cursor:'pointer', font:"500 13px/1 'Inter',sans-serif" }}>{t('cookie_configure')}</button>
         <button onClick={handleAccept} style={{ height:36, padding:'0 14px', borderRadius:8, background:'var(--op-accent)', color:'var(--op-text-on-accent)', border:'none', cursor:'pointer', font:"500 13px/1 'Inter',sans-serif" }}>{t('cookie_accept')}</button>
@@ -112,14 +113,22 @@ export default function Footer() {
           <div style={{ display:'flex', justifyContent:'space-between', gap:16, paddingTop:24, borderTop:'1px solid var(--op-border)', flexWrap:'wrap', font:"400 12px/1.4 'JetBrains Mono',monospace", color:'var(--op-text-muted)', letterSpacing:'.06em' }}>
             <span>{t('copyright')}</span>
             <div style={{ display:'flex', gap:16 }}>
-              <a href="/privacy" style={{ color:'inherit', textDecoration:'none', cursor:'pointer' }}>/privacy</a>
-              <a href="/cookies" style={{ color:'inherit', textDecoration:'none', cursor:'pointer' }}>/cookies</a>
+              <Link href="/privacy" style={{ color:'inherit', textDecoration:'none', cursor:'pointer' }}>/privacy</Link>
+              <Link href="/cookies" style={{ color:'inherit', textDecoration:'none', cursor:'pointer' }}>/cookies</Link>
             </div>
           </div>
         </div>
       </footer>
       <CookieBanner/>
-      <style>{`@media(max-width:900px){.footer-grid{grid-template-columns:repeat(2,1fr)!important;}}@media(max-width:640px){.footer-grid{grid-template-columns:1fr!important;}}`}</style>
+      <style>{`
+        @media(max-width:900px){.footer-grid{grid-template-columns:repeat(2,1fr)!important;}}
+        @media(max-width:640px){.footer-grid{grid-template-columns:1fr!important;}}
+        @media(max-width:480px){
+          .cookie-banner{padding:12px 16px!important;}
+          .cookie-btns{flex-direction:column!important;}
+          .cookie-btns button{width:100%!important;justify-content:center;}
+        }
+      `}</style>
     </>
   );
 }

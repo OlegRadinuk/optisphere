@@ -10,10 +10,10 @@ export default function FinalCtaSection() {
           НАЧНЁМ С РАЗГОВОРА
         </span>
         <h2 style={{ font:"500 clamp(36px,5.5vw,68px)/1.05 'Oxanium',sans-serif", letterSpacing:'-0.03em', margin:0, color:'var(--op-text)', maxWidth:900 }}>
-          Начнём с разговора
+          Опти разберётся в задаче за 5 минут
         </h2>
         <p style={{ font:"400 19px/1.55 'Inter',sans-serif", color:'var(--op-text-secondary)', margin:0, maxWidth:620 }}>
-          Наш ассистент за 5 минут поймёт задачу и даст конкретные цифры по срокам и стоимости.
+          Расскажите о бизнесе — получите конкретные цифры по срокам и стоимости. Без анкет и «мы вам перезвоним».
         </p>
         <button onClick={() => window.dispatchEvent(new CustomEvent('yura-open'))} style={{ marginTop:8, height:56, padding:'0 32px', fontSize:16, display:'inline-flex', alignItems:'center', justifyContent:'center', gap:8, borderRadius:8, background:'var(--op-accent)', color:'var(--op-text-on-accent)', border:'none', cursor:'pointer', font:"500 16px/1 'Inter',sans-serif" }}>
           Открыть чат с ассистентом →

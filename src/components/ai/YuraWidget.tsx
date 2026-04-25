@@ -945,8 +945,8 @@ export default function YuraWidget() {
                 background: "rgba(10,10,10,0.96)",
                 border: "1px solid rgba(232,32,32,0.35)",
                 borderRadius: "12px 12px 4px 12px",
-                padding: "0.625rem 1rem",
-                fontSize: "0.8125rem",
+                padding: "0.5rem 0.75rem",
+                fontSize: "0.75rem",
                 color: "#F0F0FF",
                 whiteSpace: "nowrap",
                 backdropFilter: "blur(16px)",
@@ -956,7 +956,11 @@ export default function YuraWidget() {
                 cursor: "pointer",
                 display: "flex",
                 alignItems: "center",
-                gap: "0.5rem",
+                gap: "0.375rem",
+                maxWidth: "calc(100vw - 3rem - 56px - 0.75rem)",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                alignSelf: "flex-end",
               }}
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -1089,6 +1093,7 @@ export default function YuraWidget() {
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
+                    style={{ transform: "scaleX(-1)" }}
                   >
                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
                   </svg>

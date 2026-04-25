@@ -47,19 +47,85 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         : "First AI-native web studio. Website + AI assistant Opti — sells 24/7.",
     metadataBase: new URL("https://optisphere.tech"),
     alternates: {
-      canonical: locale === "ru" ? "/" : "/en",
-      languages: { ru: "/", en: "/en" },
+      canonical: locale === "ru" ? "https://optisphere.tech/" : "https://optisphere.tech/en",
+      languages: {
+        ru: "https://optisphere.tech/",
+        en: "https://optisphere.tech/en",
+      },
     },
     openGraph: {
       siteName: "Optisphere",
       locale: locale === "ru" ? "ru_RU" : "en_US",
       type: "website",
+      images: [
+        {
+          url: "/og-image.png",
+          width: 1200,
+          height: 630,
+          alt: locale === "ru" ? "Optisphere — AI Web Studio" : "Optisphere — AI Web Studio",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      images: ["/og-image.png"],
     },
   };
 }
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
+}
+
+function buildSchemaOrg(locale: string): string {
+  const isRu = locale === "ru";
+  const siteUrl = "https://optisphere.tech";
+
+  const localBusiness = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ProfessionalService",
+        "@id": `${siteUrl}/#organization`,
+        name: isRu ? "Optisphere — AI-студия веб-разработки" : "Optisphere — AI Web Studio",
+        url: siteUrl,
+        logo: `${siteUrl}/og-image.png`,
+        image: `${siteUrl}/og-image.png`,
+        description: isRu
+          ? "Первая AI-нативная веб-студия. Создаём сайты и AI-ассистентов для гостиниц, клиник, строительных компаний."
+          : "First AI-native web studio. We build websites and AI assistants for hotels, clinics, and construction companies.",
+        email: "hello@optisphere.ru",
+        telephone: "+79785768451",
+        areaServed: [
+          { "@type": "Country", name: "Russia" },
+          { "@type": "AdministrativeArea", name: isRu ? "Крым" : "Crimea" },
+        ],
+        serviceType: isRu
+          ? ["Веб-разработка", "AI-ассистенты", "SEO-продвижение"]
+          : ["Web Development", "AI Assistants", "SEO"],
+        inLanguage: isRu ? "ru-RU" : "en-US",
+        sameAs: [],
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${siteUrl}/#website`,
+        url: siteUrl,
+        name: "Optisphere",
+        publisher: { "@id": `${siteUrl}/#organization` },
+        inLanguage: isRu ? "ru-RU" : "en-US",
+        potentialAction: {
+          "@type": "SearchAction",
+          target: {
+            "@type": "EntryPoint",
+            urlTemplate: `${siteUrl}/?q={search_term_string}`,
+          },
+          "query-input": "required name=search_term_string",
+        },
+      },
+    ],
+  };
+
+  return JSON.stringify(localBusiness);
 }
 
 export default async function LocaleLayout({ children, params }: Props) {
@@ -80,6 +146,10 @@ export default async function LocaleLayout({ children, params }: Props) {
     if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
   } catch(e) {}
 ` }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: buildSchemaOrg(locale) }}
+        />
       </head>
       <body style={{ background: "var(--op-base)", color: "var(--op-text)" }}>
         <NextIntlClientProvider messages={messages}>

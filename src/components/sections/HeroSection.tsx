@@ -72,7 +72,7 @@ export default function HeroSection() {
               {t('cta.primary')}
             </button>
             <button
-              onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => document.getElementById('demo')?.scrollIntoView({ behavior: 'smooth' })}
               className="btn btn-ghost"
             >
               {t('cta.secondary')}

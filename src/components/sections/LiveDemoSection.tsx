@@ -16,7 +16,7 @@ function FrameVisual({ idx, briefPlaceholder, salesmanConnected, readySystem, re
       key={0}
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
       style={{ position: 'absolute', inset: 0, padding: 48, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
     >
       <div style={{ width: '52%', aspectRatio: '4/3', borderRadius: 14, border: '1px dashed var(--op-border-strong)', display: 'flex', alignItems: 'center', justifyContent: 'center', font: "400 13px 'JetBrains Mono',monospace", color: 'var(--op-text-muted)', letterSpacing: '.1em' }}>{briefPlaceholder}</div>
@@ -27,7 +27,7 @@ function FrameVisual({ idx, briefPlaceholder, salesmanConnected, readySystem, re
       key={1}
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
       style={{ position: 'absolute', inset: 0, padding: 48, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: 8 }}
     >
       {[72, 60, 48, 36].map((w, i) => (
@@ -40,7 +40,7 @@ function FrameVisual({ idx, briefPlaceholder, salesmanConnected, readySystem, re
       key={2}
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
       style={{ position: 'absolute', inset: 0, padding: 48, display: 'flex', gap: 12, alignItems: 'stretch' }}
     >
       {[0, 1, 2, 3].map(i => (
@@ -56,7 +56,7 @@ function FrameVisual({ idx, briefPlaceholder, salesmanConnected, readySystem, re
       key={3}
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
       style={{ position: 'absolute', inset: 0, padding: 48, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 20 }}
     >
       <div style={{ display: 'flex', gap: 12 }}>
@@ -75,7 +75,7 @@ function FrameVisual({ idx, briefPlaceholder, salesmanConnected, readySystem, re
       key={4}
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
       style={{ position: 'absolute', inset: 0, padding: 48, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 16 }}
     >
       <div style={{ width: '70%', height: 10, background: 'var(--op-surface-overlay)', borderRadius: 999, overflow: 'hidden' }}>
@@ -98,6 +98,8 @@ export default function LiveDemoSection() {
   const t = useTranslations('demo');
   const [idx, setIdx] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [prevPressed, setPrevPressed] = useState(false);
+  const [nextPressed, setNextPressed] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   const FRAMES = [
@@ -120,8 +122,9 @@ export default function LiveDemoSection() {
   useEffect(() => {
     if (isMobile) return;
     return scrollYProgress.on('change', (v: number) => {
-      const newIdx = Math.min(Math.floor(v * FRAMES.length), FRAMES.length - 1);
-      setIdx(newIdx);
+      const raw = v * FRAMES.length;
+      const newIdx = Math.min(Math.floor(raw), FRAMES.length - 1);
+      setIdx(prev => prev !== newIdx ? newIdx : prev);
     });
   }, [scrollYProgress, isMobile, FRAMES.length]);
 
@@ -203,14 +206,44 @@ export default function LiveDemoSection() {
                   <button
                     onClick={() => setIdx(i => Math.max(0, i - 1))}
                     disabled={idx === 0}
-                    style={{ flex: 1, padding: '10px 0', borderRadius: 8, border: '1px solid var(--op-border)', background: 'var(--op-surface-overlay)', color: 'var(--op-text-secondary)', font: "500 13px 'JetBrains Mono',monospace", cursor: idx === 0 ? 'not-allowed' : 'pointer', opacity: idx === 0 ? 0.4 : 1 }}
+                    onPointerDown={() => setPrevPressed(true)}
+                    onPointerUp={() => setPrevPressed(false)}
+                    onPointerLeave={() => setPrevPressed(false)}
+                    style={{
+                      flex: 1,
+                      padding: '10px 0',
+                      borderRadius: 8,
+                      border: '1px solid var(--op-border)',
+                      background: prevPressed ? 'var(--op-accent-subtle)' : 'var(--op-surface-overlay)',
+                      color: prevPressed ? 'var(--op-accent)' : 'var(--op-text-secondary)',
+                      font: "500 13px 'JetBrains Mono',monospace",
+                      cursor: idx === 0 ? 'not-allowed' : 'pointer',
+                      opacity: idx === 0 ? 0.4 : 1,
+                      transition: 'background 150ms ease, color 150ms ease',
+                      WebkitTapHighlightColor: 'transparent',
+                    }}
                   >
                     ← Назад
                   </button>
                   <button
                     onClick={() => setIdx(i => Math.min(FRAMES.length - 1, i + 1))}
                     disabled={idx === FRAMES.length - 1}
-                    style={{ flex: 1, padding: '10px 0', borderRadius: 8, border: '1px solid var(--op-border)', background: 'var(--op-surface-overlay)', color: 'var(--op-text-secondary)', font: "500 13px 'JetBrains Mono',monospace", cursor: idx === FRAMES.length - 1 ? 'not-allowed' : 'pointer', opacity: idx === FRAMES.length - 1 ? 0.4 : 1 }}
+                    onPointerDown={() => setNextPressed(true)}
+                    onPointerUp={() => setNextPressed(false)}
+                    onPointerLeave={() => setNextPressed(false)}
+                    style={{
+                      flex: 1,
+                      padding: '10px 0',
+                      borderRadius: 8,
+                      border: nextPressed ? '1px solid var(--op-border-accent)' : '1px solid var(--op-border)',
+                      background: nextPressed ? 'var(--op-accent-subtle)' : 'var(--op-surface-overlay)',
+                      color: nextPressed ? 'var(--op-accent)' : 'var(--op-text-secondary)',
+                      font: "500 13px 'JetBrains Mono',monospace",
+                      cursor: idx === FRAMES.length - 1 ? 'not-allowed' : 'pointer',
+                      opacity: idx === FRAMES.length - 1 ? 0.4 : 1,
+                      transition: 'background 150ms ease, color 150ms ease, border-color 150ms ease',
+                      WebkitTapHighlightColor: 'transparent',
+                    }}
                   >
                     Далее →
                   </button>
