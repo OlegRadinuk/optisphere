@@ -124,7 +124,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   try {
     const response = await fetch(
-      `https://api.telegram.org/bot${token}/sendMessage`,
+      `https://tg-proxy.radinuko.workers.dev/bot${token}/sendMessage`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

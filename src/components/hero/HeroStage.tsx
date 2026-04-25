@@ -8,8 +8,48 @@ type SphereState = 'idle' | 'thinking' | 'speaking';
 
 const GREETING = "Опишите ваш бизнес — подберу похожий кейс, рассчитаю бюджет и покажу что именно вам нужно. Прямо здесь, за минуту.";
 const PROGRESS_STEPS = 3;
+const SAVE_LEAD_MARKER = '[SAVE_LEAD]';
 
 const QUICK_PROMPTS = ['Стоматология', 'Гостиница', 'Магазин', 'Строительство'];
+
+function HeroLeadForm({ sessionId, messages, onSubmitted }: { sessionId: string; messages: ChatMessage[]; onSubmitted: () => void }) {
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+  const [done, setDone] = useState(false);
+
+  if (done) return (
+    <div style={{ padding: '12px 16px', borderRadius: 8, background: 'rgba(16,185,129,0.12)', border: '1px solid rgba(16,185,129,0.3)', color: '#6ee7b7', fontSize: 13 }}>
+      ✓ Заявка отправлена — Олег свяжется лично.
+    </div>
+  );
+
+  return (
+    <div style={{ padding: '14px', borderRadius: 8, background: 'rgba(232,32,32,0.06)', border: '1px solid rgba(232,32,32,0.2)' }}>
+      <p style={{ font: "500 12px/1 'JetBrains Mono',monospace", color: 'var(--op-accent)', marginBottom: 10, textTransform: 'uppercase', letterSpacing: '.08em' }}>Оставьте контакт — Олег свяжется лично</p>
+      <input value={name} onChange={e => setName(e.target.value)} placeholder="Ваше имя *" style={{ width: '100%', marginBottom: 8, padding: '9px 12px', background: 'rgba(255,255,255,0.05)', border: '1px solid var(--op-border)', borderRadius: 6, color: 'var(--op-text)', font: "400 13px/1 'Inter',sans-serif", outline: 'none' }} />
+      <input value={phone} onChange={e => setPhone(e.target.value)} placeholder="Телефон или Telegram *" style={{ width: '100%', marginBottom: 10, padding: '9px 12px', background: 'rgba(255,255,255,0.05)', border: '1px solid var(--op-border)', borderRadius: 6, color: 'var(--op-text)', font: "400 13px/1 'Inter',sans-serif", outline: 'none' }} />
+      <button
+        disabled={submitting || !name.trim() || !phone.trim()}
+        onClick={async () => {
+          setSubmitting(true);
+          const summary = messages.filter(m => m.role === 'user').map(m => m.content).slice(-3).join(' | ') || 'Нет данных';
+          await fetch('/api/leads/telegram', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ contact: phone.trim(), name: name.trim(), intent: 'warm', summary, dialog: messages.slice(-6) }),
+          }).catch(() => {});
+          setSubmitting(false);
+          setDone(true);
+          onSubmitted();
+        }}
+        style={{ width: '100%', padding: '10px', background: submitting || !name.trim() || !phone.trim() ? 'rgba(232,32,32,0.3)' : 'var(--op-accent)', border: 'none', borderRadius: 6, color: '#fff', font: "600 11px/1 'JetBrains Mono',monospace", letterSpacing: '.1em', textTransform: 'uppercase', cursor: submitting || !name.trim() || !phone.trim() ? 'not-allowed' : 'pointer' }}
+      >
+        {submitting ? '···' : 'Отправить →'}
+      </button>
+    </div>
+  );
+}
 
 export default function HeroStage() {
   const { sharedMessages, setSharedMessages, sharedSessionId } = useHeroChat();
@@ -18,6 +58,7 @@ export default function HeroStage() {
   const [input, setInput] = useState('');
   const [busy, setBusy] = useState(false);
   const [greetingTyped, setGreetingTyped] = useState('');
+  const [showLeadForm, setShowLeadForm] = useState(false);
   const abortRef = useRef<AbortController | null>(null);
 
   // Typewriter effect for greeting — only when no messages yet
@@ -67,10 +108,14 @@ export default function HeroStage() {
         if (done) break;
         const chunk = decoder.decode(value);
         full += chunk;
-        setStreamingText(full.replace(/\[SHOW_FORM\]/g, ''));
+        setStreamingText(full.replace(/\[SHOW_FORM\]|\[SAVE_LEAD\]/g, '').trim());
       }
 
-      setSharedMessages(prev => [...prev, { role: 'assistant', content: full.replace(/\[SHOW_FORM\]/g, '') }]);
+      const cleanFull = full.replace(/\[SHOW_FORM\]|\[SAVE_LEAD\]/g, '').trim();
+      if (full.includes(SAVE_LEAD_MARKER) || full.includes('[SHOW_FORM]')) {
+        setShowLeadForm(true);
+      }
+      setSharedMessages(prev => [...prev, { role: 'assistant', content: cleanFull }]);
       setStreamingText('');
     } catch (e: unknown) {
       if ((e as Error)?.name !== 'AbortError') {
@@ -171,6 +216,15 @@ export default function HeroStage() {
           </div>
         )}
       </div>
+
+      {/* Lead form */}
+      {showLeadForm && (
+        <HeroLeadForm
+          sessionId={sharedSessionId}
+          messages={sharedMessages}
+          onSubmitted={() => setShowLeadForm(false)}
+        />
+      )}
 
       {/* Input */}
       <div style={{ marginTop: 'auto' }}>
