@@ -56,20 +56,19 @@ export default function TransitionProvider({ children }: { children: React.React
       zIndex: 9999,
       pointerEvents: 'none',
       background: '#07070f',
-      // Scan-line: red glow at the leading (bottom) edge of the panel
-      boxShadow: '0 4px 0 0 #E82020, 0 6px 24px 0 rgba(232,32,32,0.55)',
       willChange: 'transform',
     };
+    const scanLine = '0 4px 0 0 #E82020, 0 6px 24px 0 rgba(232,32,32,0.55)';
 
     switch (state) {
       case 'idle':
         return { ...base, transform: 'translateY(-100%)', transition: 'none' };
       case 'covering':
-        return { ...base, transform: 'translateY(0%)', transition: `transform ${COVER_MS}ms cubic-bezier(0.76, 0, 0.24, 1)` };
+        return { ...base, transform: 'translateY(0%)', transition: `transform ${COVER_MS}ms cubic-bezier(0.76, 0, 0.24, 1)`, boxShadow: scanLine };
       case 'covered':
-        return { ...base, transform: 'translateY(0%)', transition: 'none' };
+        return { ...base, transform: 'translateY(0%)', transition: 'none', boxShadow: scanLine };
       case 'revealing':
-        return { ...base, transform: 'translateY(100%)', transition: `transform ${REVEAL_MS}ms cubic-bezier(0.76, 0, 0.24, 1)` };
+        return { ...base, transform: 'translateY(100%)', transition: `transform ${REVEAL_MS}ms cubic-bezier(0.76, 0, 0.24, 1)`, boxShadow: scanLine };
     }
   })();
 

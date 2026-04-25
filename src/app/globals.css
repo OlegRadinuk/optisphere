@@ -151,10 +151,14 @@ article ol { list-style: decimal; }
 .btn-ghost:hover { border-color: rgba(232,32,32,0.5); color: var(--op-accent); }
 
 /* ── Scrollbar ────────────────────────────────────────────── */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--op-base); }
-::-webkit-scrollbar-thumb { background: var(--op-border-strong); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--op-accent); }
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--op-accent); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--op-accent-hover); }
+
+/* ── Custom cursor ────────────────────────────────────────── */
+*, *::before, *::after { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='20' viewBox='0 0 16 20'%3E%3Cpath d='M2 1 L2 17 L6 13 L8.5 19.5 L11 18.5 L8.5 12 L14 12 Z' fill='%23E82020' stroke='white' stroke-width='1.2' stroke-linejoin='round'/%3E%3C/svg%3E") 2 1, auto !important; }
+a, button, [role=button], input, textarea, select, label[for] { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Ccircle cx='8' cy='4' r='5' fill='%23E82020' stroke='white' stroke-width='1.2'/%3E%3Crect x='7' y='9' width='2' height='10' rx='1' fill='%23E82020' stroke='white' stroke-width='0.8'/%3E%3C/svg%3E") 8 4, pointer !important; }
 
 /* ── Mobile responsive padding ─────────────────────────────── */
 /* Section-level vertical padding */
