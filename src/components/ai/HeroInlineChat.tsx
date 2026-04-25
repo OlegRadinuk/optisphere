@@ -15,6 +15,7 @@ export interface ChatMessage {
 interface LeadFormData {
   name: string;
   phone: string;
+  telegram: string;
   time: string;
 }
 
@@ -147,7 +148,7 @@ function LeadFormBubble({
   isSubmitting: boolean;
   submitted: boolean;
 }) {
-  const [data, setData] = useState<LeadFormData>({ name: '', phone: '', time: '' });
+  const [data, setData] = useState<LeadFormData>({ name: '', phone: '', telegram: '', time: '' });
 
   if (submitted) {
     return (
@@ -201,7 +202,7 @@ function LeadFormBubble({
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          if (!data.name.trim() || !data.phone.trim()) return;
+          if (!data.name.trim() || (!data.phone.trim() && !data.telegram.trim())) return;
           onSubmit(data);
         }}
       >
@@ -214,10 +215,16 @@ function LeadFormBubble({
         />
         <input
           style={inputStyle}
-          placeholder="Телефон или Telegram *"
+          placeholder="+7 (___) ___ __ __ *"
+          type="tel"
           value={data.phone}
           onChange={(e) => setData((d) => ({ ...d, phone: e.target.value }))}
-          required
+        />
+        <input
+          style={inputStyle}
+          placeholder="Telegram @username (необязательно)"
+          value={data.telegram}
+          onChange={(e) => setData((d) => ({ ...d, telegram: e.target.value }))}
         />
         <input
           style={{ ...inputStyle, marginBottom: 12 }}
@@ -227,7 +234,7 @@ function LeadFormBubble({
         />
         <button
           type="submit"
-          disabled={isSubmitting || !data.name.trim() || !data.phone.trim()}
+          disabled={isSubmitting || !data.name.trim() || (!data.phone.trim() && !data.telegram.trim())}
           style={{
             width: '100%',
             padding: '12px',
@@ -428,14 +435,15 @@ export default function HeroInlineChat({
   const handleLeadFormSubmit = useCallback(
     async (data: LeadFormData) => {
       setLeadFormSubmitting(true);
+      const contactStr = [data.phone.trim(), data.telegram.trim()].filter(Boolean).join(' / ');
       const allMessages: ChatMessage[] = [
         ...messages,
         {
           role: 'user',
-          content: `Имя: ${data.name}, контакт: ${data.phone}${data.time ? `, время: ${data.time}` : ''}`,
+          content: `Имя: ${data.name}, контакт: ${contactStr}${data.time ? `, время: ${data.time}` : ''}`,
         },
       ];
-      await sendLead(data.phone, allMessages, data.name, data.time);
+      await sendLead(contactStr, allMessages, data.name, data.time);
       setLeadFormSubmitting(false);
       setLeadFormSubmitted(true);
     },
