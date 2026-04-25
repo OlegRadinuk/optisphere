@@ -124,9 +124,9 @@ export default function Footer() {
         @media(max-width:900px){.footer-grid{grid-template-columns:repeat(2,1fr)!important;}}
         @media(max-width:640px){.footer-grid{grid-template-columns:1fr!important;}}
         @media(max-width:480px){
-          .cookie-banner{padding:12px 16px!important;}
-          .cookie-btns{flex-direction:column!important;}
-          .cookie-btns button{width:100%!important;justify-content:center;}
+          .cookie-banner{padding:10px 12px!important; gap:10px!important;}
+          .cookie-btns{gap:4px!important;}
+          .cookie-btns button{height:30px!important; padding:0 8px!important; font-size:11px!important;}
         }
       `}</style>
     </>

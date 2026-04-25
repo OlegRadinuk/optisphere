@@ -103,8 +103,8 @@ export default function HeroStage() {
       <div style={{ display: 'flex', alignItems: 'flex-start', gap: 20 }}>
         <WireSphere state={state} />
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8, flex: 1, paddingTop: 24 }}>
-          <span style={{ font: "500 10px/1 'JetBrains Mono',monospace", color: 'var(--op-accent)', letterSpacing: '.18em', textTransform: 'uppercase', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-            ◆ Опти · AI-консультант
+          <span style={{ font: "500 9px/1 'JetBrains Mono',monospace", color: 'var(--op-accent)', letterSpacing: '.12em', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
+            ◆ ОПТИ · AI-КОНСУЛЬТАНТ
           </span>
           <span style={{ font: "600 20px/1.2 'Oxanium',sans-serif", color: 'var(--op-text)', letterSpacing: '-0.005em', textTransform: 'uppercase' }}>
             {state === 'idle' ? 'Готов слушать' : state === 'thinking' ? 'Анализирую…' : 'Формирую ответ'}
