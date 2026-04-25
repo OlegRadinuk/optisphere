@@ -21,16 +21,20 @@ function Brand() {
         <line x1="0" y1="15" x2="12" y2="15" stroke="white" strokeWidth="0.8" opacity="0.45"/>
         <line x1="3" y1="20" x2="12" y2="20" stroke="white" strokeWidth="0.6" opacity="0.25"/>
       </svg>
-      {/* O ring — accretion disk: white arcs top+bottom, red arcs right+left */}
+      {/* O ring — asymmetric accretion disk: big red arc right, small red accent lower-left */}
       <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-label="Optisphere" style={{ flexShrink:0 }}>
-        {/* White arc: 300°→30° (through top, 90°) */}
-        <path d="M 6.74,11.5 A 13,13 0 0 1 24.5,6.74" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round"/>
-        {/* Red arc: 30°→150° (right side, 120°) */}
-        <path d="M 24.5,6.74 A 13,13 0 0 1 24.5,29.26" stroke="#e82020" strokeWidth="2.8" fill="none" strokeLinecap="round"/>
-        {/* White arc: 150°→210° (across bottom, 60°) */}
-        <path d="M 24.5,29.26 A 13,13 0 0 1 11.5,29.26" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round"/>
-        {/* Red arc: 210°→300° (left side, 90°) */}
-        <path d="M 11.5,29.26 A 13,13 0 0 1 6.74,11.5" stroke="#e82020" strokeWidth="2.8" fill="none" strokeLinecap="round"/>
+        {/* Faint inner sphere hint */}
+        <circle cx="18" cy="18" r="6" stroke="white" strokeWidth="0.6" opacity="0.15"/>
+        {/* White arc: 280°→30° (large, through top — 110°) */}
+        <path d="M 5.2,15.74 A 13,13 0 0 1 24.5,6.74" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round"/>
+        {/* Red arc: 30°→130° (right side — 100°, main accent) */}
+        <path d="M 24.5,6.74 A 13,13 0 0 1 27.96,26.36" stroke="#e82020" strokeWidth="3" fill="none" strokeLinecap="round"/>
+        {/* White arc: 130°→195° (lower-right to lower-left — 65°) */}
+        <path d="M 27.96,26.36 A 13,13 0 0 1 14.63,30.56" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round"/>
+        {/* Red arc: 195°→250° (lower-left — 55°, smaller accent) */}
+        <path d="M 14.63,30.56 A 13,13 0 0 1 5.78,22.45" stroke="#e82020" strokeWidth="2.4" fill="none" strokeLinecap="round"/>
+        {/* White arc: 250°→280° (left side gap — 30°) */}
+        <path d="M 5.78,22.45 A 13,13 0 0 1 5.2,15.74" stroke="white" strokeWidth="1.4" fill="none" strokeLinecap="round" opacity="0.5"/>
       </svg>
       {/* "ptisphere" wordmark */}
       <span style={{ fontFamily:"'Oxanium',sans-serif", fontWeight:500, fontSize:20, color:'var(--op-text)', letterSpacing:'-0.01em', lineHeight:1, paddingLeft:3 }}>
