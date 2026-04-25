@@ -47,3 +47,4 @@ agents/artifacts/
 .playwright-mcp/
 .claude/worktrees/
 .claude/settings.local.json
+scripts/get-gsc-token.js
