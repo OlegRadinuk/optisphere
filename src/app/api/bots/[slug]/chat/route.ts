@@ -101,12 +101,33 @@ export async function POST(
     try { saveMessage(client.id, sessionId, "user", lastUserMsg.content) } catch {}
   }
 
-  // Build system prompt with today's date
-  const now = new Date()
-  const today = now.toLocaleDateString("ru-RU", {
-    weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Moscow",
+  // Build system prompt with pre-calculated dates (don't let the model do calendar math)
+  const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Europe/Moscow" }))
+  const todayStr = now.toLocaleDateString("ru-RU", {
+    weekday: "long", day: "numeric", month: "long", year: "numeric",
   })
-  let systemPrompt = client.system_prompt + `\n\nСегодня: ${today}.`
+  const dayOfWeek = now.getDay() // 0=Sun, 6=Sat
+
+  const addDays = (d: Date, n: number) => { const r = new Date(d); r.setDate(r.getDate() + n); return r }
+  const fmt = (d: Date) => d.toLocaleDateString("ru-RU", { weekday: "short", day: "numeric", month: "long" })
+
+  // This Saturday (0 days ahead if today is Sat, else find next Sat)
+  const daysToThisSat = dayOfWeek === 6 ? 0 : (6 - dayOfWeek + 7) % 7
+  const thisSat = addDays(now, daysToThisSat)
+  const thisSun = addDays(thisSat, 1)
+  const nextSat = addDays(thisSat, 7)
+  const nextSun = addDays(nextSat, 1)
+  const nextNextSat = addDays(thisSat, 14)
+  const nextNextSun = addDays(nextNextSat, 1)
+
+  const isWeekend = dayOfWeek === 0 || dayOfWeek === 6
+  const calendarCtx = `\n\n— Календарь (используй ТОЛЬКО эти даты, не считай сам) —
+Сегодня: ${todayStr}${isWeekend ? " (выходной)" : ""}.
+Эти выходные: ${fmt(thisSat)} — ${fmt(thisSun)}.
+Следующие выходные: ${fmt(nextSat)} — ${fmt(nextSun)}.
+Через две недели: ${fmt(nextNextSat)} — ${fmt(nextNextSun)}.`
+
+  let systemPrompt = client.system_prompt + calendarCtx
 
   // URL detection
   let urlFetchPromise: Promise<string | null> = Promise.resolve(null)
