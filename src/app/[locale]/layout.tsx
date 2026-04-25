@@ -72,6 +72,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     verification: {
       google: "D2bmSl1lozm70q5Iq9WasgQJ2pbS2l1_bh9jJJo_pIg",
+      yandex: "d5a06dfcc3217e76",
     },
   };
 }
