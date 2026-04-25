@@ -16,6 +16,7 @@ type ClientWithStats = {
 
 export default function AdminPage() {
   const [authed, setAuthed] = useState<boolean | null>(null)
+  const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [loginErr, setLoginErr] = useState("")
   const [clients, setClients] = useState<ClientWithStats[]>([])
@@ -36,13 +37,13 @@ export default function AdminPage() {
     const r = await fetch("/api/admin/auth", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ password }),
+      body: JSON.stringify({ username, password }),
     })
     if (r.ok) {
       setAuthed(true)
       loadClients()
     } else {
-      setLoginErr("Неверный пароль")
+      setLoginErr("Неверный логин или пароль")
     }
   }
 
@@ -87,13 +88,23 @@ export default function AdminPage() {
         <div style={styles.loginBox}>
           <div style={styles.logo}>⬡ Optisphere Admin</div>
           <input
+            type="text"
+            placeholder="Логин"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && login()}
+            style={styles.input}
+            autoFocus
+            autoComplete="username"
+          />
+          <input
             type="password"
             placeholder="Пароль"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && login()}
             style={styles.input}
-            autoFocus
+            autoComplete="current-password"
           />
           {loginErr && <div style={styles.err}>{loginErr}</div>}
           <button onClick={login} style={styles.btn}>Войти</button>

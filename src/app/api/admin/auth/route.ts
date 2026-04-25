@@ -52,15 +52,24 @@ export async function POST(request: NextRequest): Promise<Response> {
     )
   }
 
-  let body: { password?: string }
+  let body: { username?: string; password?: string }
   try {
     body = await request.json()
   } catch {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 })
   }
 
-  if (body.password !== ADMIN_PASSWORD) {
-    return NextResponse.json({ error: "Wrong password" }, { status: 401 })
+  // Credentials are stored as plain text in env vars (env vars are server-side only,
+  // never exposed to the client bundle). The real security layer is username + password
+  // combined with the rate limiter above.
+  const ADMIN_USERNAME = process.env.ADMIN_USERNAME
+
+  const passwordOk = body.password === ADMIN_PASSWORD
+  // If ADMIN_USERNAME is set, require username match too; otherwise fall back to password-only.
+  const usernameOk = ADMIN_USERNAME ? body.username === ADMIN_USERNAME : true
+
+  if (!passwordOk || !usernameOk) {
+    return NextResponse.json({ error: "Wrong credentials" }, { status: 401 })
   }
 
   // Successful auth — clear the rate limit entry for this IP
