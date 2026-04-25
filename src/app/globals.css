@@ -157,13 +157,13 @@ article ol { list-style: decimal; }
 ::-webkit-scrollbar-thumb:hover { background: var(--op-accent-hover); }
 
 /* ── Custom cursor ──────────────────────────────────────────── */
-/* Default: bracket-style cursor — 4 corner brackets + red center dot */
+/* Default: geometric arrow — dark fill, white stroke, red tip */
 *, *::before, *::after {
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M2,2 L8,2 M2,2 L2,8' stroke='white' stroke-width='1.5' fill='none'/%3E%3Cpath d='M20,2 L26,2 M26,2 L26,8' stroke='white' stroke-width='1.5' fill='none'/%3E%3Cpath d='M2,20 L2,26 M2,26 L8,26' stroke='white' stroke-width='1.5' fill='none'/%3E%3Cpath d='M26,20 L26,26 M20,26 L26,26' stroke='white' stroke-width='1.5' fill='none'/%3E%3Crect x='12' y='12' width='4' height='4' fill='%23e82020'/%3E%3C/svg%3E") 14 14, auto !important;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='28' viewBox='0 0 22 28'%3E%3Cpath d='M2,2 L2,22 L8,17 L12,26 L16,24 L12,15 L20,14 Z' fill='%23060606' stroke='%23f5f5f5' stroke-width='1.2' stroke-linejoin='miter'/%3E%3Cpath d='M2,2 L2,8 L6,6 Z' fill='%23e82020'/%3E%3C/svg%3E") 2 2, auto !important;
 }
-/* Pointer: reticle — dashed ring + red crosshair lines + red center */
+/* Pointer: same arrow + red accent ring at tip for interactive elements */
 a, button, [role=button], input, textarea, select, label[for] {
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Ccircle cx='14' cy='14' r='10' fill='none' stroke='white' stroke-width='1' stroke-dasharray='4 3'/%3E%3Cline x1='0' y1='14' x2='6' y2='14' stroke='%23e82020' stroke-width='1.5'/%3E%3Cline x1='22' y1='14' x2='28' y2='14' stroke='%23e82020' stroke-width='1.5'/%3E%3Cline x1='14' y1='0' x2='14' y2='6' stroke='white' stroke-width='1.5'/%3E%3Cline x1='14' y1='22' x2='14' y2='28' stroke='white' stroke-width='1.5'/%3E%3Crect x='12.5' y='12.5' width='3' height='3' fill='%23e82020'/%3E%3C/svg%3E") 14 14, pointer !important;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='28' viewBox='0 0 22 28'%3E%3Cpath d='M2,2 L2,22 L8,17 L12,26 L16,24 L12,15 L20,14 Z' fill='%23060606' stroke='%23f5f5f5' stroke-width='1.2' stroke-linejoin='miter'/%3E%3Cpath d='M2,2 L2,8 L6,6 Z' fill='%23e82020'/%3E%3Ccircle cx='2' cy='2' r='3.5' fill='none' stroke='%23e82020' stroke-width='1'/%3E%3C/svg%3E") 2 2, pointer !important;
 }
 
 /* ── Mobile responsive padding ─────────────────────────────── */

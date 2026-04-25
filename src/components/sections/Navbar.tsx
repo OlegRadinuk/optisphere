@@ -15,29 +15,32 @@ const LINK_HREFS: Record<string, string> = {
 
 function Brand() {
   return (
-    <div style={{ position:'relative', display:'inline-flex', alignItems:'center', gap:10, padding:'8px 12px' }}>
-      {/* Corner brackets */}
-      <span style={{ position:'absolute', top:0, left:0, width:8, height:8, borderTop:'1px solid var(--op-accent)', borderLeft:'1px solid var(--op-accent)' }}/>
-      <span style={{ position:'absolute', top:0, right:0, width:8, height:8, borderTop:'1px solid var(--op-accent)', borderRight:'1px solid var(--op-accent)' }}/>
-      <span style={{ position:'absolute', bottom:0, left:0, width:8, height:8, borderBottom:'1px solid var(--op-accent)', borderLeft:'1px solid var(--op-accent)' }}/>
-      <span style={{ position:'absolute', bottom:0, right:0, width:8, height:8, borderBottom:'1px solid var(--op-accent)', borderRight:'1px solid var(--op-accent)' }}/>
-      {/* MiniMark SVG */}
-      <svg width={36} height={36} viewBox="0 0 64 64" fill="none" aria-label="Optisphere">
-        <circle cx="32" cy="32" r="26" stroke="#f5f5f5" strokeWidth="2.4"
-          strokeDasharray="120 35" strokeDashoffset="-15"/>
-        <circle cx="32" cy="32" r="18" stroke="#f5f5f5" strokeOpacity=".25" strokeWidth="1"/>
-        <rect x="29.5" y="29.5" width="5" height="5" fill="#e82020"/>
-        <rect x="55" y="30.5" width="5" height="3" fill="#e82020"/>
+    <div style={{ display:'inline-flex', alignItems:'center', gap:0 }}>
+      {/* Left parallel lines */}
+      <svg width="12" height="36" viewBox="0 0 12 36" fill="none" style={{ flexShrink:0 }}>
+        <line x1="0" y1="15" x2="12" y2="15" stroke="white" strokeWidth="0.8" opacity="0.45"/>
+        <line x1="3" y1="20" x2="12" y2="20" stroke="white" strokeWidth="0.6" opacity="0.25"/>
       </svg>
-      {/* Brand text block */}
-      <div style={{ display:'flex', flexDirection:'column', gap:3 }}>
-        <span style={{ font:"500 17px/1 'Oxanium',sans-serif", color:'var(--op-text)', letterSpacing:'-0.015em' }}>
-          Optisphere
-        </span>
-        <span style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:8, color:'var(--op-text-muted)', letterSpacing:'.28em' }}>
-          // AI-FIRST WEB STUDIO
-        </span>
-      </div>
+      {/* O ring — accretion disk: white arcs top+bottom, red arcs right+left */}
+      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-label="Optisphere" style={{ flexShrink:0 }}>
+        {/* White arc: 300°→30° (through top, 90°) */}
+        <path d="M 6.74,11.5 A 13,13 0 0 1 24.5,6.74" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round"/>
+        {/* Red arc: 30°→150° (right side, 120°) */}
+        <path d="M 24.5,6.74 A 13,13 0 0 1 24.5,29.26" stroke="#e82020" strokeWidth="2.8" fill="none" strokeLinecap="round"/>
+        {/* White arc: 150°→210° (across bottom, 60°) */}
+        <path d="M 24.5,29.26 A 13,13 0 0 1 11.5,29.26" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round"/>
+        {/* Red arc: 210°→300° (left side, 90°) */}
+        <path d="M 11.5,29.26 A 13,13 0 0 1 6.74,11.5" stroke="#e82020" strokeWidth="2.8" fill="none" strokeLinecap="round"/>
+      </svg>
+      {/* "ptisphere" wordmark */}
+      <span style={{ fontFamily:"'Oxanium',sans-serif", fontWeight:500, fontSize:20, color:'var(--op-text)', letterSpacing:'-0.01em', lineHeight:1, paddingLeft:3 }}>
+        ptisphere
+      </span>
+      {/* Right tail with red step-line */}
+      <svg width="26" height="36" viewBox="0 0 26 36" fill="none" style={{ flexShrink:0, marginLeft:5 }}>
+        <path d="M 0,17 L 14,17 L 18,21 L 26,21" stroke="#e82020" strokeWidth="1" fill="none"/>
+        <line x1="0" y1="20" x2="13" y2="20" stroke="white" strokeWidth="0.6" opacity="0.22"/>
+      </svg>
     </div>
   );
 }
@@ -119,7 +122,7 @@ export default function Navbar() {
         </div>
         <div style={{ marginLeft:'auto', display:'flex', alignItems:'center', gap:12 }}>
           <span style={{ font:"400 11px/1 'JetBrains Mono',monospace", color:'var(--op-text-muted)', letterSpacing:'.12em' }}
-                className="nav-price-desktop">ОТ 90 000 ₽</span>
+                className="nav-price-desktop">ОТ 30 000 ₽</span>
           <div style={{ display:'flex', alignItems:'center', gap:8, padding:'6px 10px', border:'1px solid var(--op-border)', background:'transparent' }} className="nav-opti-status">
             <span style={{ width:6, height:6, background:'var(--op-accent)', boxShadow:'0 0 8px var(--op-accent-ring)', animation:'hudPulse 1.4s ease-in-out infinite', display:'inline-block' }}/>
             <span style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:9, color:'var(--op-text-secondary)', letterSpacing:'.18em' }}>OPTI · READY</span>
@@ -196,7 +199,7 @@ export default function Navbar() {
           Обсудить проект →
         </button>
         <div style={{ marginTop:20, font:"400 11px/1.5 'JetBrains Mono',monospace", color:'var(--op-text-muted)', letterSpacing:'.12em' }}>
-          ОТ 90 000 ₽ · hi@optisphere.ru
+          ОТ 30 000 ₽ · hi@optisphere.ru
         </div>
       </div>
 
