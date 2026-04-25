@@ -3,6 +3,12 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 
+type ExternalStats = {
+  travelline_bookings: number
+  website_bookings: number
+  total_active: number
+}
+
 type ClientWithStats = {
   id: number
   slug: string
@@ -12,6 +18,19 @@ type ClientWithStats = {
   widget_color: string
   created_at: string
   stats: { messages: number; leads: number; sessions: number }
+  externalStats?: ExternalStats | null
+}
+
+const LIFESTYLE_STATS_URL = "https://lovelifestyle.ru/api/public/stats"
+
+async function fetchLifestyleStats(): Promise<ExternalStats | null> {
+  try {
+    const r = await fetch(LIFESTYLE_STATS_URL, { cache: "no-store" })
+    if (!r.ok) return null
+    return await r.json()
+  } catch {
+    return null
+  }
 }
 
 export default function AdminPage() {
@@ -29,7 +48,19 @@ export default function AdminPage() {
         setAuthed(true)
         return r.json()
       })
-      .then((d) => d && setClients(d))
+      .then(async (d) => {
+        if (!d) return
+        const enriched: ClientWithStats[] = await Promise.all(
+          d.map(async (c: ClientWithStats) => {
+            if (c.slug === "lifestyle-crimea") {
+              const externalStats = await fetchLifestyleStats()
+              return { ...c, externalStats }
+            }
+            return c
+          })
+        )
+        setClients(enriched)
+      })
   }, [])
 
   async function login() {
@@ -57,7 +88,16 @@ export default function AdminPage() {
     setLoading(true)
     const r = await fetch("/api/admin/clients")
     const d = await r.json()
-    setClients(d)
+    const enriched: ClientWithStats[] = await Promise.all(
+      d.map(async (c: ClientWithStats) => {
+        if (c.slug === "lifestyle-crimea") {
+          const externalStats = await fetchLifestyleStats()
+          return { ...c, externalStats }
+        }
+        return c
+      })
+    )
+    setClients(enriched)
     setLoading(false)
   }
 
@@ -155,12 +195,41 @@ export default function AdminPage() {
                   </span>
                 </div>
 
-                {/* Stats */}
+                {/* AI chat stats */}
                 <div style={styles.stats}>
                   <div style={styles.stat}><span style={styles.statNum}>{c.stats.sessions}</span><span style={styles.statLabel}>сессий</span></div>
                   <div style={styles.stat}><span style={styles.statNum}>{c.stats.messages}</span><span style={styles.statLabel}>сообщ</span></div>
                   <div style={styles.stat}><span style={styles.statNum}>{c.stats.leads}</span><span style={styles.statLabel}>заявок</span></div>
                 </div>
+
+                {/* Travelline bookings block — only for lifestyle-crimea */}
+                {c.slug === "lifestyle-crimea" && (
+                  <div style={styles.travellineBlock}>
+                    <div style={styles.travellineTitle}>Бронирования lovelifestyle.ru</div>
+                    {c.externalStats === undefined && (
+                      <div style={styles.travellineLoading}>загрузка…</div>
+                    )}
+                    {c.externalStats === null && (
+                      <div style={styles.travellineError}>недоступно</div>
+                    )}
+                    {c.externalStats != null && (
+                      <div style={styles.travellineStats}>
+                        <div style={styles.stat}>
+                          <span style={{ ...styles.statNum, color: "#34d399" }}>{c.externalStats.travelline_bookings}</span>
+                          <span style={styles.statLabel}>Travelline</span>
+                        </div>
+                        <div style={styles.stat}>
+                          <span style={{ ...styles.statNum, color: "#34d399" }}>{c.externalStats.website_bookings}</span>
+                          <span style={styles.statLabel}>сайт</span>
+                        </div>
+                        <div style={styles.stat}>
+                          <span style={{ ...styles.statNum, color: "#a78bfa" }}>{c.externalStats.total_active}</span>
+                          <span style={styles.statLabel}>всего акт.</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
 
                 {/* Embed snippet */}
                 <details style={styles.details}>
@@ -221,6 +290,11 @@ const styles: Record<string, React.CSSProperties> = {
   stat: { display: "flex", flexDirection: "column", alignItems: "center" },
   statNum: { fontSize: 22, fontWeight: 700, color: "#38bdf8" },
   statLabel: { fontSize: 11, color: "#64748b", textTransform: "uppercase" },
+  travellineBlock: { background: "#0f172a", borderRadius: 8, padding: "10px 14px", border: "1px solid #1e3a52" },
+  travellineTitle: { fontSize: 11, color: "#64748b", textTransform: "uppercase", marginBottom: 8, letterSpacing: "0.05em" },
+  travellineStats: { display: "flex", gap: 20 },
+  travellineLoading: { fontSize: 13, color: "#475569" },
+  travellineError: { fontSize: 13, color: "#f87171" },
   details: { cursor: "pointer" },
   summary: { fontSize: 13, color: "#64748b", userSelect: "none" },
   code: { display: "block", background: "#0f172a", padding: "10px 12px", borderRadius: 6, fontSize: 12, color: "#7dd3fc", marginTop: 8, overflowX: "auto", whiteSpace: "pre-wrap", wordBreak: "break-all" },
