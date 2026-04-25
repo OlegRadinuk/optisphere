@@ -59,18 +59,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       siteName: "Optisphere",
       locale: locale === "ru" ? "ru_RU" : "en_US",
       type: "website",
-      images: [
-        {
-          url: "/og-image.png",
-          width: 1200,
-          height: 630,
-          alt: locale === "ru" ? "Optisphere — AI Web Studio" : "Optisphere — AI Web Studio",
-        },
-      ],
+      title: "Optisphere — AI Web Studio",
+      description: locale === "ru"
+        ? "Первая AI-нативная веб-студия. Сайт + AI-ассистент Опти — продаёт 24/7."
+        : "First AI-native web studio. Website + AI assistant Opti — sells 24/7.",
     },
     twitter: {
       card: "summary_large_image",
-      images: ["/og-image.png"],
+      title: "Optisphere — AI Web Studio",
+      description: locale === "ru"
+        ? "Первая AI-нативная веб-студия. Сайт + AI-ассистент Опти — продаёт 24/7."
+        : "First AI-native web studio. Website + AI assistant Opti — sells 24/7.",
     },
     verification: {
       google: "D2bmSl1lozm70q5Iq9WasgQJ2pbS2l1_bh9jJJo_pIg",
