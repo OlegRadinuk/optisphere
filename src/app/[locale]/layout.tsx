@@ -70,6 +70,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: "summary_large_image",
       images: ["/og-image.png"],
     },
+    verification: {
+      google: "D2bmSl1lozm70q5Iq9WasgQJ2pbS2l1_bh9jJJo_pIg",
+      yandex: "ee510aeeba594210",
+    },
   };
 }
 
