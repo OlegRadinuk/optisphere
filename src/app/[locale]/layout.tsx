@@ -5,6 +5,7 @@ import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import YuraWidgetLoader from "@/components/ai/YuraWidgetLoader";
+import LoadingScreen from "@/components/LoadingScreen";
 import { HeroChatProvider } from "@/components/ai/HeroChatContext";
 import TransitionProvider from "@/components/transitions/TransitionProvider";
 import "../globals.css";
@@ -157,6 +158,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         />
       </head>
       <body style={{ background: "var(--op-base)", color: "var(--op-text)" }}>
+        <LoadingScreen />
         <NextIntlClientProvider messages={messages}>
           <HeroChatProvider>
             <TransitionProvider>

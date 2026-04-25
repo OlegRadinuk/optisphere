@@ -15,15 +15,29 @@ const LINK_HREFS: Record<string, string> = {
 
 function Brand() {
   return (
-    <div style={{ display:'flex', alignItems:'center', gap:10 }}>
-      <svg width={26} height={26} viewBox="0 0 48 48" aria-label="Optisphere">
-        <circle cx="24" cy="24" r="22" fill="none" stroke="#e8e6e3" strokeWidth="1.5"/>
-        <path d="M 24 2 A 22 12 0 0 1 24 46" fill="none" stroke="#e82020" strokeWidth="1.5"/>
-        <path d="M 2 24 L 46 24" stroke="#e8e6e3" strokeWidth="1.5" opacity="0.35" fill="none"/>
+    <div style={{ position:'relative', display:'inline-flex', alignItems:'center', gap:10, padding:'8px 12px' }}>
+      {/* Corner brackets */}
+      <span style={{ position:'absolute', top:0, left:0, width:8, height:8, borderTop:'1px solid var(--op-accent)', borderLeft:'1px solid var(--op-accent)' }}/>
+      <span style={{ position:'absolute', top:0, right:0, width:8, height:8, borderTop:'1px solid var(--op-accent)', borderRight:'1px solid var(--op-accent)' }}/>
+      <span style={{ position:'absolute', bottom:0, left:0, width:8, height:8, borderBottom:'1px solid var(--op-accent)', borderLeft:'1px solid var(--op-accent)' }}/>
+      <span style={{ position:'absolute', bottom:0, right:0, width:8, height:8, borderBottom:'1px solid var(--op-accent)', borderRight:'1px solid var(--op-accent)' }}/>
+      {/* MiniMark SVG */}
+      <svg width={36} height={36} viewBox="0 0 64 64" fill="none" aria-label="Optisphere">
+        <circle cx="32" cy="32" r="26" stroke="#f5f5f5" strokeWidth="2.4"
+          strokeDasharray="120 35" strokeDashoffset="-15"/>
+        <circle cx="32" cy="32" r="18" stroke="#f5f5f5" strokeOpacity=".25" strokeWidth="1"/>
+        <rect x="29.5" y="29.5" width="5" height="5" fill="#e82020"/>
+        <rect x="55" y="30.5" width="5" height="3" fill="#e82020"/>
       </svg>
-      <span style={{ font:"500 17px/1 'Oxanium',sans-serif", color:'var(--op-text)', letterSpacing:'-0.015em' }}>
-        Optisphere
-      </span>
+      {/* Brand text block */}
+      <div style={{ display:'flex', flexDirection:'column', gap:3 }}>
+        <span style={{ font:"500 17px/1 'Oxanium',sans-serif", color:'var(--op-text)', letterSpacing:'-0.015em' }}>
+          Optisphere
+        </span>
+        <span style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:8, color:'var(--op-text-muted)', letterSpacing:'.28em' }}>
+          // AI-FIRST WEB STUDIO
+        </span>
+      </div>
     </div>
   );
 }
@@ -85,21 +99,31 @@ export default function Navbar() {
       }}>
         <Brand/>
         <div style={{ display:'flex', gap:22, marginLeft:16 }} className="nav-links-desktop">
-          {LINKS.map(l => (
+          {LINKS.map((l, i) => (
             <a key={l} href={LINK_HREFS[l] || '#'} style={{
               font: "500 14px/1 'Inter',sans-serif",
               color: 'var(--op-text-secondary)',
               textDecoration: 'none', cursor: 'pointer',
               transition: 'color 180ms',
+              display: 'inline-flex', alignItems: 'center',
             }}
             onMouseEnter={e => (e.currentTarget.style.color = 'var(--op-text)')}
             onMouseLeave={e => (e.currentTarget.style.color = 'var(--op-text-secondary)')}
-            >{l}</a>
+            >
+              <span style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:9, color:'var(--op-accent)', opacity:.7, letterSpacing:'.18em', marginRight:5 }}>
+                0{i+1}
+              </span>
+              {l}
+            </a>
           ))}
         </div>
         <div style={{ marginLeft:'auto', display:'flex', alignItems:'center', gap:12 }}>
           <span style={{ font:"400 11px/1 'JetBrains Mono',monospace", color:'var(--op-text-muted)', letterSpacing:'.12em' }}
                 className="nav-price-desktop">ОТ 90 000 ₽</span>
+          <div style={{ display:'flex', alignItems:'center', gap:8, padding:'6px 10px', border:'1px solid var(--op-border)', background:'transparent' }} className="nav-opti-status">
+            <span style={{ width:6, height:6, background:'var(--op-accent)', boxShadow:'0 0 8px var(--op-accent-ring)', animation:'hudPulse 1.4s ease-in-out infinite', display:'inline-block' }}/>
+            <span style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:9, color:'var(--op-text-secondary)', letterSpacing:'.18em' }}>OPTI · READY</span>
+          </div>
           <div className="locale-switcher" style={{ display: 'flex', alignItems: 'center', borderRadius: 8, overflow: 'hidden', border: '1px solid var(--op-border-strong)', fontSize: 11, fontFamily: "'JetBrains Mono', monospace", letterSpacing: '0.08em' }}>
             <Link href="/" locale="ru" style={{ padding: '0 10px', height: 36, display: 'inline-flex', alignItems: 'center', background: locale === 'ru' ? 'var(--op-accent)' : 'transparent', color: locale === 'ru' ? '#fff' : 'var(--op-text-secondary)', textDecoration: 'none', transition: 'all 140ms' }}>RU</Link>
             <Link href="/" locale="en" style={{ padding: '0 10px', height: 36, display: 'inline-flex', alignItems: 'center', background: locale === 'en' ? 'var(--op-accent)' : 'transparent', color: locale === 'en' ? '#fff' : 'var(--op-text-secondary)', textDecoration: 'none', transition: 'all 140ms' }}>EN</Link>
@@ -126,8 +150,9 @@ export default function Navbar() {
             style={{
               display:'inline-flex', alignItems:'center', justifyContent:'center', gap:8,
               height:36, padding:'0 14px',
-              borderRadius:8, background:'var(--op-accent)', color:'var(--op-text-on-accent)',
+              borderRadius:0, background:'var(--op-accent)', color:'var(--op-text-on-accent)',
               border:'none', cursor:'pointer', font:"500 13px/1 'Inter',sans-serif",
+              clipPath:'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))',
             }}
           >Обсудить</button>
           <button
@@ -179,6 +204,7 @@ export default function Navbar() {
         @media (max-width: 900px) {
           .nav-links-desktop { display: none !important; }
           .nav-price-desktop { display: none !important; }
+          .nav-opti-status { display: none !important; }
           .nav-burger { display: inline-flex !important; }
         }
         @media (max-width: 640px) {
