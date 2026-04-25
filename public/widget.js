@@ -28,6 +28,48 @@
   var leadFormShown = false;
   var bubbleDismissed = false;
 
+  var STORAGE_KEY    = "yana_chat_" + BOT_SLUG;
+  var SESSION_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
+  var MAX_MESSAGES   = 50;
+
+  function loadSession() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      var data = JSON.parse(raw);
+      if (!data || !data.sessionId || !data.messages || !data.savedAt) return;
+      if (Date.now() - data.savedAt > SESSION_TTL_MS) {
+        localStorage.removeItem(STORAGE_KEY);
+        return;
+      }
+      sessionId = data.sessionId;
+      messages  = data.messages;
+    } catch (e) { /* localStorage unavailable or JSON parse error */ }
+  }
+
+  function saveSession() {
+    try {
+      var trimmed = messages.slice(-MAX_MESSAGES);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        sessionId: sessionId,
+        messages:  trimmed,
+        savedAt:   Date.now()
+      }));
+    } catch (e) { /* quota exceeded or unavailable */ }
+  }
+
+  function restoreMessages() {
+    if (!messages.length) return;
+    for (var i = 0; i < messages.length; i++) {
+      var m = messages[i];
+      if (m.role === "user") {
+        appendUserMsg(m.content);
+      } else if (m.role === "assistant") {
+        appendBotRow(m.content);
+      }
+    }
+  }
+
   var PILL_H    = 48;
 
   // ── CSS ─────────────────────────────────────────────────────────────────────
@@ -205,6 +247,7 @@
     inp.value = "";
     inp.style.height = "auto";
     messages.push({ role: "user", content: text });
+    saveSession();
     appendUserMsg(text);
     streamBot();
   }
@@ -240,8 +283,9 @@
           reader.read().then(function (r) {
             if (r.done) {
               var cleaned = full.replace(/\[SAVE_LEAD\]/g, "").trimEnd();
-              bubble.textContent = cleaned;
+              bubble.innerHTML = linkify(cleaned);
               messages.push({ role: "assistant", content: cleaned });
+              saveSession();
               if (full.indexOf("[SAVE_LEAD]") !== -1 && !leadFormShown) showLeadForm();
               isStreaming = false;
               setSendDisabled(false);
@@ -340,9 +384,16 @@
     return row;
   }
 
+  function linkify(text) {
+    var escaped = escHtml(text);
+    return escaped.replace(/(https?:\/\/[^\s]+)/g, function (url) {
+      return '<a href="' + url + '" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">' + url + '</a>';
+    });
+  }
+
   function appendBotRow(text) {
     var row = createBotRow();
-    row.querySelector(".opsph-bot").textContent = text;
+    row.querySelector(".opsph-bot").innerHTML = linkify(text);
     msgs().appendChild(row);
     scrollToBottom();
   }
@@ -390,10 +441,12 @@
   function render() {
     injectCSS();
     buildDOM();
+    restoreMessages();
     if (GREETING_DELAY >= 0) setTimeout(showBubble, GREETING_DELAY);
   }
 
   function init() {
+    loadSession();
     fetch(API_BASE + "/api/bots/" + BOT_SLUG + "/config")
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (cfg) {
