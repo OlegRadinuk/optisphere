@@ -386,8 +386,10 @@
 
   function linkify(text) {
     var escaped = escHtml(text);
-    return escaped.replace(/(https?:\/\/[^\s]+)/g, function (url) {
-      return '<a href="' + url + '" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">' + url + '</a>';
+    // Match full URLs (https://...) and bare domains (domain.ru/...)
+    return escaped.replace(/(https?:\/\/[^\s<]+|(?<!["\w])(?:[\w-]+\.(?:ru|com|tech|io|org|net)(?:\/[^\s<]*)?))(?=[.,!?)\s]|$)/g, function (match) {
+      var href = match.startsWith("http") ? match : "https://" + match;
+      return '<a href="' + href + '" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">' + match + '</a>';
     });
   }
 
