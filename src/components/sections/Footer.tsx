@@ -3,19 +3,7 @@ import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import TransitionLink from '@/components/transitions/TransitionLink';
-
-function Brand() {
-  return (
-    <div style={{ display:'flex', alignItems:'center', gap:10 }}>
-      <svg width={28} height={28} viewBox="0 0 48 48">
-        <circle cx="24" cy="24" r="22" fill="none" stroke="#e8e6e3" strokeWidth="1.5"/>
-        <path d="M 24 2 A 22 12 0 0 1 24 46" fill="none" stroke="#e82020" strokeWidth="1.5"/>
-        <path d="M 2 24 L 46 24" stroke="#e8e6e3" strokeWidth="1.5" opacity="0.35" fill="none"/>
-      </svg>
-      <span style={{ font:"500 17px/1 'Oxanium',sans-serif", color:'var(--op-text)', letterSpacing:'-0.015em' }}>Optisphere</span>
-    </div>
-  );
-}
+import OptisphereLogo from '@/components/ui/OptisphereLogo';
 
 function Col({ title, items }: { title: string; items: { label: string; href?: string }[] }) {
   return (
@@ -85,7 +73,7 @@ export default function Footer() {
         <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px' }} className="section-container">
           <div style={{ display:'grid', gridTemplateColumns:'1.4fr 1fr 1fr 1fr 1fr', gap:40, marginBottom:56 }} className="footer-grid">
             <div style={{ display:'flex', flexDirection:'column', gap:16, maxWidth:320 }}>
-              <Brand/>
+              <OptisphereLogo size={28} />
               <p style={{ font:"400 14px/1.55 'Inter',sans-serif", color:'var(--op-text-secondary)', margin:0 }}>
                 {t('desc_short')}
               </p>

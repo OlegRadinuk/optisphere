@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useLocale } from 'next-intl';
 import { Link } from '@/i18n/navigation';
+import OptisphereLogo from '@/components/ui/OptisphereLogo';
 
 const LINKS = ['AI-сотрудники','Сайты','SEO','Реклама','Кейсы','Тарифы'];
 const LINK_HREFS: Record<string, string> = {
@@ -12,42 +13,6 @@ const LINK_HREFS: Record<string, string> = {
   'Кейсы': '#cases',
   'Тарифы': '#pricing',
 };
-
-function Brand() {
-  return (
-    <div style={{ display:'inline-flex', alignItems:'center', gap:0 }}>
-      {/* Left parallel lines */}
-      <svg width="12" height="36" viewBox="0 0 12 36" fill="none" style={{ flexShrink:0 }}>
-        <line x1="0" y1="15" x2="12" y2="15" stroke="white" strokeWidth="0.8" opacity="0.45"/>
-        <line x1="3" y1="20" x2="12" y2="20" stroke="white" strokeWidth="0.6" opacity="0.25"/>
-      </svg>
-      {/* O ring — asymmetric accretion disk: big red arc right, small red accent lower-left */}
-      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-label="Optisphere" style={{ flexShrink:0 }}>
-        {/* Faint inner sphere hint */}
-        <circle cx="18" cy="18" r="6" stroke="white" strokeWidth="0.6" opacity="0.15"/>
-        {/* White arc: 280°→30° (large, through top — 110°) */}
-        <path d="M 5.2,15.74 A 13,13 0 0 1 24.5,6.74" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round"/>
-        {/* Red arc: 30°→130° (right side — 100°, main accent) */}
-        <path d="M 24.5,6.74 A 13,13 0 0 1 27.96,26.36" stroke="#e82020" strokeWidth="3" fill="none" strokeLinecap="round"/>
-        {/* White arc: 130°→195° (lower-right to lower-left — 65°) */}
-        <path d="M 27.96,26.36 A 13,13 0 0 1 14.63,30.56" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round"/>
-        {/* Red arc: 195°→250° (lower-left — 55°, smaller accent) */}
-        <path d="M 14.63,30.56 A 13,13 0 0 1 5.78,22.45" stroke="#e82020" strokeWidth="2.4" fill="none" strokeLinecap="round"/>
-        {/* White arc: 250°→280° (left side gap — 30°) */}
-        <path d="M 5.78,22.45 A 13,13 0 0 1 5.2,15.74" stroke="white" strokeWidth="1.4" fill="none" strokeLinecap="round" opacity="0.5"/>
-      </svg>
-      {/* "ptisphere" wordmark */}
-      <span style={{ fontFamily:"'Oxanium',sans-serif", fontWeight:500, fontSize:20, color:'var(--op-text)', letterSpacing:'-0.01em', lineHeight:1, paddingLeft:3 }}>
-        ptisphere
-      </span>
-      {/* Right tail with red step-line */}
-      <svg width="26" height="36" viewBox="0 0 26 36" fill="none" style={{ flexShrink:0, marginLeft:5 }}>
-        <path d="M 0,17 L 14,17 L 18,21 L 26,21" stroke="#e82020" strokeWidth="1" fill="none"/>
-        <line x1="0" y1="20" x2="13" y2="20" stroke="white" strokeWidth="0.6" opacity="0.22"/>
-      </svg>
-    </div>
-  );
-}
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -104,7 +69,7 @@ export default function Navbar() {
         backdropFilter: scrolled ? 'blur(12px)' : 'none',
         transition: 'all 220ms ease',
       }}>
-        <Brand/>
+        <OptisphereLogo size={36} />
         <div style={{ display:'flex', gap:22, marginLeft:16 }} className="nav-links-desktop">
           {LINKS.map((l, i) => (
             <a key={l} href={LINK_HREFS[l] || '#'} style={{
