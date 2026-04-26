@@ -71,7 +71,7 @@ export default function Navbar() {
         transition: 'all 220ms ease',
       }}>
         {/* Logo overflows nav by ~14px bottom — ring peeks below the header line */}
-        <div style={{ position: 'relative', flexShrink: 0, zIndex: 2 }}>
+        <div style={{ position: 'relative', flexShrink: 0, zIndex: 2, transform: 'translateY(-6px)' }}>
           <img
             src={isLight ? '/optisphere-logo-light.png' : '/optisphere-logo-dark.png'}
             alt="Optisphere"
