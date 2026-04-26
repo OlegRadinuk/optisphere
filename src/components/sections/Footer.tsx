@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import TransitionLink from '@/components/transitions/TransitionLink';
-import OptisphereLogo from '@/components/ui/OptisphereLogo';
 
 function Col({ title, items }: { title: string; items: { label: string; href?: string }[] }) {
   return (
@@ -66,6 +65,15 @@ function CookieBanner() {
 
 export default function Footer() {
   const t = useTranslations('footer');
+  const [isLight, setIsLight] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsLight(document.documentElement.getAttribute('data-theme') === 'light');
+    check();
+    const obs = new MutationObserver(check);
+    obs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    return () => obs.disconnect();
+  }, []);
 
   return (
     <>
@@ -73,7 +81,11 @@ export default function Footer() {
         <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px' }} className="section-container">
           <div style={{ display:'grid', gridTemplateColumns:'1.4fr 1fr 1fr 1fr 1fr', gap:40, marginBottom:56 }} className="footer-grid">
             <div style={{ display:'flex', flexDirection:'column', gap:16, maxWidth:320 }}>
-              <OptisphereLogo size={28} />
+              <img
+                src={isLight ? '/optisphere-logo-light.png' : '/optisphere-logo-dark.png'}
+                alt="Optisphere"
+                style={{ height: 48, width: 'auto', display: 'block' }}
+              />
               <p style={{ font:"400 14px/1.55 'Inter',sans-serif", color:'var(--op-text-secondary)', margin:0 }}>
                 {t('desc_short')}
               </p>

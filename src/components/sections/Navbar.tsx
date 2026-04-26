@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react';
 import { useLocale } from 'next-intl';
 import { Link } from '@/i18n/navigation';
-import OptisphereLogo from '@/components/ui/OptisphereLogo';
 
 const LINKS = ['AI-сотрудники','Сайты','SEO','Реклама','Кейсы','Тарифы'];
 const LINK_HREFS: Record<string, string> = {
@@ -69,7 +68,11 @@ export default function Navbar() {
         backdropFilter: scrolled ? 'blur(12px)' : 'none',
         transition: 'all 220ms ease',
       }}>
-        <OptisphereLogo size={36} />
+        <img
+          src={isLight ? '/optisphere-logo-light.png' : '/optisphere-logo-dark.png'}
+          alt="Optisphere"
+          style={{ height: 48, width: 'auto', display: 'block' }}
+        />
         <div style={{ display:'flex', gap:22, marginLeft:16 }} className="nav-links-desktop">
           {LINKS.map((l, i) => (
             <a key={l} href={LINK_HREFS[l] || '#'} style={{
