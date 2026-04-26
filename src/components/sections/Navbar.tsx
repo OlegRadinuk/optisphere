@@ -62,17 +62,22 @@ export default function Navbar() {
       <nav style={{
         position: 'sticky', top: 34, zIndex: 60,
         display: 'flex', alignItems: 'center', gap: 24,
-        padding: '14px 32px',
+        height: 68,
+        padding: '0 32px',
+        overflow: 'visible',
         borderBottom: scrolled ? '1px solid var(--op-border)' : '1px solid transparent',
         background: scrolled ? (isLight ? 'rgba(255,255,255,0.92)' : 'rgba(6,6,6,0.85)') : 'transparent',
         backdropFilter: scrolled ? 'blur(12px)' : 'none',
         transition: 'all 220ms ease',
       }}>
-        <img
-          src={isLight ? '/optisphere-logo-light.png' : '/optisphere-logo-dark.png'}
-          alt="Optisphere"
-          style={{ height: 48, width: 'auto', display: 'block' }}
-        />
+        {/* Logo overflows nav by ~14px bottom — ring peeks below the header line */}
+        <div style={{ position: 'relative', flexShrink: 0, zIndex: 2 }}>
+          <img
+            src={isLight ? '/optisphere-logo-light.png' : '/optisphere-logo-dark.png'}
+            alt="Optisphere"
+            style={{ height: 96, width: 'auto', display: 'block' }}
+          />
+        </div>
         <div style={{ display:'flex', gap:22, marginLeft:16 }} className="nav-links-desktop">
           {LINKS.map((l, i) => (
             <a key={l} href={LINK_HREFS[l] || '#'} style={{
