@@ -17,6 +17,7 @@ const DEFAULT_FORM = {
   widget_color: "#2563eb",
   widget_title: "Ассистент",
   widget_placeholder: "Напишите вопрос…",
+  quick_replies: "",
   rate_limit: 30,
   active: 1,
 }
@@ -124,6 +125,14 @@ export default function NewClientPage() {
             </Field>
             <Field label="Лимит сообщений в минуту">
               <input type="number" style={styles.input} value={form.rate_limit} onChange={(e) => set("rate_limit", Number(e.target.value))} min={1} max={200} />
+            </Field>
+            <Field label="Быстрые ответы (JSON)" hint="оставь пустым чтобы скрыть кнопки">
+              <textarea
+                style={{ ...styles.input, height: 80, resize: "vertical", fontFamily: "monospace", fontSize: 12 }}
+                value={form.quick_replies}
+                onChange={(e) => set("quick_replies", e.target.value)}
+                placeholder='[{"label":"Записаться","action":"send"},{"label":"Позвонить","action":"tel","href":"tel:+7..."}]'
+              />
             </Field>
           </Section>
 

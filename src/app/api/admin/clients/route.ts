@@ -83,6 +83,7 @@ export async function POST(request: NextRequest): Promise<Response> {
       rate_limit: data.rate_limit ?? 30,
       active: data.active ?? 1,
       context_url: data.context_url ?? "",
+      quick_replies: data.quick_replies ?? "",
     })
     return NextResponse.json(client, { status: 201 })
   } catch (err: unknown) {

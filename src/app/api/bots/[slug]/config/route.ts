@@ -18,11 +18,17 @@ export async function GET(
     return NextResponse.json({ error: "Not found" }, { status: 404, headers: corsHeaders })
   }
 
+  let quickReplies: unknown[] = []
+  if (client.quick_replies) {
+    try { quickReplies = JSON.parse(client.quick_replies) } catch { /* invalid JSON — ignore */ }
+  }
+
   return NextResponse.json(
     {
       title: client.widget_title,
       color: client.widget_color,
       placeholder: client.widget_placeholder,
+      quick_replies: quickReplies,
     },
     { headers: corsHeaders }
   )

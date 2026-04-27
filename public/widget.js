@@ -393,12 +393,7 @@
   }
 
   // ── Quick replies ─────────────────────────────────────────────────────────────
-  var QUICK_REPLIES = [
-    { label: "Показать апартаменты", action: "send" },
-    { label: "Узнать цены",          action: "send" },
-    { label: "Свободные даты",       action: "send" },
-    { label: "Позвонить нам",        action: "tel",  href: "tel:+79785036363" }
-  ];
+  var QUICK_REPLIES = [];
 
   function appendQuickReplies() {
     if (quickRepliesShown) return;
@@ -540,6 +535,7 @@
           if (cfg.color)       COLOR      = cfg.color;
           if (cfg.title)       CHAR_NAME  = cfg.title;
           if (cfg.placeholder) script.setAttribute("data-placeholder", cfg.placeholder);
+          if (Array.isArray(cfg.quick_replies) && cfg.quick_replies.length) QUICK_REPLIES = cfg.quick_replies;
           AVA_LETTER = CHAR_NAME.charAt(0).toUpperCase();
         }
         render();

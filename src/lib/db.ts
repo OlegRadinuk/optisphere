@@ -37,7 +37,8 @@ function initSchema(db: Database.Database) {
       widget_placeholder TEXT DEFAULT 'Напишите вопрос…',
       rate_limit  INTEGER DEFAULT 30,
       active      INTEGER DEFAULT 1,
-      context_url TEXT    DEFAULT '',
+      context_url   TEXT    DEFAULT '',
+      quick_replies TEXT    DEFAULT '',
       created_at  TEXT    DEFAULT (datetime('now'))
     );
 
@@ -71,6 +72,11 @@ function initSchema(db: Database.Database) {
   } catch {
     // Column already exists — ignore
   }
+  try {
+    db.exec(`ALTER TABLE clients ADD COLUMN quick_replies TEXT DEFAULT ''`)
+  } catch {
+    // Column already exists — ignore
+  }
 }
 
 // ── Types ──────────────────────────────────────────────────────────────────────
@@ -92,6 +98,7 @@ export type Client = {
   rate_limit: number
   active: number
   context_url: string
+  quick_replies: string
   created_at: string
 }
 
@@ -137,11 +144,11 @@ export function createClient(
     INSERT INTO clients
       (slug, name, description, system_prompt, api_key, base_url, model,
        tg_token, tg_chat_id, widget_color, widget_title, widget_placeholder,
-       rate_limit, active)
+       rate_limit, active, quick_replies)
     VALUES
       (@slug, @name, @description, @system_prompt, @api_key, @base_url, @model,
        @tg_token, @tg_chat_id, @widget_color, @widget_title, @widget_placeholder,
-       @rate_limit, @active)
+       @rate_limit, @active, @quick_replies)
   `)
   const result = stmt.run(data)
   return getDb()

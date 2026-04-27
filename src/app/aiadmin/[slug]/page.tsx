@@ -45,6 +45,7 @@ type ClientData = {
   rate_limit: number
   active: number
   context_url: string
+  quick_replies: string
 }
 
 export default function EditClientPage() {
@@ -242,6 +243,14 @@ export default function EditClientPage() {
               </Field>
               <Field label="Rate limit (сообщ/мин)">
                 <input type="number" style={styles.input} value={form.rate_limit} onChange={(e) => set("rate_limit", Number(e.target.value))} min={1} max={200} />
+              </Field>
+              <Field label="Быстрые ответы (JSON)">
+                <textarea
+                  style={{ ...styles.input, height: 100, resize: "vertical", fontFamily: "monospace", fontSize: 12 }}
+                  value={form.quick_replies}
+                  onChange={(e) => set("quick_replies", e.target.value)}
+                  placeholder='[{"label":"Записаться","action":"send"},{"label":"Позвонить","action":"tel","href":"tel:+7..."}]'
+                />
               </Field>
             </Section>
 
