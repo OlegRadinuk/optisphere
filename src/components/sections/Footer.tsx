@@ -84,7 +84,7 @@ export default function Footer() {
               <img
                 src={isLight ? '/optisphere-logo-light.png' : '/optisphere-logo-dark.png'}
                 alt="Optisphere"
-                style={{ height: 48, width: 'auto', maxWidth: 200, display: 'block', objectFit: 'contain', objectPosition: 'left' }}
+                style={{ height: 65, width: 'auto', display: 'block', alignSelf: 'center' }}
               />
               <p style={{ font:"400 14px/1.55 'Inter',sans-serif", color:'var(--op-text-secondary)', margin:0 }}>
                 {t('desc_short')}
