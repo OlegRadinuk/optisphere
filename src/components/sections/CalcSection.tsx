@@ -223,7 +223,7 @@ function StepTitle({ children }: { children: React.ReactNode }) {
 
 // ─── Result card ──────────────────────────────────────────────────────────────
 
-function ResultCard({ result, onYura }: { result: CalcResult; onYura: () => void }) {
+function ResultCard({ result, onOpti }: { result: CalcResult; onOpti: () => void }) {
   const tCalc = useTranslations('calculator');
 
   return (
@@ -291,7 +291,7 @@ function ResultCard({ result, onYura }: { result: CalcResult; onYura: () => void
       </div>
 
       <button
-        onClick={onYura}
+        onClick={onOpti}
         className="btn btn-primary"
         style={{
           width: '100%', height: 48,
@@ -340,8 +340,8 @@ export default function CalcSection() {
     return false;
   }
 
-  function openYura(calcResult: CalcResult) {
-    window.dispatchEvent(new CustomEvent('yura-open', { detail: { calcResult } }));
+  function openOpti(calcResult: CalcResult) {
+    window.dispatchEvent(new CustomEvent('opti-open', { detail: { calcResult } }));
   }
 
   const slideVariants = stepVariants(direction);
@@ -395,7 +395,7 @@ export default function CalcSection() {
             overflow: 'hidden',
           }}>
             {result ? (
-              <ResultCard result={result} onYura={() => openYura(result)} />
+              <ResultCard result={result} onOpti={() => openOpti(result)} />
             ) : (
               <>
                 <StepCounter step={step} total={TOTAL_STEPS} />

@@ -15,7 +15,7 @@ const TODAY = new Date().toLocaleDateString("ru-RU", {
   timeZone: "Europe/Moscow",
 })
 
-const YURA_SYSTEM = `Ты — Опти, AI-консультант веб-студии Optisphere.
+const OPTI_SYSTEM = `Ты — Опти, AI-консультант веб-студии Optisphere.
 Сегодня: ${TODAY}.
 Ты встроен прямо в этот сайт и сам являешься живым примером того, что студия продаёт клиентам: AI-ассистент, который продаёт, консультирует и собирает заявки 24/7.
 
@@ -322,7 +322,7 @@ export async function POST(request: NextRequest): Promise<Response> {
     : null
 
   // Build system prompt
-  let systemPrompt = YURA_SYSTEM
+  let systemPrompt = OPTI_SYSTEM
   if (safeCalcResult) {
     systemPrompt += `\n\nКонтекст: клиент прошёл калькулятор, результат: ${safeCalcResult}. Учти это при ответах.`
   }

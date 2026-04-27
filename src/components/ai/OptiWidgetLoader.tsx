@@ -3,12 +3,12 @@
 import dynamic from "next/dynamic"
 import { useEffect, useState } from "react"
 
-const YuraWidget = dynamic(() => import("./YuraWidget"), {
+const OptiWidget = dynamic(() => import("./OptiWidget"), {
   ssr: false,
   loading: () => null,
 })
 
-export default function YuraWidgetLoader() {
+export default function OptiWidgetLoader() {
   const [pastHero, setPastHero] = useState(false)
 
   useEffect(() => {
@@ -29,5 +29,5 @@ export default function YuraWidgetLoader() {
   }, [])
 
   if (!pastHero) return null
-  return <YuraWidget />
+  return <OptiWidget />
 }

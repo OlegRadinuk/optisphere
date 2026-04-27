@@ -66,7 +66,7 @@ export default function PricingSection() {
                 <span style={{ font: "400 12px/1 'JetBrains Mono',monospace", color: 'var(--op-text-muted)', letterSpacing: '.08em', textTransform: 'uppercase' }}>{tier.days}</span>
               </div>
               <p style={{ font: "400 14px/1.55 'Inter',sans-serif", color: 'var(--op-text-secondary)', margin: 0 }}>{tier.desc}</p>
-              <button onClick={() => window.dispatchEvent(new CustomEvent('yura-open'))} style={{ marginTop: 'auto', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 6, height: 36, padding: '0 14px', borderRadius: 8, background: tier.featured ? 'var(--op-accent)' : 'transparent', color: tier.featured ? 'var(--op-text-on-accent)' : 'var(--op-text)', border: tier.featured ? 'none' : '1px solid var(--op-border-strong)', cursor: 'pointer', font: "500 13px/1 'Inter',sans-serif" }}>
+              <button onClick={() => window.dispatchEvent(new CustomEvent('opti-open'))} style={{ marginTop: 'auto', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 6, height: 36, padding: '0 14px', borderRadius: 8, background: tier.featured ? 'var(--op-accent)' : 'transparent', color: tier.featured ? 'var(--op-text-on-accent)' : 'var(--op-text)', border: tier.featured ? 'none' : '1px solid var(--op-border-strong)', cursor: 'pointer', font: "500 13px/1 'Inter',sans-serif" }}>
                 {tier.cta} →
               </button>
             </motion.article>
@@ -91,7 +91,7 @@ export default function PricingSection() {
               <span style={{ font: "400 12px/1 'JetBrains Mono',monospace", color: 'var(--op-text-muted)', letterSpacing: '.08em', textTransform: 'uppercase' }}>{CORPORATE.days}</span>
             </div>
             <p style={{ font: "400 14px/1.55 'Inter',sans-serif", color: 'var(--op-text-secondary)', margin: 0 }}>{CORPORATE.desc}</p>
-            <button onClick={() => window.dispatchEvent(new CustomEvent('yura-open'))} style={{ marginTop: 'auto', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 6, height: 36, padding: '0 14px', borderRadius: 8, background: 'transparent', color: 'var(--op-text)', border: '1px solid var(--op-border-strong)', cursor: 'pointer', font: "500 13px/1 'Inter',sans-serif" }}>
+            <button onClick={() => window.dispatchEvent(new CustomEvent('opti-open'))} style={{ marginTop: 'auto', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 6, height: 36, padding: '0 14px', borderRadius: 8, background: 'transparent', color: 'var(--op-text)', border: '1px solid var(--op-border-strong)', cursor: 'pointer', font: "500 13px/1 'Inter',sans-serif" }}>
               {CORPORATE.cta} →
             </button>
           </motion.article>

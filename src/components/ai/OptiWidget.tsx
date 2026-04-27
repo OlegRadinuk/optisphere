@@ -181,7 +181,7 @@ function genUUID(): string {
 
 function getSessionId(): string {
   if (typeof window === "undefined") return genUUID()
-  const key = "yura_session_id"
+  const key = "opti_session_id"
   const stored = sessionStorage.getItem(key)
   if (stored) return stored
   const id = genUUID()
@@ -203,7 +203,7 @@ function TypingDots() {
             height: 8,
             borderRadius: "50%",
             background: "var(--op-text-muted)",
-            animation: `yuraDot 1.2s ease-in-out ${i * 0.2}s infinite`,
+            animation: `optiDot 1.2s ease-in-out ${i * 0.2}s infinite`,
           }}
         />
       ))}
@@ -213,7 +213,7 @@ function TypingDots() {
 
 // ── Avatar sphere ──────────────────────────────────────────────────────────────
 
-function YuraAvatar({ size = 36 }: { size?: number }) {
+function OptiAvatar({ size = 36 }: { size?: number }) {
   const ringSize = Math.round(size * 1.45)
   return (
     <div
@@ -234,7 +234,7 @@ function YuraAvatar({ size = 36 }: { size?: number }) {
           left: "50%",
           borderRadius: "50%",
           border: "1px solid rgba(232,32,32,0.32)",
-          animation: "yuraOrbit 5s linear infinite",
+          animation: "optiOrbit 5s linear infinite",
           pointerEvents: "none",
         }}
       />
@@ -246,7 +246,7 @@ function YuraAvatar({ size = 36 }: { size?: number }) {
           borderRadius: "50%",
           background: "linear-gradient(135deg, #e82020 0%, #ff4a4a 100%)",
           boxShadow: "0 0 12px rgba(232,32,32,0.5)",
-          animation: "yuraPulse 2.5s ease-in-out infinite",
+          animation: "optiPulse 2.5s ease-in-out infinite",
           position: "relative",
           overflow: "hidden",
         }}
@@ -284,7 +284,7 @@ function MessageBubble({ msg }: { msg: ChatMessage }) {
         alignItems: "flex-end",
       }}
     >
-      {!isUser && <YuraAvatar size={28} />}
+      {!isUser && <OptiAvatar size={28} />}
       <div
         style={{
           maxWidth: "78%",
@@ -309,7 +309,7 @@ function MessageBubble({ msg }: { msg: ChatMessage }) {
 
 // ── Main widget ────────────────────────────────────────────────────────────────
 
-export default function YuraWidget() {
+export default function OptiWidget() {
   const t = useTranslations("ai")
   const { heroChatOpen, sharedMessages, setSharedMessages, sharedSessionId } = useHeroChat()
 
@@ -399,7 +399,7 @@ export default function YuraWidget() {
     }
   }, [])
 
-  // Listen for yura-open custom event (from CalcSection)
+  // Listen for opti-open custom event (from CalcSection)
   useEffect(() => {
     type RawCalcResult = { min: number; max: number; tier: string; days: string }
     const handler = (e: Event) => {
@@ -420,8 +420,8 @@ export default function YuraWidget() {
       setShowBubble(false)
       setHasUnread(false)
     }
-    window.addEventListener("yura-open", handler)
-    return () => window.removeEventListener("yura-open", handler)
+    window.addEventListener("opti-open", handler)
+    return () => window.removeEventListener("opti-open", handler)
   }, [])
 
   // Hide unread dot when chat opens
@@ -500,7 +500,7 @@ export default function YuraWidget() {
           }),
         })
       } catch (err) {
-        console.error("[YuraWidget] lead send error:", err)
+        console.error("[OptiWidget] lead send error:", err)
       }
     },
     [leadSent, calcResult]
@@ -537,7 +537,7 @@ export default function YuraWidget() {
     const contact = detectContact(trimmed)
 
     try {
-      const res = await fetch("/api/bots/yura/chat", {
+      const res = await fetch("/api/ai/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -593,11 +593,11 @@ export default function YuraWidget() {
           { role: "assistant", content: assistantText.replace(FORM_MARKER, "").trim() },
         ]
         sendLead(contact, finalMessages).catch((err) =>
-          console.error("[YuraWidget] sendLead error:", err)
+          console.error("[OptiWidget] sendLead error:", err)
         )
       }
     } catch (err) {
-      console.error("[YuraWidget] sendMessage error:", err)
+      console.error("[OptiWidget] sendMessage error:", err)
       setIsTyping(false)
       setSharedMessages((prev) => [
         ...prev,
@@ -623,23 +623,23 @@ export default function YuraWidget() {
     <>
       {/* Keyframe styles */}
       <style>{`
-        @keyframes yuraPulse {
+        @keyframes optiPulse {
           0%, 100% { box-shadow: 0 0 12px rgba(232,32,32,0.5); }
           50%       { box-shadow: 0 0 22px rgba(255,74,74,0.7); }
         }
-        @keyframes yuraDot {
+        @keyframes optiDot {
           0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
           40%           { transform: translateY(-6px); opacity: 1; }
         }
-        @keyframes yuraRing {
+        @keyframes optiRing {
           0%   { transform: scale(1);   opacity: 0.55; }
           100% { transform: scale(1.9); opacity: 0; }
         }
-        @keyframes yuraOrbit {
+        @keyframes optiOrbit {
           from { transform: translate(-50%, -50%) rotate(0deg); }
           to   { transform: translate(-50%, -50%) rotate(360deg); }
         }
-        @keyframes yuraGreenPulse {
+        @keyframes optiGreenPulse {
           0%, 100% { opacity: 0.6; transform: scale(0.85); }
           50%      { opacity: 1;   transform: scale(1); }
         }
@@ -668,7 +668,7 @@ export default function YuraWidget() {
         <AnimatePresence>
           {isOpen && (
             <motion.div
-              key="yura-panel"
+              key="opti-panel"
               initial={{ opacity: 0, y: 24, scale: 0.94 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 16, scale: 0.95 }}
@@ -707,7 +707,7 @@ export default function YuraWidget() {
                   flexShrink: 0,
                 }}
               >
-                <YuraAvatar size={40} />
+                <OptiAvatar size={40} />
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div
                     style={{
@@ -751,7 +751,7 @@ export default function YuraWidget() {
                       background: "#22C55E",
                       display: "block",
                       boxShadow: "0 0 6px rgba(34,197,94,0.8)",
-                      animation: "yuraGreenPulse 2s ease-in-out infinite",
+                      animation: "optiGreenPulse 2s ease-in-out infinite",
                     }}
                   />
                   <span style={{ fontSize: "0.7rem", color: "#22C55E" }}>
@@ -822,7 +822,7 @@ export default function YuraWidget() {
                 ))}
                 {isTyping && (
                   <div style={{ display: "flex", alignItems: "end", gap: 8 }}>
-                    <YuraAvatar size={28} />
+                    <OptiAvatar size={28} />
                     <div
                       style={{
                         background: 'rgba(255,255,255,0.04)',
@@ -935,7 +935,7 @@ export default function YuraWidget() {
         <AnimatePresence>
           {showBubble && !isOpen && (
             <motion.button
-              key="yura-bubble"
+              key="opti-bubble"
               initial={{ opacity: 0, y: 8, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, scale: 0.85, y: 4 }}
@@ -981,7 +981,7 @@ export default function YuraWidget() {
                 inset: -3,
                 borderRadius: "50%",
                 border: "2px solid rgba(232,32,32,0.45)",
-                animation: "yuraRing 2.2s ease-out infinite",
+                animation: "optiRing 2.2s ease-out infinite",
                 pointerEvents: "none",
               }}
             />

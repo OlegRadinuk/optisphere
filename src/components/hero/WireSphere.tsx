@@ -121,7 +121,7 @@ export default function WireSphere({ state }: { state: SphereState }) {
         )}
 
         <g style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:9, fill:'rgba(255,255,255,.5)', letterSpacing:'0.12em' }}>
-          <text x="10" y="18">YURA · v3.1</text>
+          <text x="10" y="18">OPTI · v3.1</text>
           <text x={size-86} y="18">42°N · OPT</text>
           <text x="10" y={size-10}>MODE · {state==='thinking' ? 'THINK' : state==='speaking' ? 'SPEAK' : 'READY'}</text>
           <text x={size-56} y={size-10}>▲ {state==='idle' ? 'IDLE' : 'LIVE'}</text>

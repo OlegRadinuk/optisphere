@@ -52,7 +52,7 @@ export default function HeroStage() {
 
     try {
       abortRef.current = new AbortController();
-      const res = await fetch('/api/bots/yura/chat', {
+      const res = await fetch('/api/ai/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: newMessages, sessionId: sharedSessionId }),

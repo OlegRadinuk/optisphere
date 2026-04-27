@@ -97,7 +97,7 @@ export default function CTASection() {
   const ref  = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: '-80px' });
 
-  function openYura() { window.dispatchEvent(new CustomEvent('yura-open')); }
+  function openOpti() { window.dispatchEvent(new CustomEvent('opti-open')); }
 
   return (
     <section
@@ -200,7 +200,7 @@ export default function CTASection() {
             style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center', marginTop: '0.5rem' }}
           >
             <motion.button
-              onClick={openYura}
+              onClick={openOpti}
               className="btn btn-primary"
               animate={{ scale: [1, 1.018, 1] }}
               transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}

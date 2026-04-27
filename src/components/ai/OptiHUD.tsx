@@ -71,7 +71,7 @@ function TypingText({ text }: { text: string }) {
 
 // ─── Message ─────────────────────────────────────────────────────────────────
 
-interface Msg { role: 'yura' | 'user'; text: string; }
+interface Msg { role: 'opti' | 'user'; text: string; }
 
 // ─── Placeholder animator ─────────────────────────────────────────────────────
 
@@ -108,7 +108,7 @@ function AnimatedPlaceholder({ active }: { active: boolean }) {
 
 // ─── Main HUD ─────────────────────────────────────────────────────────────────
 
-interface YuraHUDProps {
+interface OptiHUDProps {
   onLeadCaptured?: (data: { name?: string; phone?: string; message: string }) => void;
 }
 
@@ -118,7 +118,7 @@ const FIRST_MESSAGES = [
   'Добрый день! Я помогу рассчитать стоимость и сроки. С чего начнём?',
 ];
 
-export default function YuraHUD({ onLeadCaptured }: YuraHUDProps) {
+export default function OptiHUD({ onLeadCaptured }: OptiHUDProps) {
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -132,7 +132,7 @@ export default function YuraHUD({ onLeadCaptured }: YuraHUDProps) {
   // First message after delay
   useEffect(() => {
     const t = setTimeout(() => {
-      setMessages([{ role: 'yura', text: firstMsg.current }]);
+      setMessages([{ role: 'opti', text: firstMsg.current }]);
       setStarted(true);
     }, 800);
     return () => clearTimeout(t);
@@ -161,7 +161,7 @@ export default function YuraHUD({ onLeadCaptured }: YuraHUDProps) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           messages: [...messages, userMsg].map(m => ({
-            role: m.role === 'yura' ? 'assistant' : 'user',
+            role: m.role === 'opti' ? 'assistant' : 'user',
             content: m.text,
           })),
         }),
@@ -174,7 +174,7 @@ export default function YuraHUD({ onLeadCaptured }: YuraHUDProps) {
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
       let full = '';
-      setMessages(prev => [...prev, { role: 'yura', text: '' }]);
+      setMessages(prev => [...prev, { role: 'opti', text: '' }]);
 
       while (true) {
         const { done, value } = await reader.read();
@@ -182,7 +182,7 @@ export default function YuraHUD({ onLeadCaptured }: YuraHUDProps) {
         full += decoder.decode(value, { stream: true });
         setMessages(prev => {
           const copy = [...prev];
-          copy[copy.length - 1] = { role: 'yura', text: full };
+          copy[copy.length - 1] = { role: 'opti', text: full };
           return copy;
         });
       }
@@ -192,7 +192,7 @@ export default function YuraHUD({ onLeadCaptured }: YuraHUDProps) {
       }
     } catch (e: unknown) {
       if ((e as Error).name !== 'AbortError') {
-        setMessages(prev => [...prev, { role: 'yura', text: 'Что-то пошло не так. Попробуйте ещё раз.' }]);
+        setMessages(prev => [...prev, { role: 'opti', text: 'Что-то пошло не так. Попробуйте ещё раз.' }]);
       }
     } finally {
       setLoading(false);
@@ -305,7 +305,7 @@ export default function YuraHUD({ onLeadCaptured }: YuraHUDProps) {
                 border: msg.role === 'user' ? '1px solid rgba(79,70,229,0.4)' : '1px solid rgba(0,212,255,0.15)',
                 fontSize: '0.82rem', lineHeight: 1.5, color: '#E8EAED',
               }}>
-                {i === messages.length - 1 && msg.role === 'yura' && started
+                {i === messages.length - 1 && msg.role === 'opti' && started
                   ? <TypingText text={msg.text} />
                   : msg.text}
               </div>
@@ -313,7 +313,7 @@ export default function YuraHUD({ onLeadCaptured }: YuraHUDProps) {
           ))}
         </AnimatePresence>
 
-        {loading && messages[messages.length - 1]?.role !== 'yura' && (
+        {loading && messages[messages.length - 1]?.role !== 'opti' && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ display: 'flex', gap: 4, padding: '4px 8px' }}>
             {[0, 1, 2].map(i => (
               <div key={i} style={{

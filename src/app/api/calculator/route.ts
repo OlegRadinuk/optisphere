@@ -68,7 +68,7 @@ export async function POST(
   const featureList = Array.isArray(features) ? features : []
   for (const f of featureList) {
     const fl = f.toLowerCase()
-    if (fl.includes("ai") || fl.includes("юра") || fl.includes("yura")) {
+    if (fl.includes("ai") || fl.includes("опти") || fl.includes("opti")) {
       min += 20_000
       max += 20_000
     }

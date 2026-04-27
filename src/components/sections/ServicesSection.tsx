@@ -97,7 +97,7 @@ function ServicePanel({ accent, accentDim, label, title, desc, features, visual,
             ))}
           </ul>
           <button
-            onClick={() => window.dispatchEvent(new CustomEvent('yura-open'))}
+            onClick={() => window.dispatchEvent(new CustomEvent('opti-open'))}
             style={{
               marginTop: '2rem',
               display: 'inline-flex', alignItems: 'center', gap: 8,

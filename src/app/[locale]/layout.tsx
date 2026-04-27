@@ -4,7 +4,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import YuraWidgetLoader from "@/components/ai/YuraWidgetLoader";
+import OptiWidgetLoader from "@/components/ai/OptiWidgetLoader";
 import LoadingScreen from "@/components/LoadingScreen";
 import { HeroChatProvider } from "@/components/ai/HeroChatContext";
 import TransitionProvider from "@/components/transitions/TransitionProvider";
@@ -162,7 +162,7 @@ export default async function LocaleLayout({ children, params }: Props) {
           <HeroChatProvider>
             <TransitionProvider>
               {children}
-              <YuraWidgetLoader />
+              <OptiWidgetLoader />
             </TransitionProvider>
           </HeroChatProvider>
         </NextIntlClientProvider>

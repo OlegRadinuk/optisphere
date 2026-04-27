@@ -38,7 +38,7 @@ function genUUID(): string {
 
 function getSessionId(): string {
   if (typeof window === 'undefined') return genUUID();
-  const key = 'yura_session_id';
+  const key = 'opti_session_id';
   const stored = sessionStorage.getItem(key);
   if (stored) return stored;
   const id = genUUID();
@@ -92,7 +92,7 @@ function TypingDots() {
             height: 6,
             borderRadius: '50%',
             background: 'rgba(160, 165, 200, 0.75)',
-            animation: `yuraDot 1.2s ease-in-out ${i * 0.2}s infinite`,
+            animation: `optiDot 1.2s ease-in-out ${i * 0.2}s infinite`,
           }}
         />
       ))}
@@ -102,7 +102,7 @@ function TypingDots() {
 
 // ─── Avatar ─────────────────────────────────────────────────────────────────
 
-function YuraAvatar({ size = 32 }: { size?: number }) {
+function OptiAvatar({ size = 32 }: { size?: number }) {
   return (
     <div
       style={{
@@ -147,7 +147,7 @@ function MessageBubble({ msg }: { msg: ChatMessage }) {
         alignItems: 'flex-end',
       }}
     >
-      {!isUser && <YuraAvatar size={28} />}
+      {!isUser && <OptiAvatar size={28} />}
       <div
         style={{
           maxWidth: '80%',
@@ -208,9 +208,9 @@ export default function HeroInlineChat({
 
   // If we started with an initial user message — fetch assistant response for it
   // beyond the pre-generated greeting. But per spec: first_messages is the first
-  // assistant message, and if user tapped Yes/No, Yura "responds to it" — so we
+  // assistant message, and if user tapped Yes/No, Опти "responds to it" — so we
   // send the user message through the API to get a real reply, *replacing* the
-  // stock greeting context. Actually per spec: "Юра отвечает на него" — keep
+  // stock greeting context. Actually per spec: "Опти отвечает на него" — keep
   // the first message as intro AND send the user's answer to generate the reply.
   const initialSentRef = useRef(false);
   useEffect(() => {
@@ -311,7 +311,7 @@ export default function HeroInlineChat({
       const contact = detectContact(lastUserText);
 
       try {
-        const res = await fetch('/api/bots/yura/chat', {
+        const res = await fetch('/api/ai/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ messages: fullMessages, sessionId: sessionId.current }),
@@ -492,7 +492,7 @@ export default function HeroInlineChat({
 
   return (
     <motion.div
-      layoutId="yura-chat-panel"
+      layoutId="opti-chat-panel"
       initial={isMobile ? { y: 40, opacity: 0 } : { x: 32, opacity: 0 }}
       animate={isMobile ? { y: 0, opacity: 1 } : { x: 0, opacity: 1 }}
       exit={isMobile ? { y: 40, opacity: 0 } : { x: 32, opacity: 0 }}
@@ -519,7 +519,7 @@ export default function HeroInlineChat({
           flexShrink: 0,
         }}
       >
-        <YuraAvatar size={36} />
+        <OptiAvatar size={36} />
         <div style={{ flex: 1, minWidth: 0 }}>
           <div
             style={{
@@ -637,7 +637,7 @@ export default function HeroInlineChat({
         ))}
         {isTyping && (
           <div style={{ display: 'flex', alignItems: 'end', gap: 8 }}>
-            <YuraAvatar size={28} />
+            <OptiAvatar size={28} />
             <div
               style={{
                 background: 'rgba(255,255,255,0.04)',
@@ -776,7 +776,7 @@ export default function HeroInlineChat({
       </div>
 
       <style>{`
-        @keyframes yuraDot {
+        @keyframes optiDot {
           0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
           40%           { transform: translateY(-6px); opacity: 1; }
         }

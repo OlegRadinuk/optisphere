@@ -123,7 +123,7 @@ export default function Navbar() {
             {theme === 'dark' ? '☀' : '🌙'}
           </button>
           <button
-            onClick={() => window.dispatchEvent(new CustomEvent('yura-open'))}
+            onClick={() => window.dispatchEvent(new CustomEvent('opti-open'))}
             style={{
               display:'inline-flex', alignItems:'center', justifyContent:'center', gap:8,
               height:36, padding:'0 14px',
@@ -167,7 +167,7 @@ export default function Navbar() {
           }}>{l}</a>
         ))}
         <button
-          onClick={e => { e.stopPropagation(); window.dispatchEvent(new CustomEvent('yura-open')); setOpen(false); }}
+          onClick={e => { e.stopPropagation(); window.dispatchEvent(new CustomEvent('opti-open')); setOpen(false); }}
           style={{ marginTop:24, height:48, padding:'0 26px', background:'var(--op-accent)', color:'#fff', border:'none', borderRadius:8, cursor:'pointer', font:"500 15px/1 'Inter',sans-serif" }}
         >
           Обсудить проект →

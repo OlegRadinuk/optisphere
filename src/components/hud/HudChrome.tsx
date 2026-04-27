@@ -168,7 +168,7 @@ const BOOT_MESSAGES = [
 ];
 
 const LOG_MESSAGES = [
-  '> yura.reason(niche="dental") → 6 options generated · 412ms',
+  '> opti.reason(niche="dental") → 6 options generated · 412ms',
   '> agents[sales].handoff(lead#4821) → qualified · $1.2M pipeline',
   '> seo.crawl(optisphere.ru) → 347 pages indexed · ok',
   '> copy.draft(tone="premium") → 3 variants · 890ms',
