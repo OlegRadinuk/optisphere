@@ -73,7 +73,7 @@ export default function Navbar() {
         <img
           src={isLight ? '/optisphere-logo-light.png' : '/optisphere-logo-dark.png'}
           alt="Optisphere"
-          style={{ height: 44, width: 'auto', display: 'block', flexShrink: 0 }}
+          style={{ height: 56, width: 'auto', display: 'block', flexShrink: 0 }}
         />
         <div style={{ display:'flex', gap:22, marginLeft:16 }} className="nav-links-desktop">
           {LINKS.map((l, i) => (
