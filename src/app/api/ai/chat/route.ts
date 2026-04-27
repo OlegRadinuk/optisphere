@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from "next/server"
-import OpenAI from "openai"
+import Anthropic from "@anthropic-ai/sdk"
 
 function getAI() {
-  return new OpenAI({
+  const rawBase = process.env.AI_BASE_URL ?? ""
+  const baseURL = rawBase
+    ? rawBase.replace(/\/v1\/?$/, "")
+    : "https://api.anthropic.com"
+  return new Anthropic({
     apiKey: process.env.ANTHROPIC_API_KEY ?? process.env.AI_API_KEY ?? "placeholder",
-    baseURL: process.env.AI_BASE_URL ?? "https://api.anthropic.com/v1/",
+    baseURL,
   })
 }
 
@@ -358,22 +362,17 @@ export async function POST(request: NextRequest): Promise<Response> {
           }
         }
 
-        const completion = await getAI().chat.completions.create({
+        const response = await getAI().messages.stream({
           model: process.env.AI_MODEL ?? "claude-haiku-4-5-20251001",
-          stream: true,
-          messages: [
-            { role: "system", content: systemPrompt },
-            ...body.messages,
-          ],
+          max_tokens: 1024,
+          system: systemPrompt,
+          messages: body.messages,
         })
 
-        for await (const chunk of completion) {
-          // Skip reasoning_content chunks (extended thinking models)
-          const delta = chunk.choices[0]?.delta as Record<string, unknown>
-          if (delta?.reasoning_content) continue
-          const text = delta?.content
-          if (typeof text === "string" && text) {
-            controller.enqueue(encoder.encode(text))
+        for await (const chunk of response) {
+          if (chunk.type === "content_block_delta" && chunk.delta.type === "text_delta") {
+            const text = chunk.delta.text
+            if (text) controller.enqueue(encoder.encode(text))
           }
         }
       } catch (err) {
