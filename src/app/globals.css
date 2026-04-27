@@ -156,32 +156,16 @@ article ol { list-style: decimal; }
 ::-webkit-scrollbar-thumb { background: var(--op-accent); border-radius: 2px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--op-accent-hover); }
 
-/* ── Custom cursor — Optisphere Cursor Pack v1.0 ─────────────── */
-/* DEFAULT: white arrow, dark outline, red dot at notch */
+/* ── Custom cursor — red arrow ───────────────────────────────── */
 *, *::before, *::after {
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='28' viewBox='0 0 22 28'%3E%3Cpath d='M2,2 L2,22 L8,17 L12,26 L16,24 L12,15 L20,14 Z' fill='white' stroke='%23060606' stroke-width='1.5' stroke-linejoin='miter'/%3E%3Ccircle cx='5' cy='8' r='2.5' fill='%23e82020'/%3E%3C/svg%3E") 2 2, auto !important;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='24' viewBox='0 0 20 24'%3E%3Cpath d='M2,2 L2,20 L7,15 L10.5,23 L13.5,22 L10,14 L17,13 Z' fill='%23e82020' stroke='%23000' stroke-width='1' stroke-linejoin='round'/%3E%3C/svg%3E") 2 2, auto !important;
 }
-/* LINK SELECT: arrow + red target ring for interactive elements */
 a, button, [role=button], label[for], summary {
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M2,2 L2,22 L8,17 L12,26 L16,24 L12,15 L20,14 Z' fill='white' stroke='%23060606' stroke-width='1.5' stroke-linejoin='miter'/%3E%3Ccircle cx='5' cy='8' r='2.5' fill='%23e82020'/%3E%3Ccircle cx='22' cy='20' r='5' fill='none' stroke='%23e82020' stroke-width='1.5'/%3E%3Ccircle cx='22' cy='20' r='2' fill='%23e82020'/%3E%3C/svg%3E") 2 2, pointer !important;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='24' viewBox='0 0 20 24'%3E%3Cpath d='M2,2 L2,20 L7,15 L10.5,23 L13.5,22 L10,14 L17,13 Z' fill='%23e82020' stroke='%23000' stroke-width='1' stroke-linejoin='round'/%3E%3C/svg%3E") 2 2, pointer !important;
 }
-/* TEXT SELECT: white I-beam, red top bar */
 input[type=text], input[type=email], input[type=search], input[type=number],
-input[type=url], input[type=password], input[type=tel],
-textarea, [contenteditable=true] {
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='28' viewBox='0 0 20 28'%3E%3Cline x1='10' y1='4' x2='10' y2='24' stroke='white' stroke-width='1.5'/%3E%3Cline x1='5' y1='4' x2='15' y2='4' stroke='%23e82020' stroke-width='1.5'/%3E%3Cline x1='5' y1='24' x2='15' y2='24' stroke='white' stroke-width='1.5'/%3E%3C/svg%3E") 10 14, text !important;
-}
-/* WAIT: red target circle with center dot */
-[aria-busy=true], .cursor-wait {
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Ccircle cx='14' cy='14' r='11' fill='none' stroke='%23e82020' stroke-width='1.5'/%3E%3Ccircle cx='14' cy='14' r='3.5' fill='%23e82020'/%3E%3C/svg%3E") 14 14, wait !important;
-}
-/* UNAVAILABLE: arrow + red minus circle */
-[disabled], [aria-disabled=true] {
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M2,2 L2,22 L8,17 L12,26 L16,24 L12,15 L20,14 Z' fill='white' stroke='%23060606' stroke-width='1.5' stroke-linejoin='miter'/%3E%3Ccircle cx='22' cy='20' r='5' fill='none' stroke='%23e82020' stroke-width='1.5'/%3E%3Cline x1='18' y1='20' x2='26' y2='20' stroke='%23e82020' stroke-width='1.5'/%3E%3C/svg%3E") 2 2, not-allowed !important;
-}
-/* MOVE: 4-way arrows with red center dot */
-[draggable=true] {
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cline x1='14' y1='3' x2='14' y2='25' stroke='white' stroke-width='1.5'/%3E%3Cline x1='3' y1='14' x2='25' y2='14' stroke='white' stroke-width='1.5'/%3E%3Cpath d='M14,3 L11,8 L17,8Z' fill='white'/%3E%3Cpath d='M14,25 L11,20 L17,20Z' fill='white'/%3E%3Cpath d='M3,14 L8,11 L8,17Z' fill='white'/%3E%3Cpath d='M25,14 L20,11 L20,17Z' fill='white'/%3E%3Ccircle cx='14' cy='14' r='2' fill='%23e82020'/%3E%3C/svg%3E") 14 14, move !important;
+input[type=url], input[type=password], input[type=tel], textarea, [contenteditable=true] {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='24' viewBox='0 0 14 24'%3E%3Cline x1='7' y1='2' x2='7' y2='22' stroke='%23e82020' stroke-width='2'/%3E%3Cline x1='3' y1='2' x2='11' y2='2' stroke='%23e82020' stroke-width='2'/%3E%3Cline x1='3' y1='22' x2='11' y2='22' stroke='%23e82020' stroke-width='2'/%3E%3C/svg%3E") 7 12, text !important;
 }
 
 /* ── Touch & canvas hygiene ─────────────────────────────────── */
