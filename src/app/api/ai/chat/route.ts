@@ -276,6 +276,7 @@ type RequestBody = {
   messages: ChatMessage[]
   sessionId: string
   calcResult?: string
+  visitorContext?: string
 }
 
 // ── Handler ────────────────────────────────────────────────────────────────────
@@ -323,6 +324,9 @@ export async function POST(request: NextRequest): Promise<Response> {
 
   // Build system prompt
   let systemPrompt = OPTI_SYSTEM
+  if (body.visitorContext?.trim()) {
+    systemPrompt += `\n\n[КОНТЕКСТ ПРЕДЫДУЩИХ ВИЗИТОВ]\n${body.visitorContext.slice(0, 500)}\nИспользуй ненавязчиво — не говори «я вас помню», просто учитывай что уже знаешь о клиенте.`;
+  }
   if (safeCalcResult) {
     systemPrompt += `\n\nКонтекст: клиент прошёл калькулятор, результат: ${safeCalcResult}. Учти это при ответах.`
   }

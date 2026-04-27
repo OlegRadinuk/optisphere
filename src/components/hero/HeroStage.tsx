@@ -4,6 +4,8 @@ import WireSphere from './WireSphere';
 import { useHeroChat } from '@/components/ai/HeroChatContext';
 import type { ChatMessage } from '@/components/ai/HeroChatContext';
 import LeadForm from '@/components/ai/LeadForm';
+import { getMemory, saveMemory } from '@/lib/optiMemory';
+import type { OptiMemory } from '@/lib/optiMemory';
 
 type SphereState = 'idle' | 'thinking' | 'speaking';
 
@@ -16,6 +18,9 @@ const QUICK_PROMPTS = ['Стоматология', 'Гостиница', 'Маг
 
 export default function HeroStage() {
   const { sharedMessages, setSharedMessages, sharedSessionId } = useHeroChat();
+  const [visitorMemory] = useState<OptiMemory | null>(() =>
+    typeof window !== 'undefined' ? getMemory() : null
+  );
   const [state, setState] = useState<SphereState>('idle');
   const [streamingText, setStreamingText] = useState('');
   const [input, setInput] = useState('');
@@ -55,7 +60,11 @@ export default function HeroStage() {
       const res = await fetch('/api/ai/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: newMessages, sessionId: sharedSessionId }),
+        body: JSON.stringify({
+          messages: newMessages,
+          sessionId: sharedSessionId,
+          visitorContext: visitorMemory?.summary ?? undefined,
+        }),
         signal: abortRef.current.signal,
       });
 
@@ -78,8 +87,20 @@ export default function HeroStage() {
       if (full.includes(SAVE_LEAD_MARKER) || full.includes('[SHOW_FORM]')) {
         setShowLeadForm(true);
       }
+      const finalMessages = [...newMessages, { role: 'assistant' as const, content: cleanFull }];
       setSharedMessages(prev => [...prev, { role: 'assistant', content: cleanFull }]);
       setStreamingText('');
+
+      // Background summary — non-blocking
+      if (finalMessages.length >= 4) {
+        fetch('/api/ai/summary', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ messages: finalMessages }),
+        }).then(r => r.json()).then((data: { summary: string | null }) => {
+          if (data.summary) saveMemory(data.summary, visitorMemory);
+        }).catch(() => {});
+      }
     } catch (e: unknown) {
       if ((e as Error)?.name !== 'AbortError') {
         setStreamingText('Что-то пошло не так. Попробуйте ещё раз.');

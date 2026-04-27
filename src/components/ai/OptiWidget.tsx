@@ -5,6 +5,8 @@ import { AnimatePresence, motion } from "framer-motion"
 import { useTranslations } from "next-intl"
 import { useHeroChat } from "@/components/ai/HeroChatContext"
 import type { ChatMessage } from "@/components/ai/HeroChatContext"
+import { getMemory, saveMemory, clearMemory } from "@/lib/optiMemory"
+import type { OptiMemory } from "@/lib/optiMemory"
 
 interface LeadFormData {
   name: string
@@ -315,6 +317,9 @@ export default function OptiWidget() {
 
   const hints = t.raw("bubble_hints") as string[]
   const [bubbleHint] = useState<string>(() => hints[Math.floor(Math.random() * hints.length)])
+  const [visitorMemory, setVisitorMemory] = useState<OptiMemory | null>(() =>
+    typeof window !== 'undefined' ? getMemory() : null
+  )
 
   const [isOpen, setIsOpen] = useState(false)
   const [input, setInput] = useState("")
@@ -544,6 +549,7 @@ export default function OptiWidget() {
           messages: newMessages,
           sessionId: sharedSessionId,
           calcResult,
+          visitorContext: visitorMemory?.summary ?? undefined,
         }),
       })
 
@@ -584,6 +590,24 @@ export default function OptiWidget() {
       // Detect [SHOW_FORM] marker in full response
       if (assistantText.includes(FORM_MARKER)) {
         setShowLeadForm(true)
+      }
+
+      // Background summary — non-blocking
+      const finalMessages: ChatMessage[] = [
+        ...newMessages,
+        { role: "assistant", content: assistantText.replace(FORM_MARKER, "").trim() },
+      ]
+      if (finalMessages.length >= 4) {
+        fetch('/api/ai/summary', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ messages: finalMessages }),
+        }).then(r => r.json()).then((data: { summary: string | null }) => {
+          if (data.summary) {
+            saveMemory(data.summary, visitorMemory);
+            setVisitorMemory(getMemory());
+          }
+        }).catch(() => {});
       }
 
       // If contact detected in user text — send lead silently
@@ -851,14 +875,15 @@ export default function OptiWidget() {
               <div
                 style={{
                   borderTop: '1px solid rgba(255,255,255,0.07)',
-                  padding: "0.75rem 1rem",
+                  padding: "0.75rem 1rem 0.5rem",
                   display: "flex",
+                  flexDirection: "column",
                   gap: "0.5rem",
-                  alignItems: "flex-end",
                   flexShrink: 0,
                   background: 'rgba(0,0,0,0.12)',
                 }}
               >
+              <div style={{ display: "flex", gap: "0.5rem", alignItems: "flex-end" }}>
                 <textarea
                   ref={textareaRef}
                   value={input}
@@ -926,6 +951,28 @@ export default function OptiWidget() {
                     <polygon points="22 2 15 22 11 13 2 9 22 2" />
                   </svg>
                 </button>
+              </div>
+              {/* Clear history link */}
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <button
+                  onClick={() => {
+                    clearMemory();
+                    setVisitorMemory(null);
+                  }}
+                  style={{
+                    font: "400 11px/1 'JetBrains Mono',monospace",
+                    color: 'var(--op-text-muted)',
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    letterSpacing: '.08em',
+                    padding: '2px 4px',
+                    opacity: 0.6,
+                  }}
+                >
+                  очистить историю
+                </button>
+              </div>
               </div>
             </motion.div>
           )}
