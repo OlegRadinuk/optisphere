@@ -7,7 +7,7 @@ import LeadForm from '@/components/ai/LeadForm';
 
 type SphereState = 'idle' | 'thinking' | 'speaking';
 
-const GREETING = "Опишите ваш бизнес — подберу похожий кейс, рассчитаю бюджет и покажу что именно вам нужно. Прямо здесь, за минуту.";
+const GREETING = "Расскажите чем занимаетесь — покажу, как именно это продаётся через сайт.";
 const PROGRESS_STEPS = 3;
 const SAVE_LEAD_MARKER = '[SAVE_LEAD]';
 
@@ -201,7 +201,7 @@ export default function HeroStage() {
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && !e.shiftKey && send(input)}
-            placeholder="Ниша, задача, вопрос — Опти разберётся…"
+            placeholder="Стоматология, нужен сайт с записью…"
             disabled={busy}
             style={{ flex: 1, background: 'transparent', border: 0, outline: 0, color: 'var(--op-text)', font: "400 14px/1 'Inter',sans-serif", padding: '10px 0', minWidth: 0 }}
           />
