@@ -70,30 +70,11 @@ export default function Navbar() {
         backdropFilter: scrolled ? 'blur(12px)' : 'none',
         transition: 'all 220ms ease',
       }}>
-        {/* Two-layer logo: wordmark centered with nav links, ring overflows below */}
-        <div style={{ position: 'relative', flexShrink: 0, zIndex: 2 }}>
-          {/* Ring: absolute, centered on wordmark but shifted +14px down → no top overflow into HUD */}
-          <img
-            src={isLight ? '/optisphere-ring-light.png' : '/optisphere-ring-dark.png'}
-            aria-hidden="true"
-            style={{
-              position: 'absolute',
-              height: 90,
-              width: 'auto',
-              left: '50%',
-              top: '50%',
-              transform: 'translate(-50%, calc(-50% + 14px))',
-              zIndex: 1,
-              pointerEvents: 'none',
-            }}
-          />
-          {/* Wordmark: layout element, vertically centered in nav by parent alignItems:center */}
-          <img
-            src={isLight ? '/optisphere-wordmark-light.png' : '/optisphere-wordmark-dark.png'}
-            alt="Optisphere"
-            style={{ height: 24, width: 'auto', display: 'block', position: 'relative', zIndex: 2 }}
-          />
-        </div>
+        <img
+          src={isLight ? '/optisphere-logo-light.png' : '/optisphere-logo-dark.png'}
+          alt="Optisphere"
+          style={{ height: 44, width: 'auto', display: 'block', flexShrink: 0 }}
+        />
         <div style={{ display:'flex', gap:22, marginLeft:16 }} className="nav-links-desktop">
           {LINKS.map((l, i) => (
             <a key={l} href={LINK_HREFS[l] || '#'} style={{
