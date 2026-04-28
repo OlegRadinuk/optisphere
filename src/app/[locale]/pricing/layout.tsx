@@ -1,4 +1,7 @@
 import type { Metadata } from 'next';
+import Navbar from '@/components/sections/Navbar';
+import Footer from '@/components/sections/Footer';
+import { HudStatusBar, HudCorners, HudRail } from '@/components/hud/HudChrome';
 
 export const metadata: Metadata = {
   title: 'Цены на разработку сайтов и AI-ассистентов — Optisphere',
@@ -7,5 +10,14 @@ export const metadata: Metadata = {
 };
 
 export default function PricingLayout({ children }: { children: React.ReactNode }) {
-  return children;
+  return (
+    <div style={{ minHeight: '100vh', background: 'var(--op-base)' }}>
+      <HudStatusBar />
+      <HudCorners />
+      <HudRail />
+      <Navbar />
+      {children}
+      <Footer />
+    </div>
+  );
 }
