@@ -46,6 +46,12 @@ export const NAV_ITEMS: NavItem[] = [
     pageHref: '/cases',
   },
   {
+    label: 'Блог',
+    labelEn: 'Blog',
+    href: '/blog',
+    pageHref: '/blog',
+  },
+  {
     label: 'Цены',
     labelEn: 'Pricing',
     href: '#pricing',

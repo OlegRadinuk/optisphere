@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next'
+import { getAllPosts } from '@/lib/blog'
 
 const BASE_URL = 'https://optisphere.tech'
 
@@ -30,6 +31,7 @@ const PAGES: PageEntry[] = [
   { path: '/services/yandex-direct', priority: 0.7,  changeFreq: 'monthly' },
   { path: '/cases',                  priority: 0.85, changeFreq: 'weekly'  },
   { path: '/pricing',                priority: 0.85, changeFreq: 'monthly' },
+  { path: '/blog',                   priority: 0.85, changeFreq: 'weekly'  },
   { path: '/contact',                priority: 0.8,  changeFreq: 'yearly'  },
   { path: '/privacy',                priority: 0.2,  changeFreq: 'yearly'  },
   { path: '/cookies',                priority: 0.2,  changeFreq: 'yearly'  },
@@ -68,6 +70,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
           en: enUrl,
         },
       },
+    })
+  }
+
+  // Blog posts
+  const posts = getAllPosts('ru')
+  for (const post of posts) {
+    const ruUrl = `${BASE_URL}/blog/${post.slug}`
+    const enUrl = `${BASE_URL}/en/blog/${post.slug}`
+    entries.push({
+      url: ruUrl,
+      lastModified: LAST_MOD,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+      alternates: { languages: { ru: ruUrl, en: enUrl } },
+    })
+    entries.push({
+      url: enUrl,
+      lastModified: LAST_MOD,
+      changeFrequency: 'monthly',
+      priority: 0.63,
+      alternates: { languages: { ru: ruUrl, en: enUrl } },
     })
   }
 
