@@ -38,15 +38,36 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
 
+  const titleDefault =
+    locale === "ru"
+      ? "Создание сайтов в Крыму с AI-ассистентом | Optisphere"
+      : "Website Development in Crimea with AI Assistant | Optisphere";
+
+  const description =
+    locale === "ru"
+      ? "Разрабатываем продающие сайты для малого бизнеса в Крыму. Лендинги от 50 000 ₽. AI-ассистент в каждом сайте. Симферополь, Севастополь, Ялта. Работаем по всей России."
+      : "We build conversion-focused websites for businesses in Crimea. Landing pages from 50 000 ₽. AI assistant included. Simferopol, Sevastopol, Yalta.";
+
   return {
     title: {
-      default: "Optisphere — AI Web Studio",
+      default: titleDefault,
       template: "%s | Optisphere",
     },
-    description:
-      locale === "ru"
-        ? "Первая AI-нативная веб-студия. Сайт + AI-ассистент Опти — продаёт 24/7."
-        : "First AI-native web studio. Website + AI assistant Opti — sells 24/7.",
+    description,
+    ...(locale === "ru"
+      ? {
+          keywords: [
+            "создание сайтов Крым",
+            "разработка сайтов Симферополь",
+            "лендинг под ключ",
+            "AI-ассистент для сайта",
+            "веб-студия Крым",
+            "SEO продвижение Крым",
+            "Яндекс.Директ настройка",
+            "сайт для бизнеса",
+          ],
+        }
+      : {}),
     metadataBase: new URL("https://optisphere.tech"),
     alternates: {
       canonical: locale === "ru" ? "https://optisphere.tech/" : "https://optisphere.tech/en",
@@ -59,17 +80,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       siteName: "Optisphere",
       locale: locale === "ru" ? "ru_RU" : "en_US",
       type: "website",
-      title: "Optisphere — AI Web Studio",
-      description: locale === "ru"
-        ? "Первая AI-нативная веб-студия. Сайт + AI-ассистент Опти — продаёт 24/7."
-        : "First AI-native web studio. Website + AI assistant Opti — sells 24/7.",
+      title: titleDefault,
+      description,
+      url: locale === "ru" ? "https://optisphere.tech/" : "https://optisphere.tech/en",
     },
     twitter: {
       card: "summary_large_image",
-      title: "Optisphere — AI Web Studio",
-      description: locale === "ru"
-        ? "Первая AI-нативная веб-студия. Сайт + AI-ассистент Опти — продаёт 24/7."
-        : "First AI-native web studio. Website + AI assistant Opti — sells 24/7.",
+      title: titleDefault,
+      description,
     },
     verification: {
       google: "D2bmSl1lozm70q5Iq9WasgQJ2pbS2l1_bh9jJJo_pIg",
@@ -101,9 +119,26 @@ function buildSchemaOrg(locale: string): string {
           : "First AI-native web studio. We build websites and AI assistants for hotels, clinics, and construction companies.",
         email: "hello@optisphere.ru",
         telephone: "+79785768451",
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "Симферополь",
+          addressRegion: "Республика Крым",
+          addressCountry: "RU",
+        },
+        geo: {
+          "@type": "GeoCoordinates",
+          latitude: 44.952116,
+          longitude: 34.102411,
+        },
         areaServed: [
           { "@type": "Country", name: "Russia" },
           { "@type": "AdministrativeArea", name: isRu ? "Крым" : "Crimea" },
+          { "@type": "City", name: isRu ? "Симферополь" : "Simferopol" },
+          { "@type": "City", name: isRu ? "Севастополь" : "Sevastopol" },
+          { "@type": "City", name: isRu ? "Ялта" : "Yalta" },
+          { "@type": "City", name: isRu ? "Феодосия" : "Feodosiya" },
+          { "@type": "City", name: isRu ? "Евпатория" : "Yevpatoria" },
+          { "@type": "City", name: isRu ? "Керчь" : "Kerch" },
         ],
         serviceType: isRu
           ? ["Веб-разработка", "AI-ассистенты", "SEO-продвижение"]

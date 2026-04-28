@@ -388,6 +388,69 @@
       "docs": "Documentation"
     }
   },
+  "services_hub": {
+    "label": "Services",
+    "title": "What we do",
+    "sub": "Five tools for growing your business online.",
+    "cards": {
+      "ai": { "label": "AI 01", "title": "AI Assistants", "desc": "Smart chatbot: answers 24/7, captures leads.", "price": "from ₽50,000" },
+      "web": { "label": "WEB 02", "title": "Websites", "desc": "Landing page in 3 days or multi-page CMS site.", "price": "from ₽50,000" },
+      "seo": { "label": "SEO 03", "title": "SEO", "desc": "Organic traffic from Yandex and Google from month one.", "price": "from ₽25,000/mo" },
+      "direct": { "label": "ADS 04", "title": "Yandex Direct", "desc": "Paid traffic with ROI. Management and reports.", "price": "from ₽20,000/mo" },
+      "pano": { "label": "VR 05", "title": "360° Panoramas", "desc": "Interactive tours. Hotels, clinics, showrooms.", "price": "from ₽8,000" }
+    },
+    "more": "Learn more"
+  },
+  "services_websites": {
+    "label": "Websites",
+    "title": "Websites in Crimea",
+    "desc": "We build high-converting sites for small businesses. Landing page in 3 days.",
+    "packages_title": "Packages",
+    "spec_title": "Specialisations",
+    "faq_title": "FAQ",
+    "cta": "Discuss project →"
+  },
+  "services_ai": {
+    "label": "AI Assistants",
+    "title": "AI assistant for your business",
+    "subtitle": "Answers questions 24/7, captures leads and forwards them to you.",
+    "price_hint": "from ₽50,000 · 3-day integration",
+    "steps_title": "How it works",
+    "cases_title": "Use cases",
+    "faq_title": "FAQ",
+    "cta": "Discuss project →"
+  },
+  "contact": {
+    "label": "Contact",
+    "title": "Let's discuss your project",
+    "sub": "I reply within an hour via Telegram or phone. Straight to the point.",
+    "form": {
+      "name": "Name",
+      "name_optional": "(optional)",
+      "contact": "Phone or Telegram",
+      "contact_required": "*",
+      "contact_placeholder": "+7 900 000 00 00 or @username",
+      "contact_error": "Enter a phone or Telegram (at least 5 chars)",
+      "type": "Request type",
+      "type_website": "Website",
+      "type_ai": "AI Assistant",
+      "type_seo": "SEO",
+      "type_other": "Other",
+      "message": "Message",
+      "message_optional": "(optional)",
+      "message_placeholder": "Tell us about your business and task...",
+      "submit": "Send →",
+      "submitting": "Sending...",
+      "consent": "By clicking Send you agree to the",
+      "consent_link": "privacy policy",
+      "success_title": "Thank you!",
+      "success_text": "I'll reply within an hour via Telegram or phone.",
+      "error_server": "Sending error. Try again or write directly: hi@optisphere.ru"
+    },
+    "telegram_label": "Telegram",
+    "email_label": "Email",
+    "status": "Reply within 1 hour · Crimea, all Russia"
+  },
   "footer": {
     "tagline": "AI-native web studio",
     "rights": "© 2026 Optisphere. All rights reserved.",

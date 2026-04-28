@@ -1,7 +1,7 @@
 import Navbar from '@/components/sections/Navbar';
 import HeroSection from '@/components/sections/HeroSection';
 import LiveDemoSection from '@/components/sections/LiveDemoSection';
-import ThreePathsSection from '@/components/sections/ThreePathsSection';
+import ServicesPreviewSection from '@/components/sections/ServicesPreviewSection';
 import CasesSection from '@/components/sections/CasesSection';
 import ProofSection from '@/components/sections/ProofSection';
 import TeamSection from '@/components/sections/TeamSection';
@@ -14,14 +14,14 @@ import { HudStatusBar, HudCorners, HudRail, HudLogTicker } from '@/components/hu
 
 export default function Home() {
   return (
-    <main style={{ minHeight:'100vh', background:'var(--op-base)' }}>
+    <main style={{ minHeight: '100vh', background: 'var(--op-base)' }}>
       <HudStatusBar />
       <HudCorners />
       <HudRail />
       <Navbar />
       <HeroSection />
       <LiveDemoSection />
-      <ThreePathsSection />
+      <ServicesPreviewSection />
       <CasesSection />
       <ProofSection />
       <TeamSection />
