@@ -81,6 +81,20 @@
     } catch (e) { /* quota exceeded or unavailable */ }
   }
 
+  function clearHistory() {
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+      sessionStorage.removeItem(SESSION_FLAG);
+    } catch (e) {}
+    messages       = [];
+    sessionId      = "s-" + Math.random().toString(36).slice(2);
+    leadFormShown  = false;
+    quickRepliesShown = false;
+    var msgsEl = msgs();
+    if (msgsEl) msgsEl.innerHTML = "";
+    showGreeting();
+  }
+
   function restoreMessages() {
     if (!messages.length) return;
     for (var i = 0; i < messages.length; i++) {
@@ -145,7 +159,10 @@
       ".opsph-lead-btn{width:100%;padding:9px;border:none;border-radius:9px;background:" + COLOR + ";color:#fff;font-weight:600;font-size:13px;font-family:system-ui,sans-serif;cursor:pointer;}",
       ".opsph-lead-btn:disabled{opacity:.5;cursor:default;}",
       ".opsph-lead-ok{color:#059669;font-size:13px;font-family:system-ui,sans-serif;font-weight:600;text-align:center;padding:6px 0;}",
-      "#opsph-form{display:flex;padding:10px 12px;border-top:1px solid #e2e8f0;gap:8px;flex-shrink:0;background:#fff;}",
+      "#opsph-footer{display:flex;flex-direction:column;flex-shrink:0;background:#fff;border-top:1px solid #e2e8f0;}",
+      "#opsph-form{display:flex;padding:10px 12px 6px;gap:8px;}",
+      "#opsph-clear{background:none;border:none;cursor:pointer;font-size:11px;color:#94a3b8;font-family:system-ui,sans-serif;padding:0 12px 8px;text-align:center;width:100%;transition:color .15s;}",
+      "#opsph-clear:hover{color:#64748b;}",
       "#opsph-input{flex:1;padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:12px;font-size:14px;font-family:system-ui,sans-serif;outline:none;resize:none;min-height:38px;max-height:96px;line-height:1.4;transition:border-color .15s;color:#1e293b;background:#f8fafc;}",
       "#opsph-input:focus{border-color:" + COLOR + ";background:#fff;}",
       "#opsph-send{width:38px;height:38px;border-radius:12px;border:none;background:" + COLOR + ";cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}",
@@ -187,15 +204,19 @@
         '<button id="opsph-close" aria-label="Закрыть">✕</button>',
       '</div>',
       '<div id="opsph-msgs" aria-live="polite"></div>',
-      '<form id="opsph-form" autocomplete="off">',
-        '<textarea id="opsph-input" placeholder="' + escHtml(placeholder) + '" rows="1"></textarea>',
-        '<button id="opsph-send" type="submit">' + sendIcon() + '</button>',
-      '</form>'
+      '<div id="opsph-footer">',
+        '<form id="opsph-form" autocomplete="off">',
+          '<textarea id="opsph-input" placeholder="' + escHtml(placeholder) + '" rows="1"></textarea>',
+          '<button id="opsph-send" type="submit">' + sendIcon() + '</button>',
+        '</form>',
+        '<button id="opsph-clear" type="button">очистить историю</button>',
+      '</div>'
     ].join("");
     document.body.appendChild(wrap);
 
     wrap.querySelector("#opsph-close").addEventListener("click", toggle);
     wrap.querySelector("#opsph-form").addEventListener("submit", onSubmit);
+    wrap.querySelector("#opsph-clear").addEventListener("click", clearHistory);
     var inp = wrap.querySelector("#opsph-input");
     inp.addEventListener("keydown", function (e) {
       if (e.key === "Enter" && !e.shiftKey) {
