@@ -81,14 +81,15 @@ export async function POST(
 
     let fullText = header
 
-    // Append last 5 messages from this session
+    // Append last 10 messages from this session
     if (sessionId) {
-      const msgs = getMessagesBySession(client.id, sessionId, 5).reverse()
+      const msgs = getMessagesBySession(client.id, sessionId, 10).reverse()
       if (msgs.length > 0) {
+        const botName = client.widget_title || client.name
         const history = msgs
-          .map((m) => `${m.role === "user" ? "Гость" : "Яна"}: ${m.content.slice(0, 300)}`)
-          .join("\n")
-        fullText += `\n\n<b>Последние сообщения:</b>\n${history}`
+          .map((m) => `${m.role === "user" ? "👤 Гость" : `🤖 ${botName}`}: ${m.content.slice(0, 500)}`)
+          .join("\n\n")
+        fullText += `\n\n<b>💬 Переписка:</b>\n${history}`
       }
     }
 
