@@ -10,12 +10,16 @@ fs.mkdirSync(path.dirname(DB_PATH), { recursive: true })
 
 let _db: Database.Database | null = null
 
+const SEED_PATH =
+  process.env.BOT_SEED_PATH ?? path.join(process.cwd(), "data", "bots-seed.json")
+
 export function getDb(): Database.Database {
   if (_db) return _db
   _db = new Database(DB_PATH)
   _db.pragma("journal_mode = WAL")
   _db.pragma("foreign_keys = ON")
   initSchema(_db)
+  seedBots(_db)
   return _db
 }
 
@@ -76,6 +80,52 @@ function initSchema(db: Database.Database) {
     db.exec(`ALTER TABLE clients ADD COLUMN quick_replies TEXT DEFAULT ''`)
   } catch {
     // Column already exists — ignore
+  }
+}
+
+function seedBots(db: Database.Database) {
+  if (!fs.existsSync(SEED_PATH)) return
+  let seeds: Partial<Client>[]
+  try {
+    seeds = JSON.parse(fs.readFileSync(SEED_PATH, "utf-8"))
+  } catch {
+    console.error("[db] Failed to parse bots-seed.json")
+    return
+  }
+  for (const seed of seeds) {
+    if (!seed.slug) continue
+    const existing = db.prepare("SELECT id FROM clients WHERE slug = ?").get(seed.slug) as { id: number } | undefined
+    if (existing) {
+      // Update safe fields only — never overwrite admin changes to sensitive fields
+      const safeFields = ["name","widget_title","widget_color","widget_placeholder","context_url","quick_replies","system_prompt","model","rate_limit","active"] as const
+      const updates: Partial<Client> = {}
+      for (const f of safeFields) {
+        if (seed[f] !== undefined) (updates as Record<string, unknown>)[f] = seed[f]
+      }
+      if (Object.keys(updates).length) {
+        const fields = Object.keys(updates).map((k) => `${k} = @${k}`).join(", ")
+        db.prepare(`UPDATE clients SET ${fields} WHERE slug = @slug`).run({ ...updates, slug: seed.slug })
+      }
+    } else {
+      // Insert full record from seed
+      db.prepare(`
+        INSERT OR IGNORE INTO clients
+          (slug,name,description,system_prompt,api_key,base_url,model,tg_token,tg_chat_id,
+           widget_color,widget_title,widget_placeholder,rate_limit,active,context_url,quick_replies)
+        VALUES
+          (@slug,@name,@description,@system_prompt,@api_key,@base_url,@model,@tg_token,@tg_chat_id,
+           @widget_color,@widget_title,@widget_placeholder,@rate_limit,@active,@context_url,@quick_replies)
+      `).run({
+        slug: seed.slug, name: seed.name ?? seed.slug, description: seed.description ?? "",
+        system_prompt: seed.system_prompt ?? "", api_key: seed.api_key ?? "",
+        base_url: seed.base_url ?? "https://api.anthropic.com", model: seed.model ?? "claude-haiku-4-5-20251001",
+        tg_token: seed.tg_token ?? "", tg_chat_id: seed.tg_chat_id ?? "",
+        widget_color: seed.widget_color ?? "#2563eb", widget_title: seed.widget_title ?? "Ассистент",
+        widget_placeholder: seed.widget_placeholder ?? "Напишите вопрос…",
+        rate_limit: seed.rate_limit ?? 30, active: seed.active ?? 1,
+        context_url: seed.context_url ?? "", quick_replies: seed.quick_replies ?? "",
+      })
+    }
   }
 }
 

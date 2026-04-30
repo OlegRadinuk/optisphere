@@ -147,7 +147,7 @@ export async function POST(
     try {
       const ctxRes = await fetch(client.context_url, {
         signal: AbortSignal.timeout(3000),
-        headers: { "User-Agent": "Optisphere-Bot/1.0" },
+        headers: { "User-Agent": "Optisphere-Bot/1.0", "Accept-Encoding": "gzip, deflate" },
       })
       if (ctxRes.ok) {
         const ctxText = await ctxRes.text()
