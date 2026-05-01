@@ -9,6 +9,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isRu = locale === 'ru';
 
+  const canonical = isRu
+    ? 'https://optisphere.tech/services/seo'
+    : 'https://optisphere.tech/en/services/seo';
   return {
     title: isRu
       ? 'SEO-продвижение сайтов в Крыму — Яндекс и Google | Optisphere'
@@ -16,6 +19,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: isRu
       ? 'Вывод сайта в топ Яндекса и Google по Крыму и всей России. Техническое SEO, контент, schema.org, Core Web Vitals. Первые результаты за 3 месяца.'
       : 'Ranking websites in Yandex and Google for Crimea and all Russia. Technical SEO, content, schema.org, Core Web Vitals. First results in 3 months.',
+    alternates: {
+      canonical,
+      languages: {
+        ru: 'https://optisphere.tech/services/seo',
+        en: 'https://optisphere.tech/en/services/seo',
+      },
+    },
+    openGraph: { url: canonical },
   };
 }
 

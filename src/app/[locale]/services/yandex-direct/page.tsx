@@ -9,6 +9,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isRu = locale === 'ru';
 
+  const canonical = isRu
+    ? 'https://optisphere.tech/services/yandex-direct'
+    : 'https://optisphere.tech/en/services/yandex-direct';
   return {
     title: isRu
       ? 'Яндекс.Директ для бизнеса в Крыму — настройка и ведение | Optisphere'
@@ -16,6 +19,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: isRu
       ? 'Настраиваем рекламу в Яндекс.Директ для малого бизнеса. Кейс: 189 кликов за 9 497 ₽, стоимость лида 1 583 ₽. Гостиницы, цветы, медицина, строительство.'
       : 'We set up Yandex Direct advertising for small businesses. Case: 189 clicks for ₽9,497, lead cost ₽1,583. Hotels, flowers, medical, construction.',
+    alternates: {
+      canonical,
+      languages: {
+        ru: 'https://optisphere.tech/services/yandex-direct',
+        en: 'https://optisphere.tech/en/services/yandex-direct',
+      },
+    },
+    openGraph: { url: canonical },
   };
 }
 

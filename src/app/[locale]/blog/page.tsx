@@ -9,6 +9,7 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isRu = locale === 'ru';
+  const canonical = isRu ? 'https://optisphere.tech/blog' : 'https://optisphere.tech/en/blog';
   return {
     title: isRu
       ? 'Блог об AI и маркетинге для малого бизнеса | Optisphere'
@@ -16,6 +17,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: isRu
       ? 'Практические статьи об AI-ассистентах, SEO-продвижении и рекламе для бизнеса в Крыму и России. Реальные кейсы с цифрами.'
       : 'Practical articles on AI assistants, SEO promotion, and advertising for business in Crimea and Russia.',
+    alternates: {
+      canonical,
+      languages: {
+        ru: 'https://optisphere.tech/blog',
+        en: 'https://optisphere.tech/en/blog',
+      },
+    },
+    openGraph: { url: canonical },
   };
 }
 

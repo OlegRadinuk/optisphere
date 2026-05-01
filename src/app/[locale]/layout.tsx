@@ -69,20 +69,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         }
       : {}),
     metadataBase: new URL("https://optisphere.tech"),
-    alternates: {
-      canonical: locale === "ru" ? "https://optisphere.tech/" : "https://optisphere.tech/en",
-      languages: {
-        ru: "https://optisphere.tech/",
-        en: "https://optisphere.tech/en",
-      },
-    },
     openGraph: {
       siteName: "Optisphere",
       locale: locale === "ru" ? "ru_RU" : "en_US",
       type: "website",
       title: titleDefault,
       description,
-      url: locale === "ru" ? "https://optisphere.tech/" : "https://optisphere.tech/en",
     },
     twitter: {
       card: "summary_large_image",

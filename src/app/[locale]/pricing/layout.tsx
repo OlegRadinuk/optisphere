@@ -7,6 +7,13 @@ export const metadata: Metadata = {
   title: 'Цены на разработку сайтов и AI-ассистентов — Optisphere',
   description:
     'Прозрачные цены на создание сайтов, AI-ботов и SEO-продвижение. Лендинг от 50 000 ₽, AI-ассистент от 50 000 ₽. Подписка "Орбита" от 10 000 ₽/мес.',
+  alternates: {
+    canonical: 'https://optisphere.tech/pricing',
+    languages: {
+      ru: 'https://optisphere.tech/pricing',
+      en: 'https://optisphere.tech/en/pricing',
+    },
+  },
 };
 
 export default function PricingLayout({ children }: { children: React.ReactNode }) {

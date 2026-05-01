@@ -10,11 +10,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isRu = locale === 'ru';
 
+  const canonical = isRu ? 'https://optisphere.tech/services' : 'https://optisphere.tech/en/services';
   return {
     title: isRu ? 'Услуги — Optisphere' : 'Services — Optisphere',
     description: isRu
       ? 'Разрабатываем сайты с AI-ассистентом, продвигаем в Яндексе и Google. Для малого бизнеса в Крыму и по всей России.'
       : 'We build websites with AI assistants and promote on Yandex and Google. For small businesses across Russia.',
+    alternates: {
+      canonical,
+      languages: {
+        ru: 'https://optisphere.tech/services',
+        en: 'https://optisphere.tech/en/services',
+      },
+    },
+    openGraph: { url: canonical },
   };
 }
 

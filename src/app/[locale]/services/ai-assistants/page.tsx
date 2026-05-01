@@ -9,6 +9,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isRu = locale === 'ru';
 
+  const canonical = isRu
+    ? 'https://optisphere.tech/services/ai-assistants'
+    : 'https://optisphere.tech/en/services/ai-assistants';
   return {
     title: isRu
       ? 'AI-ассистент для сайта — умный чат-бот для вашего бизнеса'
@@ -16,6 +19,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: isRu
       ? 'Встраиваем AI-чат-бота в ваш сайт: отвечает 24/7, принимает заявки, увеличивает конверсию. На базе Claude AI. Для гостиниц, клиник, магазинов. Крым и вся Россия.'
       : 'We embed an AI chatbot in your site: answers 24/7, captures leads, increases conversion. Powered by Claude AI. For hotels, clinics, stores. Crimea and all Russia.',
+    alternates: {
+      canonical,
+      languages: {
+        ru: 'https://optisphere.tech/services/ai-assistants',
+        en: 'https://optisphere.tech/en/services/ai-assistants',
+      },
+    },
+    openGraph: { url: canonical },
   };
 }
 

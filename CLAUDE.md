@@ -68,13 +68,19 @@ SEO + Яндекс.Директ — часть подписки PRO/MAX.
 - Claude API (claude-haiku-4-5 для скорости/стоимости, claude-sonnet-4-6 для качества)
 
 ## Визуальная концепция
-- **Тема: tactical/tech** — тёмный фон (#060606), HUD-элементы, монопространственные шрифты
+
+**→ Полная спека: `spec/PROJECT_STATE.md` (единый источник правды)**
+
+- **Тема: Azimov Dark** — тёмный фон (#080808) + белые геометрические акценты (opacity 0.03–0.08) в стиле AWP Asiimov из CS2
 - **Акцент: красный (#e82020)** — единственный цвет, всё остальное ч/б
+- **Геометрия:** угловые белые фигуры на фоне, диагональные срезы секций, card corners через `::before`
 - Логотип: asymmetric O-ring с акреционными дугами + wordmark "ptisphere"
 - Navbar: numbered nav (01 02...), OPTI·READY status chip, chamfered кнопки
 - Loader: terminal boot screen (OPTI.KERNEL · v4.2.1) — показывается один раз за сессию
 - Переходы между страницами: scan-line overlay (TransitionProvider)
 - Курсор: кастомный стрелки (тёмные с красным акцентом)
+
+**Шрифты:** Oxanium (headings) + Inter (body) + JetBrains Mono (HUD/labels)
 
 ## Mobile стратегия (КРИТИЧНО)
 Mobile — оптимизированная версия, НЕ упрощённая скучная.

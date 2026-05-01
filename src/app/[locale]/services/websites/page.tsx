@@ -9,6 +9,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isRu = locale === 'ru';
 
+  const canonical = isRu
+    ? 'https://optisphere.tech/services/websites'
+    : 'https://optisphere.tech/en/services/websites';
   return {
     title: isRu
       ? 'Создание сайтов в Крыму под ключ — лендинги и многостраничники'
@@ -16,6 +19,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: isRu
       ? 'Разрабатываем продающие сайты для малого бизнеса. Лендинг от 50 000 ₽ за 3-5 дней. AI-ассистент в комплекте. Гостиницы, стоматологии, строительство. Крым, вся Россия.'
       : 'We build high-converting websites for small businesses. Landing page from ₽50,000 in 3-5 days. AI assistant included. Hotels, clinics, construction. Crimea, all Russia.',
+    alternates: {
+      canonical,
+      languages: {
+        ru: 'https://optisphere.tech/services/websites',
+        en: 'https://optisphere.tech/en/services/websites',
+      },
+    },
+    openGraph: { url: canonical },
   };
 }
 
