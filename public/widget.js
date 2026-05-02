@@ -338,6 +338,11 @@
               messages.push({ role: "assistant", content: cleaned });
               saveSession();
               if ((full.indexOf("[SAVE_LEAD]") !== -1 || full.indexOf("[SHOW_FORM]") !== -1) && !leadFormShown) showLeadForm();
+              if (!leadFormShown) {
+                var userMsgCount = 0;
+                for (var mi = 0; mi < messages.length; mi++) { if (messages[mi].role === "user") userMsgCount++; }
+                if (userMsgCount >= 3) showLeadForm();
+              }
               isStreaming = false;
               setSendDisabled(false);
               scrollToBottom();
