@@ -96,12 +96,14 @@ function seedBots(db: Database.Database) {
     if (!seed.slug) continue
     const existing = db.prepare("SELECT id FROM clients WHERE slug = ?").get(seed.slug) as { id: number } | undefined
     if (existing) {
-      // Update safe fields only — never overwrite admin changes to sensitive fields
       const safeFields = ["name","widget_title","widget_color","widget_placeholder","context_url","quick_replies","system_prompt","model","rate_limit","active"] as const
       const updates: Partial<Client> = {}
       for (const f of safeFields) {
         if (seed[f] !== undefined) (updates as Record<string, unknown>)[f] = seed[f]
       }
+      // Restore tg credentials from seed only when seed has non-empty values
+      if (seed.tg_token) (updates as Record<string, unknown>).tg_token = seed.tg_token
+      if (seed.tg_chat_id) (updates as Record<string, unknown>).tg_chat_id = seed.tg_chat_id
       if (Object.keys(updates).length) {
         const fields = Object.keys(updates).map((k) => `${k} = @${k}`).join(", ")
         db.prepare(`UPDATE clients SET ${fields} WHERE slug = @slug`).run({ ...updates, slug: seed.slug })
@@ -217,6 +219,27 @@ export function updateClient(
   getDb()
     .prepare(`UPDATE clients SET ${fields} WHERE slug = @slug`)
     .run({ ...data, slug })
+  // Keep seed file in sync so credentials survive DB wipe
+  if (data.tg_token !== undefined || data.tg_chat_id !== undefined) {
+    syncClientToSeed(slug)
+  }
+}
+
+function syncClientToSeed(slug: string): void {
+  try {
+    if (!fs.existsSync(SEED_PATH)) return
+    const seeds: Partial<Client>[] = JSON.parse(fs.readFileSync(SEED_PATH, "utf-8"))
+    const client = getDb().prepare("SELECT * FROM clients WHERE slug = ?").get(slug) as Client | undefined
+    if (!client) return
+    const idx = seeds.findIndex((s) => s.slug === slug)
+    const entry = idx >= 0 ? seeds[idx] : { slug }
+    entry.tg_token = client.tg_token
+    entry.tg_chat_id = client.tg_chat_id
+    if (idx < 0) seeds.push(entry)
+    fs.writeFileSync(SEED_PATH, JSON.stringify(seeds, null, 2), "utf-8")
+  } catch (e) {
+    console.error("[db] syncClientToSeed failed", e)
+  }
 }
 
 export function deleteClient(slug: string): void {
