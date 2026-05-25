@@ -134,8 +134,11 @@ export async function POST(
   const nextNextSun = addDays(nextNextSat, 1)
 
   const isWeekend = dayOfWeek === 0 || dayOfWeek === 6
+  const timeStr = now.toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" })
+
   const calendarCtx = `\n\n— Календарь (используй ТОЛЬКО эти даты, не считай сам) —
 Сегодня: ${todayStr}${isWeekend ? " (выходной)" : ""}.
+Текущее время: ${timeStr} (московское время).
 Эти выходные: ${fmt(thisSat)} — ${fmt(thisSun)}.
 Следующие выходные: ${fmt(nextSat)} — ${fmt(nextSun)}.
 Через две недели: ${fmt(nextNextSat)} — ${fmt(nextNextSun)}.`
