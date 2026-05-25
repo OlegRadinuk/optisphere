@@ -67,7 +67,8 @@ const NAV_ITEMS = [
   },
 ]
 
-export function AlbamedShell({ children }: { children: React.ReactNode }) {
+// The full dashboard shell (sidebar, topbar, bottom nav, auth check)
+function AlbamedShellInner({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const [authed, setAuthed] = useState<boolean | null>(null)
   const [newLeadsCount, setNewLeadsCount] = useState(0)
@@ -238,4 +239,15 @@ export function AlbamedShell({ children }: { children: React.ReactNode }) {
       `}</style>
     </ToastProvider>
   )
+}
+
+// Login page bypasses the shell entirely to avoid the auth redirect loop
+export function AlbamedShell({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname()
+
+  if (pathname === "/albamed/login") {
+    return <>{children}</>
+  }
+
+  return <AlbamedShellInner>{children}</AlbamedShellInner>
 }
