@@ -39,6 +39,29 @@ function formatDate(iso: string) {
   })
 }
 
+function StatusBadge({ status }: { status: LeadStatus }) {
+  const map: Record<LeadStatus, { label: string; bg: string; color: string; border: string }> = {
+    new:     { label: "Новый",    bg: "#eff6ff", color: "#1d4ed8", border: "#bfdbfe" },
+    working: { label: "В работе", bg: "#fff7ed", color: "#c2410c", border: "#fed7aa" },
+    closed:  { label: "Закрыт",  bg: "#f0fdf4", color: "#16a34a", border: "#bbf7d0" },
+  }
+  const s = map[status] ?? map.new
+  return (
+    <span style={{
+      fontSize: 11,
+      fontWeight: 600,
+      padding: "3px 9px",
+      borderRadius: 9999,
+      background: s.bg,
+      color: s.color,
+      border: `1px solid ${s.border}`,
+      whiteSpace: "nowrap",
+    }}>
+      {s.label}
+    </span>
+  )
+}
+
 export default function LeadsPage() {
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -79,13 +102,184 @@ export default function LeadsPage() {
 
   return (
     <div>
-      <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexWrap: "wrap", gap: 12, marginBottom: 16 }}>
+      <style>{`
+        /* ── Desktop defaults ── */
+        .ab-leads-search-wrap {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          gap: 12px;
+          margin-bottom: 16px;
+        }
+        .ab-leads-search-box {
+          display: flex;
+          align-items: center;
+          gap: 0;
+          border: 1px solid #e8e8e8;
+          border-radius: 8px;
+          background: #fff;
+          overflow: hidden;
+          min-width: 240px;
+        }
+        .ab-leads-search-input {
+          flex: 1;
+          border: none;
+          outline: none;
+          padding: 8px 12px 8px 0;
+          font-size: 13px;
+          background: transparent;
+          color: #1a1a1a;
+          font-family: inherit;
+        }
+        .ab-leads-tabs {
+          display: flex;
+          gap: 6px;
+          margin-bottom: 16px;
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+          padding-bottom: 2px;
+        }
+        .ab-leads-tabs::-webkit-scrollbar { display: none; }
+        .ab-leads-tab {
+          -webkit-tap-highlight-color: transparent;
+          flex-shrink: 0;
+          white-space: nowrap;
+        }
+        .ab-table-wrap { overflow-x: auto; }
+        .ab-mobile-cards { display: none; }
+
+        /* ── Mobile overrides ── */
+        @media (max-width: 767px) {
+          .ab-leads-search-wrap {
+            flex-direction: column;
+            align-items: stretch;
+          }
+          .ab-leads-search-box {
+            min-width: 0;
+            width: 100%;
+          }
+          .ab-leads-search-input {
+            font-size: 16px; /* prevent iOS zoom */
+          }
+          .ab-table-wrap table { display: none; }
+          .ab-mobile-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+          }
+          .ab-card {
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            border-radius: 12px;
+            padding: 14px 16px;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            min-height: 44px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+          }
+          .ab-card:active { background: #fafafa; }
+          .ab-card-row1 {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 6px;
+          }
+          .ab-card-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1a1a1a;
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+          .ab-card-row2 {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 6px;
+          }
+          .ab-card-phone {
+            font-size: 15px;
+            font-weight: 500;
+            color: #f47920;
+            text-decoration: none;
+            -webkit-tap-highlight-color: transparent;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+          }
+          .ab-card-date {
+            font-size: 12px;
+            color: #bbb;
+            white-space: nowrap;
+          }
+          .ab-card-msg {
+            font-size: 13px;
+            color: #999;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-bottom: 8px;
+          }
+          .ab-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-top: 2px;
+          }
+          .ab-card-chat-link {
+            font-size: 13px;
+            font-weight: 500;
+            color: #f47920;
+            text-decoration: none;
+            -webkit-tap-highlight-color: transparent;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+          }
+          /* Skeleton cards */
+          .ab-skel-card {
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            border-radius: 12px;
+            padding: 14px 16px;
+          }
+          .ab-skel-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 8px;
+          }
+          .ab-skel-line {
+            height: 14px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            animation: pulse 1.5s ease infinite;
+          }
+        }
+
+        @keyframes pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.5; }
+        }
+      `}</style>
+
+      {/* Header + Search */}
+      <div className="ab-leads-search-wrap">
         <div>
           <h1 style={{ fontSize: 22, fontWeight: 700, color: "#1a1a1a", margin: "0 0 4px" }}>Лиды</h1>
           <p style={{ fontSize: 14, color: "#999", margin: 0 }}>Заявки от пациентов через бота</p>
         </div>
-        {/* Search */}
-        <div style={{ display: "flex", alignItems: "center", gap: 0, border: "1px solid #e8e8e8", borderRadius: 8, background: "#fff", overflow: "hidden", minWidth: 240 }}>
+        <div className="ab-leads-search-box">
           <svg style={{ margin: "0 10px", flexShrink: 0, color: "#bbb" }} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
             <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
           </svg>
@@ -95,25 +289,26 @@ export default function LeadsPage() {
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
             onKeyDown={(e) => { if (e.key === "Enter") { setSearch(searchInput); router.push(`/albamed/leads?status=${statusParam}&page=1`) } }}
-            style={{ flex: 1, border: "none", outline: "none", padding: "8px 12px 8px 0", fontSize: 13, background: "transparent", color: "#1a1a1a", fontFamily: "inherit" }}
+            className="ab-leads-search-input"
           />
           {searchInput && (
             <button
               onClick={() => { setSearchInput(""); setSearch(""); router.push(`/albamed/leads?status=${statusParam}&page=1`) }}
-              style={{ background: "none", border: "none", cursor: "pointer", padding: "0 10px", color: "#bbb", fontSize: 16 }}
+              style={{ background: "none", border: "none", cursor: "pointer", padding: "0 10px", color: "#bbb", fontSize: 16, minHeight: 44, WebkitTapHighlightColor: "transparent" }}
             >×</button>
           )}
         </div>
       </div>
 
       {/* Filter tabs */}
-      <div style={{ display: "flex", gap: 6, marginBottom: 16, flexWrap: "wrap" }}>
+      <div className="ab-leads-tabs">
         {STATUS_TABS.map((tab) => {
           const active = statusParam === tab.key
           const count = statusCounts[tab.key]
           return (
             <button
               key={tab.key}
+              className="ab-leads-tab"
               onClick={() => { setSearch(""); setSearchInput(""); router.push(`/albamed/leads?status=${tab.key}&page=1`) }}
               style={{
                 padding: "7px 16px",
@@ -130,6 +325,7 @@ export default function LeadsPage() {
                 display: "flex",
                 alignItems: "center",
                 gap: 6,
+                minHeight: 44,
               }}
             >
               {tab.label}
@@ -152,20 +348,23 @@ export default function LeadsPage() {
         })}
       </div>
 
-      {/* Table */}
-      <div style={{ overflowX: "auto" }}>
-        <div style={{ background: "#fff", border: "1px solid #e8e8e8", borderRadius: 10, overflow: "hidden", minWidth: 700, boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
-          {error ? (
-            <div style={{ padding: 20, color: "#ef4444", display: "flex", gap: 12, alignItems: "center" }}>
-              <span>{error}</span>
-              <button
-                onClick={loadLeads}
-                style={{ border: "1px solid #ef4444", color: "#ef4444", borderRadius: 6, padding: "6px 12px", background: "transparent", cursor: "pointer", fontSize: 13, fontFamily: "inherit" }}
-              >
-                Повторить
-              </button>
-            </div>
-          ) : (
+      {/* Error state */}
+      {error && (
+        <div style={{ padding: 20, color: "#ef4444", display: "flex", gap: 12, alignItems: "center", background: "#fff", border: "1px solid #e8e8e8", borderRadius: 10 }}>
+          <span>{error}</span>
+          <button
+            onClick={loadLeads}
+            style={{ border: "1px solid #ef4444", color: "#ef4444", borderRadius: 6, padding: "6px 12px", background: "transparent", cursor: "pointer", fontSize: 13, fontFamily: "inherit" }}
+          >
+            Повторить
+          </button>
+        </div>
+      )}
+
+      {/* Desktop table */}
+      {!error && (
+        <div className="ab-table-wrap">
+          <div style={{ background: "#fff", border: "1px solid #e8e8e8", borderRadius: 10, overflow: "hidden", minWidth: 700, boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
             <table style={{ width: "100%", borderCollapse: "collapse" }}>
               <thead>
                 <tr style={{ background: "#fafafa", borderBottom: "1px solid #e8e8e8" }}>
@@ -235,17 +434,88 @@ export default function LeadsPage() {
                     ))}
               </tbody>
             </table>
-          )}
+          </div>
         </div>
-      </div>
+      )}
+
+      {/* Mobile cards */}
+      {!error && (
+        <div className="ab-mobile-cards">
+          {loading
+            ? Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="ab-skel-card">
+                  <div className="ab-skel-row">
+                    <div className="ab-skel-line" style={{ width: "55%" }} />
+                    <div className="ab-skel-line" style={{ width: "22%" }} />
+                  </div>
+                  <div className="ab-skel-row">
+                    <div className="ab-skel-line" style={{ width: "40%" }} />
+                    <div className="ab-skel-line" style={{ width: "30%" }} />
+                  </div>
+                  <div className="ab-skel-line" style={{ width: "80%" }} />
+                </div>
+              ))
+            : leads.length === 0
+            ? (
+                <div style={{ padding: "40px 0", textAlign: "center", color: "#bbb", fontSize: 14 }}>
+                  Лидов нет
+                </div>
+              )
+            : leads.map((lead) => (
+                <div
+                  key={lead.id}
+                  className="ab-card"
+                  onClick={() => {
+                    if (lead.session_id) router.push(`/albamed/sessions/${lead.session_id}`)
+                  }}
+                >
+                  {/* Row 1: Name + Status badge */}
+                  <div className="ab-card-row1">
+                    <span className="ab-card-name">{lead.name || "—"}</span>
+                    <StatusBadge status={lead.status} />
+                  </div>
+
+                  {/* Row 2: Phone + Date */}
+                  <div className="ab-card-row2">
+                    <a
+                      href={`tel:${lead.phone}`}
+                      className="ab-card-phone"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      {lead.phone}
+                    </a>
+                    <span className="ab-card-date">{formatDate(lead.created_at)}</span>
+                  </div>
+
+                  {/* Message preview */}
+                  {lead.message && (
+                    <div className="ab-card-msg">{lead.message}</div>
+                  )}
+
+                  {/* Footer: chat link */}
+                  {lead.session_id && (
+                    <div className="ab-card-footer">
+                      <Link
+                        href={`/albamed/sessions/${lead.session_id}`}
+                        className="ab-card-chat-link"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        Открыть чат →
+                      </Link>
+                    </div>
+                  )}
+                </div>
+              ))}
+        </div>
+      )}
 
       {/* Pagination */}
       {!loading && !error && totalPages > 1 && (
-        <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 16, justifyContent: "center" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 16, justifyContent: "center", paddingBottom: "env(safe-area-inset-bottom)" }}>
           <button
             onClick={() => router.push(`/albamed/leads?status=${statusParam}&page=${pageParam - 1}`)}
             disabled={pageParam <= 1}
-            style={{ background: "#fff", border: "1px solid #e8e8e8", color: pageParam <= 1 ? "#ccc" : "#555", borderRadius: 8, padding: "7px 14px", fontSize: 13, cursor: pageParam <= 1 ? "not-allowed" : "pointer", fontFamily: "inherit" }}
+            style={{ background: "#fff", border: "1px solid #e8e8e8", color: pageParam <= 1 ? "#ccc" : "#555", borderRadius: 8, padding: "7px 14px", fontSize: 13, cursor: pageParam <= 1 ? "not-allowed" : "pointer", fontFamily: "inherit", minHeight: 44, WebkitTapHighlightColor: "transparent" }}
           >
             ← Пред.
           </button>
@@ -255,7 +525,7 @@ export default function LeadsPage() {
           <button
             onClick={() => router.push(`/albamed/leads?status=${statusParam}&page=${pageParam + 1}`)}
             disabled={pageParam >= totalPages}
-            style={{ background: "#fff", border: "1px solid #e8e8e8", color: pageParam >= totalPages ? "#ccc" : "#555", borderRadius: 8, padding: "7px 14px", fontSize: 13, cursor: pageParam >= totalPages ? "not-allowed" : "pointer", fontFamily: "inherit" }}
+            style={{ background: "#fff", border: "1px solid #e8e8e8", color: pageParam >= totalPages ? "#ccc" : "#555", borderRadius: 8, padding: "7px 14px", fontSize: 13, cursor: pageParam >= totalPages ? "not-allowed" : "pointer", fontFamily: "inherit", minHeight: 44, WebkitTapHighlightColor: "transparent" }}
           >
             След. →
           </button>

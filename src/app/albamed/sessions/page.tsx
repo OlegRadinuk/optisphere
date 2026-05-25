@@ -59,19 +59,138 @@ export default function SessionsPage() {
 
   return (
     <div>
+      <style>{`
+        /* ── Desktop defaults ── */
+        .ab-sessions-table-wrap { overflow-x: auto; }
+        .ab-sessions-mobile-cards { display: none; }
+
+        /* ── Mobile overrides ── */
+        @media (max-width: 767px) {
+          .ab-sessions-table-wrap table { display: none; }
+          .ab-sessions-mobile-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+          }
+          .ab-sess-card {
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            border-radius: 12px;
+            padding: 14px 16px;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+          }
+          .ab-sess-card:active { background: #fafafa; }
+          .ab-sess-card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 6px;
+          }
+          .ab-sess-date {
+            font-size: 12px;
+            color: #bbb;
+            white-space: nowrap;
+          }
+          .ab-sess-lead-badge {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 9999px;
+            background: #f0fdf4;
+            color: #16a34a;
+            border: 1px solid #bbf7d0;
+            white-space: nowrap;
+          }
+          .ab-sess-msg {
+            font-size: 14px;
+            color: #1a1a1a;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            margin-bottom: 10px;
+            line-height: 1.45;
+          }
+          .ab-sess-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+          }
+          .ab-sess-count {
+            font-size: 12px;
+            color: #f47920;
+            font-weight: 500;
+          }
+          .ab-sess-open-link {
+            font-size: 13px;
+            font-weight: 500;
+            color: #f47920;
+            text-decoration: none;
+            -webkit-tap-highlight-color: transparent;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+          }
+          /* Skeleton cards */
+          .ab-sess-skel-card {
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            border-radius: 12px;
+            padding: 14px 16px;
+          }
+          .ab-sess-skel-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 8px;
+          }
+          .ab-sess-skel-line {
+            height: 14px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            animation: sess-pulse 1.5s ease infinite;
+          }
+          .ab-sess-skel-line-tall {
+            height: 36px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            animation: sess-pulse 1.5s ease infinite;
+            margin-bottom: 8px;
+          }
+        }
+
+        @keyframes sess-pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.5; }
+        }
+        @keyframes pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.5; }
+        }
+      `}</style>
+
       <h1 style={{ fontSize: 22, fontWeight: 700, color: "#1a1a1a", margin: "0 0 6px" }}>Диалоги</h1>
       <p style={{ fontSize: 14, color: "#999", margin: "0 0 20px" }}>История переписки пациентов с ботом</p>
 
-      <div style={{ overflowX: "auto" }}>
-        <div style={{ background: "#fff", border: "1px solid #e8e8e8", borderRadius: 10, overflow: "hidden", minWidth: 600, boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
-          {error ? (
-            <div style={{ padding: 20, color: "#ef4444", display: "flex", gap: 12, alignItems: "center" }}>
-              <span>{error}</span>
-              <button onClick={loadSessions} style={{ border: "1px solid #ef4444", color: "#ef4444", borderRadius: 6, padding: "6px 12px", background: "transparent", cursor: "pointer", fontSize: 13, fontFamily: "inherit" }}>
-                Повторить
-              </button>
-            </div>
-          ) : (
+      {/* Error state */}
+      {error && (
+        <div style={{ padding: 20, color: "#ef4444", display: "flex", gap: 12, alignItems: "center", background: "#fff", border: "1px solid #e8e8e8", borderRadius: 10, marginBottom: 12 }}>
+          <span>{error}</span>
+          <button onClick={loadSessions} style={{ border: "1px solid #ef4444", color: "#ef4444", borderRadius: 6, padding: "6px 12px", background: "transparent", cursor: "pointer", fontSize: 13, fontFamily: "inherit" }}>
+            Повторить
+          </button>
+        </div>
+      )}
+
+      {/* Desktop table */}
+      {!error && (
+        <div className="ab-sessions-table-wrap">
+          <div style={{ background: "#fff", border: "1px solid #e8e8e8", borderRadius: 10, overflow: "hidden", minWidth: 600, boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
             <table style={{ width: "100%", borderCollapse: "collapse" }}>
               <thead>
                 <tr style={{ background: "#fafafa", borderBottom: "1px solid #e8e8e8" }}>
@@ -141,16 +260,75 @@ export default function SessionsPage() {
                     ))}
               </tbody>
             </table>
-          )}
+          </div>
         </div>
-      </div>
+      )}
 
+      {/* Mobile cards */}
+      {!error && (
+        <div className="ab-sessions-mobile-cards">
+          {loading
+            ? Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="ab-sess-skel-card">
+                  <div className="ab-sess-skel-row">
+                    <div className="ab-sess-skel-line" style={{ width: "35%" }} />
+                    <div className="ab-sess-skel-line" style={{ width: "20%" }} />
+                  </div>
+                  <div className="ab-sess-skel-line-tall" style={{ width: "100%" }} />
+                  <div className="ab-sess-skel-row" style={{ marginBottom: 0 }}>
+                    <div className="ab-sess-skel-line" style={{ width: "25%" }} />
+                    <div className="ab-sess-skel-line" style={{ width: "20%" }} />
+                  </div>
+                </div>
+              ))
+            : sessions.length === 0
+            ? (
+                <div style={{ padding: "40px 0", textAlign: "center", color: "#bbb", fontSize: 14 }}>
+                  Нет данных
+                </div>
+              )
+            : sessions.map((session) => (
+                <div
+                  key={session.session_id}
+                  className="ab-sess-card"
+                  onClick={() => router.push(`/albamed/sessions/${session.session_id}`)}
+                >
+                  {/* Top: date + lead badge */}
+                  <div className="ab-sess-card-top">
+                    <span className="ab-sess-date">{formatDate(session.createdAt)}</span>
+                    {session.hasLead && (
+                      <span className="ab-sess-lead-badge">Оставлен</span>
+                    )}
+                  </div>
+
+                  {/* First message (2 lines max) */}
+                  <div className="ab-sess-msg">
+                    {session.firstMessage || "—"}
+                  </div>
+
+                  {/* Footer: message count + open link */}
+                  <div className="ab-sess-footer">
+                    <span className="ab-sess-count">{session.messageCount} сообщений</span>
+                    <Link
+                      href={`/albamed/sessions/${session.session_id}`}
+                      className="ab-sess-open-link"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      Открыть →
+                    </Link>
+                  </div>
+                </div>
+              ))}
+        </div>
+      )}
+
+      {/* Pagination */}
       {!loading && !error && totalPages > 1 && (
-        <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 16, justifyContent: "center" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 16, justifyContent: "center", paddingBottom: "env(safe-area-inset-bottom)" }}>
           <button
             onClick={() => router.push(`/albamed/sessions?page=${pageParam - 1}`)}
             disabled={pageParam <= 1}
-            style={{ background: "#fff", border: "1px solid #e8e8e8", color: pageParam <= 1 ? "#ccc" : "#555", borderRadius: 8, padding: "7px 14px", fontSize: 13, cursor: pageParam <= 1 ? "not-allowed" : "pointer", fontFamily: "inherit" }}
+            style={{ background: "#fff", border: "1px solid #e8e8e8", color: pageParam <= 1 ? "#ccc" : "#555", borderRadius: 8, padding: "7px 14px", fontSize: 13, cursor: pageParam <= 1 ? "not-allowed" : "pointer", fontFamily: "inherit", minHeight: 44, WebkitTapHighlightColor: "transparent" }}
           >
             ← Пред.
           </button>
@@ -158,7 +336,7 @@ export default function SessionsPage() {
           <button
             onClick={() => router.push(`/albamed/sessions?page=${pageParam + 1}`)}
             disabled={pageParam >= totalPages}
-            style={{ background: "#fff", border: "1px solid #e8e8e8", color: pageParam >= totalPages ? "#ccc" : "#555", borderRadius: 8, padding: "7px 14px", fontSize: 13, cursor: pageParam >= totalPages ? "not-allowed" : "pointer", fontFamily: "inherit" }}
+            style={{ background: "#fff", border: "1px solid #e8e8e8", color: pageParam >= totalPages ? "#ccc" : "#555", borderRadius: 8, padding: "7px 14px", fontSize: 13, cursor: pageParam >= totalPages ? "not-allowed" : "pointer", fontFamily: "inherit", minHeight: 44, WebkitTapHighlightColor: "transparent" }}
           >
             След. →
           </button>
