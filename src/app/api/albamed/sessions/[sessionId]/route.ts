@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { isAuthenticated } from "@/app/api/admin/auth/route"
+import { isAlbamedAuthenticated } from "@/app/api/albamed/auth/route"
 import { getDb, getSessionMessages } from "@/lib/db"
 import type { Lead, Message } from "@/lib/db"
 
@@ -14,7 +14,7 @@ export async function GET(
   _req: NextRequest,
   { params }: { params: Promise<{ sessionId: string }> }
 ): Promise<Response> {
-  if (!(await isAuthenticated())) {
+  if (!(await isAlbamedAuthenticated())) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
 

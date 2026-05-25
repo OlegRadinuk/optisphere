@@ -16,8 +16,8 @@ export function AlbamedSidebar({ newLeadsCount, onClose }: AlbamedSidebarProps) 
     href === "/albamed" ? pathname === "/albamed" : pathname.startsWith(href)
 
   async function handleLogout() {
-    await fetch("/api/admin/auth", { method: "DELETE" })
-    router.push("/aiadmin")
+    await fetch("/api/albamed/auth", { method: "DELETE" })
+    window.location.replace("/albamed/login")
   }
 
   const navItems = [

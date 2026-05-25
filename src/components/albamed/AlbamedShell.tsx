@@ -13,7 +13,7 @@ export function AlbamedShell({ children }: { children: React.ReactNode }) {
     fetch("/api/albamed/stats")
       .then((r) => {
         if (r.status === 401) {
-          window.location.replace("/aiadmin")
+          window.location.replace("/albamed/login")
           return null
         }
         setAuthed(true)
@@ -23,7 +23,7 @@ export function AlbamedShell({ children }: { children: React.ReactNode }) {
         if (d?.leadsNew !== undefined) setNewLeadsCount(d.leadsNew)
       })
       .catch(() => {
-        window.location.replace("/aiadmin")
+        window.location.replace("/albamed/login")
       })
   }, [])
 

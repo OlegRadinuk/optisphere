@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { isAuthenticated } from "@/app/api/admin/auth/route"
+import { isAlbamedAuthenticated } from "@/app/api/albamed/auth/route"
 import { getDb } from "@/lib/db"
 
 const CLIENT_ID = 1
@@ -16,7 +16,7 @@ type SessionRow = {
 type SessionResponse = Omit<SessionRow, "has_lead"> & { hasLead: boolean }
 
 export async function GET(req: NextRequest): Promise<Response> {
-  if (!(await isAuthenticated())) {
+  if (!(await isAlbamedAuthenticated())) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
 

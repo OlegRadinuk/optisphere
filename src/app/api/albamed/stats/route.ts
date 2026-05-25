@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server"
-import { isAuthenticated } from "@/app/api/admin/auth/route"
+import { isAlbamedAuthenticated } from "@/app/api/albamed/auth/route"
 import { getDb } from "@/lib/db"
 
 const CLIENT_ID = 1
 
 export async function GET(): Promise<Response> {
-  if (!(await isAuthenticated())) {
+  if (!(await isAlbamedAuthenticated())) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
 

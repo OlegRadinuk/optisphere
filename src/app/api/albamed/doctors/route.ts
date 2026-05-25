@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
-import { isAuthenticated } from "@/app/api/admin/auth/route"
+import { isAlbamedAuthenticated } from "@/app/api/albamed/auth/route"
 import { getDb, getDoctors, updateDoctor } from "@/lib/db"
 import type { Doctor } from "@/lib/db"
 
@@ -26,7 +26,7 @@ const PatchSchema = z.object({
 })
 
 export async function GET(): Promise<Response> {
-  if (!(await isAuthenticated())) {
+  if (!(await isAlbamedAuthenticated())) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
 
@@ -40,7 +40,7 @@ export async function GET(): Promise<Response> {
 }
 
 export async function PATCH(req: NextRequest): Promise<Response> {
-  if (!(await isAuthenticated())) {
+  if (!(await isAlbamedAuthenticated())) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
 
