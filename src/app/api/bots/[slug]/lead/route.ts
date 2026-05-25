@@ -87,7 +87,7 @@ export async function POST(
       if (msgs.length > 0) {
         const botName = client.widget_title || client.name
         const history = msgs
-          .map((m) => `${m.role === "user" ? "👤 Гость" : `🤖 ${botName}`}: ${m.content.slice(0, 500)}`)
+          .map((m) => `${m.role === "user" ? "👤 Гость" : `🤖 ${botName}`}: ${m.content.replace(/\[SAVE_LEAD\]/g, "").trim().slice(0, 500)}`)
           .join("\n\n")
         fullText += `\n\n<b>💬 Переписка:</b>\n${history}`
       }
