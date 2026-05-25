@@ -11,9 +11,9 @@ interface StatusSelectProps {
 }
 
 const STATUS_STYLES: Record<LeadStatus, React.CSSProperties> = {
-  new: { background: "#1d3461", color: "#3b82f6", borderColor: "#3b82f6" },
-  working: { background: "#3d2e0a", color: "#f59e0b", borderColor: "#f59e0b" },
-  closed: { background: "#0f2a1a", color: "#22c55e", borderColor: "#22c55e" },
+  new:     { background: "#fff4ec", color: "#f47920", borderColor: "#fdd9b5" },
+  working: { background: "#eff6ff", color: "#2563eb", borderColor: "#bfdbfe" },
+  closed:  { background: "#f0fdf4", color: "#16a34a", borderColor: "#bbf7d0" },
 }
 
 export function StatusSelect({ leadId, current, onChange }: StatusSelectProps) {
@@ -49,8 +49,9 @@ export function StatusSelect({ leadId, current, onChange }: StatusSelectProps) {
         ...styles,
         border: `1px solid ${styles.borderColor as string}`,
         borderRadius: 6,
-        padding: "4px 8px",
+        padding: "5px 10px",
         fontSize: 12,
+        fontWeight: 600,
         cursor: saving ? "not-allowed" : "pointer",
         opacity: saving ? 0.6 : 1,
         outline: "none",

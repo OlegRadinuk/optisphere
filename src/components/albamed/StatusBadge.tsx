@@ -3,9 +3,9 @@ interface StatusBadgeProps {
 }
 
 const STATUS_CONFIG = {
-  new: { bg: "#1d3461", color: "#3b82f6", label: "Новый" },
-  working: { bg: "#3d2e0a", color: "#f59e0b", label: "В работе" },
-  closed: { bg: "#0f2a1a", color: "#22c55e", label: "Закрыт" },
+  new:     { bg: "#fff4ec", color: "#f47920", border: "#fdd9b5", label: "Новый" },
+  working: { bg: "#eff6ff", color: "#2563eb", border: "#bfdbfe", label: "В работе" },
+  closed:  { bg: "#f0fdf4", color: "#16a34a", border: "#bbf7d0", label: "Закрыт" },
 } as const
 
 export function StatusBadge({ status }: StatusBadgeProps) {
@@ -15,10 +15,11 @@ export function StatusBadge({ status }: StatusBadgeProps) {
       style={{
         background: cfg.bg,
         color: cfg.color,
+        border: `1px solid ${cfg.border}`,
         borderRadius: 9999,
-        padding: "2px 8px",
+        padding: "3px 10px",
         fontSize: 12,
-        fontWeight: 500,
+        fontWeight: 600,
         whiteSpace: "nowrap",
       }}
     >

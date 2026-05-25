@@ -22,31 +22,20 @@ interface LeadInfo {
 interface SessionDetail {
   messages: Message[]
   lead: LeadInfo | null
-  createdAt?: string
-  messageCount?: number
 }
 
 function formatTime(iso: string) {
-  const d = new Date(iso)
-  return d.toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" })
+  return new Date(iso).toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" })
 }
 
 function formatDateTime(iso: string) {
-  const d = new Date(iso)
-  return d.toLocaleString("ru-RU", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
+  return new Date(iso).toLocaleString("ru-RU", {
+    day: "2-digit", month: "2-digit", year: "numeric",
+    hour: "2-digit", minute: "2-digit",
   })
 }
 
-export default function SessionDetailPage({
-  params,
-}: {
-  params: Promise<{ sessionId: string }>
-}) {
+export default function SessionDetailPage({ params }: { params: Promise<{ sessionId: string }> }) {
   const { sessionId } = use(params)
   const [data, setData] = useState<SessionDetail | null>(null)
   const [loading, setLoading] = useState(true)
@@ -55,10 +44,7 @@ export default function SessionDetailPage({
 
   useEffect(() => {
     fetch(`/api/albamed/sessions/${sessionId}`)
-      .then((r) => {
-        if (!r.ok) throw new Error("Ошибка загрузки диалога")
-        return r.json()
-      })
+      .then((r) => { if (!r.ok) throw new Error("Ошибка загрузки диалога"); return r.json() })
       .then((d: SessionDetail) => {
         setData(d)
         if (d.lead) setLeadStatus(d.lead.status)
@@ -75,128 +61,49 @@ export default function SessionDetailPage({
 
   return (
     <div>
-      {/* Back link */}
       <Link
         href="/albamed/sessions"
-        style={{
-          color: "#94a3b8",
-          fontSize: 13,
-          textDecoration: "none",
-          display: "inline-flex",
-          alignItems: "center",
-          gap: 4,
-          marginBottom: 16,
-          transition: "color 150ms",
-        }}
-        onMouseEnter={(e) => {
-          ;(e.currentTarget as HTMLElement).style.color = "#e2e8f0"
-        }}
-        onMouseLeave={(e) => {
-          ;(e.currentTarget as HTMLElement).style.color = "#94a3b8"
-        }}
+        style={{ color: "#f47920", fontSize: 13, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 4, marginBottom: 16 }}
+        onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.textDecoration = "underline" }}
+        onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.textDecoration = "none" }}
       >
         ← Все диалоги
       </Link>
 
-      <h1 style={{ fontSize: 22, fontWeight: 700, color: "#e2e8f0", margin: "0 0 16px" }}>
-        Диалог
-      </h1>
+      <h1 style={{ fontSize: 22, fontWeight: 700, color: "#1a1a1a", margin: "0 0 16px" }}>Диалог</h1>
 
       {loading ? (
         <>
-          {/* Skeleton meta card */}
-          <div
-            style={{
-              background: "#1e293b",
-              border: "1px solid #334155",
-              borderRadius: 8,
-              padding: "16px 20px",
-              marginBottom: 16,
-              display: "flex",
-              gap: 24,
-            }}
-          >
+          <div style={{ background: "#fff", border: "1px solid #e8e8e8", borderRadius: 10, padding: "16px 20px", marginBottom: 16, display: "flex", gap: 24 }}>
             {[120, 80, 90].map((w, i) => (
-              <div
-                key={i}
-                style={{
-                  width: w,
-                  height: 16,
-                  background: "#334155",
-                  borderRadius: 4,
-                  animation: "pulse 1.5s ease infinite",
-                }}
-              />
+              <div key={i} style={{ width: w, height: 16, background: "#f0f0f0", borderRadius: 4, animation: "pulse 1.5s ease infinite" }} />
             ))}
           </div>
-          {/* Skeleton chat */}
-          <div
-            style={{
-              background: "#1e293b",
-              border: "1px solid #334155",
-              borderRadius: 8,
-              padding: 16,
-              display: "flex",
-              flexDirection: "column",
-              gap: 12,
-            }}
-          >
-            {[{ align: "flex-start", w: 220 }, { align: "flex-end", w: 180 }, { align: "flex-start", w: 260 }].map(
-              (b, i) => (
-                <div
-                  key={i}
-                  style={{ alignSelf: b.align as "flex-start" | "flex-end", maxWidth: "70%" }}
-                >
-                  <div
-                    style={{
-                      width: b.w,
-                      height: 48,
-                      background: "#334155",
-                      borderRadius: 12,
-                      animation: "pulse 1.5s ease infinite",
-                    }}
-                  />
-                </div>
-              )
-            )}
+          <div style={{ background: "#fff", border: "1px solid #e8e8e8", borderRadius: 10, padding: 16, display: "flex", flexDirection: "column", gap: 12 }}>
+            {[{ align: "flex-start", w: 220 }, { align: "flex-end", w: 180 }, { align: "flex-start", w: 260 }].map((b, i) => (
+              <div key={i} style={{ alignSelf: b.align as "flex-start" | "flex-end", maxWidth: "70%" }}>
+                <div style={{ width: b.w, height: 48, background: "#f0f0f0", borderRadius: 12, animation: "pulse 1.5s ease infinite" }} />
+              </div>
+            ))}
           </div>
         </>
       ) : error ? (
         <div style={{ color: "#ef4444", padding: 20 }}>{error}</div>
       ) : (
         <>
-          {/* Session metadata */}
-          <div
-            style={{
-              background: "#1e293b",
-              border: "1px solid #334155",
-              borderRadius: 8,
-              padding: "16px 20px",
-              marginBottom: 16,
-              display: "flex",
-              gap: 24,
-              alignItems: "center",
-              flexWrap: "wrap",
-            }}
-          >
+          {/* Meta */}
+          <div style={{ background: "#fff", border: "1px solid #e8e8e8", borderRadius: 10, padding: "14px 20px", marginBottom: 16, display: "flex", gap: 24, alignItems: "center", flexWrap: "wrap", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
             <div>
-              <span style={{ fontSize: 13, color: "#94a3b8" }}>Дата: </span>
-              <span style={{ fontSize: 13, color: "#e2e8f0" }}>
-                {firstMessage ? formatDateTime(firstMessage) : "—"}
-              </span>
+              <span style={{ fontSize: 12, color: "#999" }}>Дата: </span>
+              <span style={{ fontSize: 13, color: "#1a1a1a", fontWeight: 500 }}>{firstMessage ? formatDateTime(firstMessage) : "—"}</span>
             </div>
             <div>
-              <span style={{ fontSize: 13, color: "#94a3b8" }}>Сообщений: </span>
-              <span style={{ fontSize: 13, color: "#e2e8f0" }}>{messageCount}</span>
+              <span style={{ fontSize: 12, color: "#999" }}>Сообщений: </span>
+              <span style={{ fontSize: 13, color: "#1a1a1a", fontWeight: 500 }}>{messageCount}</span>
             </div>
             <div>
-              <span style={{ fontSize: 13, color: "#94a3b8" }}>Лид: </span>
-              <span
-                style={{
-                  fontSize: 13,
-                  color: data?.lead ? "#22c55e" : "#94a3b8",
-                }}
-              >
+              <span style={{ fontSize: 12, color: "#999" }}>Лид: </span>
+              <span style={{ fontSize: 13, color: data?.lead ? "#16a34a" : "#bbb", fontWeight: 500 }}>
                 {data?.lead ? "Оставлен" : "Не оставлен"}
               </span>
             </div>
@@ -204,117 +111,57 @@ export default function SessionDetailPage({
 
           {/* Lead card */}
           {data?.lead && (
-            <div
-              style={{
-                background: "#1e293b",
-                border: "1px solid #334155",
-                borderRadius: 8,
-                padding: "16px 20px",
-                marginBottom: 16,
-              }}
-            >
-              <div
-                style={{
-                  fontSize: 13,
-                  fontWeight: 600,
-                  color: "#e2e8f0",
-                  marginBottom: 12,
-                  paddingBottom: 10,
-                  borderBottom: "1px solid #334155",
-                }}
-              >
+            <div style={{ background: "#fff", border: "1px solid #e8e8e8", borderRadius: 10, padding: "16px 20px", marginBottom: 16, boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
+              <div style={{ fontSize: 13, fontWeight: 600, color: "#f47920", marginBottom: 12, paddingBottom: 10, borderBottom: "1px solid #f0f0f0", display: "flex", alignItems: "center", gap: 8 }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                </svg>
                 Лид из этого диалога
               </div>
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "auto 1fr",
-                  gap: "8px 16px",
-                  alignItems: "center",
-                }}
-              >
-                <span style={{ color: "#94a3b8", fontSize: 13 }}>Имя:</span>
-                <span style={{ color: "#e2e8f0", fontSize: 14 }}>{data.lead.name || "—"}</span>
-                <span style={{ color: "#94a3b8", fontSize: 13 }}>Телефон:</span>
-                <span style={{ color: "#e2e8f0", fontSize: 14 }}>{data.lead.phone}</span>
-                <span style={{ color: "#94a3b8", fontSize: 13 }}>Статус:</span>
+              <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: "8px 16px", alignItems: "center" }}>
+                <span style={{ color: "#999", fontSize: 13 }}>Имя:</span>
+                <span style={{ color: "#1a1a1a", fontSize: 14, fontWeight: 500 }}>{data.lead.name || "—"}</span>
+                <span style={{ color: "#999", fontSize: 13 }}>Телефон:</span>
+                <span style={{ color: "#1a1a1a", fontSize: 14, fontWeight: 500 }}>{data.lead.phone}</span>
+                <span style={{ color: "#999", fontSize: 13 }}>Статус:</span>
                 {leadStatus !== null && (
-                  <StatusSelect
-                    leadId={data.lead.id}
-                    current={leadStatus}
-                    onChange={(s) => setLeadStatus(s)}
-                  />
+                  <StatusSelect leadId={data.lead.id} current={leadStatus} onChange={(s) => setLeadStatus(s)} />
                 )}
               </div>
             </div>
           )}
 
           {/* Chat */}
-          <div
-            style={{
-              background: "#1e293b",
-              border: "1px solid #334155",
-              borderRadius: 8,
-              padding: 16,
-            }}
-          >
-            <div
-              style={{
-                fontSize: 13,
-                fontWeight: 600,
-                color: "#94a3b8",
-                marginBottom: 12,
-              }}
-            >
+          <div style={{ background: "#fff", border: "1px solid #e8e8e8", borderRadius: 10, padding: 20, boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
+            <div style={{ fontSize: 13, fontWeight: 600, color: "#555", marginBottom: 16, display: "flex", alignItems: "center", gap: 6 }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
               Переписка
             </div>
 
             {data?.messages.length === 0 ? (
-              <div
-                style={{
-                  color: "#94a3b8",
-                  textAlign: "center",
-                  padding: "40px 0",
-                }}
-              >
-                Сообщений нет
-              </div>
+              <div style={{ color: "#bbb", textAlign: "center", padding: "40px 0" }}>Сообщений нет</div>
             ) : (
               <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                 {data?.messages.map((msg, idx) => {
                   const isUser = msg.role === "user"
                   return (
-                    <div
-                      key={idx}
-                      style={{
-                        alignSelf: isUser ? "flex-end" : "flex-start",
-                        maxWidth: "70%",
-                        display: "flex",
-                        flexDirection: "column",
-                      }}
-                    >
-                      <div
-                        style={{
-                          background: isUser ? "#1d3461" : "#293548",
-                          border: isUser ? "1px solid #3b82f6" : "1px solid #334155",
-                          borderRadius: isUser ? "12px 12px 2px 12px" : "12px 12px 12px 2px",
-                          padding: "10px 14px",
-                          color: "#e2e8f0",
-                          fontSize: 14,
-                          lineHeight: 1.5,
-                          wordBreak: "break-word",
-                        }}
-                      >
+                    <div key={idx} style={{ alignSelf: isUser ? "flex-end" : "flex-start", maxWidth: "70%", display: "flex", flexDirection: "column" }}>
+                      <div style={{
+                        background: isUser ? "#f47920" : "#f5f6f8",
+                        border: isUser ? "none" : "1px solid #e8e8e8",
+                        borderRadius: isUser ? "12px 12px 2px 12px" : "12px 12px 12px 2px",
+                        padding: "10px 14px",
+                        color: isUser ? "#fff" : "#1a1a1a",
+                        fontSize: 14,
+                        lineHeight: 1.5,
+                        wordBreak: "break-word",
+                      }}>
                         {msg.content}
                       </div>
-                      <span
-                        style={{
-                          fontSize: 11,
-                          color: "#94a3b8",
-                          marginTop: 4,
-                          textAlign: isUser ? "right" : "left",
-                        }}
-                      >
+                      <span style={{ fontSize: 11, color: "#bbb", marginTop: 4, textAlign: isUser ? "right" : "left" }}>
                         {formatTime(msg.created_at)}
                       </span>
                     </div>

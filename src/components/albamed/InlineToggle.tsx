@@ -19,7 +19,7 @@ export function InlineToggle({ checked, onChange, disabled }: InlineToggleProps)
         width: 36,
         height: 20,
         borderRadius: 10,
-        background: checked ? "#3b82f6" : "#334155",
+        background: checked ? "#f47920" : "#d1d5db",
         border: "none",
         cursor: disabled ? "not-allowed" : "pointer",
         padding: 2,
@@ -39,6 +39,7 @@ export function InlineToggle({ checked, onChange, disabled }: InlineToggleProps)
           transform: checked ? "translateX(16px)" : "translateX(0)",
           transition: "transform 200ms",
           flexShrink: 0,
+          boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
         }}
       />
     </button>

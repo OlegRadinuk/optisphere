@@ -32,15 +32,16 @@ export function ActivityChart({ data, loading }: ActivityChartProps) {
   return (
     <div
       style={{
-        background: "#1e293b",
-        border: "1px solid #334155",
-        borderRadius: 8,
+        background: "#ffffff",
+        border: "1px solid #e8e8e8",
+        borderRadius: 10,
         padding: 20,
         marginTop: 16,
         position: "relative",
+        boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
       }}
     >
-      <div style={{ fontSize: 14, fontWeight: 600, color: "#e2e8f0", marginBottom: 16 }}>
+      <div style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a", marginBottom: 16 }}>
         Активность за сегодня
       </div>
 
@@ -48,7 +49,7 @@ export function ActivityChart({ data, loading }: ActivityChartProps) {
         <div
           style={{
             height: svgHeight,
-            background: "#334155",
+            background: "#f0f0f0",
             borderRadius: 4,
             animation: "pulse 1.5s ease infinite",
           }}
@@ -61,13 +62,7 @@ export function ActivityChart({ data, loading }: ActivityChartProps) {
             style={{ height: "auto", display: "block" }}
           >
             {isEmpty ? (
-              <text
-                x={svgWidth / 2}
-                y={svgHeight / 2}
-                textAnchor="middle"
-                fill="#94a3b8"
-                fontSize="13"
-              >
+              <text x={svgWidth / 2} y={svgHeight / 2} textAnchor="middle" fill="#bbb" fontSize="13">
                 Нет активности за сегодня
               </text>
             ) : (
@@ -85,39 +80,32 @@ export function ActivityChart({ data, loading }: ActivityChartProps) {
                       width={w}
                       height={barH}
                       rx={2}
-                      fill={tooltip?.hour === d.hour ? "#60a5fa" : "#3b82f6"}
+                      fill={tooltip?.hour === d.hour ? "#e06810" : "#f47920"}
                       style={{ cursor: d.count > 0 ? "pointer" : "default" }}
                       onMouseEnter={(e) => {
                         if (d.count === 0) return
-                        const rect = (e.currentTarget as SVGElement)
-                          .closest("div")
-                          ?.getBoundingClientRect()
                         const svgEl = (e.currentTarget as SVGElement).closest("svg")
                         const svgRect = svgEl?.getBoundingClientRect()
                         if (!svgRect) return
                         const svgScaleX = svgRect.width / svgWidth
-                        const barCenterX = (x + w / 2) * svgScaleX
-                        const barTopY = y * (svgRect.height / svgHeight)
                         setTooltip({
-                          x: barCenterX,
-                          y: barTopY,
+                          x: (x + w / 2) * svgScaleX,
+                          y: y * (svgRect.height / svgHeight),
                           hour: d.hour,
                           count: d.count,
                         })
-                        void rect
                       }}
                       onMouseLeave={() => setTooltip(null)}
                     />
                   )
                 })}
-                {/* X axis labels for even hours */}
                 {[0, 4, 8, 12, 16, 20].map((h) => (
                   <text
                     key={h}
                     x={h * barWidth + barWidth / 2}
                     y={svgHeight - 2}
                     textAnchor="middle"
-                    fill="#94a3b8"
+                    fill="#bbb"
                     fontSize="10"
                   >
                     {String(h).padStart(2, "0")}
@@ -134,15 +122,15 @@ export function ActivityChart({ data, loading }: ActivityChartProps) {
                 left: tooltip.x,
                 top: Math.max(0, tooltip.y - 36),
                 transform: "translateX(-50%)",
-                background: "#0f172a",
-                border: "1px solid #334155",
+                background: "#1a1a1a",
                 borderRadius: 6,
-                padding: "4px 8px",
+                padding: "5px 10px",
                 fontSize: 12,
-                color: "#e2e8f0",
+                color: "#fff",
                 pointerEvents: "none",
                 whiteSpace: "nowrap",
                 zIndex: 10,
+                boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
               }}
             >
               {String(tooltip.hour).padStart(2, "0")}:00 — {tooltip.count} диалогов

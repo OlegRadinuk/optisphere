@@ -73,38 +73,49 @@ export function AlbamedSidebar({ newLeadsCount, onClose }: AlbamedSidebarProps) 
         left: 0,
         height: "100vh",
         width: 220,
-        background: "#0f172a",
-        borderRight: "1px solid #334155",
+        background: "#ffffff",
+        borderRight: "1px solid #e8e8e8",
         display: "flex",
         flexDirection: "column",
         zIndex: 100,
+        boxShadow: "2px 0 8px rgba(0,0,0,0.06)",
       }}
     >
       {/* Logo */}
       <div
         style={{
           padding: "20px 16px",
-          fontSize: 14,
-          fontWeight: 600,
-          color: "#e2e8f0",
-          borderBottom: "1px solid #1e293b",
+          borderBottom: "1px solid #f0f0f0",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
         }}
       >
-        <span>Альба-Мед</span>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <div
+            style={{
+              width: 32,
+              height: 32,
+              background: "#f47920",
+              borderRadius: 8,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+            </svg>
+          </div>
+          <div>
+            <div style={{ fontSize: 13, fontWeight: 700, color: "#1a1a1a", lineHeight: 1.2 }}>Альба-Мед</div>
+            <div style={{ fontSize: 11, color: "#999", lineHeight: 1.2 }}>Дашборд</div>
+          </div>
+        </div>
         {onClose && (
           <button
             onClick={onClose}
-            style={{
-              background: "none",
-              border: "none",
-              color: "#94a3b8",
-              cursor: "pointer",
-              padding: 4,
-              lineHeight: 1,
-            }}
+            style={{ background: "none", border: "none", color: "#999", cursor: "pointer", padding: 4 }}
             aria-label="Закрыть меню"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -127,25 +138,27 @@ export function AlbamedSidebar({ newLeadsCount, onClose }: AlbamedSidebarProps) 
                 display: "flex",
                 alignItems: "center",
                 gap: 10,
-                padding: "10px 8px",
-                borderRadius: 6,
-                color: active ? "#3b82f6" : "#94a3b8",
-                background: active ? "#1e293b" : "transparent",
+                padding: "10px 10px",
+                borderRadius: 8,
+                color: active ? "#f47920" : "#555",
+                background: active ? "#fff4ec" : "transparent",
                 textDecoration: "none",
                 fontSize: 14,
+                fontWeight: active ? 600 : 400,
                 transition: "background 150ms, color 150ms",
                 position: "relative",
+                borderLeft: active ? "3px solid #f47920" : "3px solid transparent",
               }}
               onMouseEnter={(e) => {
                 if (!active) {
-                  (e.currentTarget as HTMLElement).style.background = "#293548"
-                  ;(e.currentTarget as HTMLElement).style.color = "#e2e8f0"
+                  (e.currentTarget as HTMLElement).style.background = "#fafafa"
+                  ;(e.currentTarget as HTMLElement).style.color = "#1a1a1a"
                 }
               }}
               onMouseLeave={(e) => {
                 if (!active) {
                   (e.currentTarget as HTMLElement).style.background = "transparent"
-                  ;(e.currentTarget as HTMLElement).style.color = "#94a3b8"
+                  ;(e.currentTarget as HTMLElement).style.color = "#555"
                 }
               }}
             >
@@ -154,12 +167,12 @@ export function AlbamedSidebar({ newLeadsCount, onClose }: AlbamedSidebarProps) 
               {item.badge !== null && item.badge !== undefined && (
                 <span
                   style={{
-                    background: "#3b82f6",
+                    background: "#f47920",
                     color: "#fff",
                     borderRadius: 9999,
-                    padding: "1px 6px",
+                    padding: "1px 7px",
                     fontSize: 11,
-                    fontWeight: 600,
+                    fontWeight: 700,
                   }}
                 >
                   {item.badge}
@@ -171,7 +184,7 @@ export function AlbamedSidebar({ newLeadsCount, onClose }: AlbamedSidebarProps) 
       </div>
 
       {/* Logout */}
-      <div style={{ padding: "0 8px 20px" }}>
+      <div style={{ padding: "0 8px 20px", borderTop: "1px solid #f0f0f0", paddingTop: 12 }}>
         <button
           onClick={handleLogout}
           style={{
@@ -179,9 +192,9 @@ export function AlbamedSidebar({ newLeadsCount, onClose }: AlbamedSidebarProps) 
             display: "flex",
             alignItems: "center",
             gap: 10,
-            padding: "10px 8px",
-            borderRadius: 6,
-            color: "#94a3b8",
+            padding: "10px 10px",
+            borderRadius: 8,
+            color: "#999",
             background: "transparent",
             border: "none",
             cursor: "pointer",
@@ -189,12 +202,12 @@ export function AlbamedSidebar({ newLeadsCount, onClose }: AlbamedSidebarProps) 
             transition: "background 150ms, color 150ms",
           }}
           onMouseEnter={(e) => {
-            ;(e.currentTarget as HTMLElement).style.background = "#293548"
-            ;(e.currentTarget as HTMLElement).style.color = "#e2e8f0"
+            ;(e.currentTarget as HTMLElement).style.background = "#fff0f0"
+            ;(e.currentTarget as HTMLElement).style.color = "#e53e3e"
           }}
           onMouseLeave={(e) => {
             ;(e.currentTarget as HTMLElement).style.background = "transparent"
-            ;(e.currentTarget as HTMLElement).style.color = "#94a3b8"
+            ;(e.currentTarget as HTMLElement).style.color = "#999"
           }}
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

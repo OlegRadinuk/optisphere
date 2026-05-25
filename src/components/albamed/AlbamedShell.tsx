@@ -1,12 +1,10 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
 import { AlbamedSidebar } from "@/components/albamed/AlbamedSidebar"
 import { ToastProvider } from "@/components/albamed/Toast"
 
 export function AlbamedShell({ children }: { children: React.ReactNode }) {
-  const router = useRouter()
   const [authed, setAuthed] = useState<boolean | null>(null)
   const [newLeadsCount, setNewLeadsCount] = useState(0)
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -15,7 +13,7 @@ export function AlbamedShell({ children }: { children: React.ReactNode }) {
     fetch("/api/albamed/stats")
       .then((r) => {
         if (r.status === 401) {
-          router.push("/aiadmin")
+          window.location.replace("/aiadmin")
           return null
         }
         setAuthed(true)
@@ -25,9 +23,9 @@ export function AlbamedShell({ children }: { children: React.ReactNode }) {
         if (d?.leadsNew !== undefined) setNewLeadsCount(d.leadsNew)
       })
       .catch(() => {
-        router.push("/aiadmin")
+        window.location.replace("/aiadmin")
       })
-  }, [router])
+  }, [])
 
   if (authed === null) {
     return (
@@ -37,9 +35,23 @@ export function AlbamedShell({ children }: { children: React.ReactNode }) {
           alignItems: "center",
           justifyContent: "center",
           minHeight: "100vh",
+          background: "#f5f6f8",
         }}
       >
-        <span style={{ color: "#94a3b8", fontSize: 14 }}>Загрузка...</span>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
+          <div
+            style={{
+              width: 36,
+              height: 36,
+              border: "3px solid #f0f0f0",
+              borderTopColor: "#f47920",
+              borderRadius: "50%",
+              animation: "spin 0.7s linear infinite",
+            }}
+          />
+          <span style={{ color: "#999", fontSize: 14 }}>Загрузка...</span>
+        </div>
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
     )
   }
@@ -56,12 +68,13 @@ export function AlbamedShell({ children }: { children: React.ReactNode }) {
           top: 12,
           left: 12,
           zIndex: 200,
-          background: "#1e293b",
-          border: "1px solid #334155",
+          background: "#fff",
+          border: "1px solid #e8e8e8",
           borderRadius: 8,
           padding: "8px",
           cursor: "pointer",
-          color: "#e2e8f0",
+          color: "#555",
+          boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
         }}
         className="albamed-hamburger"
       >
@@ -76,12 +89,7 @@ export function AlbamedShell({ children }: { children: React.ReactNode }) {
       {sidebarOpen && (
         <div
           onClick={() => setSidebarOpen(false)}
-          style={{
-            position: "fixed",
-            inset: 0,
-            background: "rgba(0,0,0,0.6)",
-            zIndex: 99,
-          }}
+          style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.4)", zIndex: 99 }}
         />
       )}
 
@@ -89,10 +97,7 @@ export function AlbamedShell({ children }: { children: React.ReactNode }) {
         style={{ transform: sidebarOpen ? "translateX(0)" : undefined }}
         className={`albamed-sidebar-wrapper${sidebarOpen ? " open" : ""}`}
       >
-        <AlbamedSidebar
-          newLeadsCount={newLeadsCount}
-          onClose={() => setSidebarOpen(false)}
-        />
+        <AlbamedSidebar newLeadsCount={newLeadsCount} onClose={() => setSidebarOpen(false)} />
       </div>
 
       <main
@@ -100,18 +105,15 @@ export function AlbamedShell({ children }: { children: React.ReactNode }) {
         style={{
           marginLeft: 220,
           minHeight: "100vh",
-          background: "#0f172a",
-          padding: 24,
+          background: "#f5f6f8",
+          padding: 28,
         }}
       >
         {children}
       </main>
 
       <style>{`
-        @keyframes pulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.4; }
-        }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
         @media (max-width: 767px) {
           .albamed-hamburger { display: flex !important; align-items: center; justify-content: center; }
           .albamed-main { margin-left: 0 !important; padding-top: 60px !important; }
