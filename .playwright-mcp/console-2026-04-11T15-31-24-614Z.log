@@ -1,4 +1,0 @@
-[    8057ms] [LOG] JQMIGRATE: Migrate is installed, version 1.4.1 @ http://kis-logistic.ru/media/jui/js/jquery.site.min.js:7
-[ 1097804ms] Uncaught (in promise) Error: reCAPTCHA Timeout (o)
-    at <anonymous> (https://www.gstatic.com/recaptcha/releases/kUYUkUlSyqkjTSMaN2w3RaOh/recaptcha__ru.js:1495:78)
-    at u (https://www.gstatic.com/recaptcha/releases/kUYUkUlSyqkjTSMaN2w3RaOh/recaptcha__ru.js:333:106)

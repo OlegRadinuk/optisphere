@@ -20,6 +20,7 @@ export function getDb(): Database.Database {
   _db.pragma("foreign_keys = ON")
   initSchema(_db)
   seedBots(_db)
+  seedDoctors(_db)
   return _db
 }
 
@@ -68,6 +69,20 @@ function initSchema(db: Database.Database) {
 
     CREATE INDEX IF NOT EXISTS idx_messages_session ON messages(client_id, session_id);
     CREATE INDEX IF NOT EXISTS idx_leads_client    ON leads(client_id);
+
+    CREATE TABLE IF NOT EXISTS doctors (
+      id          INTEGER PRIMARY KEY AUTOINCREMENT,
+      client_id   INTEGER NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
+      name        TEXT    NOT NULL,
+      specialty   TEXT    NOT NULL DEFAULT '',
+      branch      INTEGER NOT NULL DEFAULT 1,
+      schedule    TEXT    NOT NULL DEFAULT '{"mon":true,"tue":true,"wed":true,"thu":true,"fri":true,"sat":false,"sun":false}',
+      active      INTEGER NOT NULL DEFAULT 1,
+      created_at  TEXT    DEFAULT (datetime('now'))
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_doctors_client ON doctors(client_id);
+    CREATE INDEX IF NOT EXISTS idx_leads_status   ON leads(client_id, status);
   `)
 
   // Migrations — safe to run on every start
@@ -81,6 +96,83 @@ function initSchema(db: Database.Database) {
   } catch {
     // Column already exists — ignore
   }
+  try {
+    db.exec(`ALTER TABLE leads ADD COLUMN status TEXT NOT NULL DEFAULT 'new' CHECK(status IN ('new','working','closed'))`)
+  } catch {
+    // Column already exists — ignore
+  }
+}
+
+const DEFAULT_SCHEDULE = '{"mon":true,"tue":true,"wed":true,"thu":true,"fri":true,"sat":false,"sun":false}'
+
+const ALBAMED_DOCTORS: Array<{ name: string; specialty: string; branch: number }> = [
+  // Гинекология (branch=1)
+  { name: "Мурадасилова Зийде Наримановна",    specialty: "Главврач, акушер-гинеколог",       branch: 1 },
+  { name: "Румянцева Зоя Сергеевна",           specialty: "К.м.н., акушер-гинеколог",         branch: 1 },
+  { name: "Мощенская Юлия Сергеевна",          specialty: "Акушер-гинеколог",                 branch: 1 },
+  { name: "Баталова Динара Тахировна",          specialty: "Акушер-гинеколог, УЗД",            branch: 1 },
+  { name: "Литвина Инна Дмитриевна",           specialty: "Гинеколог, акушер, УЗИ",           branch: 1 },
+  { name: "Лубенникова Марианна Владимировна", specialty: "Гинеколог (бесплодие)",             branch: 1 },
+  { name: "Муртазаева Наджие Юсуфовна",        specialty: "Акушер-гинеколог",                 branch: 1 },
+  { name: "Сейдаметова Элина Эрнестовна",      specialty: "Гинеколог, акушер",                branch: 1 },
+  // Урология/Андрология (branch=1)
+  { name: "Халилов Ваид Садыкович",            specialty: "Уролог, андролог, УЗИ",            branch: 1 },
+  { name: "Шведун Александр Александрович",    specialty: "Уролог, андролог",                 branch: 1 },
+  // Хирургия (branch=1)
+  { name: "Гудкова Мариэтта Андреевна",        specialty: "Хирург-онколог-колопроктолог",     branch: 1 },
+  { name: "Турамуратова Мафтунабону Самадовна", specialty: "Детский хирург",                  branch: 1 },
+  { name: "Абдулаева Эльвиза Айдеровна",       specialty: "Пластический хирург",              branch: 1 },
+  { name: "Безруков Владимир Олегович",         specialty: "Маммолог, хирург, УЗД",            branch: 1 },
+  // Гастроэнтерология (branch=1)
+  { name: "Оголихина Ирина Сергеевна",         specialty: "Гастроэнтеролог, детский гастроэнтеролог", branch: 1 },
+  { name: "Джерад Зиед",                       specialty: "Гастроэнтеролог",                  branch: 1 },
+  { name: "Барбанова Айше Анваровна",          specialty: "Детский гастроэнтеролог, педиатр, УЗИ", branch: 1 },
+  // Кардиология (branch=1)
+  { name: "Джабер Зухаир Т.Х.",               specialty: "Кардиолог",                        branch: 1 },
+  { name: "Чистякова Светлана Игоревна",       specialty: "Кардиолог, УЗД, к.м.н.",           branch: 1 },
+  { name: "Кузьменко Татьяна Владимировна",    specialty: "Детский кардиолог",                branch: 1 },
+  // Неврология (branch=1)
+  { name: "Новинская Ольга Вячеславовна",      specialty: "Невролог",                         branch: 1 },
+  { name: "Джеппарова Беянслы Гиреевна",       specialty: "Детский невролог",                 branch: 1 },
+  // Педиатрия (branch=1)
+  { name: "Османова Эльвина Фикретовна",       specialty: "Педиатр",                          branch: 1 },
+  { name: "Шаллал Халаф Камел",               specialty: "Педиатр, пульмонолог",             branch: 1 },
+  { name: "Решетова Севиль Серверовна",        specialty: "Педиатр, УЗИ",                     branch: 1 },
+  // ЛОР (branch=2)
+  { name: "Милоярова Эльвиза Курбановна",      specialty: "ЛОР",                              branch: 2 },
+  { name: "Сапаева Сабина Равильевна",         specialty: "ЛОР",                              branch: 2 },
+  { name: "Акимова Диляра Нуриевна",           specialty: "ЛОР",                              branch: 2 },
+  // УЗИ (branch=1)
+  { name: "Меликаева Екатерина Игоревна",      specialty: "Врач УЗИ",                         branch: 1 },
+  { name: "Покидченко Елена Владимировна",     specialty: "Врач УЗИ",                         branch: 1 },
+  { name: "Мамутова Эльвира Вильмуровна",      specialty: "Врач УЗИ",                         branch: 1 },
+  // Другие специальности (branch=1)
+  { name: "Цветков Владимир Александрович",    specialty: "Эндокринолог, терапевт",           branch: 1 },
+  { name: "Мурадасилова Альмира Ахмедовна",    specialty: "Терапевт",                         branch: 1 },
+  { name: "Ивашина Ольга Игоревна",            specialty: "Гематолог",                        branch: 1 },
+  { name: "Шуваев Виктор Викторович",          specialty: "Ортопед-травматолог, Текар-терапия", branch: 1 },
+  { name: "Сосновский Сергей Юрьевич",         specialty: "Ортопед-травматолог",              branch: 1 },
+  { name: "Шаталов Тимур Олегович",            specialty: "Эндоскопист",                      branch: 1 },
+  { name: "Степанов Владимир Владимирович",    specialty: "Рентгенография",                   branch: 1 },
+  { name: "Седикова Наталья Ивановна",         specialty: "Дерматовенеролог",                 branch: 1 },
+  { name: "Ощепков Эдуард Евгеньевич",         specialty: "Психиатр, нарколог",               branch: 1 },
+  { name: "Королёва Елена Владимировна",       specialty: "Анестезиолог-реаниматолог",        branch: 1 },
+]
+
+function seedDoctors(db: Database.Database) {
+  const count = (db.prepare("SELECT COUNT(*) as n FROM doctors WHERE client_id = 1").get() as { n: number }).n
+  if (count > 0) return
+
+  const insert = db.prepare(`
+    INSERT INTO doctors (client_id, name, specialty, branch, schedule, active)
+    VALUES (1, @name, @specialty, @branch, @schedule, 1)
+  `)
+  const insertMany = db.transaction((rows: typeof ALBAMED_DOCTORS) => {
+    for (const row of rows) {
+      insert.run({ name: row.name, specialty: row.specialty, branch: row.branch, schedule: DEFAULT_SCHEDULE })
+    }
+  })
+  insertMany(ALBAMED_DOCTORS)
 }
 
 function seedBots(db: Database.Database) {
@@ -162,6 +254,21 @@ export type Lead = {
   phone: string
   email: string
   message: string
+  status: "new" | "working" | "closed"
+  created_at: string
+}
+
+// Omit status from insert — DB sets DEFAULT 'new'
+export type LeadInsert = Omit<Lead, "id" | "created_at" | "status">
+
+export type Doctor = {
+  id: number
+  client_id: number
+  name: string
+  specialty: string
+  branch: number
+  schedule: string
+  active: number
   created_at: string
 }
 
@@ -259,7 +366,7 @@ export function saveMessage(
     .run(clientId, sessionId, role, content)
 }
 
-export function saveLead(lead: Omit<Lead, "id" | "created_at">): void {
+export function saveLead(lead: LeadInsert): void {
   getDb()
     .prepare(
       `INSERT INTO leads (client_id, session_id, name, phone, email, message)
@@ -341,4 +448,31 @@ export function getSessionMessages(clientId: number, sessionId: string): Message
       "SELECT * FROM messages WHERE client_id = ? AND session_id = ? ORDER BY created_at ASC"
     )
     .all(clientId, sessionId) as Message[]
+}
+
+export function getDoctors(clientId: number): Doctor[] {
+  return getDb()
+    .prepare(
+      "SELECT * FROM doctors WHERE client_id = ? AND active = 1 ORDER BY id ASC"
+    )
+    .all(clientId) as Doctor[]
+}
+
+export function updateDoctor(
+  id: number,
+  data: Partial<Pick<Doctor, "name" | "specialty" | "branch" | "schedule" | "active">>
+): void {
+  const fields = Object.keys(data)
+    .map((k) => `${k} = @${k}`)
+    .join(", ")
+  if (!fields) return
+  getDb()
+    .prepare(`UPDATE doctors SET ${fields} WHERE id = @id`)
+    .run({ ...data, id })
+}
+
+export function updateLeadStatus(id: number, status: "new" | "working" | "closed"): void {
+  getDb()
+    .prepare("UPDATE leads SET status = ? WHERE id = ?")
+    .run(status, id)
 }
