@@ -76,10 +76,10 @@ function EstetShellInner({ children }: { children: React.ReactNode }) {
 
   if (authed === null) {
     return (
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh", background: "#F4F7FA" }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh", background: "#F8FAFB" }}>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
-          <div style={{ width: 36, height: 36, border: "3px solid #e0ecf7", borderTopColor: "#2B8FD5", borderRadius: "50%", animation: "spin 0.7s linear infinite" }} />
-          <span style={{ color: "#999", fontSize: 14 }}>Загрузка...</span>
+          <div style={{ width: 36, height: 36, border: "3px solid #E2E8F0", borderTopColor: "#0D9488", borderRadius: "50%", animation: "spin 0.7s linear infinite" }} />
+          <span style={{ color: "#94A3B8", fontSize: 14 }}>Загрузка...</span>
         </div>
         <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
@@ -96,16 +96,16 @@ function EstetShellInner({ children }: { children: React.ReactNode }) {
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <div style={{
             width: 32, height: 32, borderRadius: 9,
-            background: "linear-gradient(135deg, #2B8FD5 0%, #1A78BF 100%)",
+            background: "linear-gradient(135deg, #0D9488 0%, #0F766E 100%)",
             display: "flex", alignItems: "center", justifyContent: "center",
-            boxShadow: "0 2px 8px rgba(43,143,213,0.3)",
+            boxShadow: "0 2px 8px rgba(13,148,136,0.3)",
           }}>
             <ToothLogo size={18} />
           </div>
-          <span style={{ fontSize: 14, fontWeight: 700, color: "#1a1a1a" }}>Эстетик</span>
+          <span style={{ fontSize: 14, fontWeight: 700, color: "#0F172A" }}>Эстетик</span>
         </div>
         {newLeadsCount > 0 && (
-          <span style={{ background: "#2B8FD5", color: "#fff", borderRadius: 9999, padding: "2px 10px", fontSize: 12, fontWeight: 700 }}>
+          <span style={{ background: "#0D9488", color: "#fff", borderRadius: 9999, padding: "2px 10px", fontSize: 12, fontWeight: 700 }}>
             {newLeadsCount} новых
           </span>
         )}
@@ -125,14 +125,14 @@ function EstetShellInner({ children }: { children: React.ReactNode }) {
             <Link key={item.href} href={item.href} style={{
               display: "flex", flexDirection: "column", alignItems: "center", gap: 3, flex: 1,
               padding: "8px 2px", textDecoration: "none",
-              color: active ? "#2B8FD5" : "#8b96a5",
+              color: active ? "#0D9488" : "#8b96a5",
               position: "relative", WebkitTapHighlightColor: "transparent",
             }}>
               <div style={{ position: "relative" }}>
                 {item.icon}
                 {isLeads && newLeadsCount > 0 && (
                   <span style={{
-                    position: "absolute", top: -4, right: -8, background: "#2B8FD5", color: "#fff",
+                    position: "absolute", top: -4, right: -8, background: "#0D9488", color: "#fff",
                     borderRadius: 9999, fontSize: 10, fontWeight: 700, padding: "1px 5px", minWidth: 16, textAlign: "center", lineHeight: "14px",
                   }}>
                     {newLeadsCount > 99 ? "99+" : newLeadsCount}
@@ -140,7 +140,7 @@ function EstetShellInner({ children }: { children: React.ReactNode }) {
                 )}
               </div>
               <span style={{ fontSize: 10, fontWeight: active ? 600 : 400, letterSpacing: "0.01em" }}>{item.label}</span>
-              {active && <span style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: 28, height: 2, background: "#2B8FD5", borderRadius: 2 }} />}
+              {active && <span style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: 28, height: 2, background: "#0D9488", borderRadius: 2 }} />}
             </Link>
           )
         })}
@@ -156,7 +156,7 @@ function EstetShellInner({ children }: { children: React.ReactNode }) {
         .es-main {
           margin-left: 220px;
           min-height: 100vh;
-          background: #F4F7FA;
+          background: #F8FAFB;
           padding: 28px;
         }
 
@@ -165,7 +165,7 @@ function EstetShellInner({ children }: { children: React.ReactNode }) {
           .es-topbar {
             display: flex; align-items: center; justify-content: space-between;
             position: fixed; top: 0; left: 0; right: 0; height: 52px;
-            background: #fff; border-bottom: 1px solid #e0ecf7; padding: 0 16px; z-index: 100;
+            background: #fff; border-bottom: 1px solid #E2E8F0; padding: 0 16px; z-index: 100;
             padding-top: env(safe-area-inset-top);
             height: calc(52px + env(safe-area-inset-top));
           }
@@ -177,7 +177,7 @@ function EstetShellInner({ children }: { children: React.ReactNode }) {
           }
           .es-bottomnav {
             display: flex; position: fixed; bottom: 0; left: 0; right: 0;
-            background: #fff; border-top: 1px solid #e0ecf7; z-index: 100;
+            background: #fff; border-top: 1px solid #E2E8F0; z-index: 100;
             padding-bottom: env(safe-area-inset-bottom);
           }
         }

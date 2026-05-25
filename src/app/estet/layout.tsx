@@ -1,5 +1,41 @@
+import type { Metadata } from "next"
+import { Oxanium, Inter } from "next/font/google"
 import { EstetShell } from "@/components/estet/EstetShell"
 
+const oxanium = Oxanium({
+  variable: "--font-oxanium",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["500", "600", "700"],
+})
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin", "cyrillic"],
+  display: "swap",
+})
+
+export const metadata: Metadata = {
+  title: "Эстетик — Дашборд",
+  robots: "noindex, nofollow",
+}
+
 export default function EstetLayout({ children }: { children: React.ReactNode }) {
-  return <EstetShell>{children}</EstetShell>
+  return (
+    <html lang="ru" className={`${oxanium.variable} ${inter.variable}`}>
+      <body
+        style={{
+          margin: 0,
+          background: "#F8FAFB",
+          color: "#0F172A",
+          fontFamily: "var(--font-inter), system-ui, -apple-system, sans-serif",
+          fontSize: 14,
+          WebkitFontSmoothing: "antialiased",
+          MozOsxFontSmoothing: "grayscale",
+        }}
+      >
+        <EstetShell>{children}</EstetShell>
+      </body>
+    </html>
+  )
 }

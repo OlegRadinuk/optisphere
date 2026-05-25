@@ -82,18 +82,18 @@ export function EstetSidebar({ newLeadsCount, onClose }: EstetSidebarProps) {
         height: "100vh",
         width: 220,
         background: "#ffffff",
-        borderRight: "1px solid #e0ecf7",
+        borderRight: "1px solid #E2E8F0",
         display: "flex",
         flexDirection: "column",
         zIndex: 100,
-        boxShadow: "2px 0 8px rgba(43,143,213,0.08)",
+        boxShadow: "2px 0 8px rgba(13,148,136,0.08)",
       }}
     >
       {/* Logo */}
       <div
         style={{
           padding: "20px 16px",
-          borderBottom: "1px solid #eaf3fb",
+          borderBottom: "1px solid #F1F5F9",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
@@ -102,23 +102,23 @@ export function EstetSidebar({ newLeadsCount, onClose }: EstetSidebarProps) {
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <div style={{
             width: 36, height: 36, borderRadius: 10, flexShrink: 0,
-            background: "linear-gradient(135deg, #2B8FD5 0%, #1A78BF 100%)",
+            background: "linear-gradient(135deg, #0D9488 0%, #0F766E 100%)",
             display: "flex", alignItems: "center", justifyContent: "center",
-            boxShadow: "0 2px 8px rgba(43,143,213,0.35)",
+            boxShadow: "0 2px 8px rgba(13,148,136,0.35)",
           }}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 5.5C10.5 4 8.5 3.5 7 4.2 5 5 4 7 4.5 10c.4 2.3 1 3.8 1.4 6 .3 1.6.5 4 1.6 4 1 0 1.1-1.7 1.4-3.2.3-1.5.6-2.6 1.1-2.6.5 0 .8 1.1 1.1 2.6.3 1.5.4 3.2 1.4 3.2 1.1 0 1.3-2.4 1.6-4 .4-2.2 1-3.7 1.4-6 .5-3-.5-5-2.5-5.8-1.5-.7-3.5-.2-5 1.3z"/>
             </svg>
           </div>
           <div>
-            <div style={{ fontSize: 13, fontWeight: 700, color: "#1a1a1a", lineHeight: 1.2 }}>Эстетик</div>
-            <div style={{ fontSize: 11, color: "#999", lineHeight: 1.2 }}>Дашборд</div>
+            <div style={{ fontSize: 13, fontWeight: 700, color: "#0F172A", lineHeight: 1.2 }}>Эстетик</div>
+            <div style={{ fontSize: 11, color: "#94A3B8", lineHeight: 1.2 }}>Дашборд</div>
           </div>
         </div>
         {onClose && (
           <button
             onClick={onClose}
-            style={{ background: "none", border: "none", color: "#999", cursor: "pointer", padding: 4 }}
+            style={{ background: "none", border: "none", color: "#94A3B8", cursor: "pointer", padding: 4 }}
             aria-label="Закрыть меню"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -143,19 +143,19 @@ export function EstetSidebar({ newLeadsCount, onClose }: EstetSidebarProps) {
                 gap: 10,
                 padding: "10px 10px",
                 borderRadius: 8,
-                color: active ? "#2B8FD5" : "#555",
-                background: active ? "#EBF5FF" : "transparent",
+                color: active ? "#0D9488" : "#555",
+                background: active ? "#F0FDFA" : "transparent",
                 textDecoration: "none",
                 fontSize: 14,
                 fontWeight: active ? 600 : 400,
                 transition: "background 150ms, color 150ms",
                 position: "relative",
-                borderLeft: active ? "3px solid #2B8FD5" : "3px solid transparent",
+                borderLeft: active ? "3px solid #0D9488" : "3px solid transparent",
               }}
               onMouseEnter={(e) => {
                 if (!active) {
-                  (e.currentTarget as HTMLElement).style.background = "#f4f8fc"
-                  ;(e.currentTarget as HTMLElement).style.color = "#1a1a1a"
+                  (e.currentTarget as HTMLElement).style.background = "#F1F5F9"
+                  ;(e.currentTarget as HTMLElement).style.color = "#0F172A"
                 }
               }}
               onMouseLeave={(e) => {
@@ -169,7 +169,7 @@ export function EstetSidebar({ newLeadsCount, onClose }: EstetSidebarProps) {
               <span style={{ flex: 1 }}>{item.label}</span>
               {item.badge !== null && item.badge !== undefined && (
                 <span style={{
-                  background: "#2B8FD5",
+                  background: "#0D9488",
                   color: "#fff",
                   borderRadius: 9999,
                   padding: "1px 7px",
@@ -185,7 +185,7 @@ export function EstetSidebar({ newLeadsCount, onClose }: EstetSidebarProps) {
       </div>
 
       {/* Logout */}
-      <div style={{ padding: "0 8px 20px", borderTop: "1px solid #eaf3fb", paddingTop: 12 }}>
+      <div style={{ padding: "0 8px 20px", borderTop: "1px solid #F1F5F9", paddingTop: 12 }}>
         <button
           onClick={handleLogout}
           style={{
@@ -195,7 +195,7 @@ export function EstetSidebar({ newLeadsCount, onClose }: EstetSidebarProps) {
             gap: 10,
             padding: "10px 10px",
             borderRadius: 8,
-            color: "#999",
+            color: "#94A3B8",
             background: "transparent",
             border: "none",
             cursor: "pointer",

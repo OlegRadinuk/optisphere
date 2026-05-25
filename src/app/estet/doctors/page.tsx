@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from "react"
 import { InlineToggle } from "@/components/estet/InlineToggle"
 import { useToast } from "@/components/estet/Toast"
 
-const PRIMARY = "#2B8FD5"
+const PRIMARY = "#0D9488"
 
 type DayKey = "mon" | "tue" | "wed" | "thu" | "fri" | "sat" | "sun"
 
@@ -104,8 +104,8 @@ export default function EstetDoctorsPage() {
 
   return (
     <div>
-      <h1 style={{ fontSize: 22, fontWeight: 700, color: "#1a1a1a", margin: "0 0 6px" }}>Врачи</h1>
-      <p style={{ fontSize: 14, color: "#999", margin: "0 0 20px" }}>Расписание и статус активности</p>
+      <h1 style={{ fontFamily: "var(--font-oxanium)", fontSize: 22, fontWeight: 700, letterSpacing: "-0.3px", color: "#0F172A", margin: "0 0 6px" }}>Врачи</h1>
+      <p style={{ fontSize: 14, color: "#94A3B8", margin: "0 0 20px" }}>Расписание и статус активности</p>
 
       {errorBlock}
 
@@ -113,16 +113,16 @@ export default function EstetDoctorsPage() {
         <>
           {/* Desktop table */}
           <div className="es-doctors-table" style={{ overflowX: "auto" }}>
-            <div style={{ background: "#fff", border: "1px solid #e0ecf7", borderRadius: 10, overflow: "hidden", minWidth: 800, boxShadow: "0 1px 4px rgba(43,143,213,0.06)" }}>
+            <div style={{ background: "#fff", border: "1px solid #E2E8F0", borderRadius: 10, overflow: "hidden", minWidth: 800, boxShadow: "0 1px 2px rgba(15,23,42,0.04), 0 4px 12px rgba(15,23,42,0.05)" }}>
               <table style={{ width: "100%", borderCollapse: "collapse" }}>
                 <thead>
-                  <tr style={{ background: "#f8fbfe", borderBottom: "1px solid #e0ecf7" }}>
-                    <th style={{ padding: "10px 16px", textAlign: "left", color: "#999", fontSize: 12, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.04em", width: 200 }}>Врач</th>
-                    <th style={{ padding: "10px 16px", textAlign: "left", color: "#999", fontSize: 12, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.04em", width: 180 }}>Специальность</th>
+                  <tr style={{ background: "#F1F5F9", borderBottom: "1px solid #E2E8F0" }}>
+                    <th style={{ padding: "10px 16px", textAlign: "left", color: "#94A3B8", fontSize: 12, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.04em", width: 200 }}>Врач</th>
+                    <th style={{ padding: "10px 16px", textAlign: "left", color: "#94A3B8", fontSize: 12, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.04em", width: 180 }}>Специальность</th>
                     {DAYS.map(({ key, label }) => (
-                      <th key={key} style={{ padding: "10px 8px", textAlign: "center", color: "#999", fontSize: 12, fontWeight: 600, textTransform: "uppercase", width: 44 }}>{label}</th>
+                      <th key={key} style={{ padding: "10px 8px", textAlign: "center", color: "#94A3B8", fontSize: 12, fontWeight: 600, textTransform: "uppercase", width: 44 }}>{label}</th>
                     ))}
-                    <th style={{ padding: "10px 16px", textAlign: "center", color: "#999", fontSize: 12, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.04em", width: 80 }}>Активен</th>
+                    <th style={{ padding: "10px 16px", textAlign: "center", color: "#94A3B8", fontSize: 12, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.04em", width: 80 }}>Активен</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -131,7 +131,7 @@ export default function EstetDoctorsPage() {
                         <tr key={i}>
                           {[180, 160, 24, 24, 24, 24, 24, 24, 24, 36].map((w, j) => (
                             <td key={j} style={{ padding: "13px 16px", borderBottom: "1px solid #f5f5f5", textAlign: j >= 2 ? "center" : "left" }}>
-                              <div style={{ width: w, height: 14, background: "#e8f3fb", borderRadius: 4, animation: "pulse 1.5s ease infinite", margin: j >= 2 ? "0 auto" : undefined }} />
+                              <div style={{ width: w, height: 14, background: "#E2E8F0", borderRadius: 4, animation: "pulse 1.5s ease infinite", margin: j >= 2 ? "0 auto" : undefined }} />
                             </td>
                           ))}
                         </tr>
@@ -142,11 +142,11 @@ export default function EstetDoctorsPage() {
                       )
                     : doctors.map((doctor, idx) => (
                         <tr key={doctor.id} style={{ transition: "background 150ms", opacity: doctor.active ? 1 : 0.55 }}
-                          onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "#f8fbfe" }}
+                          onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "#F1F5F9" }}
                           onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent" }}
                         >
-                          <td style={{ padding: "13px 16px", color: "#1a1a1a", fontWeight: 500, borderBottom: idx < doctors.length - 1 ? "1px solid #f5f5f5" : "none" }}>{doctor.name}</td>
-                          <td style={{ padding: "13px 16px", color: "#555", fontSize: 13, borderBottom: idx < doctors.length - 1 ? "1px solid #f5f5f5" : "none" }}>{doctor.specialty}</td>
+                          <td style={{ padding: "13px 16px", color: "#0F172A", fontWeight: 500, borderBottom: idx < doctors.length - 1 ? "1px solid #f5f5f5" : "none" }}>{doctor.name}</td>
+                          <td style={{ padding: "13px 16px", color: "#475569", fontSize: 13, borderBottom: idx < doctors.length - 1 ? "1px solid #f5f5f5" : "none" }}>{doctor.specialty}</td>
                           {DAYS.map(({ key }) => {
                             const savingKey = `${doctor.id}-${key}`
                             const isChecked = doctor.schedule?.[key] ?? false
@@ -173,21 +173,21 @@ export default function EstetDoctorsPage() {
           <div className="es-doctors-cards" style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             {loading
               ? Array.from({ length: 4 }).map((_, i) => (
-                  <div key={i} style={{ background: "#fff", border: "1px solid #e0ecf7", borderRadius: 10, padding: "16px", animation: "pulse 1.5s ease infinite" }}>
-                    <div style={{ width: "60%", height: 16, background: "#e8f3fb", borderRadius: 4, marginBottom: 8 }} />
-                    <div style={{ width: "40%", height: 12, background: "#e8f3fb", borderRadius: 4 }} />
+                  <div key={i} style={{ background: "#fff", border: "1px solid #E2E8F0", borderRadius: 10, padding: "16px", animation: "pulse 1.5s ease infinite" }}>
+                    <div style={{ width: "60%", height: 16, background: "#E2E8F0", borderRadius: 4, marginBottom: 8 }} />
+                    <div style={{ width: "40%", height: 12, background: "#E2E8F0", borderRadius: 4 }} />
                   </div>
                 ))
               : doctors.length === 0
               ? (
-                  <div style={{ textAlign: "center", padding: "40px 16px", color: "#bbb", background: "#fff", borderRadius: 10, border: "1px solid #e0ecf7" }}>Врачи не найдены</div>
+                  <div style={{ textAlign: "center", padding: "40px 16px", color: "#bbb", background: "#fff", borderRadius: 10, border: "1px solid #E2E8F0" }}>Врачи не найдены</div>
                 )
               : doctors.map((doctor) => (
-                  <div key={doctor.id} style={{ background: "#fff", border: "1px solid #e0ecf7", borderRadius: 10, padding: "16px", boxShadow: "0 1px 4px rgba(43,143,213,0.06)", opacity: doctor.active ? 1 : 0.6 }}>
+                  <div key={doctor.id} style={{ background: "#fff", border: "1px solid #E2E8F0", borderRadius: 10, padding: "16px", boxShadow: "0 1px 2px rgba(15,23,42,0.04), 0 4px 12px rgba(15,23,42,0.05)", opacity: doctor.active ? 1 : 0.6 }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10 }}>
                       <div>
-                        <div style={{ fontSize: 15, fontWeight: 600, color: "#1a1a1a", marginBottom: 2 }}>{doctor.name}</div>
-                        <div style={{ fontSize: 13, color: "#888" }}>{doctor.specialty}</div>
+                        <div style={{ fontSize: 15, fontWeight: 600, color: "#0F172A", marginBottom: 2 }}>{doctor.name}</div>
+                        <div style={{ fontSize: 13, color: "#64748B" }}>{doctor.specialty}</div>
                         <div style={{ fontSize: 12, color: "#aaa", marginTop: 2 }}>{BRANCHES[doctor.branch] ?? `Филиал ${doctor.branch}`}</div>
                       </div>
                       <InlineToggle checked={doctor.active} disabled={saving.has(`${doctor.id}-active`)} onChange={(v) => handleActiveToggle(doctor, v)} />
@@ -201,7 +201,7 @@ export default function EstetDoctorsPage() {
                           <button key={key} disabled={saving.has(savingKey)} onClick={() => handleDayToggle(doctor, key, !isChecked)}
                             style={{
                               width: 34, height: 34, borderRadius: 8, border: "none",
-                              background: isChecked ? PRIMARY : "#eef3f8",
+                              background: isChecked ? PRIMARY : "#F1F5F9",
                               color: isChecked ? "#fff" : "#999",
                               fontSize: 11, fontWeight: 600,
                               cursor: saving.has(savingKey) ? "not-allowed" : "pointer",

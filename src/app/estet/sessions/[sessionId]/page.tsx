@@ -4,7 +4,7 @@ import { useState, useEffect, use } from "react"
 import Link from "next/link"
 import { EstetStatusSelect } from "@/components/estet/EstetStatusSelect"
 
-const PRIMARY = "#2B8FD5"
+const PRIMARY = "#0D9488"
 
 type LeadStatus = "new" | "working" | "closed"
 
@@ -74,19 +74,19 @@ export default function EstetSessionDetailPage({ params }: { params: Promise<{ s
         ← Все диалоги
       </Link>
 
-      <h1 style={{ fontSize: 22, fontWeight: 700, color: "#1a1a1a", margin: "0 0 16px" }}>Диалог</h1>
+      <h1 style={{ fontFamily: "var(--font-oxanium)", fontSize: 22, fontWeight: 700, letterSpacing: "-0.3px", color: "#0F172A", margin: "0 0 16px" }}>Диалог</h1>
 
       {loading ? (
         <>
-          <div style={{ background: "#fff", border: "1px solid #e0ecf7", borderRadius: 10, padding: "16px 20px", marginBottom: 16, display: "flex", gap: 24 }}>
+          <div style={{ background: "#fff", border: "1px solid #E2E8F0", borderRadius: 10, padding: "16px 20px", marginBottom: 16, display: "flex", gap: 24 }}>
             {[120, 80, 90].map((w, i) => (
-              <div key={i} style={{ width: w, height: 16, background: "#e8f3fb", borderRadius: 4, animation: "pulse 1.5s ease infinite" }} />
+              <div key={i} style={{ width: w, height: 16, background: "#E2E8F0", borderRadius: 4, animation: "pulse 1.5s ease infinite" }} />
             ))}
           </div>
-          <div style={{ background: "#fff", border: "1px solid #e0ecf7", borderRadius: 10, padding: 16, display: "flex", flexDirection: "column", gap: 12 }}>
+          <div style={{ background: "#fff", border: "1px solid #E2E8F0", borderRadius: 10, padding: 16, display: "flex", flexDirection: "column", gap: 12 }}>
             {[{ align: "flex-start", w: 220 }, { align: "flex-end", w: 180 }, { align: "flex-start", w: 260 }].map((b, i) => (
               <div key={i} style={{ alignSelf: b.align as "flex-start" | "flex-end", maxWidth: "70%" }}>
-                <div style={{ width: b.w, height: 48, background: "#e8f3fb", borderRadius: 12, animation: "pulse 1.5s ease infinite" }} />
+                <div style={{ width: b.w, height: 48, background: "#E2E8F0", borderRadius: 12, animation: "pulse 1.5s ease infinite" }} />
               </div>
             ))}
           </div>
@@ -96,17 +96,17 @@ export default function EstetSessionDetailPage({ params }: { params: Promise<{ s
       ) : (
         <>
           {/* Meta */}
-          <div style={{ background: "#fff", border: "1px solid #e0ecf7", borderRadius: 10, padding: "14px 20px", marginBottom: 16, display: "flex", gap: 24, alignItems: "center", flexWrap: "wrap", boxShadow: "0 1px 4px rgba(43,143,213,0.06)" }}>
+          <div style={{ background: "#fff", border: "1px solid #E2E8F0", borderRadius: 10, padding: "14px 20px", marginBottom: 16, display: "flex", gap: 24, alignItems: "center", flexWrap: "wrap", boxShadow: "0 1px 2px rgba(15,23,42,0.04), 0 4px 12px rgba(15,23,42,0.05)" }}>
             <div>
-              <span style={{ fontSize: 12, color: "#999" }}>Дата: </span>
-              <span style={{ fontSize: 13, color: "#1a1a1a", fontWeight: 500 }}>{firstMessage ? formatDateTime(firstMessage) : "—"}</span>
+              <span style={{ fontSize: 12, color: "#94A3B8" }}>Дата: </span>
+              <span style={{ fontSize: 13, color: "#0F172A", fontWeight: 500 }}>{firstMessage ? formatDateTime(firstMessage) : "—"}</span>
             </div>
             <div>
-              <span style={{ fontSize: 12, color: "#999" }}>Сообщений: </span>
-              <span style={{ fontSize: 13, color: "#1a1a1a", fontWeight: 500 }}>{messageCount}</span>
+              <span style={{ fontSize: 12, color: "#94A3B8" }}>Сообщений: </span>
+              <span style={{ fontSize: 13, color: "#0F172A", fontWeight: 500 }}>{messageCount}</span>
             </div>
             <div>
-              <span style={{ fontSize: 12, color: "#999" }}>Лид: </span>
+              <span style={{ fontSize: 12, color: "#94A3B8" }}>Лид: </span>
               <span style={{ fontSize: 13, color: data?.lead ? "#16a34a" : "#bbb", fontWeight: 500 }}>
                 {data?.lead ? "Оставлен" : "Не оставлен"}
               </span>
@@ -115,8 +115,8 @@ export default function EstetSessionDetailPage({ params }: { params: Promise<{ s
 
           {/* Lead card */}
           {data?.lead && (
-            <div style={{ background: "#fff", border: "1px solid #e0ecf7", borderRadius: 10, padding: "16px 20px", marginBottom: 16, boxShadow: "0 1px 4px rgba(43,143,213,0.06)" }}>
-              <div style={{ fontSize: 13, fontWeight: 600, color: PRIMARY, marginBottom: 12, paddingBottom: 10, borderBottom: "1px solid #eaf3fb", display: "flex", alignItems: "center", gap: 8 }}>
+            <div style={{ background: "#fff", border: "1px solid #E2E8F0", borderRadius: 10, padding: "16px 20px", marginBottom: 16, boxShadow: "0 1px 2px rgba(15,23,42,0.04), 0 4px 12px rgba(15,23,42,0.05)" }}>
+              <div style={{ fontSize: 13, fontWeight: 600, color: PRIMARY, marginBottom: 12, paddingBottom: 10, borderBottom: "1px solid #F1F5F9", display: "flex", alignItems: "center", gap: 8 }}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                   <circle cx="12" cy="7" r="4"/>
@@ -124,11 +124,11 @@ export default function EstetSessionDetailPage({ params }: { params: Promise<{ s
                 Лид из этого диалога
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: "8px 16px", alignItems: "center" }}>
-                <span style={{ color: "#999", fontSize: 13 }}>Имя:</span>
-                <span style={{ color: "#1a1a1a", fontSize: 14, fontWeight: 500 }}>{data.lead.name || "—"}</span>
-                <span style={{ color: "#999", fontSize: 13 }}>Телефон:</span>
+                <span style={{ color: "#94A3B8", fontSize: 13 }}>Имя:</span>
+                <span style={{ color: "#0F172A", fontSize: 14, fontWeight: 500 }}>{data.lead.name || "—"}</span>
+                <span style={{ color: "#94A3B8", fontSize: 13 }}>Телефон:</span>
                 <a href={`tel:${data.lead.phone}`} style={{ color: PRIMARY, fontSize: 14, fontWeight: 500, textDecoration: "none" }}>{data.lead.phone}</a>
-                <span style={{ color: "#999", fontSize: 13 }}>Статус:</span>
+                <span style={{ color: "#94A3B8", fontSize: 13 }}>Статус:</span>
                 {leadStatus !== null && (
                   <EstetStatusSelect leadId={data.lead.id} current={leadStatus} onChange={(s) => setLeadStatus(s)} />
                 )}
@@ -137,8 +137,8 @@ export default function EstetSessionDetailPage({ params }: { params: Promise<{ s
           )}
 
           {/* Chat */}
-          <div style={{ background: "#fff", border: "1px solid #e0ecf7", borderRadius: 10, padding: 20, boxShadow: "0 1px 4px rgba(43,143,213,0.06)" }}>
-            <div style={{ fontSize: 13, fontWeight: 600, color: "#555", marginBottom: 16, display: "flex", alignItems: "center", gap: 6 }}>
+          <div style={{ background: "#fff", border: "1px solid #E2E8F0", borderRadius: 10, padding: 20, boxShadow: "0 1px 2px rgba(15,23,42,0.04), 0 4px 12px rgba(15,23,42,0.05)" }}>
+            <div style={{ fontSize: 13, fontWeight: 600, color: "#475569", marginBottom: 16, display: "flex", alignItems: "center", gap: 6 }}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
               </svg>
@@ -154,11 +154,11 @@ export default function EstetSessionDetailPage({ params }: { params: Promise<{ s
                   return (
                     <div key={idx} style={{ alignSelf: isUser ? "flex-end" : "flex-start", maxWidth: "70%", display: "flex", flexDirection: "column" }}>
                       <div style={{
-                        background: isUser ? PRIMARY : "#f4f8fc",
-                        border: isUser ? "none" : "1px solid #e0ecf7",
+                        background: isUser ? PRIMARY : "#F1F5F9",
+                        border: isUser ? "none" : "1px solid #E2E8F0",
                         borderRadius: isUser ? "12px 12px 2px 12px" : "12px 12px 12px 2px",
                         padding: "10px 14px",
-                        color: isUser ? "#fff" : "#1a1a1a",
+                        color: isUser ? "#fff" : "#0F172A",
                         fontSize: 14,
                         lineHeight: 1.5,
                         wordBreak: "break-word",

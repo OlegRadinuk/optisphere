@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation"
 import Link from "next/link"
 import { EstetStatusSelect } from "@/components/estet/EstetStatusSelect"
 
-const PRIMARY = "#2B8FD5"
+const PRIMARY = "#0D9488"
 
 type LeadStatus = "new" | "working" | "closed"
 
@@ -43,7 +43,7 @@ function formatDate(iso: string) {
 
 function StatusBadge({ status }: { status: LeadStatus }) {
   const map: Record<LeadStatus, { label: string; bg: string; color: string; border: string }> = {
-    new:     { label: "Новый",    bg: "#EBF5FF", color: PRIMARY, border: "#BFD9F5" },
+    new:     { label: "Новый",    bg: "#F0FDFA", color: PRIMARY, border: "#99F6E4" },
     working: { label: "В работе", bg: "#eff6ff", color: "#2563eb", border: "#bfdbfe" },
     closed:  { label: "Закрыт",  bg: "#f0fdf4", color: "#16a34a", border: "#bbf7d0" },
   }
@@ -100,16 +100,16 @@ export default function EstetLeadsPage() {
       <style>{`
         @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.5; } }
         .es-leads-search-wrap { display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:16px; }
-        .es-leads-search-box { display:flex; align-items:center; border:1px solid #d0e8f5; border-radius:8px; background:#fff; overflow:hidden; min-width:240px; }
-        .es-leads-search-input { flex:1; border:none; outline:none; padding:8px 12px 8px 0; font-size:13px; background:transparent; color:#1a1a1a; font-family:inherit; }
+        .es-leads-search-box { display:flex; align-items:center; border:1px solid #CBD5E1; border-radius:8px; background:#fff; overflow:hidden; min-width:240px; }
+        .es-leads-search-input { flex:1; border:none; outline:none; padding:8px 12px 8px 0; font-size:13px; background:transparent; color:#0F172A; font-family:inherit; }
         .es-leads-tabs { display:flex; gap:6px; margin-bottom:16px; flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; -ms-overflow-style:none; padding-bottom:2px; }
         .es-leads-tabs::-webkit-scrollbar { display:none; }
         .es-leads-tab { -webkit-tap-highlight-color:transparent; flex-shrink:0; white-space:nowrap; }
         .es-table-wrap { overflow-x:auto; }
         .es-mobile-cards { display:none; }
-        .es-skel-card { background:#fff; border:1px solid #e0ecf7; border-radius:12px; padding:14px 16px; }
+        .es-skel-card { background:#fff; border:1px solid #E2E8F0; border-radius:12px; padding:14px 16px; }
         .es-skel-row { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:8px; }
-        .es-skel-line { height:14px; background:#e8f3fb; border-radius:4px; animation:pulse 1.5s ease infinite; }
+        .es-skel-line { height:14px; background:#E2E8F0; border-radius:4px; animation:pulse 1.5s ease infinite; }
 
         @media (max-width: 767px) {
           .es-leads-search-wrap { flex-direction:column; align-items:stretch; }
@@ -117,10 +117,10 @@ export default function EstetLeadsPage() {
           .es-leads-search-input { font-size:16px; }
           .es-table-wrap table { display:none; }
           .es-mobile-cards { display:flex; flex-direction:column; gap:10px; }
-          .es-card { background:#fff; border:1px solid #e0ecf7; border-radius:12px; padding:14px 16px; cursor:pointer; -webkit-tap-highlight-color:transparent; min-height:44px; box-shadow:0 1px 4px rgba(43,143,213,0.06); }
-          .es-card:active { background:#f8fbfe; }
+          .es-card { background:#fff; border:1px solid #E2E8F0; border-radius:12px; padding:14px 16px; cursor:pointer; -webkit-tap-highlight-color:transparent; min-height:44px; box-shadow:0 1px 2px rgba(15,23,42,0.04), 0 4px 12px rgba(15,23,42,0.05); }
+          .es-card:active { background:#F1F5F9; }
           .es-card-row1 { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:6px; }
-          .es-card-name { font-size:15px; font-weight:600; color:#1a1a1a; flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+          .es-card-name { font-size:15px; font-weight:600; color:#0F172A; flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
           .es-card-row2 { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:6px; }
           .es-card-phone { font-size:15px; font-weight:500; color:${PRIMARY}; text-decoration:none; -webkit-tap-highlight-color:transparent; min-height:44px; display:flex; align-items:center; }
           .es-card-date { font-size:12px; color:#bbb; white-space:nowrap; }
@@ -132,8 +132,8 @@ export default function EstetLeadsPage() {
 
       <div className="es-leads-search-wrap">
         <div>
-          <h1 style={{ fontSize: 22, fontWeight: 700, color: "#1a1a1a", margin: "0 0 4px" }}>Лиды</h1>
-          <p style={{ fontSize: 14, color: "#999", margin: 0 }}>Заявки от пациентов через бота Элю</p>
+          <h1 style={{ fontFamily: "var(--font-oxanium)", fontSize: 22, fontWeight: 700, letterSpacing: "-0.3px", color: "#0F172A", margin: "0 0 4px" }}>Лиды</h1>
+          <p style={{ fontSize: 14, color: "#94A3B8", margin: 0 }}>Заявки от пациентов через бота Элю</p>
         </div>
         <div className="es-leads-search-box">
           <svg style={{ margin: "0 10px", flexShrink: 0, color: "#bbb" }} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -167,7 +167,7 @@ export default function EstetLeadsPage() {
               onClick={() => { setSearch(""); setSearchInput(""); router.push(`/estet/leads?status=${tab.key}&page=1`) }}
               style={{
                 padding: "7px 16px", borderRadius: 8, fontSize: 13, fontWeight: active ? 600 : 400,
-                cursor: "pointer", border: active ? "none" : "1px solid #d0e8f5",
+                cursor: "pointer", border: active ? "none" : "1px solid #CBD5E1",
                 background: active ? PRIMARY : "#fff",
                 color: active ? "#fff" : "#555",
                 fontFamily: "inherit", transition: "all 150ms",
@@ -178,7 +178,7 @@ export default function EstetLeadsPage() {
               {tab.label}
               {count !== undefined && count > 0 && (
                 <span style={{
-                  background: active ? "rgba(255,255,255,0.25)" : "#EBF5FF",
+                  background: active ? "rgba(255,255,255,0.25)" : "#F0FDFA",
                   color: active ? "#fff" : PRIMARY,
                   borderRadius: 9999, padding: "1px 7px", fontSize: 11, fontWeight: 700,
                 }}>
@@ -202,12 +202,12 @@ export default function EstetLeadsPage() {
       {/* Desktop table */}
       {!error && (
         <div className="es-table-wrap">
-          <div style={{ background: "#fff", border: "1px solid #e0ecf7", borderRadius: 10, overflow: "hidden", minWidth: 700, boxShadow: "0 1px 4px rgba(43,143,213,0.06)" }}>
+          <div style={{ background: "#fff", border: "1px solid #E2E8F0", borderRadius: 10, overflow: "hidden", minWidth: 700, boxShadow: "0 1px 2px rgba(15,23,42,0.04), 0 4px 12px rgba(15,23,42,0.05)" }}>
             <table style={{ width: "100%", borderCollapse: "collapse" }}>
               <thead>
-                <tr style={{ background: "#f8fbfe", borderBottom: "1px solid #e0ecf7" }}>
+                <tr style={{ background: "#F1F5F9", borderBottom: "1px solid #E2E8F0" }}>
                   {["Дата", "Имя", "Телефон", "Сообщение", "Статус", "Переписка"].map((col) => (
-                    <th key={col} style={{ padding: "10px 16px", textAlign: "left", color: "#999", fontSize: 12, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.04em" }}>
+                    <th key={col} style={{ padding: "10px 16px", textAlign: "left", color: "#94A3B8", fontSize: 12, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.04em" }}>
                       {col}
                     </th>
                   ))}
@@ -219,7 +219,7 @@ export default function EstetLeadsPage() {
                       <tr key={i}>
                         {[100, 120, 110, 200, 100, 80].map((w, j) => (
                           <td key={j} style={{ padding: "13px 16px", borderBottom: "1px solid #f5f5f5" }}>
-                            <div style={{ width: w, height: 14, background: "#e8f3fb", borderRadius: 4, animation: "pulse 1.5s ease infinite" }} />
+                            <div style={{ width: w, height: 14, background: "#E2E8F0", borderRadius: 4, animation: "pulse 1.5s ease infinite" }} />
                           </td>
                         ))}
                       </tr>
@@ -230,19 +230,19 @@ export default function EstetLeadsPage() {
                     )
                   : leads.map((lead, idx) => (
                       <tr key={lead.id} style={{ transition: "background 150ms" }}
-                        onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "#f8fbfe" }}
+                        onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "#F1F5F9" }}
                         onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent" }}
                       >
-                        <td style={{ padding: "13px 16px", color: "#999", fontSize: 13, borderBottom: idx < leads.length - 1 ? "1px solid #f5f5f5" : "none", whiteSpace: "nowrap" }}>
+                        <td style={{ padding: "13px 16px", color: "#94A3B8", fontSize: 13, borderBottom: idx < leads.length - 1 ? "1px solid #f5f5f5" : "none", whiteSpace: "nowrap" }}>
                           {formatDate(lead.created_at)}
                         </td>
                         <td style={{ padding: "13px 16px", fontWeight: 500, borderBottom: idx < leads.length - 1 ? "1px solid #f5f5f5" : "none" }}>
                           {lead.name || "—"}
                         </td>
-                        <td style={{ padding: "13px 16px", color: "#555", borderBottom: idx < leads.length - 1 ? "1px solid #f5f5f5" : "none", whiteSpace: "nowrap" }}>
+                        <td style={{ padding: "13px 16px", color: "#475569", borderBottom: idx < leads.length - 1 ? "1px solid #f5f5f5" : "none", whiteSpace: "nowrap" }}>
                           {lead.phone}
                         </td>
-                        <td style={{ padding: "13px 16px", color: "#999", borderBottom: idx < leads.length - 1 ? "1px solid #f5f5f5" : "none", maxWidth: 260, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }} title={lead.message}>
+                        <td style={{ padding: "13px 16px", color: "#94A3B8", borderBottom: idx < leads.length - 1 ? "1px solid #f5f5f5" : "none", maxWidth: 260, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }} title={lead.message}>
                           {lead.message ? (lead.message.length > 80 ? lead.message.slice(0, 80) + "…" : lead.message) : "—"}
                         </td>
                         <td style={{ padding: "13px 16px", borderBottom: idx < leads.length - 1 ? "1px solid #f5f5f5" : "none" }}>
@@ -317,12 +317,12 @@ export default function EstetLeadsPage() {
       {!loading && !error && totalPages > 1 && (
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 16, justifyContent: "center", paddingBottom: "env(safe-area-inset-bottom)" }}>
           <button onClick={() => router.push(`/estet/leads?status=${statusParam}&page=${pageParam - 1}`)} disabled={pageParam <= 1}
-            style={{ background: "#fff", border: "1px solid #d0e8f5", color: pageParam <= 1 ? "#ccc" : "#555", borderRadius: 8, padding: "7px 14px", fontSize: 13, cursor: pageParam <= 1 ? "not-allowed" : "pointer", fontFamily: "inherit", minHeight: 44, WebkitTapHighlightColor: "transparent" }}>
+            style={{ background: "#fff", border: "1px solid #CBD5E1", color: pageParam <= 1 ? "#ccc" : "#555", borderRadius: 8, padding: "7px 14px", fontSize: 13, cursor: pageParam <= 1 ? "not-allowed" : "pointer", fontFamily: "inherit", minHeight: 44, WebkitTapHighlightColor: "transparent" }}>
             ← Пред.
           </button>
-          <span style={{ color: "#999", fontSize: 13, padding: "0 8px" }}>{pageParam} / {totalPages}</span>
+          <span style={{ color: "#94A3B8", fontSize: 13, padding: "0 8px" }}>{pageParam} / {totalPages}</span>
           <button onClick={() => router.push(`/estet/leads?status=${statusParam}&page=${pageParam + 1}`)} disabled={pageParam >= totalPages}
-            style={{ background: "#fff", border: "1px solid #d0e8f5", color: pageParam >= totalPages ? "#ccc" : "#555", borderRadius: 8, padding: "7px 14px", fontSize: 13, cursor: pageParam >= totalPages ? "not-allowed" : "pointer", fontFamily: "inherit", minHeight: 44, WebkitTapHighlightColor: "transparent" }}>
+            style={{ background: "#fff", border: "1px solid #CBD5E1", color: pageParam >= totalPages ? "#ccc" : "#555", borderRadius: 8, padding: "7px 14px", fontSize: 13, cursor: pageParam >= totalPages ? "not-allowed" : "pointer", fontFamily: "inherit", minHeight: 44, WebkitTapHighlightColor: "transparent" }}>
             След. →
           </button>
         </div>

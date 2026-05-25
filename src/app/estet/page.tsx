@@ -3,9 +3,9 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 
-const PRIMARY = "#2B8FD5"
-const PRIMARY_LIGHT = "#EBF5FF"
-const PRIMARY_SHADOW = "rgba(43,143,213,0.25)"
+const PRIMARY = "#0D9488"
+const PRIMARY_LIGHT = "#F0FDFA"
+const PRIMARY_SHADOW = "rgba(13,148,136,0.25)"
 
 interface StatsData {
   leadsTotal: number
@@ -33,7 +33,7 @@ function formatDate(iso: string) {
 
 function StatusBadge({ status }: { status: "new" | "working" | "closed" }) {
   const map = {
-    new:     { label: "Новый",    bg: PRIMARY_LIGHT, color: PRIMARY, border: "#BFD9F5" },
+    new:     { label: "Новый",    bg: PRIMARY_LIGHT, color: PRIMARY, border: "#99F6E4" },
     working: { label: "В работе", bg: "#eff6ff", color: "#2563eb", border: "#bfdbfe" },
     closed:  { label: "Закрыт",  bg: "#f0fdf4", color: "#16a34a", border: "#bbf7d0" },
   }
@@ -54,13 +54,13 @@ function StatCard({ label, value, icon, loading, accent }: {
   return (
     <div style={{
       background: accent ? PRIMARY : "#ffffff",
-      border: accent ? "none" : "1px solid #e0ecf7",
+      border: accent ? "none" : "1px solid #E2E8F0",
       borderRadius: 10,
       padding: "20px 24px",
       display: "flex",
       alignItems: "center",
       gap: 16,
-      boxShadow: accent ? `0 4px 16px ${PRIMARY_SHADOW}` : "0 1px 4px rgba(0,0,0,0.04)",
+      boxShadow: accent ? `0 4px 16px ${PRIMARY_SHADOW}` : "0 1px 2px rgba(15,23,42,0.04), 0 4px 12px rgba(15,23,42,0.05)",
     }}>
       <div style={{
         width: 44, height: 44, borderRadius: 10,
@@ -77,7 +77,7 @@ function StatCard({ label, value, icon, loading, accent }: {
         {loading ? (
           <div style={{ width: 56, height: 24, background: accent ? "rgba(255,255,255,0.3)" : "#f0f0f0", borderRadius: 4, animation: "pulse 1.5s ease infinite" }} />
         ) : (
-          <div style={{ fontSize: 24, fontWeight: 700, color: accent ? "#fff" : "#1a1a1a", lineHeight: 1.2 }}>
+          <div style={{ fontFamily: "var(--font-oxanium)", fontSize: 30, fontWeight: 700, letterSpacing: "-0.8px", color: accent ? "#fff" : "#0F172A", lineHeight: 1.1 }}>
             {value}
           </div>
         )}
@@ -127,8 +127,8 @@ export default function EstetOverviewPage() {
       `}</style>
 
       <div style={{ marginBottom: 24 }}>
-        <h1 style={{ fontSize: 22, fontWeight: 700, color: "#1a1a1a", margin: "0 0 4px" }}>Обзор</h1>
-        <p style={{ fontSize: 14, color: "#999", margin: 0 }}>Статистика бота Эля — стоматология Эстетик</p>
+        <h1 style={{ fontFamily: "var(--font-oxanium)", fontSize: 22, fontWeight: 700, letterSpacing: "-0.3px", color: "#0F172A", margin: "0 0 4px" }}>Обзор</h1>
+        <p style={{ fontSize: 14, color: "#94A3B8", margin: 0 }}>Статистика бота Эля — стоматология Эстетик</p>
       </div>
 
       {/* Stats grid */}
@@ -179,8 +179,8 @@ export default function EstetOverviewPage() {
 
       {/* Activity chart */}
       {stats && stats.leadsByDay.length > 0 && (
-        <div style={{ background: "#fff", border: "1px solid #e0ecf7", borderRadius: 10, padding: "20px 24px", marginBottom: 24, boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
-          <div style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a", marginBottom: 16 }}>Активность за 14 дней</div>
+        <div style={{ background: "#fff", border: "1px solid #E2E8F0", borderRadius: 10, padding: "20px 24px", marginBottom: 24, boxShadow: "0 1px 2px rgba(15,23,42,0.04), 0 4px 12px rgba(15,23,42,0.05)" }}>
+          <div style={{ fontSize: 14, fontWeight: 600, color: "#0F172A", marginBottom: 16 }}>Активность за 14 дней</div>
           <div style={{ display: "flex", alignItems: "flex-end", gap: 6, height: 80 }}>
             {stats.leadsByDay.map((d) => (
               <div key={d.date} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
@@ -204,9 +204,9 @@ export default function EstetOverviewPage() {
       )}
 
       {/* Recent leads */}
-      <div style={{ background: "#fff", border: "1px solid #e0ecf7", borderRadius: 10, overflow: "hidden", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
-        <div style={{ padding: "16px 20px", borderBottom: "1px solid #eaf3fb", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <span style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a" }}>Последние лиды</span>
+      <div style={{ background: "#fff", border: "1px solid #E2E8F0", borderRadius: 10, overflow: "hidden", boxShadow: "0 1px 2px rgba(15,23,42,0.04), 0 4px 12px rgba(15,23,42,0.05)" }}>
+        <div style={{ padding: "16px 20px", borderBottom: "1px solid #F1F5F9", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <span style={{ fontSize: 14, fontWeight: 600, color: "#0F172A" }}>Последние лиды</span>
           <Link href="/estet/leads" style={{ fontSize: 13, color: PRIMARY, textDecoration: "none", fontWeight: 500 }}>
             Все лиды →
           </Link>
@@ -216,9 +216,9 @@ export default function EstetOverviewPage() {
         <div className="es-overview-table-wrap">
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <thead>
-              <tr style={{ background: "#f8fbfe", borderBottom: "1px solid #e0ecf7" }}>
+              <tr style={{ background: "#F1F5F9", borderBottom: "1px solid #E2E8F0" }}>
                 {["Дата", "Имя", "Телефон", "Статус"].map((col) => (
-                  <th key={col} style={{ padding: "10px 16px", textAlign: "left", color: "#999", fontSize: 12, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.04em" }}>
+                  <th key={col} style={{ padding: "10px 16px", textAlign: "left", color: "#94A3B8", fontSize: 12, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.04em" }}>
                     {col}
                   </th>
                 ))}
@@ -245,17 +245,17 @@ export default function EstetOverviewPage() {
                   )
                 : recentLeads.map((lead, idx) => (
                     <tr key={lead.id}
-                      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "#f8fbfe" }}
+                      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "#F1F5F9" }}
                       onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent" }}
                       style={{ transition: "background 150ms" }}
                     >
-                      <td style={{ padding: "13px 16px", color: "#999", fontSize: 13, borderBottom: idx < recentLeads.length - 1 ? "1px solid #f5f5f5" : "none", whiteSpace: "nowrap" }}>
+                      <td style={{ padding: "13px 16px", color: "#94A3B8", fontSize: 13, borderBottom: idx < recentLeads.length - 1 ? "1px solid #f5f5f5" : "none", whiteSpace: "nowrap" }}>
                         {formatDate(lead.created_at)}
                       </td>
                       <td style={{ padding: "13px 16px", fontWeight: 500, borderBottom: idx < recentLeads.length - 1 ? "1px solid #f5f5f5" : "none" }}>
                         {lead.name || "—"}
                       </td>
-                      <td style={{ padding: "13px 16px", color: "#555", borderBottom: idx < recentLeads.length - 1 ? "1px solid #f5f5f5" : "none", whiteSpace: "nowrap" }}>
+                      <td style={{ padding: "13px 16px", color: "#475569", borderBottom: idx < recentLeads.length - 1 ? "1px solid #f5f5f5" : "none", whiteSpace: "nowrap" }}>
                         {lead.phone}
                       </td>
                       <td style={{ padding: "13px 16px", borderBottom: idx < recentLeads.length - 1 ? "1px solid #f5f5f5" : "none" }}>
@@ -271,15 +271,15 @@ export default function EstetOverviewPage() {
         <div className="es-overview-cards" style={{ padding: "12px 16px" }}>
           {loadingLeads
             ? Array.from({ length: 3 }).map((_, i) => (
-                <div key={i} style={{ background: "#f8fbfe", borderRadius: 10, padding: "14px 16px", marginBottom: 8 }}>
-                  <div style={{ width: "55%", height: 14, background: "#e0ecf7", borderRadius: 4, marginBottom: 8, animation: "pulse 1.5s ease infinite" }} />
-                  <div style={{ width: "40%", height: 14, background: "#e0ecf7", borderRadius: 4, animation: "pulse 1.5s ease infinite" }} />
+                <div key={i} style={{ background: "#F1F5F9", borderRadius: 10, padding: "14px 16px", marginBottom: 8 }}>
+                  <div style={{ width: "55%", height: 14, background: "#E2E8F0", borderRadius: 4, marginBottom: 8, animation: "pulse 1.5s ease infinite" }} />
+                  <div style={{ width: "40%", height: 14, background: "#E2E8F0", borderRadius: 4, animation: "pulse 1.5s ease infinite" }} />
                 </div>
               ))
             : recentLeads.map((lead) => (
-                <div key={lead.id} style={{ background: "#f8fbfe", border: "1px solid #e0ecf7", borderRadius: 10, padding: "14px 16px", marginBottom: 8 }}>
+                <div key={lead.id} style={{ background: "#F1F5F9", border: "1px solid #E2E8F0", borderRadius: 10, padding: "14px 16px", marginBottom: 8 }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
-                    <span style={{ fontWeight: 600, color: "#1a1a1a", fontSize: 15 }}>{lead.name || "—"}</span>
+                    <span style={{ fontWeight: 600, color: "#0F172A", fontSize: 15 }}>{lead.name || "—"}</span>
                     <StatusBadge status={lead.status} />
                   </div>
                   <div style={{ fontSize: 12, color: "#bbb", marginBottom: 4 }}>{formatDate(lead.created_at)}</div>

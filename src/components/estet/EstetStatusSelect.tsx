@@ -11,7 +11,7 @@ interface EstetStatusSelectProps {
 }
 
 const STATUS_STYLES: Record<LeadStatus, React.CSSProperties> = {
-  new:     { background: "#ebf5ff", color: "#2b8fd5", borderColor: "#bfd9f5" },
+  new:     { background: "#F0FDFA", color: "#0D9488", borderColor: "#99F6E4" },
   working: { background: "#eff6ff", color: "#2563eb", borderColor: "#bfdbfe" },
   closed:  { background: "#f0fdf4", color: "#16a34a", borderColor: "#bbf7d0" },
 }

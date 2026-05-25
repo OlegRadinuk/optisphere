@@ -19,7 +19,7 @@ export function InlineToggle({ checked, onChange, disabled }: InlineToggleProps)
         width: 36,
         height: 20,
         borderRadius: 10,
-        background: checked ? "#2B8FD5" : "#d1d5db",
+        background: checked ? "#0D9488" : "#d1d5db",
         border: "none",
         cursor: disabled ? "not-allowed" : "pointer",
         padding: 2,

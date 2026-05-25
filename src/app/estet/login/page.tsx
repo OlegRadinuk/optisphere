@@ -36,13 +36,13 @@ export default function EstetLoginPage() {
 
   const inputStyle: React.CSSProperties = {
     width: "100%",
-    border: error ? "1px solid #fca5a5" : "1px solid #d0e8f5",
+    border: error ? "1px solid #fca5a5" : "1px solid #CBD5E1",
     borderRadius: 8,
     padding: "10px 14px",
     fontSize: 16,
     outline: "none",
     fontFamily: "inherit",
-    color: "#1a1a1a",
+    color: "#0F172A",
     background: "#fff",
     boxSizing: "border-box",
     transition: "border-color 150ms",
@@ -52,7 +52,7 @@ export default function EstetLoginPage() {
     <div
       style={{
         minHeight: "100vh",
-        background: "linear-gradient(135deg, #F4F7FA 0%, #EBF5FF 100%)",
+        background: "linear-gradient(135deg, #F8FAFB 0%, #F0FDFA 100%)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -66,29 +66,29 @@ export default function EstetLoginPage() {
           padding: "36px 32px",
           width: "100%",
           maxWidth: 380,
-          boxShadow: "0 4px 32px rgba(43,143,213,0.12)",
+          boxShadow: "0 4px 32px rgba(13,148,136,0.12)",
         }}
       >
         {/* Logo */}
         <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 28 }}>
           <div style={{
             width: 52, height: 52, borderRadius: 14, flexShrink: 0,
-            background: "linear-gradient(135deg, #2B8FD5 0%, #1A78BF 100%)",
+            background: "linear-gradient(135deg, #0D9488 0%, #0F766E 100%)",
             display: "flex", alignItems: "center", justifyContent: "center",
-            boxShadow: "0 4px 16px rgba(43,143,213,0.3)",
+            boxShadow: "0 4px 16px rgba(13,148,136,0.3)",
           }}>
             <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 5.5C10.5 4 8.5 3.5 7 4.2 5 5 4 7 4.5 10c.4 2.3 1 3.8 1.4 6 .3 1.6.5 4 1.6 4 1 0 1.1-1.7 1.4-3.2.3-1.5.6-2.6 1.1-2.6.5 0 .8 1.1 1.1 2.6.3 1.5.4 3.2 1.4 3.2 1.1 0 1.3-2.4 1.6-4 .4-2.2 1-3.7 1.4-6 .5-3-.5-5-2.5-5.8-1.5-.7-3.5-.2-5 1.3z"/>
             </svg>
           </div>
           <div>
-            <div style={{ fontSize: 16, fontWeight: 700, color: "#1a1a1a", lineHeight: 1.2 }}>Эстетик</div>
-            <div style={{ fontSize: 12, color: "#999" }}>Стоматологическая клиника</div>
+            <div style={{ fontSize: 16, fontWeight: 700, color: "#0F172A", lineHeight: 1.2 }}>Эстетик</div>
+            <div style={{ fontSize: 12, color: "#94A3B8" }}>Стоматологическая клиника</div>
           </div>
         </div>
 
-        <h1 style={{ fontSize: 20, fontWeight: 700, color: "#1a1a1a", margin: "0 0 6px" }}>Вход</h1>
-        <p style={{ fontSize: 14, color: "#999", margin: "0 0 24px" }}>Панель управления ботом</p>
+        <h1 style={{ fontSize: 20, fontWeight: 700, color: "#0F172A", margin: "0 0 6px" }}>Вход</h1>
+        <p style={{ fontSize: 14, color: "#94A3B8", margin: "0 0 24px" }}>Панель управления ботом</p>
 
         <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 14 }}>
           <div>
@@ -104,8 +104,8 @@ export default function EstetLoginPage() {
               autoFocus
               required
               style={inputStyle}
-              onFocus={(e) => { (e.target as HTMLInputElement).style.borderColor = "#2B8FD5" }}
-              onBlur={(e) => { (e.target as HTMLInputElement).style.borderColor = error ? "#fca5a5" : "#d0e8f5" }}
+              onFocus={(e) => { (e.target as HTMLInputElement).style.borderColor = "#0D9488" }}
+              onBlur={(e) => { (e.target as HTMLInputElement).style.borderColor = error ? "#fca5a5" : "#CBD5E1" }}
             />
           </div>
 
@@ -122,8 +122,8 @@ export default function EstetLoginPage() {
                 autoComplete="current-password"
                 required
                 style={{ ...inputStyle, paddingRight: 44 }}
-                onFocus={(e) => { (e.target as HTMLInputElement).style.borderColor = "#2B8FD5" }}
-                onBlur={(e) => { (e.target as HTMLInputElement).style.borderColor = error ? "#fca5a5" : "#d0e8f5" }}
+                onFocus={(e) => { (e.target as HTMLInputElement).style.borderColor = "#0D9488" }}
+                onBlur={(e) => { (e.target as HTMLInputElement).style.borderColor = error ? "#fca5a5" : "#CBD5E1" }}
               />
               <button
                 type="button"
@@ -169,7 +169,7 @@ export default function EstetLoginPage() {
             type="submit"
             disabled={loading}
             style={{
-              background: "linear-gradient(135deg, #2B8FD5 0%, #1A78BF 100%)",
+              background: "linear-gradient(135deg, #0D9488 0%, #0F766E 100%)",
               color: "#fff",
               border: "none",
               borderRadius: 8,
@@ -181,7 +181,7 @@ export default function EstetLoginPage() {
               fontFamily: "inherit",
               marginTop: 4,
               transition: "opacity 150ms",
-              boxShadow: "0 4px 12px rgba(43,143,213,0.3)",
+              boxShadow: "0 4px 12px rgba(13,148,136,0.3)",
             }}
           >
             {loading ? "Вход..." : "Войти"}

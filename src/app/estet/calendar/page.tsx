@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from "react"
 import { useToast } from "@/components/estet/Toast"
 
-const PRIMARY = "#2B8FD5"
+const PRIMARY = "#0D9488"
 
 type ApptStatus = "scheduled" | "confirmed" | "cancelled" | "completed"
 
@@ -43,7 +43,7 @@ const STATUS_LABELS: Record<ApptStatus, string> = {
 }
 
 const DOCTOR_COLORS = [
-  "#2B8FD5", "#16a34a", "#9333ea", "#dc2626", "#0891b2",
+  "#0D9488", "#16a34a", "#9333ea", "#dc2626", "#0891b2",
   "#d97706", "#7c3aed", "#059669", "#db2777", "#1d4ed8",
   "#15803d", "#b45309", "#6d28d9", "#0369a1", "#047857",
   "#be123c", "#4338ca", "#0f766e", "#92400e", "#7e22ce",
@@ -121,11 +121,11 @@ function AppointmentModal({ mode, initial, doctors, onSave, onDelete, onClose, s
   }
 
   const inputStyle = {
-    width: "100%", border: "1px solid #d0e8f5", borderRadius: 8,
+    width: "100%", border: "1px solid #CBD5E1", borderRadius: 8,
     padding: "10px 12px", fontSize: 16, outline: "none", fontFamily: "inherit",
-    boxSizing: "border-box" as const, background: "#fff", color: "#1a1a1a",
+    boxSizing: "border-box" as const, background: "#fff", color: "#0F172A",
   }
-  const labelStyle = { fontSize: 12, color: "#999", marginBottom: 4, display: "block" as const }
+  const labelStyle = { fontSize: 12, color: "#94A3B8", marginBottom: 4, display: "block" as const }
 
   return (
     <div
@@ -139,10 +139,10 @@ function AppointmentModal({ mode, initial, doctors, onSave, onDelete, onClose, s
         <div style={{ width: 36, height: 4, background: "#e0e0e0", borderRadius: 2, margin: "0 auto 20px" }} />
 
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-          <h2 style={{ fontSize: 17, fontWeight: 700, color: "#1a1a1a", margin: 0 }}>
+          <h2 style={{ fontSize: 17, fontWeight: 700, color: "#0F172A", margin: 0 }}>
             {mode === "create" ? "Новая запись" : "Редактировать запись"}
           </h2>
-          <button onClick={onClose} style={{ background: "none", border: "none", cursor: "pointer", fontSize: 20, color: "#999", padding: 4, lineHeight: 1 }}>×</button>
+          <button onClick={onClose} style={{ background: "none", border: "none", cursor: "pointer", fontSize: 20, color: "#94A3B8", padding: 4, lineHeight: 1 }}>×</button>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
@@ -188,7 +188,7 @@ function AppointmentModal({ mode, initial, doctors, onSave, onDelete, onClose, s
               {DURATIONS.map((d) => (
                 <button key={d} onClick={() => set("duration_min", d)} style={{
                   padding: "7px 14px", borderRadius: 6, fontSize: 13, cursor: "pointer",
-                  border: form.duration_min === d ? "none" : "1px solid #d0e8f5",
+                  border: form.duration_min === d ? "none" : "1px solid #CBD5E1",
                   background: form.duration_min === d ? PRIMARY : "#fff",
                   color: form.duration_min === d ? "#fff" : "#555",
                   fontFamily: "inherit",
@@ -218,10 +218,10 @@ function AppointmentModal({ mode, initial, doctors, onSave, onDelete, onClose, s
 
         <div style={{ display: "flex", gap: 8, marginTop: 20 }}>
           <button onClick={() => onSave(form)} disabled={saving} style={{
-            flex: 1, padding: "13px 0", background: "linear-gradient(135deg, #2B8FD5 0%, #1A78BF 100%)", color: "#fff",
+            flex: 1, padding: "13px 0", background: "linear-gradient(135deg, #0D9488 0%, #0F766E 100%)", color: "#fff",
             border: "none", borderRadius: 8, fontSize: 15, fontWeight: 600,
             cursor: saving ? "not-allowed" : "pointer", opacity: saving ? 0.7 : 1, fontFamily: "inherit",
-            boxShadow: "0 4px 12px rgba(43,143,213,0.3)",
+            boxShadow: "0 4px 12px rgba(13,148,136,0.3)",
           }}>
             {saving ? "Сохранение..." : mode === "create" ? "Создать запись" : "Сохранить"}
           </button>
@@ -408,19 +408,19 @@ export default function EstetCalendarPage() {
     <div style={{ display: "flex", flexDirection: "column" }}>
       <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16, flexWrap: "wrap" }}>
         <div>
-          <h1 style={{ fontSize: 22, fontWeight: 700, color: "#1a1a1a", margin: "0 0 2px" }}>Запись</h1>
-          <p style={{ fontSize: 14, color: "#999", margin: 0 }}>Расписание приёмов</p>
+          <h1 style={{ fontFamily: "var(--font-oxanium)", fontSize: 22, fontWeight: 700, letterSpacing: "-0.3px", color: "#0F172A", margin: "0 0 2px" }}>Запись</h1>
+          <p style={{ fontSize: 14, color: "#94A3B8", margin: 0 }}>Расписание приёмов</p>
         </div>
         <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-          <span style={{ fontSize: 13, color: "#555", fontWeight: 500 }}>{formatMonthYear(weekStart)}</span>
+          <span style={{ fontSize: 13, color: "#475569", fontWeight: 500 }}>{formatMonthYear(weekStart)}</span>
           <button onClick={prevWeek} style={navBtnStyle}>‹</button>
-          <button onClick={goToday} style={{ ...navBtnStyle, fontWeight: 600, color: PRIMARY, borderColor: "#bfd9f5" }}>Сегодня</button>
+          <button onClick={goToday} style={{ ...navBtnStyle, fontWeight: 600, color: PRIMARY, borderColor: "#99F6E4" }}>Сегодня</button>
           <button onClick={nextWeek} style={navBtnStyle}>›</button>
           <button onClick={() => openCreateNow(selectedDate)} style={{
-            background: "linear-gradient(135deg, #2B8FD5 0%, #1A78BF 100%)", color: "#fff", border: "none",
+            background: "linear-gradient(135deg, #0D9488 0%, #0F766E 100%)", color: "#fff", border: "none",
             borderRadius: 8, padding: "7px 14px", fontSize: 13, fontWeight: 600,
             cursor: "pointer", fontFamily: "inherit", WebkitTapHighlightColor: "transparent",
-            boxShadow: "0 2px 8px rgba(43,143,213,0.3)",
+            boxShadow: "0 2px 8px rgba(13,148,136,0.3)",
           }}>
             + Запись
           </button>
@@ -428,13 +428,13 @@ export default function EstetCalendarPage() {
       </div>
 
       {/* DESKTOP week view */}
-      <div className="cal-week-view" style={{ flex: 1, background: "#fff", border: "1px solid #e0ecf7", borderRadius: 10, overflow: "hidden", boxShadow: "0 1px 4px rgba(43,143,213,0.06)", display: "flex", flexDirection: "column", minHeight: 500 }}>
-        <div style={{ display: "grid", gridTemplateColumns: "52px repeat(7, 1fr)", borderBottom: "1px solid #e0ecf7", background: "#f8fbfe", flexShrink: 0 }}>
+      <div className="cal-week-view" style={{ flex: 1, background: "#fff", border: "1px solid #E2E8F0", borderRadius: 10, overflow: "hidden", boxShadow: "0 1px 2px rgba(15,23,42,0.04), 0 4px 12px rgba(15,23,42,0.05)", display: "flex", flexDirection: "column", minHeight: 500 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "52px repeat(7, 1fr)", borderBottom: "1px solid #E2E8F0", background: "#F1F5F9", flexShrink: 0 }}>
           <div />
           {weekDays.map((date, i) => (
-            <div key={date} style={{ padding: "10px 8px", textAlign: "center", borderLeft: "1px solid #eaf3fb", background: isTodayDate(date) ? "#EBF5FF" : undefined }}>
-              <div style={{ fontSize: 11, color: "#999", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 2 }}>{DAY_LABELS[i]}</div>
-              <div style={{ fontSize: 15, fontWeight: 600, color: isTodayDate(date) ? PRIMARY : "#1a1a1a", lineHeight: 1 }}>{formatShortDate(date)}</div>
+            <div key={date} style={{ padding: "10px 8px", textAlign: "center", borderLeft: "1px solid #F1F5F9", background: isTodayDate(date) ? "#F0FDFA" : undefined }}>
+              <div style={{ fontSize: 11, color: "#94A3B8", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 2 }}>{DAY_LABELS[i]}</div>
+              <div style={{ fontSize: 15, fontWeight: 600, color: isTodayDate(date) ? PRIMARY : "#0F172A", lineHeight: 1 }}>{formatShortDate(date)}</div>
             </div>
           ))}
         </div>
@@ -449,7 +449,7 @@ export default function EstetCalendarPage() {
             <div style={{ display: "grid", gridTemplateColumns: "52px repeat(7, minmax(100px, 1fr))", position: "relative" }}>
               <div>
                 {hours.map((h) => (
-                  <div key={h} style={{ height: HOUR_H, borderBottom: "1px solid #f3f8fc", display: "flex", alignItems: "flex-start", justifyContent: "flex-end", paddingRight: 8, paddingTop: 4 }}>
+                  <div key={h} style={{ height: HOUR_H, borderBottom: "1px solid #EEF2F6", display: "flex", alignItems: "flex-start", justifyContent: "flex-end", paddingRight: 8, paddingTop: 4 }}>
                     <span style={{ fontSize: 11, color: "#bbb", whiteSpace: "nowrap" }}>{String(h).padStart(2, "0")}:00</span>
                   </div>
                 ))}
@@ -458,11 +458,11 @@ export default function EstetCalendarPage() {
               {weekDays.map((date) => {
                 const dayAppts = getApptsByDay(date)
                 return (
-                  <div key={date} style={{ position: "relative", borderLeft: "1px solid #eaf3fb", background: isTodayDate(date) ? "rgba(43,143,213,0.02)" : undefined }}>
+                  <div key={date} style={{ position: "relative", borderLeft: "1px solid #F1F5F9", background: isTodayDate(date) ? "rgba(13,148,136,0.02)" : undefined }}>
                     {hours.map((h) =>
                       [0, 1].map((q) => (
-                        <div key={`${h}-${q}`} style={{ height: HOUR_H / 2, borderBottom: q === 0 ? "1px dashed #f3f8fc" : "1px solid #f3f8fc", cursor: "cell" }}
-                          onDragOver={(e) => { e.preventDefault(); (e.currentTarget as HTMLElement).style.background = "rgba(43,143,213,0.08)" }}
+                        <div key={`${h}-${q}`} style={{ height: HOUR_H / 2, borderBottom: q === 0 ? "1px dashed #EEF2F6" : "1px solid #EEF2F6", cursor: "cell" }}
+                          onDragOver={(e) => { e.preventDefault(); (e.currentTarget as HTMLElement).style.background = "rgba(13,148,136,0.08)" }}
                           onDragLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "" }}
                           onDrop={(e) => { e.preventDefault(); (e.currentTarget as HTMLElement).style.background = ""; onDropSlot(date, h, q * 2) }}
                           onClick={() => setModal({ type: "create", date, time: `${String(h).padStart(2, "0")}:${q === 0 ? "00" : "30"}` })}
@@ -491,8 +491,8 @@ export default function EstetCalendarPage() {
                             <span style={{ width: 6, height: 6, borderRadius: "50%", background: STATUS_DOT[appt.status], flexShrink: 0 }} />
                             <span style={{ fontSize: 11, fontWeight: 600, color, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{appt.appointment_time}</span>
                           </div>
-                          {height > 28 && <div style={{ fontSize: 11, color: "#1a1a1a", marginTop: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{appt.patient_name || "Без имени"}</div>}
-                          {height > 44 && appt.doctor_name && <div style={{ fontSize: 10, color: "#888", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{appt.doctor_name}</div>}
+                          {height > 28 && <div style={{ fontSize: 11, color: "#0F172A", marginTop: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{appt.patient_name || "Без имени"}</div>}
+                          {height > 44 && appt.doctor_name && <div style={{ fontSize: 10, color: "#64748B", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{appt.doctor_name}</div>}
                         </div>
                       )
                     })}
@@ -516,8 +516,8 @@ export default function EstetCalendarPage() {
               <button key={date} onClick={() => setSelectedDayIdx(i)} style={{
                 flexShrink: 0, display: "flex", flexDirection: "column", alignItems: "center", gap: 2,
                 padding: "10px 12px", borderRadius: 12,
-                border: isSelected ? "none" : isToday ? "1.5px solid #bfd9f5" : "1px solid #e0ecf7",
-                background: isSelected ? PRIMARY : isToday ? "#EBF5FF" : "#fff",
+                border: isSelected ? "none" : isToday ? "1.5px solid #99F6E4" : "1px solid #E2E8F0",
+                background: isSelected ? PRIMARY : isToday ? "#F0FDFA" : "#fff",
                 color: isSelected ? "#fff" : isToday ? PRIMARY : "#555",
                 cursor: "pointer", fontFamily: "inherit", WebkitTapHighlightColor: "transparent",
                 position: "relative", minWidth: 48,
@@ -532,7 +532,7 @@ export default function EstetCalendarPage() {
           })}
         </div>
 
-        <div style={{ background: "#fff", border: "1px solid #e0ecf7", borderRadius: 10, overflow: "hidden", boxShadow: "0 1px 4px rgba(43,143,213,0.06)" }}>
+        <div style={{ background: "#fff", border: "1px solid #E2E8F0", borderRadius: 10, overflow: "hidden", boxShadow: "0 1px 2px rgba(15,23,42,0.04), 0 4px 12px rgba(15,23,42,0.05)" }}>
           {loading ? (
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 200, color: "#bbb", fontSize: 14 }}>
               <div style={{ width: 20, height: 20, border: `3px solid ${PRIMARY}`, borderTopColor: "transparent", borderRadius: "50%", animation: "spin 0.8s linear infinite", marginRight: 8 }} />
@@ -541,13 +541,13 @@ export default function EstetCalendarPage() {
           ) : (
             <div style={{ position: "relative", height: totalHoursPx, overflowY: "auto" }}>
               {hours.map((h) => (
-                <div key={h} style={{ position: "absolute", top: (h - HOUR_START) * HOUR_H, left: 0, right: 0, height: HOUR_H, borderBottom: "1px solid #f3f8fc" }}
+                <div key={h} style={{ position: "absolute", top: (h - HOUR_START) * HOUR_H, left: 0, right: 0, height: HOUR_H, borderBottom: "1px solid #EEF2F6" }}
                   onClick={() => setModal({ type: "create", date: selectedDate, time: `${String(h).padStart(2, "0")}:00` })}>
                   <span style={{ position: "absolute", left: 8, top: 4, fontSize: 11, color: "#ccc", pointerEvents: "none" }}>{String(h).padStart(2, "0")}:00</span>
                 </div>
               ))}
               {hours.map((h) => (
-                <div key={`${h}-half`} style={{ position: "absolute", top: (h - HOUR_START) * HOUR_H + HOUR_H / 2, left: 0, right: 0, borderBottom: "1px dashed #f3f8fc", height: HOUR_H / 2 }}
+                <div key={`${h}-half`} style={{ position: "absolute", top: (h - HOUR_START) * HOUR_H + HOUR_H / 2, left: 0, right: 0, borderBottom: "1px dashed #EEF2F6", height: HOUR_H / 2 }}
                   onClick={() => setModal({ type: "create", date: selectedDate, time: `${String(h).padStart(2, "0")}:30` })} />
               ))}
 
@@ -568,8 +568,8 @@ export default function EstetCalendarPage() {
                       <span style={{ width: 7, height: 7, borderRadius: "50%", background: STATUS_DOT[appt.status], flexShrink: 0 }} />
                       <span style={{ fontSize: 12, fontWeight: 700, color }}>{appt.appointment_time}</span>
                     </div>
-                    {height > 30 && <div style={{ fontSize: 13, color: "#1a1a1a", fontWeight: 500, marginTop: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{appt.patient_name || "Без имени"}</div>}
-                    {height > 50 && appt.doctor_name && <div style={{ fontSize: 11, color: "#888", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{appt.doctor_name}</div>}
+                    {height > 30 && <div style={{ fontSize: 13, color: "#0F172A", fontWeight: 500, marginTop: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{appt.patient_name || "Без имени"}</div>}
+                    {height > 50 && appt.doctor_name && <div style={{ fontSize: 11, color: "#64748B", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{appt.doctor_name}</div>}
                   </div>
                 )
               })}
@@ -588,9 +588,9 @@ export default function EstetCalendarPage() {
 
       {doctors.length > 0 && (
         <div style={{ marginTop: 12, display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
-          <span style={{ fontSize: 12, color: "#999" }}>Врачи:</span>
+          <span style={{ fontSize: 12, color: "#94A3B8" }}>Врачи:</span>
           {doctors.filter((d) => d.active).slice(0, 12).map((d) => (
-            <div key={d.id} style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 11, color: "#555" }}>
+            <div key={d.id} style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 11, color: "#475569" }}>
               <span style={{ width: 10, height: 10, borderRadius: 2, background: getDoctorColor(d.id), flexShrink: 0 }} />
               {d.name.split(" ")[0]}
             </div>
@@ -625,8 +625,8 @@ export default function EstetCalendarPage() {
 
 const navBtnStyle: React.CSSProperties = {
   background: "#fff",
-  border: "1px solid #d0e8f5",
-  color: "#555",
+  border: "1px solid #CBD5E1",
+  color: "#475569",
   borderRadius: 8,
   padding: "7px 12px",
   fontSize: 15,
