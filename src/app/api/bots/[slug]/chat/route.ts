@@ -249,7 +249,7 @@ ${openStatus}${afterHoursRule}
               if (!hasLead) {
                 const recentMsgs = getMessagesBySession(client.id, sessionId, 4).reverse()
                 const history = recentMsgs
-                  .map((m) => `${m.role === "user" ? "Гость" : "Яна"}: ${m.content.slice(0, 300)}`)
+                  .map((m) => `${m.role === "user" ? "Гость" : "Ассистент"}: ${m.content.slice(0, 300)}`)
                   .join("\n")
 
                 const text = [

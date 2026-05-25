@@ -340,7 +340,7 @@ export default function EditClientPage() {
                                 borderColor: m.role === "user" ? "#334155" : "#1d4ed8",
                               }}
                             >
-                              <div style={styles.msgRole}>{m.role === "user" ? "Гость" : "Яна"}</div>
+                              <div style={styles.msgRole}>{m.role === "user" ? "Гость" : "Ассистент"}</div>
                               <div style={styles.msgContent}>{m.content}</div>
                               <div style={styles.msgTime}>
                                 {new Date(m.created_at).toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" })}
