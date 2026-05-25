@@ -44,7 +44,7 @@ export default function DoctorsPage() {
     try {
       const r = await fetch("/api/albamed/doctors")
       if (!r.ok) throw new Error("Ошибка загрузки")
-      const d: Doctor[] = await r.json()
+      const { doctors: d } = await r.json() as { doctors: Doctor[] }
       setDoctors(d)
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : "Ошибка загрузки. Обновите страницу.")

@@ -14,7 +14,7 @@
   var PRIMARY  = script.getAttribute("data-color")    || null;
   var TITLE    = script.getAttribute("data-title")    || null;
   var POSITION = script.getAttribute("data-position") || "right";
-  var BOTTOM   = parseInt(script.getAttribute("data-bottom") || "24", 10);
+  var BOTTOM   = parseInt(script.getAttribute("data-bottom") || "120", 10);
   var RIGHT    = parseInt(script.getAttribute("data-right")  || "20", 10);
   var LEFT     = parseInt(script.getAttribute("data-left")   || "20", 10);
   var GREETING_DELAY = parseInt(script.getAttribute("data-greeting-delay") || "3000", 10);
