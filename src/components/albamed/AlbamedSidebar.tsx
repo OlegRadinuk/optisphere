@@ -105,7 +105,7 @@ export function AlbamedSidebar({ newLeadsCount, onClose }: AlbamedSidebarProps) 
       >
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <img
-            src="/albamed-logo.jpg"
+            src="/albamed-logo.png"
             alt="Альба-Мед"
             style={{ width: 36, height: 36, borderRadius: 9, flexShrink: 0, objectFit: "cover", boxShadow: "0 1px 6px rgba(244,121,32,0.25)" }}
           />

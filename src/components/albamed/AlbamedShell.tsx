@@ -113,7 +113,7 @@ function AlbamedShellInner({ children }: { children: React.ReactNode }) {
       <header className="ab-topbar">
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <img
-            src="/albamed-logo.jpg"
+            src="/albamed-logo.png"
             alt="Альба-Мед"
             style={{ width: 32, height: 32, borderRadius: 8, objectFit: "cover" }}
           />

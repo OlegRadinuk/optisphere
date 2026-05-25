@@ -72,7 +72,7 @@ export default function AlbamedLoginPage() {
         {/* Logo */}
         <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 28 }}>
           <img
-            src="/albamed-logo.jpg"
+            src="/albamed-logo.png"
             alt="Альба-Мед"
             style={{ width: 52, height: 52, borderRadius: 14, flexShrink: 0, objectFit: "cover", boxShadow: "0 2px 12px rgba(244,121,32,0.3)" }}
           />
