@@ -135,13 +135,28 @@ export async function POST(
 
   const isWeekend = dayOfWeek === 0 || dayOfWeek === 6
   const timeStr = now.toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" })
+  const hour = now.getHours()
+  const isSunday = dayOfWeek === 0
+  // Mon–Sat 08:00–20:00; Sun by appointment only
+  const clinicOpen = !isSunday && hour >= 8 && hour < 20
 
-  const calendarCtx = `\n\n— Календарь (используй ТОЛЬКО эти даты, не считай сам) —
-Сегодня: ${todayStr}${isWeekend ? " (выходной)" : ""}.
-Текущее время: ${timeStr} (московское время).
+  const openStatus = clinicOpen
+    ? `Клиника СЕЙЧАС ОТКРЫТА (работает до 20:00).`
+    : isSunday
+    ? `Клиника СЕЙЧАС ЗАКРЫТА — воскресенье, только предварительная запись.`
+    : `Клиника СЕЙЧАС ЗАКРЫТА (часы работы: пн–сб 08:00–20:00).`
+
+  const afterHoursRule = !clinicOpen
+    ? `\nВАЖНО: НЕ предлагай "позвонить прямо сейчас" и НЕ говори "постараемся принять сегодня" — клиника закрыта. Вместо этого: предложи оставить имя и телефон, чтобы администратор перезвонил завтра с 08:00. При острой боли — посоветуй принять обезболивающее (ибупрофен или кетанов) до открытия клиники.`
+    : ``
+
+  const calendarCtx = `\n\n— Текущее время и статус клиники —
+Сейчас: ${timeStr} МСК, ${todayStr}.
+${openStatus}${afterHoursRule}
+
+— Ближайшие выходные (для записи) —
 Эти выходные: ${fmt(thisSat)} — ${fmt(thisSun)}.
-Следующие выходные: ${fmt(nextSat)} — ${fmt(nextSun)}.
-Через две недели: ${fmt(nextNextSat)} — ${fmt(nextNextSun)}.`
+Следующие выходные: ${fmt(nextSat)} — ${fmt(nextSun)}.`
 
   let systemPrompt = client.system_prompt + calendarCtx
 
