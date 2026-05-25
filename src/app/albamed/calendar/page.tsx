@@ -38,7 +38,6 @@ interface Appointment {
 const HOUR_START = 8
 const HOUR_END = 20
 const HOUR_H = 64 // px per hour
-const SLOT_MIN = 30
 const DAY_LABELS = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
 const STATUS_LABELS: Record<ApptStatus, string> = {
   scheduled: "Запланирован",
@@ -94,6 +93,12 @@ function isTodayDate(dateStr: string): boolean {
   return dateStr === formatDateISO(new Date())
 }
 
+function getTodayDayIdx(weekDays: string[]): number {
+  const today = formatDateISO(new Date())
+  const idx = weekDays.indexOf(today)
+  return idx >= 0 ? idx : 0
+}
+
 // ─────────────────────────────────────────────
 // Modal
 // ─────────────────────────────────────────────
@@ -128,20 +133,23 @@ function AppointmentModal({ mode, initial, doctors, onSave, onDelete, onClose, s
 
   const inputStyle = {
     width: "100%", border: "1px solid #e8e8e8", borderRadius: 8,
-    padding: "8px 12px", fontSize: 14, outline: "none", fontFamily: "inherit",
+    padding: "10px 12px", fontSize: 16, outline: "none", fontFamily: "inherit",
     boxSizing: "border-box" as const, background: "#fff", color: "#1a1a1a",
   }
   const labelStyle = { fontSize: 12, color: "#999", marginBottom: 4, display: "block" as const }
 
   return (
     <div
-      style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.35)", zIndex: 1000, display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}
+      style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.35)", zIndex: 1000, display: "flex", alignItems: "flex-end", justifyContent: "center", padding: 0 }}
       onClick={onClose}
     >
       <div
-        style={{ background: "#fff", borderRadius: 14, padding: 24, width: "100%", maxWidth: 440, boxShadow: "0 8px 40px rgba(0,0,0,0.18)", maxHeight: "90vh", overflowY: "auto" }}
+        style={{ background: "#fff", borderRadius: "14px 14px 0 0", padding: 24, width: "100%", maxWidth: 480, boxShadow: "0 -4px 32px rgba(0,0,0,0.15)", maxHeight: "90vh", overflowY: "auto" }}
         onClick={(e) => e.stopPropagation()}
       >
+        {/* Handle bar */}
+        <div style={{ width: 36, height: 4, background: "#e0e0e0", borderRadius: 2, margin: "0 auto 20px" }} />
+
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
           <h2 style={{ fontSize: 17, fontWeight: 700, color: "#1a1a1a", margin: 0 }}>
             {mode === "create" ? "Новая запись" : "Редактировать запись"}
@@ -216,7 +224,7 @@ function AppointmentModal({ mode, initial, doctors, onSave, onDelete, onClose, s
                   key={d}
                   onClick={() => set("duration_min", d)}
                   style={{
-                    padding: "5px 12px", borderRadius: 6, fontSize: 13, cursor: "pointer",
+                    padding: "7px 14px", borderRadius: 6, fontSize: 13, cursor: "pointer",
                     border: form.duration_min === d ? "none" : "1px solid #e8e8e8",
                     background: form.duration_min === d ? "#f47920" : "#fff",
                     color: form.duration_min === d ? "#fff" : "#555",
@@ -261,8 +269,8 @@ function AppointmentModal({ mode, initial, doctors, onSave, onDelete, onClose, s
             onClick={() => onSave(form)}
             disabled={saving}
             style={{
-              flex: 1, padding: "10px 0", background: "#f47920", color: "#fff",
-              border: "none", borderRadius: 8, fontSize: 14, fontWeight: 600,
+              flex: 1, padding: "13px 0", background: "#f47920", color: "#fff",
+              border: "none", borderRadius: 8, fontSize: 15, fontWeight: 600,
               cursor: saving ? "not-allowed" : "pointer", opacity: saving ? 0.7 : 1,
               fontFamily: "inherit",
             }}
@@ -274,7 +282,7 @@ function AppointmentModal({ mode, initial, doctors, onSave, onDelete, onClose, s
               onClick={onDelete}
               disabled={saving}
               style={{
-                padding: "10px 16px", background: "#fff", color: "#ef4444",
+                padding: "13px 16px", background: "#fff", color: "#ef4444",
                 border: "1px solid #fca5a5", borderRadius: 8, fontSize: 14,
                 cursor: saving ? "not-allowed" : "pointer", fontFamily: "inherit",
               }}
@@ -298,15 +306,14 @@ export default function CalendarPage() {
   const [doctors, setDoctors] = useState<Doctor[]>([])
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
+  const [selectedDayIdx, setSelectedDayIdx] = useState(0)
 
-  // Modal state
   type ModalState =
     | { type: "create"; date: string; time: string }
     | { type: "edit"; appt: Appointment }
     | null
   const [modal, setModal] = useState<ModalState>(null)
 
-  // Drag state
   const dragAppt = useRef<Appointment | null>(null)
 
   // ── Data fetching ──
@@ -330,6 +337,16 @@ export default function CalendarPage() {
   }, [showToast])
 
   useEffect(() => { loadWeek(weekStart) }, [weekStart, loadWeek])
+
+  // Set selectedDayIdx to today when week changes
+  useEffect(() => {
+    const days = Array.from({ length: 7 }, (_, i) => {
+      const d = new Date(weekStart)
+      d.setDate(d.getDate() + i)
+      return formatDateISO(d)
+    })
+    setSelectedDayIdx(getTodayDayIdx(days))
+  }, [weekStart])
 
   // ── Navigation ──
   function prevWeek() { const d = new Date(weekStart); d.setDate(d.getDate() - 7); setWeekStart(d) }
@@ -418,7 +435,6 @@ export default function CalendarPage() {
     const mm = String(mins % 60).padStart(2, "0")
     const newTime = `${hh}:${mm}`
     if (appt.appointment_date === date && appt.appointment_time === newTime) return
-    // Optimistic update
     setAppointments((prev) =>
       prev.map((a) => a.id === appt.id ? { ...a, appointment_date: date, appointment_time: newTime } : a)
     )
@@ -439,6 +455,7 @@ export default function CalendarPage() {
 
   // ── Render helpers ──
   const hours = Array.from({ length: HOUR_END - HOUR_START }, (_, i) => HOUR_START + i)
+  const totalHoursPx = (HOUR_END - HOUR_START) * HOUR_H
 
   function getApptsByDay(date: string) {
     return appointments.filter((a) => a.appointment_date === date && a.status !== "cancelled")
@@ -453,9 +470,6 @@ export default function CalendarPage() {
     return Math.max(24, (duration / 60) * HOUR_H - 2)
   }
 
-  const timeLabels = hours.map((h) => `${String(h).padStart(2, "0")}:00`)
-
-  // ── Status dot ──
   const STATUS_DOT: Record<ApptStatus, string> = {
     scheduled: "#f47920",
     confirmed: "#16a34a",
@@ -463,44 +477,45 @@ export default function CalendarPage() {
     completed: "#9ca3af",
   }
 
-  const totalHoursPx = (HOUR_END - HOUR_START) * HOUR_H
+  function openCreateNow(dateStr: string) {
+    const now = new Date()
+    const h = String(now.getHours()).padStart(2, "0")
+    const m = String(Math.round(now.getMinutes() / 30) * 30 % 60).padStart(2, "0")
+    setModal({ type: "create", date: dateStr, time: `${h}:${m}` })
+  }
+
+  const selectedDate = weekDays[selectedDayIdx] ?? weekDays[0]
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "calc(100vh - 80px)", minHeight: 600 }}>
+    <div style={{ display: "flex", flexDirection: "column" }}>
       {/* ── Header ── */}
       <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16, flexWrap: "wrap" }}>
         <div>
-          <h1 style={{ fontSize: 22, fontWeight: 700, color: "#1a1a1a", margin: "0 0 2px" }}>Календарь</h1>
+          <h1 style={{ fontSize: 22, fontWeight: 700, color: "#1a1a1a", margin: "0 0 2px" }}>Запись</h1>
           <p style={{ fontSize: 14, color: "#999", margin: 0 }}>Расписание приёмов</p>
         </div>
         <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-          <span style={{ fontSize: 14, color: "#555", fontWeight: 500, minWidth: 180, textAlign: "center" }}>
+          <span style={{ fontSize: 13, color: "#555", fontWeight: 500 }}>
             {formatMonthYear(weekStart)}
           </span>
-          <button onClick={prevWeek} style={navBtnStyle}>← Пред.</button>
+          <button onClick={prevWeek} style={navBtnStyle}>‹</button>
           <button onClick={goToday} style={{ ...navBtnStyle, fontWeight: 600, color: "#f47920", borderColor: "#fdd9b5" }}>Сегодня</button>
-          <button onClick={nextWeek} style={navBtnStyle}>След. →</button>
+          <button onClick={nextWeek} style={navBtnStyle}>›</button>
           <button
-            onClick={() => {
-              const today = formatDateISO(new Date())
-              const now = new Date()
-              const h = String(now.getHours()).padStart(2, "0")
-              const m = String(Math.round(now.getMinutes() / 30) * 30 % 60).padStart(2, "0")
-              setModal({ type: "create", date: today, time: `${h}:${m}` })
-            }}
+            onClick={() => openCreateNow(selectedDate)}
             style={{
               background: "#f47920", color: "#fff", border: "none",
-              borderRadius: 8, padding: "7px 16px", fontSize: 13, fontWeight: 600,
-              cursor: "pointer", fontFamily: "inherit",
+              borderRadius: 8, padding: "7px 14px", fontSize: 13, fontWeight: 600,
+              cursor: "pointer", fontFamily: "inherit", WebkitTapHighlightColor: "transparent",
             }}
           >
-            + Новая запись
+            + Запись
           </button>
         </div>
       </div>
 
-      {/* ── Calendar grid ── */}
-      <div style={{ flex: 1, background: "#fff", border: "1px solid #e8e8e8", borderRadius: 10, overflow: "hidden", boxShadow: "0 1px 4px rgba(0,0,0,0.04)", display: "flex", flexDirection: "column" }}>
+      {/* ── DESKTOP: week view ── */}
+      <div className="cal-week-view" style={{ flex: 1, background: "#fff", border: "1px solid #e8e8e8", borderRadius: 10, overflow: "hidden", boxShadow: "0 1px 4px rgba(0,0,0,0.04)", display: "flex", flexDirection: "column", minHeight: 500 }}>
         {/* Day headers */}
         <div style={{ display: "grid", gridTemplateColumns: "52px repeat(7, 1fr)", borderBottom: "1px solid #e8e8e8", background: "#fafafa", flexShrink: 0 }}>
           <div />
@@ -558,7 +573,6 @@ export default function CalendarPage() {
                       background: isTodayDate(date) ? "rgba(244,121,32,0.02)" : undefined,
                     }}
                   >
-                    {/* Hour rows with drop targets */}
                     {hours.map((h) =>
                       [0, 1].map((q) => (
                         <div
@@ -576,7 +590,6 @@ export default function CalendarPage() {
                       ))
                     )}
 
-                    {/* Appointments */}
                     {dayAppts.map((appt) => {
                       const top = apptTop(appt.appointment_time)
                       const height = apptHeight(appt.duration_min)
@@ -591,10 +604,7 @@ export default function CalendarPage() {
                           onClick={(e) => { e.stopPropagation(); setModal({ type: "edit", appt }) }}
                           style={{
                             position: "absolute",
-                            top,
-                            left: 2,
-                            right: 2,
-                            height,
+                            top, left: 2, right: 2, height,
                             background: `${color}18`,
                             border: `1.5px solid ${color}`,
                             borderLeft: `3px solid ${color}`,
@@ -636,6 +646,142 @@ export default function CalendarPage() {
         </div>
       </div>
 
+      {/* ── MOBILE: day picker + single day view ── */}
+      <div className="cal-mobile">
+        {/* Day picker strip */}
+        <div style={{ display: "flex", gap: 6, overflowX: "auto", paddingBottom: 12, scrollbarWidth: "none" }}>
+          {weekDays.map((date, i) => {
+            const isSelected = i === selectedDayIdx
+            const isToday = isTodayDate(date)
+            const d = new Date(date + "T00:00:00")
+            const dayApptCount = getApptsByDay(date).length
+            return (
+              <button
+                key={date}
+                onClick={() => setSelectedDayIdx(i)}
+                style={{
+                  flexShrink: 0,
+                  display: "flex", flexDirection: "column", alignItems: "center", gap: 2,
+                  padding: "10px 12px",
+                  borderRadius: 12,
+                  border: isSelected ? "none" : isToday ? "1.5px solid #fdd9b5" : "1px solid #e8e8e8",
+                  background: isSelected ? "#f47920" : isToday ? "#fff4ec" : "#fff",
+                  color: isSelected ? "#fff" : isToday ? "#f47920" : "#555",
+                  cursor: "pointer", fontFamily: "inherit",
+                  WebkitTapHighlightColor: "transparent",
+                  position: "relative",
+                  minWidth: 48,
+                }}
+              >
+                <span style={{ fontSize: 11, fontWeight: 500, opacity: isSelected ? 0.85 : 1 }}>{DAY_LABELS[i]}</span>
+                <span style={{ fontSize: 20, fontWeight: 700, lineHeight: 1 }}>{d.getDate()}</span>
+                {dayApptCount > 0 && (
+                  <span style={{
+                    width: 6, height: 6, borderRadius: "50%",
+                    background: isSelected ? "rgba(255,255,255,0.7)" : "#f47920",
+                    flexShrink: 0,
+                  }} />
+                )}
+                {dayApptCount === 0 && <span style={{ width: 6, height: 6 }} />}
+              </button>
+            )
+          })}
+        </div>
+
+        {/* Single day timeline */}
+        <div style={{ background: "#fff", border: "1px solid #e8e8e8", borderRadius: 10, overflow: "hidden", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
+          {loading ? (
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 200, color: "#bbb", fontSize: 14 }}>
+              <div style={{ width: 20, height: 20, border: "3px solid #f47920", borderTopColor: "transparent", borderRadius: "50%", animation: "spin 0.8s linear infinite", marginRight: 8 }} />
+              Загрузка...
+            </div>
+          ) : (
+            <div style={{ position: "relative", height: totalHoursPx, overflowY: "auto" }}>
+              {/* Hour grid */}
+              {hours.map((h) => (
+                <div
+                  key={h}
+                  style={{
+                    position: "absolute", top: (h - HOUR_START) * HOUR_H, left: 0, right: 0, height: HOUR_H,
+                    borderBottom: "1px solid #f5f5f5",
+                  }}
+                  onClick={() => setModal({ type: "create", date: selectedDate, time: `${String(h).padStart(2, "0")}:00` })}
+                >
+                  <span style={{ position: "absolute", left: 8, top: 4, fontSize: 11, color: "#ccc", pointerEvents: "none" }}>
+                    {String(h).padStart(2, "0")}:00
+                  </span>
+                </div>
+              ))}
+
+              {/* Half-hour markers */}
+              {hours.map((h) => (
+                <div
+                  key={`${h}-half`}
+                  style={{
+                    position: "absolute", top: (h - HOUR_START) * HOUR_H + HOUR_H / 2, left: 0, right: 0,
+                    borderBottom: "1px dashed #f5f5f5", height: HOUR_H / 2,
+                  }}
+                  onClick={() => setModal({ type: "create", date: selectedDate, time: `${String(h).padStart(2, "0")}:30` })}
+                />
+              ))}
+
+              {/* Appointments */}
+              {getApptsByDay(selectedDate).map((appt) => {
+                const top = apptTop(appt.appointment_time)
+                const height = apptHeight(appt.duration_min)
+                const color = getDoctorColor(appt.doctor_id)
+                const isCompleted = appt.status === "completed"
+                return (
+                  <div
+                    key={appt.id}
+                    onClick={(e) => { e.stopPropagation(); setModal({ type: "edit", appt }) }}
+                    style={{
+                      position: "absolute",
+                      top, left: 52, right: 8, height,
+                      background: `${color}18`,
+                      border: `1.5px solid ${color}`,
+                      borderLeft: `3px solid ${color}`,
+                      borderRadius: 8,
+                      padding: "4px 10px",
+                      cursor: "pointer",
+                      overflow: "hidden",
+                      boxSizing: "border-box",
+                      opacity: isCompleted ? 0.7 : 1,
+                      zIndex: 1,
+                      WebkitTapHighlightColor: "transparent",
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                      <span style={{ width: 7, height: 7, borderRadius: "50%", background: STATUS_DOT[appt.status], flexShrink: 0 }} />
+                      <span style={{ fontSize: 12, fontWeight: 700, color }}>{appt.appointment_time}</span>
+                    </div>
+                    {height > 30 && (
+                      <div style={{ fontSize: 13, color: "#1a1a1a", fontWeight: 500, marginTop: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                        {appt.patient_name || "Без имени"}
+                      </div>
+                    )}
+                    {height > 50 && appt.doctor_name && (
+                      <div style={{ fontSize: 11, color: "#888", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                        {appt.doctor_name}
+                      </div>
+                    )}
+                  </div>
+                )
+              })}
+
+              {/* Empty state */}
+              {getApptsByDay(selectedDate).length === 0 && (
+                <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", pointerEvents: "none" }}>
+                  <div style={{ fontSize: 32, marginBottom: 8 }}>📅</div>
+                  <div style={{ fontSize: 14, color: "#bbb" }}>Записей нет</div>
+                  <div style={{ fontSize: 12, color: "#ddd", marginTop: 4 }}>Нажмите на слот, чтобы добавить</div>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+
       {/* ── Legend ── */}
       {doctors.length > 0 && (
         <div style={{ marginTop: 12, display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
@@ -671,6 +817,12 @@ export default function CalendarPage() {
 
       <style>{`
         @keyframes spin { to { transform: rotate(360deg); } }
+        .cal-week-view { display: flex; flex-direction: column; }
+        .cal-mobile    { display: none; }
+        @media (max-width: 767px) {
+          .cal-week-view { display: none !important; }
+          .cal-mobile    { display: block !important; }
+        }
       `}</style>
     </div>
   )
@@ -681,8 +833,9 @@ const navBtnStyle: React.CSSProperties = {
   border: "1px solid #e8e8e8",
   color: "#555",
   borderRadius: 8,
-  padding: "7px 14px",
-  fontSize: 13,
+  padding: "7px 12px",
+  fontSize: 15,
   cursor: "pointer",
   fontFamily: "inherit",
+  WebkitTapHighlightColor: "transparent",
 }

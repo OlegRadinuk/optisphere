@@ -177,7 +177,8 @@ export default function AlbamedOverviewPage() {
           </Link>
         </div>
 
-        <div style={{ background: "#fff", border: "1px solid #e8e8e8", borderRadius: 10, overflow: "hidden", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
+        {/* Desktop table */}
+        <div className="ab-overview-table-wrap" style={{ background: "#fff", border: "1px solid #e8e8e8", borderRadius: 10, overflow: "hidden", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <thead>
               <tr style={{ background: "#fafafa", borderBottom: "1px solid #e8e8e8" }}>
@@ -231,10 +232,49 @@ export default function AlbamedOverviewPage() {
             </tbody>
           </table>
         </div>
+
+        {/* Mobile cards */}
+        <div className="ab-overview-cards">
+          {loadingLeads
+            ? Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} style={{ background: "#fff", border: "1px solid #e8e8e8", borderRadius: 10, padding: "14px 16px", animation: "pulse 1.5s ease infinite" }}>
+                  <div style={{ width: "60%", height: 14, background: "#f0f0f0", borderRadius: 4, marginBottom: 8 }} />
+                  <div style={{ width: "40%", height: 12, background: "#f0f0f0", borderRadius: 4 }} />
+                </div>
+              ))
+            : leads.length === 0
+            ? (
+                <div style={{ textAlign: "center", padding: "32px 16px", color: "#bbb", fontSize: 14, background: "#fff", borderRadius: 10, border: "1px solid #e8e8e8" }}>
+                  Лидов пока нет
+                </div>
+              )
+            : leads.map((lead) => (
+                <div key={lead.id} style={{ background: "#fff", border: "1px solid #e8e8e8", borderRadius: 10, padding: "14px 16px", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+                    <span style={{ fontSize: 15, fontWeight: 600, color: "#1a1a1a" }}>{lead.name || "—"}</span>
+                    <StatusBadge status={lead.status} />
+                  </div>
+                  <div style={{ fontSize: 13, color: "#999", marginBottom: 4 }}>{formatDate(lead.created_at)}</div>
+                  {lead.phone && (
+                    <a href={`tel:${lead.phone}`} style={{ fontSize: 14, color: "#f47920", fontWeight: 500, textDecoration: "none" }}>
+                      {lead.phone}
+                    </a>
+                  )}
+                </div>
+              ))
+          }
+        </div>
       </div>
 
       <style>{`
-        @media (max-width: 767px) { .albamed-stat-grid { grid-template-columns: repeat(2, 1fr) !important; } }
+        @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+        .ab-overview-table-wrap { display: block; }
+        .ab-overview-cards      { display: none; flex-direction: column; gap: 10px; }
+        @media (max-width: 767px) {
+          .albamed-stat-grid      { grid-template-columns: repeat(2, 1fr) !important; }
+          .ab-overview-table-wrap { display: none !important; }
+          .ab-overview-cards      { display: flex !important; }
+        }
       `}</style>
     </div>
   )
