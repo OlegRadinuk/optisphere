@@ -70,25 +70,14 @@ export default function AlbamedLoginPage() {
         }}
       >
         {/* Logo */}
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 28 }}>
-          <div
-            style={{
-              width: 40,
-              height: 40,
-              background: "#f47920",
-              borderRadius: 10,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              flexShrink: 0,
-            }}
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5">
-              <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-            </svg>
-          </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 28 }}>
+          <img
+            src="/albamed-logo.jpg"
+            alt="Альба-Мед"
+            style={{ width: 52, height: 52, borderRadius: 14, flexShrink: 0, objectFit: "cover", boxShadow: "0 2px 12px rgba(244,121,32,0.3)" }}
+          />
           <div>
-            <div style={{ fontSize: 15, fontWeight: 700, color: "#1a1a1a", lineHeight: 1.2 }}>Альба-Мед</div>
+            <div style={{ fontSize: 16, fontWeight: 700, color: "#1a1a1a", lineHeight: 1.2 }}>Альба-Мед</div>
             <div style={{ fontSize: 12, color: "#999" }}>Панель управления</div>
           </div>
         </div>

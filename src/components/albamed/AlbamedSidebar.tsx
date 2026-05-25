@@ -104,21 +104,11 @@ export function AlbamedSidebar({ newLeadsCount, onClose }: AlbamedSidebarProps) 
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <div
-            style={{
-              width: 32,
-              height: 32,
-              background: "#f47920",
-              borderRadius: 8,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5">
-              <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-            </svg>
-          </div>
+          <img
+            src="/albamed-logo.jpg"
+            alt="Альба-Мед"
+            style={{ width: 36, height: 36, borderRadius: 9, flexShrink: 0, objectFit: "cover", boxShadow: "0 1px 6px rgba(244,121,32,0.25)" }}
+          />
           <div>
             <div style={{ fontSize: 13, fontWeight: 700, color: "#1a1a1a", lineHeight: 1.2 }}>Альба-Мед</div>
             <div style={{ fontSize: 11, color: "#999", lineHeight: 1.2 }}>Дашборд</div>

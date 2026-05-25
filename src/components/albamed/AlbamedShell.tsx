@@ -112,11 +112,11 @@ function AlbamedShellInner({ children }: { children: React.ReactNode }) {
       {/* ── Mobile: top header ── */}
       <header className="ab-topbar">
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <div style={{ width: 30, height: 30, background: "#f47920", borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5">
-              <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-            </svg>
-          </div>
+          <img
+            src="/albamed-logo.jpg"
+            alt="Альба-Мед"
+            style={{ width: 32, height: 32, borderRadius: 8, objectFit: "cover" }}
+          />
           <span style={{ fontSize: 14, fontWeight: 700, color: "#1a1a1a" }}>Альба-Мед</span>
         </div>
         {newLeadsCount > 0 && (
