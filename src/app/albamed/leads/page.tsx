@@ -22,6 +22,7 @@ interface LeadsResponse {
   leads: Lead[]
   total: number
   page: number
+  statusCounts?: Record<string, number>
 }
 
 const STATUS_TABS: { key: string; label: string }[] = [
@@ -49,6 +50,9 @@ export default function LeadsPage() {
   const [total, setTotal] = useState(0)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [search, setSearch] = useState("")
+  const [searchInput, setSearchInput] = useState("")
+  const [statusCounts, setStatusCounts] = useState<Record<string, number>>({})
 
   const limit = 20
   const totalPages = Math.max(1, Math.ceil(total / limit))
@@ -57,33 +61,60 @@ export default function LeadsPage() {
     setLoading(true)
     setError(null)
     try {
-      const r = await fetch(`/api/albamed/leads?status=${statusParam}&page=${pageParam}&limit=${limit}`)
+      const url = `/api/albamed/leads?status=${statusParam}&page=${pageParam}&limit=${limit}${search ? `&search=${encodeURIComponent(search)}` : ""}`
+      const r = await fetch(url)
       if (!r.ok) throw new Error("Ошибка загрузки")
       const d: LeadsResponse = await r.json()
       setLeads(d.leads ?? [])
       setTotal(d.total ?? 0)
+      if (d.statusCounts) setStatusCounts(d.statusCounts)
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : "Ошибка загрузки")
     } finally {
       setLoading(false)
     }
-  }, [statusParam, pageParam])
+  }, [statusParam, pageParam, search])
 
   useEffect(() => { loadLeads() }, [loadLeads])
 
   return (
     <div>
-      <h1 style={{ fontSize: 22, fontWeight: 700, color: "#1a1a1a", margin: "0 0 6px" }}>Лиды</h1>
-      <p style={{ fontSize: 14, color: "#999", margin: "0 0 20px" }}>Заявки от пациентов через бота</p>
+      <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexWrap: "wrap", gap: 12, marginBottom: 16 }}>
+        <div>
+          <h1 style={{ fontSize: 22, fontWeight: 700, color: "#1a1a1a", margin: "0 0 4px" }}>Лиды</h1>
+          <p style={{ fontSize: 14, color: "#999", margin: 0 }}>Заявки от пациентов через бота</p>
+        </div>
+        {/* Search */}
+        <div style={{ display: "flex", alignItems: "center", gap: 0, border: "1px solid #e8e8e8", borderRadius: 8, background: "#fff", overflow: "hidden", minWidth: 240 }}>
+          <svg style={{ margin: "0 10px", flexShrink: 0, color: "#bbb" }} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input
+            type="text"
+            placeholder="Поиск по имени или телефону..."
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            onKeyDown={(e) => { if (e.key === "Enter") { setSearch(searchInput); router.push(`/albamed/leads?status=${statusParam}&page=1`) } }}
+            style={{ flex: 1, border: "none", outline: "none", padding: "8px 12px 8px 0", fontSize: 13, background: "transparent", color: "#1a1a1a", fontFamily: "inherit" }}
+          />
+          {searchInput && (
+            <button
+              onClick={() => { setSearchInput(""); setSearch(""); router.push(`/albamed/leads?status=${statusParam}&page=1`) }}
+              style={{ background: "none", border: "none", cursor: "pointer", padding: "0 10px", color: "#bbb", fontSize: 16 }}
+            >×</button>
+          )}
+        </div>
+      </div>
 
       {/* Filter tabs */}
       <div style={{ display: "flex", gap: 6, marginBottom: 16, flexWrap: "wrap" }}>
         {STATUS_TABS.map((tab) => {
           const active = statusParam === tab.key
+          const count = statusCounts[tab.key]
           return (
             <button
               key={tab.key}
-              onClick={() => router.push(`/albamed/leads?status=${tab.key}&page=1`)}
+              onClick={() => { setSearch(""); setSearchInput(""); router.push(`/albamed/leads?status=${tab.key}&page=1`) }}
               style={{
                 padding: "7px 16px",
                 borderRadius: 8,
@@ -96,9 +127,26 @@ export default function LeadsPage() {
                 fontFamily: "inherit",
                 transition: "all 150ms",
                 boxShadow: active ? "0 2px 8px rgba(244,121,32,0.3)" : "none",
+                display: "flex",
+                alignItems: "center",
+                gap: 6,
               }}
             >
               {tab.label}
+              {count !== undefined && count > 0 && (
+                <span style={{
+                  background: active ? "rgba(255,255,255,0.25)" : "#f5f5f5",
+                  color: active ? "#fff" : "#888",
+                  borderRadius: 9999,
+                  padding: "1px 7px",
+                  fontSize: 11,
+                  fontWeight: 700,
+                  minWidth: 20,
+                  textAlign: "center",
+                }}>
+                  {count}
+                </span>
+              )}
             </button>
           )
         })}

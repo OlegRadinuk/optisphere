@@ -36,15 +36,24 @@ export async function GET(req: NextRequest): Promise<Response> {
 
     const db = getDb()
 
-    const whereStatus =
-      status !== "all" ? "AND l.status = @status" : ""
+    const search = (searchParams.get("search") ?? "").trim()
+    const whereStatus = status !== "all" ? "AND l.status = @status" : ""
+    const whereSearch = search ? "AND (l.name LIKE @search OR l.phone LIKE @search)" : ""
+    const searchLike = `%${search}%`
+
+    // Status counts for tabs
+    const counts = db.prepare(`
+      SELECT status, COUNT(*) as n FROM leads WHERE client_id = @clientId GROUP BY status
+    `).all({ clientId: CLIENT_ID }) as Array<{ status: string; n: number }>
+    const statusCounts: Record<string, number> = { all: 0 }
+    counts.forEach(({ status: s, n }) => { statusCounts[s] = n; statusCounts.all = (statusCounts.all ?? 0) + n })
 
     const countRow = db
       .prepare(
         `SELECT COUNT(*) as n FROM leads l
-         WHERE l.client_id = @clientId ${whereStatus}`
+         WHERE l.client_id = @clientId ${whereStatus} ${whereSearch}`
       )
-      .get({ clientId: CLIENT_ID, status }) as { n: number }
+      .get({ clientId: CLIENT_ID, status, search: searchLike }) as { n: number }
     const total = countRow.n
 
     const rows = db
@@ -56,11 +65,11 @@ export async function GET(req: NextRequest): Promise<Response> {
              WHERE m.client_id = l.client_id AND m.session_id = l.session_id
            ) THEN 1 ELSE 0 END as has_chat
          FROM leads l
-         WHERE l.client_id = @clientId ${whereStatus}
+         WHERE l.client_id = @clientId ${whereStatus} ${whereSearch}
          ORDER BY l.created_at DESC
          LIMIT @limit OFFSET @offset`
       )
-      .all({ clientId: CLIENT_ID, status, limit, offset }) as Array<
+      .all({ clientId: CLIENT_ID, status, search: searchLike, limit, offset }) as Array<
       Lead & { has_chat: number }
     >
 
@@ -69,7 +78,7 @@ export async function GET(req: NextRequest): Promise<Response> {
       hasChat: r.has_chat === 1,
     }))
 
-    return NextResponse.json({ leads, total, page })
+    return NextResponse.json({ leads, total, page, statusCounts })
   } catch (err) {
     console.error("[albamed/leads GET] Error:", err)
     return NextResponse.json({ error: "Internal error" }, { status: 500 })
