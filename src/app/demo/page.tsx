@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useLayoutEffect } from "react"
+import { useState, useEffect, useLayoutEffect, useRef } from "react"
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Демо панели управления клиникой. Полностью статичные данные, без auth и API.
@@ -32,14 +32,14 @@ const TABS: { id: Tab; label: string }[] = [
 
 interface TourStep { tab: Tab; selector?: string; title: string; text: string }
 const TOUR: TourStep[] = [
-  { tab: "overview", title: "Это панель управления вашей клиникой", text: "Покажу за минуту, что она умеет. Можно листать самому — все элементы кликаются." },
-  { tab: "overview", selector: "[data-tour='stat-leads']", title: "Сводка за день", text: "Заявки, диалоги, конверсия — обновляются автоматически. Видно пульс клиники с утра." },
-  { tab: "overview", selector: "[data-tour='night-insight']", title: "Вот это — деньги", text: "Заявки приходят ночью и в выходные, когда регистратура не работает. Их ловит ассистент — иначе пациенты ушли бы к конкурентам." },
-  { tab: "leads", selector: "[data-tour='lead-0']", title: "Каждая заявка под рукой", text: "Имя, услуга, телефон и статус. Нажал на номер — позвонил. Ничего не теряется в переписке." },
-  { tab: "calendar", selector: "[data-tour='calendar']", title: "Живое расписание", text: "Записи можно перетаскивать мышкой на другое время — попробуйте прямо сейчас. Кнопкой «+ Запись» добавляется новая." },
-  { tab: "chats", selector: "[data-tour='chat-0']", title: "Диалоги с ассистентом", text: "Вся переписка пациента — видно, что человека волновало, ещё до звонка. Нажмите, чтобы раскрыть." },
-  { tab: "doctors", selector: "[data-tour='doctor-0']", title: "Врачи и график", text: "Кто принимает и в какие дни. Нажмите на день — он включится или выключится." },
-  { tab: "overview", title: "Понравилось?", text: "У вашей клиники будет так же — со своим логотипом, врачами и реальными заявками. Подключается за пару дней." },
+  { tab: "overview", title: "Привет! Давайте я всё покажу", text: "Это панель управления вашей клиникой. Займёт минуту — а дальше листайте сами, тут всё кликается и работает по-настоящему." },
+  { tab: "overview", selector: "[data-tour='stat-leads']", title: "С утра видно весь пульс клиники", text: "Сколько заявок, диалогов и какая конверсия — цифры собираются сами. Открыли утром и сразу в курсе." },
+  { tab: "overview", selector: "[data-tour='night-insight']", title: "А вот это — ваши деньги", text: "Пациенты пишут ночью и в выходные, когда регистратура спит. Ассистент их ловит и держит — иначе они ушли бы к соседям." },
+  { tab: "leads", selector: "[data-tour='lead-0']", title: "Ни одна заявка не теряется", text: "Имя, услуга, телефон, статус — всё в одном месте. Нажал на номер и сразу звонишь. Никаких блокнотов и стикеров." },
+  { tab: "calendar", selector: "[data-tour='calendar']", title: "Расписание — живое", text: "Возьмите любую запись и перетащите на другое время — прямо сейчас, попробуйте. А «+ Запись» добавит новую за секунду." },
+  { tab: "chats", selector: "[data-tour='chat-0']", title: "Вы знаете о пациенте заранее", text: "Вся переписка с ассистентом перед вами — видно, что человека волнует, ещё до звонка. Нажмите, чтобы раскрыть диалог." },
+  { tab: "doctors", selector: "[data-tour='doctor-0']", title: "Врачи и их дни", text: "Кто принимает и когда — настраивается в один тап. Нажмите на день недели — он включится или выключится." },
+  { tab: "overview", title: "Ну как вам?", text: "У вашей клиники будет ровно так же — свой логотип, свои врачи, реальные заявки пациентов. Запуск за пару дней, а дальше оно работает за вас 24/7." },
 ]
 
 const MoonIcon = ({ size = 14, color = "currentColor" }: { size?: number; color?: string }) => (
@@ -125,6 +125,18 @@ export default function DemoPage() {
   const [tab, setTab] = useState<Tab>("overview")
   const [nudge, setNudge] = useState(false)
   const [tourStep, setTourStep] = useState(-1)
+  const [bannerOpen, setBannerOpen] = useState(true)
+  const bannerRef = useRef<HTMLDivElement>(null)
+  const [bannerH, setBannerH] = useState(0)
+
+  // Measure banner so the fixed sidebar/topbar can sit below it (no overlap)
+  useLayoutEffect(() => {
+    if (!bannerOpen) { setBannerH(0); return }
+    const measure = () => setBannerH(bannerRef.current?.offsetHeight ?? 0)
+    measure()
+    window.addEventListener("resize", measure)
+    return () => window.removeEventListener("resize", measure)
+  }, [bannerOpen])
 
   // Auto-start tour once per browser
   useEffect(() => {
@@ -157,27 +169,37 @@ export default function DemoPage() {
   const sub: React.CSSProperties = { fontSize: 14, color: "#94A3B8", margin: "0 0 20px" }
 
   return (
-    <div>
+    <div style={{ "--banner-h": `${bannerH}px` } as React.CSSProperties}>
       {/* ── Sales banner ── */}
-      <div style={{
-        position: "sticky", top: 0, zIndex: 120,
-        background: "linear-gradient(135deg, #0D9488 0%, #0891B2 100%)",
-        color: "#fff", padding: "10px 16px",
-        display: "flex", alignItems: "center", justifyContent: "center", gap: 14, flexWrap: "wrap",
-        textAlign: "center",
-      }}>
-        <span style={{ fontSize: 13.5, fontWeight: 500, display: "inline-flex", alignItems: "center", gap: 7 }}>
-          <PlayIcon size={14} color="#fff" />
-          Это <b>демо</b>. У вашей клиники будет так же — со своим логотипом и реальными заявками пациентов.
-        </span>
-        <a href={CONTACT_URL} style={{
-          background: "#fff", color: PRIMARY, fontWeight: 700, fontSize: 13,
-          padding: "6px 16px", borderRadius: 8, textDecoration: "none", whiteSpace: "nowrap",
-          boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+      {bannerOpen && (
+        <div ref={bannerRef} style={{
+          position: "sticky", top: 0, zIndex: 120,
+          background: "linear-gradient(135deg, #0D9488 0%, #0891B2 100%)",
+          color: "#fff", padding: "10px 48px 10px 16px",
+          display: "flex", alignItems: "center", justifyContent: "center", gap: 14, flexWrap: "wrap",
+          textAlign: "center",
         }}>
-          Подключить — {PRICE} →
-        </a>
-      </div>
+          <span style={{ fontSize: 13.5, fontWeight: 500, display: "inline-flex", alignItems: "center", gap: 7 }}>
+            <PlayIcon size={14} color="#fff" />
+            Это <b>демо</b>. У вашей клиники будет так же — со своим логотипом и реальными заявками пациентов.
+          </span>
+          <a href={CONTACT_URL} style={{
+            background: "#fff", color: PRIMARY, fontWeight: 700, fontSize: 13,
+            padding: "6px 16px", borderRadius: 8, textDecoration: "none", whiteSpace: "nowrap",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+          }}>
+            Подключить — {PRICE} →
+          </a>
+          <button onClick={() => setBannerOpen(false)} aria-label="Закрыть" style={{
+            position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)",
+            background: "rgba(255,255,255,0.18)", border: "none", color: "#fff",
+            width: 26, height: 26, borderRadius: "50%", cursor: "pointer",
+            display: "flex", alignItems: "center", justifyContent: "center",
+          }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+      )}
 
       {/* ── Sidebar (desktop) ── */}
       <div className="demo-sidebar">
@@ -268,8 +290,7 @@ export default function DemoPage() {
       </a>
 
       {/* ── Help / replay tour ── */}
-      <button onClick={() => setTourStep(0)} aria-label="Запустить обучение" style={{
-        position: "fixed", left: 18, bottom: 18, zIndex: 130,
+      <button onClick={() => setTourStep(0)} aria-label="Запустить обучение" className="demo-help" style={{
         width: 44, height: 44, borderRadius: "50%", border: "1px solid #E2E8F0",
         background: "#fff", color: PRIMARY, cursor: "pointer",
         boxShadow: "0 4px 14px rgba(15,23,42,0.12)", display: "flex", alignItems: "center", justifyContent: "center",
@@ -313,19 +334,22 @@ export default function DemoPage() {
       <style>{`
         @keyframes pulse { 0%,100% { opacity:1 } 50% { opacity:.5 } }
         .demo-sidebar {
-          position: fixed; top: 0; left: 0; height: 100vh; width: 220px;
+          position: fixed; top: var(--banner-h, 0px); left: 0; height: calc(100vh - var(--banner-h, 0px)); width: 220px;
           background: #fff; border-right: 1px solid #E2E8F0; display: flex; flex-direction: column;
-          z-index: 110; box-shadow: 2px 0 16px rgba(15,23,42,0.05); padding-top: 0;
+          z-index: 110; box-shadow: 2px 0 16px rgba(15,23,42,0.05);
+          transition: top 0.2s ease, height 0.2s ease;
         }
         .demo-topbar { display: none; }
         .demo-bottomnav { display: none; }
-        .demo-main { margin-left: 220px; padding: 28px; min-height: calc(100vh - 40px); }
+        .demo-main { margin-left: 220px; padding: 28px; }
+        .demo-help { position: fixed; right: 18px; bottom: 18px; z-index: 130; }
         @media (max-width: 767px) {
           .demo-sidebar { display: none; }
           .demo-fab { display: none !important; }
+          .demo-help { bottom: calc(74px + env(safe-area-inset-bottom)); }
           .demo-topbar {
             display: flex; align-items: center; justify-content: space-between;
-            position: sticky; top: 40px; height: 52px; background: #fff;
+            position: sticky; top: var(--banner-h, 0px); height: 52px; background: #fff;
             border-bottom: 1px solid #E2E8F0; padding: 0 16px; z-index: 100;
           }
           .demo-main { margin-left: 0; padding: 16px 16px 90px; }
@@ -697,9 +721,10 @@ function TourOverlay({ step, index, total, onPrev, onNext, onClose }: {
       <div style={{
         position: "fixed", top: spotTop, left: spotLeft, width: spotW, height: spotH,
         borderRadius: 12, boxShadow: "0 0 0 3px rgba(13,148,136,0.9), 0 0 0 9999px rgba(15,40,70,0.55)",
-        transition: "all 0.25s ease", pointerEvents: "none",
+        transition: "top 0.3s cubic-bezier(0.4,0,0.2,1), left 0.3s cubic-bezier(0.4,0,0.2,1), width 0.3s cubic-bezier(0.4,0,0.2,1), height 0.3s cubic-bezier(0.4,0,0.2,1)",
+        willChange: "top, left, width, height", pointerEvents: "none",
       }} />
-      <div style={{ position: "fixed", top: tipTop, left: tipLeft }}>{tip}</div>
+      <div style={{ position: "fixed", top: tipTop, left: tipLeft, transition: "top 0.3s cubic-bezier(0.4,0,0.2,1), left 0.3s cubic-bezier(0.4,0,0.2,1)" }}>{tip}</div>
     </div>
   )
 }
