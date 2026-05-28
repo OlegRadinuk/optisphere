@@ -36,7 +36,7 @@ const TOUR: TourStep[] = [
   { tab: "overview", selector: "[data-tour='stat-leads']", title: "Владельцу — пульс клиники с утра", text: "Новые пациенты, диалоги, конверсия в запись — цифры собираются сами, без таблиц. Сразу видно: окупается ли реклама и растёт ли поток." },
   { tab: "overview", selector: "[data-tour='night-insight']", title: "Здесь прячутся ваши деньги", text: "Треть обращений приходит ночью и в выходные, когда регистратура не работает. Ассистент отвечает мгновенно и берёт контакт — иначе человек уходит к соседям. Один имплант окупает панель на год вперёд." },
   { tab: "leads", selector: "[data-tour='lead-0']", title: "Администратору — ни одной потерянной заявки", text: "Имя, услуга, телефон и статус в одном списке. Нажал на номер — позвонил. Видно, кто ещё не обработан, — ничего не тонет в мессенджерах и стикерах на мониторе." },
-  { tab: "calendar", selector: "[data-tour='calendar']", title: "Запись, которую не страшно вести", text: "Перетащите приём мышкой или коснитесь записи и выберите время — перенос за секунду, без зачёркиваний. Весь день виден сразу, а «+ Запись» добавляет пациента в пару кликов." },
+  { tab: "calendar", selector: "[data-tour='calendar']", title: "Запись, которую не страшно вести", text: "Вся неделя по дням и часам перед глазами. Перетащите приём мышкой или коснитесь записи и выберите день и время — перенос за секунду, без зачёркиваний. «+ Запись» добавляет пациента в пару кликов." },
   { tab: "chats", selector: "[data-tour='chat-0']", title: "Вы знаете о пациенте до звонка", text: "Вся переписка с ассистентом сохраняется. Администратор перезванивает, уже зная, что человека волнует и на какую сумму он рассчитывает, — разговор теплее и короче. Нажмите, чтобы раскрыть диалог." },
   { tab: "doctors", selector: "[data-tour='doctor-0']", title: "Врачи и график — под рукой", text: "Кто принимает и в какие дни — настраивается в один тап. Когда график меняется, администратор не путается, на кого записывать. Нажмите на день — он включится или выключится." },
   { tab: "overview", title: "Это будет работать на вас 24/7", text: "У вашей клиники будет так же — свой логотип, свои врачи, реальные пациенты. Владельцу — больше записей и прозрачность, администратору — спокойная смена без хаоса. Запуск за пару дней." },
@@ -48,9 +48,10 @@ const MoonIcon = ({ size = 14, color = "currentColor" }: { size?: number; color?
   </svg>
 )
 
-const PlayIcon = ({ size = 15, color = "currentColor" }: { size?: number; color?: string }) => (
+const PauseIcon = ({ size = 14, color = "currentColor" }: { size?: number; color?: string }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill={color} style={{ flexShrink: 0 }}>
-    <path d="M8 5v14l11-7z" />
+    <rect x="6" y="5" width="4" height="14" rx="1" />
+    <rect x="14" y="5" width="4" height="14" rx="1" />
   </svg>
 )
 
@@ -109,13 +110,18 @@ const DOCTORS = [
 ]
 const DAY_LABELS = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
 
-interface Appt { id: number; time: string; dur: number; patient: string; service: string; doctor: string; color: string }
+interface Appt { id: number; day: number; time: string; dur: number; patient: string; service: string; doctor: string; color: string }
 const APPTS: Appt[] = [
-  { id: 1, time: "09:00", dur: 30, patient: "Ольга П.", service: "Чистка", doctor: "Гигиенист", color: "#0891b2" },
-  { id: 2, time: "10:30", dur: 60, patient: "Сергей В.", service: "Кариес", doctor: "Терапевт", color: "#16a34a" },
-  { id: 3, time: "12:00", dur: 60, patient: "Марина К.", service: "Имплант — консультация", doctor: "Ураков А.В.", color: PRIMARY },
-  { id: 4, time: "14:30", dur: 45, patient: "Ирина М.", service: "Коронка", doctor: "Ортопед", color: "#9333ea" },
-  { id: 5, time: "16:00", dur: 90, patient: "Алексей Д.", service: "Брекеты", doctor: "Ортодонт", color: "#d97706" },
+  { id: 1, day: 0, time: "09:00", dur: 30, patient: "Ольга П.", service: "Чистка", doctor: "Гигиенист", color: "#0891b2" },
+  { id: 2, day: 0, time: "10:30", dur: 60, patient: "Сергей В.", service: "Кариес", doctor: "Терапевт", color: "#16a34a" },
+  { id: 3, day: 1, time: "12:00", dur: 60, patient: "Марина К.", service: "Имплант — консультация", doctor: "Ураков А.В.", color: PRIMARY },
+  { id: 4, day: 1, time: "15:30", dur: 45, patient: "Ирина М.", service: "Коронка", doctor: "Ортопед", color: "#9333ea" },
+  { id: 5, day: 2, time: "16:00", dur: 90, patient: "Алексей Д.", service: "Брекеты", doctor: "Ортодонт", color: "#d97706" },
+  { id: 6, day: 3, time: "09:30", dur: 60, patient: "Дмитрий Л.", service: "Консультация", doctor: "Ураков А.В.", color: PRIMARY },
+  { id: 7, day: 3, time: "13:00", dur: 30, patient: "Анна С.", service: "Профгигиена", doctor: "Гигиенист", color: "#0891b2" },
+  { id: 8, day: 4, time: "11:00", dur: 60, patient: "Павел Р.", service: "Кариес", doctor: "Терапевт", color: "#16a34a" },
+  { id: 9, day: 4, time: "16:30", dur: 45, patient: "Елена В.", service: "Отбеливание", doctor: "Гигиенист", color: "#0891b2" },
+  { id: 10, day: 5, time: "10:00", dur: 90, patient: "Игорь Т.", service: "Имплантация", doctor: "Ураков А.В.", color: PRIMARY },
 ]
 
 const ACTIVITY = [3, 5, 4, 7, 6, 9, 5, 8, 11, 7, 10, 6, 9, 14]
@@ -180,7 +186,7 @@ export default function DemoPage() {
           textAlign: "center",
         }}>
           <span style={{ fontSize: 13.5, fontWeight: 500, display: "inline-flex", alignItems: "center", gap: 7 }}>
-            <PlayIcon size={14} color="#fff" />
+            <PauseIcon size={14} color="#fff" />
             Это <b>демо</b>. У вашей клиники будет так же — со своим логотипом и реальными заявками пациентов.
           </span>
           <a href={CONTACT_URL} style={{
@@ -458,7 +464,9 @@ function toTime(min: number) { return `${String(Math.floor(min / 60)).padStart(2
 
 let demoApptSeq = 100
 
-const DEFAULT_HINT = "Перетащите запись мышкой или коснитесь её и выберите время — расписание обновится"
+const DEFAULT_HINT = "Перетащите запись мышкой или коснитесь её и выберите день и время — расписание обновится"
+const TIME_W = 46     // px ширина колонки с часами
+const DAY_MINW = 92   // px минимальная ширина колонки дня
 
 function Calendar({ card, h1, sub }: { card: React.CSSProperties; h1: React.CSSProperties; sub: React.CSSProperties }) {
   const [appts, setAppts] = useState<Appt[]>(APPTS)
@@ -469,37 +477,41 @@ function Calendar({ card, h1, sub }: { card: React.CSSProperties; h1: React.CSSP
   const hours = Array.from({ length: CAL_END - CAL_START }, (_, i) => CAL_START + i)
   const totalH = (CAL_END - CAL_START) * SLOT_H
 
-  function moveTo(id: number, hour: number, half: boolean) {
+  // Неделя с понедельника, относительно сегодня
+  const { weekDates, todayIdx } = (() => {
+    const today = new Date()
+    const dow = (today.getDay() + 6) % 7 // 0 = Пн
+    const monday = new Date(today)
+    monday.setDate(today.getDate() - dow)
+    const dates = Array.from({ length: 7 }, (_, i) => {
+      const d = new Date(monday); d.setDate(monday.getDate() + i); return d.getDate()
+    })
+    return { weekDates: dates, todayIdx: dow }
+  })()
+
+  function moveTo(id: number, day: number, hour: number, half: boolean) {
     const newMin = hour * 60 + (half ? 30 : 0)
-    setAppts((prev) => prev.map((a) => a.id === id ? { ...a, time: toTime(newMin) } : a))
+    setAppts((prev) => prev.map((a) => a.id === id ? { ...a, day, time: toTime(newMin) } : a))
     setSelectedId(null)
     setHint("Готово — запись перенесена. В вашей версии это сразу видит регистратура.")
   }
 
-  // Tap interaction (works on touch where drag-n-drop не работает):
-  // 1-й тап по записи — выбрать; тап по времени — перенести.
+  // Tap-взаимодействие (работает на тач, где drag-n-drop не срабатывает):
+  // 1-й тап по записи — выбрать; тап по ячейке дня/времени — перенести.
   function tapAppt(id: number) {
     setSelectedId((cur) => {
       const next = cur === id ? null : id
-      setHint(next != null ? "Теперь коснитесь нужного времени в расписании" : DEFAULT_HINT)
+      setHint(next != null ? "Теперь коснитесь нужной ячейки — день и время" : DEFAULT_HINT)
       return next
     })
   }
-  function tapSlot(hour: number, half: boolean) {
-    if (selectedId != null) moveTo(selectedId, hour, half)
+  function tapSlot(day: number, hour: number, half: boolean) {
+    if (selectedId != null) moveTo(selectedId, day, hour, half)
   }
 
   function addDemo() {
-    const used = new Set(appts.map((a) => a.time))
-    let slot = "11:30"
-    for (let h = CAL_START; h < CAL_END; h++) {
-      for (const m of ["00", "30"]) {
-        const t = `${String(h).padStart(2, "0")}:${m}`
-        if (!used.has(t)) { slot = t; break }
-      }
-    }
-    setAppts((prev) => [...prev, { id: ++demoApptSeq, time: slot, dur: 30, patient: "Новый пациент", service: "Консультация", doctor: "Врач", color: "#0d9488" }])
-    setHint("Запись добавлена. Перетащите её или коснитесь, затем выберите время.")
+    setAppts((prev) => [...prev, { id: ++demoApptSeq, day: todayIdx, time: "11:30", dur: 30, patient: "Новый пациент", service: "Консультация", doctor: "Врач", color: "#0d9488" }])
+    setHint("Запись добавлена сегодня в 11:30. Перетащите её или коснитесь, затем выберите ячейку.")
   }
 
   return (
@@ -507,7 +519,7 @@ function Calendar({ card, h1, sub }: { card: React.CSSProperties; h1: React.CSSP
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 10 }}>
         <div>
           <h1 style={h1}>Запись</h1>
-          <p style={sub}>Расписание приёмов на сегодня</p>
+          <p style={sub}>Расписание приёмов на неделю</p>
         </div>
         <button data-tour="add-appt" onClick={addDemo} style={{ background: PRIMARY, color: "#fff", border: "none", borderRadius: 10, padding: "9px 16px", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "inherit", boxShadow: "0 2px 8px rgba(13,148,136,0.3)" }}>+ Запись</button>
       </div>
@@ -517,55 +529,86 @@ function Calendar({ card, h1, sub }: { card: React.CSSProperties; h1: React.CSSP
         <span style={{ color: "#475569" }}>{hint}</span>
       </div>
 
-      <div data-tour="calendar" style={{ ...card, padding: "8px 8px 8px 0", overflow: "hidden" }}>
-        <div style={{ position: "relative", height: totalH }}>
-          {/* hour grid + drop zones */}
-          {hours.map((h) => (
-            <div key={h}>
-              {[0, 1].map((half) => (
-                <div
-                  key={half}
-                  onDragOver={(e) => { e.preventDefault(); (e.currentTarget as HTMLElement).style.background = "rgba(13,148,136,0.07)" }}
-                  onDragLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "" }}
-                  onDrop={(e) => { e.preventDefault(); (e.currentTarget as HTMLElement).style.background = ""; if (dragId != null) moveTo(dragId, h, half === 1) }}
-                  onClick={() => tapSlot(h, half === 1)}
-                  style={{ position: "absolute", left: 56, right: 8, top: (h - CAL_START) * SLOT_H + half * (SLOT_H / 2), height: SLOT_H / 2, borderTop: half === 0 ? "1px solid #F1F5F9" : "1px dashed #F1F5F9", background: selectedId != null ? "rgba(13,148,136,0.04)" : undefined, cursor: selectedId != null ? "pointer" : "default" }}
-                />
-              ))}
-              <span style={{ position: "absolute", left: 10, top: (h - CAL_START) * SLOT_H + 3, fontSize: 11, color: "#94A3B8", fontFamily: "var(--font-oxanium)" }}>{String(h).padStart(2, "0")}:00</span>
+      <div data-tour="calendar" style={{ ...card, padding: 0, overflow: "hidden" }}>
+        <div style={{ overflowX: "auto" }}>
+          <div style={{ minWidth: TIME_W + DAY_MINW * 7 }}>
+            {/* Шапка с днями недели */}
+            <div style={{ display: "flex", borderBottom: "1px solid #E2E8F0", position: "sticky", top: 0, background: "#fff", zIndex: 2 }}>
+              <div style={{ width: TIME_W, flexShrink: 0 }} />
+              {DAY_LABELS.map((lbl, di) => {
+                const isToday = di === todayIdx
+                return (
+                  <div key={di} style={{ flex: 1, minWidth: DAY_MINW, textAlign: "center", padding: "8px 4px", borderLeft: "1px solid #F1F5F9" }}>
+                    <div style={{ fontSize: 11, color: isToday ? PRIMARY : "#94A3B8", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.4px" }}>{lbl}</div>
+                    <div style={{
+                      fontFamily: "var(--font-oxanium)", fontSize: 15, fontWeight: 700, marginTop: 2,
+                      color: isToday ? "#fff" : "#0F172A",
+                      background: isToday ? PRIMARY : "transparent", borderRadius: 9999,
+                      width: 26, height: 26, lineHeight: "26px", margin: "2px auto 0",
+                    }}>{weekDates[di]}</div>
+                  </div>
+                )
+              })}
             </div>
-          ))}
-          {/* appointments */}
-          {appts.map((a) => {
-            const top = ((toMin(a.time) - CAL_START * 60) / 60) * SLOT_H
-            const height = Math.max(26, (a.dur / 60) * SLOT_H - 3)
-            const dragging = dragId === a.id
-            const selected = selectedId === a.id
-            return (
-              <div
-                key={a.id}
-                draggable
-                onDragStart={() => setDragId(a.id)}
-                onDragEnd={() => setDragId(null)}
-                onClick={() => tapAppt(a.id)}
-                style={{
-                  position: "absolute", left: 56, right: 8, top, height,
-                  background: `${a.color}14`,
-                  border: `1.5px solid ${a.color}`, borderLeft: `3px solid ${a.color}`,
-                  boxShadow: selected ? `0 0 0 2px #fff, 0 0 0 4px ${a.color}` : undefined,
-                  borderRadius: 8, padding: "4px 10px", boxSizing: "border-box", cursor: "pointer",
-                  opacity: dragging ? 0.4 : 1, overflow: "hidden", userSelect: "none",
-                  transition: "box-shadow 0.15s ease",
-                }}
-              >
-                <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                  <span style={{ fontFamily: "var(--font-oxanium)", fontSize: 12.5, fontWeight: 700, color: a.color }}>{a.time}</span>
-                  <span style={{ fontSize: 13, fontWeight: 600, color: "#0F172A", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{a.patient}</span>
-                </div>
-                {height > 34 && <div style={{ fontSize: 11.5, color: "#64748B", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{a.service} · {a.doctor}</div>}
+
+            {/* Тело: часы + колонки дней */}
+            <div style={{ display: "flex", position: "relative", height: totalH }}>
+              {/* колонка часов */}
+              <div style={{ width: TIME_W, flexShrink: 0, position: "relative" }}>
+                {hours.map((h) => (
+                  <span key={h} style={{ position: "absolute", left: 8, top: (h - CAL_START) * SLOT_H + 3, fontSize: 11, color: "#94A3B8", fontFamily: "var(--font-oxanium)" }}>{String(h).padStart(2, "0")}:00</span>
+                ))}
               </div>
-            )
-          })}
+
+              {/* колонки дней */}
+              {DAY_LABELS.map((_, di) => (
+                <div key={di} style={{ flex: 1, minWidth: DAY_MINW, position: "relative", borderLeft: "1px solid #F1F5F9", background: di === todayIdx ? "rgba(13,148,136,0.025)" : undefined }}>
+                  {/* drop-зоны по получасам */}
+                  {hours.map((h) => (
+                    [0, 1].map((half) => (
+                      <div
+                        key={`${h}-${half}`}
+                        onDragOver={(e) => { e.preventDefault(); (e.currentTarget as HTMLElement).style.background = "rgba(13,148,136,0.1)" }}
+                        onDragLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "" }}
+                        onDrop={(e) => { e.preventDefault(); (e.currentTarget as HTMLElement).style.background = ""; if (dragId != null) moveTo(dragId, di, h, half === 1) }}
+                        onClick={() => tapSlot(di, h, half === 1)}
+                        style={{ position: "absolute", left: 0, right: 0, top: (h - CAL_START) * SLOT_H + half * (SLOT_H / 2), height: SLOT_H / 2, borderTop: half === 0 ? "1px solid #F1F5F9" : "1px dashed #F4F6F9", cursor: selectedId != null ? "pointer" : "default" }}
+                      />
+                    ))
+                  ))}
+                  {/* записи этого дня */}
+                  {appts.filter((a) => a.day === di).map((a) => {
+                    const top = ((toMin(a.time) - CAL_START * 60) / 60) * SLOT_H
+                    const height = Math.max(24, (a.dur / 60) * SLOT_H - 3)
+                    const dragging = dragId === a.id
+                    const selected = selectedId === a.id
+                    return (
+                      <div
+                        key={a.id}
+                        draggable
+                        onDragStart={() => setDragId(a.id)}
+                        onDragEnd={() => setDragId(null)}
+                        onClick={(e) => { e.stopPropagation(); tapAppt(a.id) }}
+                        style={{
+                          position: "absolute", left: 2, right: 2, top, height,
+                          background: `${a.color}1a`,
+                          border: `1px solid ${a.color}`, borderLeft: `3px solid ${a.color}`,
+                          boxShadow: selected ? `0 0 0 2px #fff, 0 0 0 4px ${a.color}` : undefined,
+                          borderRadius: 6, padding: "2px 6px", boxSizing: "border-box", cursor: "pointer",
+                          opacity: dragging ? 0.4 : 1, overflow: "hidden", userSelect: "none", zIndex: 1,
+                          transition: "box-shadow 0.15s ease",
+                        }}
+                      >
+                        <div style={{ fontFamily: "var(--font-oxanium)", fontSize: 11, fontWeight: 700, color: a.color }}>{a.time}</div>
+                        <div style={{ fontSize: 11.5, fontWeight: 600, color: "#0F172A", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{a.patient}</div>
+                        {height > 44 && <div style={{ fontSize: 10.5, color: "#64748B", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{a.service}</div>}
+                      </div>
+                    )
+                  })}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
