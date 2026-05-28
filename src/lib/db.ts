@@ -466,6 +466,18 @@ export function getDoctors(clientId: number): Doctor[] {
     .all(clientId) as Doctor[]
 }
 
+export function createDoctor(
+  clientId: number,
+  data: { name: string; specialty?: string; branch?: number; schedule?: string }
+): Doctor {
+  const result = getDb()
+    .prepare(
+      "INSERT INTO doctors (client_id, name, specialty, branch, schedule, active) VALUES (?, ?, ?, ?, ?, 1)"
+    )
+    .run(clientId, data.name, data.specialty ?? "", data.branch ?? 1, data.schedule ?? DEFAULT_SCHEDULE)
+  return getDb().prepare("SELECT * FROM doctors WHERE id = ?").get(result.lastInsertRowid) as Doctor
+}
+
 const UPDATABLE_DOCTOR_FIELDS = new Set(["name", "specialty", "branch", "schedule", "active"])
 
 export function updateDoctor(

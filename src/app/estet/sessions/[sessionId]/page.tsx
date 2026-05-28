@@ -106,7 +106,7 @@ export default function EstetSessionDetailPage({ params }: { params: Promise<{ s
               <span style={{ fontSize: 13, color: "#0F172A", fontWeight: 500 }}>{messageCount}</span>
             </div>
             <div>
-              <span style={{ fontSize: 12, color: "#94A3B8" }}>Лид: </span>
+              <span style={{ fontSize: 12, color: "#94A3B8" }}>Клиент: </span>
               <span style={{ fontSize: 13, color: data?.lead ? "#16a34a" : "#bbb", fontWeight: 500 }}>
                 {data?.lead ? "Оставлен" : "Не оставлен"}
               </span>
@@ -121,7 +121,7 @@ export default function EstetSessionDetailPage({ params }: { params: Promise<{ s
                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                   <circle cx="12" cy="7" r="4"/>
                 </svg>
-                Лид из этого диалога
+                Клиент из этого диалога
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: "8px 16px", alignItems: "center" }}>
                 <span style={{ color: "#94A3B8", fontSize: 13 }}>Имя:</span>
@@ -150,22 +150,22 @@ export default function EstetSessionDetailPage({ params }: { params: Promise<{ s
             ) : (
               <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                 {data?.messages.map((msg, idx) => {
-                  const isUser = msg.role === "user"
+                  const isBot = msg.role !== "user"
                   return (
-                    <div key={idx} style={{ alignSelf: isUser ? "flex-end" : "flex-start", maxWidth: "70%", display: "flex", flexDirection: "column" }}>
+                    <div key={idx} style={{ alignSelf: isBot ? "flex-end" : "flex-start", maxWidth: "70%", display: "flex", flexDirection: "column" }}>
                       <div style={{
-                        background: isUser ? PRIMARY : "#F1F5F9",
-                        border: isUser ? "none" : "1px solid #E2E8F0",
-                        borderRadius: isUser ? "12px 12px 2px 12px" : "12px 12px 12px 2px",
+                        background: isBot ? PRIMARY : "#F1F5F9",
+                        border: isBot ? "none" : "1px solid #E2E8F0",
+                        borderRadius: isBot ? "12px 12px 2px 12px" : "12px 12px 12px 2px",
                         padding: "10px 14px",
-                        color: isUser ? "#fff" : "#0F172A",
+                        color: isBot ? "#fff" : "#0F172A",
                         fontSize: 14,
                         lineHeight: 1.5,
                         wordBreak: "break-word",
                       }}>
                         {msg.content}
                       </div>
-                      <span style={{ fontSize: 11, color: "#bbb", marginTop: 4, textAlign: isUser ? "right" : "left" }}>
+                      <span style={{ fontSize: 11, color: "#bbb", marginTop: 4, textAlign: isBot ? "right" : "left" }}>
                         {formatTime(msg.created_at)}
                       </span>
                     </div>

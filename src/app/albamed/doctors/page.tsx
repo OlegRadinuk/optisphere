@@ -30,12 +30,24 @@ const BRANCHES: Record<number, string> = {
   2: "ул. Киевская 153А",
 }
 
+function normalizeDoctor(raw: unknown): Doctor {
+  const d = raw as { id: number; name: string; specialty: string; branch: number; schedule: string | Record<DayKey, boolean>; active: number | boolean }
+  return {
+    id: d.id, name: d.name, specialty: d.specialty, branch: d.branch,
+    schedule: typeof d.schedule === "string" ? JSON.parse(d.schedule) : d.schedule,
+    active: !!d.active,
+  }
+}
+
 export default function DoctorsPage() {
   const { showToast } = useToast()
   const [doctors, setDoctors] = useState<Doctor[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [saving, setSaving] = useState<Set<string>>(new Set())
+  const [adding, setAdding] = useState(false)
+  const [form, setForm] = useState({ name: "", specialty: "", branch: 1 })
+  const [creating, setCreating] = useState(false)
 
   const loadDoctors = useCallback(async () => {
     setLoading(true)
@@ -43,14 +55,35 @@ export default function DoctorsPage() {
     try {
       const r = await fetch("/api/albamed/doctors")
       if (!r.ok) throw new Error("Ошибка загрузки")
-      const { doctors: d } = await r.json() as { doctors: Doctor[] }
-      setDoctors(d)
+      const { doctors: d } = await r.json() as { doctors: unknown[] }
+      setDoctors(d.map(normalizeDoctor))
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : "Ошибка загрузки. Обновите страницу.")
     } finally {
       setLoading(false)
     }
   }, [])
+
+  async function handleCreate() {
+    if (!form.name.trim()) return
+    setCreating(true)
+    try {
+      const r = await fetch("/api/albamed/doctors", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: form.name.trim(), specialty: form.specialty.trim(), branch: form.branch }),
+      })
+      if (!r.ok) throw new Error()
+      const { doctor } = await r.json() as { doctor: unknown }
+      setDoctors((prev) => [...prev, normalizeDoctor(doctor)])
+      setForm({ name: "", specialty: "", branch: 1 })
+      setAdding(false)
+      showToast("success", "Врач добавлен")
+    } catch {
+      showToast("error", "Не удалось добавить врача")
+    } finally {
+      setCreating(false)
+    }
+  }
 
   useEffect(() => { loadDoctors() }, [loadDoctors])
 
@@ -105,8 +138,40 @@ export default function DoctorsPage() {
 
   return (
     <div>
-      <h1 style={{ fontSize: 22, fontWeight: 700, color: "#1a1a1a", margin: "0 0 6px" }}>Врачи</h1>
-      <p style={{ fontSize: 14, color: "#999", margin: "0 0 20px" }}>Расписание и статус активности</p>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12, flexWrap: "wrap", marginBottom: 20 }}>
+        <div>
+          <h1 style={{ fontSize: 22, fontWeight: 700, color: "#1a1a1a", margin: "0 0 6px" }}>Врачи</h1>
+          <p style={{ fontSize: 14, color: "#999", margin: 0 }}>Расписание и статус активности</p>
+        </div>
+        <button onClick={() => setAdding(true)} style={{ background: "#f47920", color: "#fff", border: "none", borderRadius: 10, padding: "9px 16px", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "inherit", boxShadow: "0 2px 8px rgba(244,121,32,0.3)", whiteSpace: "nowrap" }}>+ Врач</button>
+      </div>
+
+      {adding && (
+        <div onClick={() => !creating && setAdding(false)} style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.4)", zIndex: 1000, display: "flex", alignItems: "flex-end", justifyContent: "center" }}>
+          <div onClick={(e) => e.stopPropagation()} style={{ background: "#fff", borderRadius: "16px 16px 0 0", padding: 24, width: "100%", maxWidth: 460, boxShadow: "0 -4px 32px rgba(0,0,0,0.18)" }}>
+            <div style={{ width: 36, height: 4, background: "#e0e0e0", borderRadius: 2, margin: "0 auto 18px" }} />
+            <h2 style={{ fontSize: 18, fontWeight: 700, color: "#1a1a1a", margin: "0 0 16px" }}>Новый врач</h2>
+            <label style={{ fontSize: 12, color: "#999", display: "block", marginBottom: 4 }}>ФИО</label>
+            <input autoFocus value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} placeholder="Иванов Иван Иванович"
+              style={{ width: "100%", border: "1px solid #e8e8e8", borderRadius: 8, padding: "10px 12px", fontSize: 16, outline: "none", fontFamily: "inherit", boxSizing: "border-box", marginBottom: 12 }} />
+            <label style={{ fontSize: 12, color: "#999", display: "block", marginBottom: 4 }}>Специальность</label>
+            <input value={form.specialty} onChange={(e) => setForm((f) => ({ ...f, specialty: e.target.value }))} placeholder="Терапевт"
+              style={{ width: "100%", border: "1px solid #e8e8e8", borderRadius: 8, padding: "10px 12px", fontSize: 16, outline: "none", fontFamily: "inherit", boxSizing: "border-box", marginBottom: 12 }} />
+            <label style={{ fontSize: 12, color: "#999", display: "block", marginBottom: 4 }}>Филиал</label>
+            <select value={form.branch} onChange={(e) => setForm((f) => ({ ...f, branch: Number(e.target.value) }))}
+              style={{ width: "100%", border: "1px solid #e8e8e8", borderRadius: 8, padding: "10px 12px", fontSize: 16, outline: "none", fontFamily: "inherit", boxSizing: "border-box", marginBottom: 18, background: "#fff", cursor: "pointer" }}>
+              {Object.entries(BRANCHES).map(([id, name]) => <option key={id} value={id}>{name}</option>)}
+            </select>
+            <div style={{ display: "flex", gap: 8 }}>
+              <button onClick={handleCreate} disabled={creating || !form.name.trim()} style={{ flex: 1, padding: "12px 0", background: "#f47920", color: "#fff", border: "none", borderRadius: 10, fontSize: 15, fontWeight: 600, cursor: creating || !form.name.trim() ? "not-allowed" : "pointer", opacity: creating || !form.name.trim() ? 0.6 : 1, fontFamily: "inherit" }}>
+                {creating ? "Сохранение..." : "Добавить"}
+              </button>
+              <button onClick={() => setAdding(false)} disabled={creating} style={{ padding: "12px 18px", background: "#fff", color: "#555", border: "1px solid #e8e8e8", borderRadius: 10, fontSize: 14, cursor: "pointer", fontFamily: "inherit" }}>Отмена</button>
+            </div>
+            <p style={{ fontSize: 12, color: "#999", margin: "12px 0 0", textAlign: "center" }}>График по умолчанию — пн–пт. Настроите после добавления.</p>
+          </div>
+        </div>
+      )}
 
       {errorBlock}
 

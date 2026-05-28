@@ -101,7 +101,7 @@ export default function EstetSessionsPage() {
             <table style={{ width: "100%", borderCollapse: "collapse" }}>
               <thead>
                 <tr style={{ background: "#F1F5F9", borderBottom: "1px solid #E2E8F0" }}>
-                  {["Дата", "Первое сообщение", "Сообщений", "Лид", ""].map((col, i) => (
+                  {["Дата", "Первое сообщение", "Сообщений", "Клиент", ""].map((col, i) => (
                     <th key={i} style={{ padding: "10px 16px", textAlign: "left", color: "#94A3B8", fontSize: 12, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.04em", whiteSpace: "nowrap" }}>
                       {col}
                     </th>

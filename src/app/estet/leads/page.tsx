@@ -132,7 +132,7 @@ export default function EstetLeadsPage() {
 
       <div className="es-leads-search-wrap">
         <div>
-          <h1 style={{ fontFamily: "var(--font-oxanium)", fontSize: 22, fontWeight: 700, letterSpacing: "-0.3px", color: "#0F172A", margin: "0 0 4px" }}>Лиды</h1>
+          <h1 style={{ fontFamily: "var(--font-oxanium)", fontSize: 22, fontWeight: 700, letterSpacing: "-0.3px", color: "#0F172A", margin: "0 0 4px" }}>Клиенты</h1>
           <p style={{ fontSize: 14, color: "#94A3B8", margin: 0 }}>Заявки от пациентов через бота Элю</p>
         </div>
         <div className="es-leads-search-box">
@@ -226,7 +226,7 @@ export default function EstetLeadsPage() {
                     ))
                   : leads.length === 0
                   ? (
-                      <tr><td colSpan={6} style={{ padding: "50px 16px", textAlign: "center", color: "#bbb", fontSize: 14 }}>Лидов нет</td></tr>
+                      <tr><td colSpan={6} style={{ padding: "50px 16px", textAlign: "center", color: "#bbb", fontSize: 14 }}>Клиентов нет</td></tr>
                     )
                   : leads.map((lead, idx) => (
                       <tr key={lead.id} style={{ transition: "background 150ms" }}
@@ -286,7 +286,7 @@ export default function EstetLeadsPage() {
                 </div>
               ))
             : leads.length === 0
-            ? <div style={{ padding: "40px 0", textAlign: "center", color: "#bbb", fontSize: 14 }}>Лидов нет</div>
+            ? <div style={{ padding: "40px 0", textAlign: "center", color: "#bbb", fontSize: 14 }}>Клиентов нет</div>
             : leads.map((lead) => (
                 <div key={lead.id} className="es-card"
                   onClick={() => { if (lead.session_id) router.push(`/estet/sessions/${lead.session_id}`) }}

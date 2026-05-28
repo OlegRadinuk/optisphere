@@ -194,7 +194,7 @@ export default function SessionsPage() {
             <table style={{ width: "100%", borderCollapse: "collapse" }}>
               <thead>
                 <tr style={{ background: "#fafafa", borderBottom: "1px solid #e8e8e8" }}>
-                  {["Дата", "Первое сообщение", "Сообщений", "Лид", ""].map((col, i) => (
+                  {["Дата", "Первое сообщение", "Сообщений", "Клиент", ""].map((col, i) => (
                     <th key={i} style={{ padding: "10px 16px", textAlign: "left", color: "#999", fontSize: 12, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.04em", whiteSpace: "nowrap" }}>
                       {col}
                     </th>

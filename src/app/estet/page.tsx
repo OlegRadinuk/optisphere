@@ -134,7 +134,7 @@ export default function EstetOverviewPage() {
       {/* Stats grid */}
       <div className="es-stat-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 16, marginBottom: 24 }}>
         <StatCard
-          label="Новых лидов"
+          label="Новых клиентов"
           value={stats?.leadsNew ?? 0}
           loading={loadingStats}
           accent
@@ -145,7 +145,7 @@ export default function EstetOverviewPage() {
           }
         />
         <StatCard
-          label="Всего лидов"
+          label="Всего клиентов"
           value={stats?.leadsTotal ?? 0}
           loading={loadingStats}
           icon={
@@ -192,7 +192,7 @@ export default function EstetOverviewPage() {
                     borderRadius: "3px 3px 0 0",
                     opacity: 0.85,
                   }}
-                  title={`${d.date}: ${d.count} лидов`}
+                  title={`${d.date}: ${d.count} клиентов`}
                 />
                 <span style={{ fontSize: 9, color: "#bbb", whiteSpace: "nowrap" }}>
                   {new Date(d.date).toLocaleDateString("ru-RU", { day: "2-digit", month: "2-digit" })}
@@ -206,9 +206,9 @@ export default function EstetOverviewPage() {
       {/* Recent leads */}
       <div style={{ background: "#fff", border: "1px solid #E2E8F0", borderRadius: 10, overflow: "hidden", boxShadow: "0 1px 2px rgba(15,23,42,0.04), 0 4px 12px rgba(15,23,42,0.05)" }}>
         <div style={{ padding: "16px 20px", borderBottom: "1px solid #F1F5F9", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <span style={{ fontSize: 14, fontWeight: 600, color: "#0F172A" }}>Последние лиды</span>
+          <span style={{ fontSize: 14, fontWeight: 600, color: "#0F172A" }}>Последние клиенты</span>
           <Link href="/estet/leads" style={{ fontSize: 13, color: PRIMARY, textDecoration: "none", fontWeight: 500 }}>
-            Все лиды →
+            Все клиенты →
           </Link>
         </div>
 
@@ -239,7 +239,7 @@ export default function EstetOverviewPage() {
                 ? (
                     <tr>
                       <td colSpan={4} style={{ padding: "40px 16px", textAlign: "center", color: "#bbb" }}>
-                        Лидов пока нет
+                        Клиентов пока нет
                       </td>
                     </tr>
                   )

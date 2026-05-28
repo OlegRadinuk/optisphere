@@ -19,12 +19,12 @@ const ICONS: Record<Tab, React.ReactNode> = {
   leads: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>,
   calendar: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>,
   chats: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>,
-  doctors: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 0h4m-4 0H8"/></svg>,
+  doctors: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6 6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.3.3 0 1 0 .3.3"/><path d="M8 15v1a6 6 0 0 0 6 6 6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/></svg>,
 }
 
 const TABS: { id: Tab; label: string }[] = [
   { id: "overview", label: "Обзор" },
-  { id: "leads", label: "Лиды" },
+  { id: "leads", label: "Клиенты" },
   { id: "calendar", label: "Запись" },
   { id: "chats", label: "Диалоги" },
   { id: "doctors", label: "Врачи" },
@@ -32,14 +32,14 @@ const TABS: { id: Tab; label: string }[] = [
 
 interface TourStep { tab: Tab; selector?: string; title: string; text: string }
 const TOUR: TourStep[] = [
-  { tab: "overview", title: "Привет! Давайте я всё покажу", text: "Это панель управления вашей клиникой. Займёт минуту — а дальше листайте сами, тут всё кликается и работает по-настоящему." },
-  { tab: "overview", selector: "[data-tour='stat-leads']", title: "С утра видно весь пульс клиники", text: "Сколько заявок, диалогов и какая конверсия — цифры собираются сами. Открыли утром и сразу в курсе." },
-  { tab: "overview", selector: "[data-tour='night-insight']", title: "А вот это — ваши деньги", text: "Пациенты пишут ночью и в выходные, когда регистратура спит. Ассистент их ловит и держит — иначе они ушли бы к соседям." },
-  { tab: "leads", selector: "[data-tour='lead-0']", title: "Ни одна заявка не теряется", text: "Имя, услуга, телефон, статус — всё в одном месте. Нажал на номер и сразу звонишь. Никаких блокнотов и стикеров." },
-  { tab: "calendar", selector: "[data-tour='calendar']", title: "Расписание — живое", text: "Возьмите любую запись и перетащите на другое время — прямо сейчас, попробуйте. А «+ Запись» добавит новую за секунду." },
-  { tab: "chats", selector: "[data-tour='chat-0']", title: "Вы знаете о пациенте заранее", text: "Вся переписка с ассистентом перед вами — видно, что человека волнует, ещё до звонка. Нажмите, чтобы раскрыть диалог." },
-  { tab: "doctors", selector: "[data-tour='doctor-0']", title: "Врачи и их дни", text: "Кто принимает и когда — настраивается в один тап. Нажмите на день недели — он включится или выключится." },
-  { tab: "overview", title: "Ну как вам?", text: "У вашей клиники будет ровно так же — свой логотип, свои врачи, реальные заявки пациентов. Запуск за пару дней, а дальше оно работает за вас 24/7." },
+  { tab: "overview", title: "Привет! Давайте покажу за минуту", text: "Это рабочее место клиники: владельцу — контроль и цифры, администратору — меньше рутины. Дальше листайте сами, тут всё кликается." },
+  { tab: "overview", selector: "[data-tour='stat-leads']", title: "Владельцу — пульс клиники с утра", text: "Новые пациенты, диалоги, конверсия в запись — цифры собираются сами, без таблиц. Сразу видно: окупается ли реклама и растёт ли поток." },
+  { tab: "overview", selector: "[data-tour='night-insight']", title: "Здесь прячутся ваши деньги", text: "Треть обращений приходит ночью и в выходные, когда регистратура не работает. Ассистент отвечает мгновенно и берёт контакт — иначе человек уходит к соседям. Один имплант окупает панель на год вперёд." },
+  { tab: "leads", selector: "[data-tour='lead-0']", title: "Администратору — ни одной потерянной заявки", text: "Имя, услуга, телефон и статус в одном списке. Нажал на номер — позвонил. Видно, кто ещё не обработан, — ничего не тонет в мессенджерах и стикерах на мониторе." },
+  { tab: "calendar", selector: "[data-tour='calendar']", title: "Запись, которую не страшно вести", text: "Перетащите приём мышкой или коснитесь записи и выберите время — перенос за секунду, без зачёркиваний. Весь день виден сразу, а «+ Запись» добавляет пациента в пару кликов." },
+  { tab: "chats", selector: "[data-tour='chat-0']", title: "Вы знаете о пациенте до звонка", text: "Вся переписка с ассистентом сохраняется. Администратор перезванивает, уже зная, что человека волнует и на какую сумму он рассчитывает, — разговор теплее и короче. Нажмите, чтобы раскрыть диалог." },
+  { tab: "doctors", selector: "[data-tour='doctor-0']", title: "Врачи и график — под рукой", text: "Кто принимает и в какие дни — настраивается в один тап. Когда график меняется, администратор не путается, на кого записывать. Нажмите на день — он включится или выключится." },
+  { tab: "overview", title: "Это будет работать на вас 24/7", text: "У вашей клиники будет так же — свой логотип, свои врачи, реальные пациенты. Владельцу — больше записей и прозрачность, администратору — спокойная смена без хаоса. Запуск за пару дней." },
 ]
 
 const MoonIcon = ({ size = 14, color = "currentColor" }: { size?: number; color?: string }) => (
@@ -78,7 +78,7 @@ const STATUS_MAP: Record<string, { label: string; bg: string; color: string; bor
 
 const CHATS = [
   {
-    name: "Марина К.", time: "23:41", tag: "Лид · имплантация",
+    name: "Марина К.", time: "23:41", tag: "Клиент · имплантация",
     msgs: [
       { role: "user", text: "Здравствуйте, сколько стоит имплант?" },
       { role: "bot", text: "Добрый вечер! Имплантация под ключ — от 38 000 ₽ за один имплант, точную сумму назовёт врач после осмотра. Подобрать вам удобное время для бесплатной консультации?" },
@@ -89,7 +89,7 @@ const CHATS = [
     ],
   },
   {
-    name: "Гость", time: "21:18", tag: "Лид · брекеты",
+    name: "Клиент", time: "21:18", tag: "Клиент · брекеты",
     msgs: [
       { role: "user", text: "брекеты ставите взрослым?" },
       { role: "bot", text: "Да, конечно. Ставим металлические, керамические и элайнеры — для взрослых это обычная практика. Хотите, запишу на консультацию ортодонта?" },
@@ -387,7 +387,7 @@ function Overview({ card, h1, sub }: { card: React.CSSProperties; h1: React.CSSP
       <p style={sub}>Что происходит в клинике прямо сейчас</p>
 
       <div className="demo-stats" style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 14, marginBottom: 20 }}>
-        <div data-tour="stat-leads"><StatCard label="Новых лидов" value="14" accent /></div>
+        <div data-tour="stat-leads"><StatCard label="Новых клиентов" value="14" accent /></div>
         <StatCard label="Всего за месяц" value="87" />
         <StatCard label="Диалогов сегодня" value="9" />
         <StatCard label="Конверсия в заявку" value="19%" />
@@ -420,7 +420,7 @@ function Overview({ card, h1, sub }: { card: React.CSSProperties; h1: React.CSSP
 function Leads({ card, h1, sub, onAction }: { card: React.CSSProperties; h1: React.CSSProperties; sub: React.CSSProperties; onAction: () => void }) {
   return (
     <div>
-      <h1 style={h1}>Лиды</h1>
+      <h1 style={h1}>Клиенты</h1>
       <p style={sub}>Каждая заявка от пациента — с контактом и услугой</p>
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
         {LEADS.map((l, i) => {
@@ -458,10 +458,13 @@ function toTime(min: number) { return `${String(Math.floor(min / 60)).padStart(2
 
 let demoApptSeq = 100
 
+const DEFAULT_HINT = "Перетащите запись мышкой или коснитесь её и выберите время — расписание обновится"
+
 function Calendar({ card, h1, sub }: { card: React.CSSProperties; h1: React.CSSProperties; sub: React.CSSProperties }) {
   const [appts, setAppts] = useState<Appt[]>(APPTS)
   const [dragId, setDragId] = useState<number | null>(null)
-  const [hint, setHint] = useState("Перетащите запись на другое время — расписание обновится")
+  const [selectedId, setSelectedId] = useState<number | null>(null)
+  const [hint, setHint] = useState(DEFAULT_HINT)
 
   const hours = Array.from({ length: CAL_END - CAL_START }, (_, i) => CAL_START + i)
   const totalH = (CAL_END - CAL_START) * SLOT_H
@@ -469,11 +472,24 @@ function Calendar({ card, h1, sub }: { card: React.CSSProperties; h1: React.CSSP
   function moveTo(id: number, hour: number, half: boolean) {
     const newMin = hour * 60 + (half ? 30 : 0)
     setAppts((prev) => prev.map((a) => a.id === id ? { ...a, time: toTime(newMin) } : a))
+    setSelectedId(null)
     setHint("Готово — запись перенесена. В вашей версии это сразу видит регистратура.")
   }
 
+  // Tap interaction (works on touch where drag-n-drop не работает):
+  // 1-й тап по записи — выбрать; тап по времени — перенести.
+  function tapAppt(id: number) {
+    setSelectedId((cur) => {
+      const next = cur === id ? null : id
+      setHint(next != null ? "Теперь коснитесь нужного времени в расписании" : DEFAULT_HINT)
+      return next
+    })
+  }
+  function tapSlot(hour: number, half: boolean) {
+    if (selectedId != null) moveTo(selectedId, hour, half)
+  }
+
   function addDemo() {
-    // find first free-ish slot
     const used = new Set(appts.map((a) => a.time))
     let slot = "11:30"
     for (let h = CAL_START; h < CAL_END; h++) {
@@ -483,7 +499,7 @@ function Calendar({ card, h1, sub }: { card: React.CSSProperties; h1: React.CSSP
       }
     }
     setAppts((prev) => [...prev, { id: ++demoApptSeq, time: slot, dur: 30, patient: "Новый пациент", service: "Консультация", doctor: "Врач", color: "#0d9488" }])
-    setHint("Запись добавлена. Перетащите её на нужное время.")
+    setHint("Запись добавлена. Перетащите её или коснитесь, затем выберите время.")
   }
 
   return (
@@ -512,7 +528,8 @@ function Calendar({ card, h1, sub }: { card: React.CSSProperties; h1: React.CSSP
                   onDragOver={(e) => { e.preventDefault(); (e.currentTarget as HTMLElement).style.background = "rgba(13,148,136,0.07)" }}
                   onDragLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "" }}
                   onDrop={(e) => { e.preventDefault(); (e.currentTarget as HTMLElement).style.background = ""; if (dragId != null) moveTo(dragId, h, half === 1) }}
-                  style={{ position: "absolute", left: 56, right: 8, top: (h - CAL_START) * SLOT_H + half * (SLOT_H / 2), height: SLOT_H / 2, borderTop: half === 0 ? "1px solid #F1F5F9" : "1px dashed #F1F5F9" }}
+                  onClick={() => tapSlot(h, half === 1)}
+                  style={{ position: "absolute", left: 56, right: 8, top: (h - CAL_START) * SLOT_H + half * (SLOT_H / 2), height: SLOT_H / 2, borderTop: half === 0 ? "1px solid #F1F5F9" : "1px dashed #F1F5F9", background: selectedId != null ? "rgba(13,148,136,0.04)" : undefined, cursor: selectedId != null ? "pointer" : "default" }}
                 />
               ))}
               <span style={{ position: "absolute", left: 10, top: (h - CAL_START) * SLOT_H + 3, fontSize: 11, color: "#94A3B8", fontFamily: "var(--font-oxanium)" }}>{String(h).padStart(2, "0")}:00</span>
@@ -523,17 +540,22 @@ function Calendar({ card, h1, sub }: { card: React.CSSProperties; h1: React.CSSP
             const top = ((toMin(a.time) - CAL_START * 60) / 60) * SLOT_H
             const height = Math.max(26, (a.dur / 60) * SLOT_H - 3)
             const dragging = dragId === a.id
+            const selected = selectedId === a.id
             return (
               <div
                 key={a.id}
                 draggable
                 onDragStart={() => setDragId(a.id)}
                 onDragEnd={() => setDragId(null)}
+                onClick={() => tapAppt(a.id)}
                 style={{
                   position: "absolute", left: 56, right: 8, top, height,
-                  background: `${a.color}14`, border: `1.5px solid ${a.color}`, borderLeft: `3px solid ${a.color}`,
-                  borderRadius: 8, padding: "4px 10px", boxSizing: "border-box", cursor: "grab",
+                  background: `${a.color}14`,
+                  border: `1.5px solid ${a.color}`, borderLeft: `3px solid ${a.color}`,
+                  boxShadow: selected ? `0 0 0 2px #fff, 0 0 0 4px ${a.color}` : undefined,
+                  borderRadius: 8, padding: "4px 10px", boxSizing: "border-box", cursor: "pointer",
                   opacity: dragging ? 0.4 : 1, overflow: "hidden", userSelect: "none",
+                  transition: "box-shadow 0.15s ease",
                 }}
               >
                 <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
@@ -568,11 +590,14 @@ function Chats({ card, h1, sub }: { card: React.CSSProperties; h1: React.CSSProp
             </button>
             {open === i && (
               <div style={{ padding: "4px 16px 16px", display: "flex", flexDirection: "column", gap: 8 }}>
-                {c.msgs.map((m, j) => (
-                  <div key={j} style={{ alignSelf: m.role === "user" ? "flex-end" : "flex-start", maxWidth: "85%", background: m.role === "user" ? "#F1F5F9" : PRIMARY_SOFT, border: `1px solid ${m.role === "user" ? "#E2E8F0" : "#99F6E4"}`, borderRadius: 12, padding: "8px 12px", fontSize: 13.5, color: "#0F172A", lineHeight: 1.45 }}>
-                    {m.text}
-                  </div>
-                ))}
+                {c.msgs.map((m, j) => {
+                  const isBot = m.role === "bot"
+                  return (
+                    <div key={j} style={{ alignSelf: isBot ? "flex-end" : "flex-start", maxWidth: "85%", background: isBot ? PRIMARY_SOFT : "#F1F5F9", border: `1px solid ${isBot ? "#99F6E4" : "#E2E8F0"}`, borderRadius: 12, padding: "8px 12px", fontSize: 13.5, color: "#0F172A", lineHeight: 1.45 }}>
+                      {m.text}
+                    </div>
+                  )
+                })}
               </div>
             )}
           </div>
@@ -587,13 +612,43 @@ function Chats({ card, h1, sub }: { card: React.CSSProperties; h1: React.CSSProp
 
 function Doctors({ card, h1, sub }: { card: React.CSSProperties; h1: React.CSSProperties; sub: React.CSSProperties }) {
   const [docs, setDocs] = useState(DOCTORS.map((d) => ({ ...d, days: [...d.days] })))
+  const [adding, setAdding] = useState(false)
+  const [form, setForm] = useState({ name: "", specialty: "" })
   const toggle = (di: number, dj: number) =>
     setDocs((prev) => prev.map((d, i) => i === di ? { ...d, days: d.days.map((v, j) => j === dj ? (v ? 0 : 1) : v) } : d))
+  function add() {
+    if (!form.name.trim()) return
+    setDocs((prev) => [...prev, { name: form.name.trim(), specialty: form.specialty.trim() || "Врач", days: [1, 1, 1, 1, 1, 0, 0] }])
+    setForm({ name: "", specialty: "" })
+    setAdding(false)
+  }
   return (
     <div>
-      <h1 style={h1}>Врачи</h1>
-      <p style={sub}>Расписание по дням недели — нажмите на день, чтобы включить/выключить</p>
-      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12, flexWrap: "wrap" }}>
+        <div>
+          <h1 style={h1}>Врачи</h1>
+          <p style={sub}>Расписание по дням недели — нажмите на день, чтобы включить/выключить</p>
+        </div>
+        <button onClick={() => setAdding(true)} style={{ background: PRIMARY, color: "#fff", border: "none", borderRadius: 10, padding: "9px 16px", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "inherit", boxShadow: "0 2px 8px rgba(13,148,136,0.3)", whiteSpace: "nowrap" }}>+ Врач</button>
+      </div>
+
+      {adding && (
+        <div onClick={() => setAdding(false)} style={{ position: "fixed", inset: 0, background: "rgba(15,40,70,0.4)", zIndex: 1000, display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}>
+          <div onClick={(e) => e.stopPropagation()} style={{ ...card, width: 380, maxWidth: "100%", padding: 24 }}>
+            <h2 style={{ fontFamily: "var(--font-oxanium)", fontSize: 18, fontWeight: 700, color: "#0F172A", margin: "0 0 16px" }}>Новый врач</h2>
+            <input autoFocus value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} placeholder="ФИО врача"
+              style={{ width: "100%", border: "1px solid #CBD5E1", borderRadius: 8, padding: "10px 12px", fontSize: 16, outline: "none", fontFamily: "inherit", boxSizing: "border-box", marginBottom: 10 }} />
+            <input value={form.specialty} onChange={(e) => setForm((f) => ({ ...f, specialty: e.target.value }))} placeholder="Специальность"
+              style={{ width: "100%", border: "1px solid #CBD5E1", borderRadius: 8, padding: "10px 12px", fontSize: 16, outline: "none", fontFamily: "inherit", boxSizing: "border-box", marginBottom: 18 }} />
+            <div style={{ display: "flex", gap: 8 }}>
+              <button onClick={add} disabled={!form.name.trim()} style={{ flex: 1, padding: "12px 0", background: PRIMARY, color: "#fff", border: "none", borderRadius: 10, fontSize: 15, fontWeight: 600, cursor: form.name.trim() ? "pointer" : "not-allowed", opacity: form.name.trim() ? 1 : 0.6, fontFamily: "inherit" }}>Добавить</button>
+              <button onClick={() => setAdding(false)} style={{ padding: "12px 18px", background: "#fff", color: "#475569", border: "1px solid #E2E8F0", borderRadius: 10, fontSize: 14, cursor: "pointer", fontFamily: "inherit" }}>Отмена</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 20 }}>
         {docs.map((d, i) => (
           <div key={i} data-tour={i === 0 ? "doctor-0" : undefined} style={{ ...card, padding: 16 }}>
             <div style={{ fontSize: 15, fontWeight: 600, color: "#0F172A" }}>{d.name}</div>
@@ -638,8 +693,9 @@ function TourOverlay({ step, index, total, onPrev, onNext, onClose }: {
       if (!step.selector) { setBox(null); return }
       const el = document.querySelector(step.selector) as HTMLElement | null
       if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "center" })
-        setTimeout(() => !cancelled && read(el), 340)
+        el.scrollIntoView({ behavior: "auto", block: "center" })
+        // Measure on the next frame (no artificial delay) so the spotlight appears instantly
+        requestAnimationFrame(() => !cancelled && read(el))
         const onMove = () => { const cur = document.querySelector(step.selector!) as HTMLElement | null; if (cur) read(cur) }
         window.addEventListener("scroll", onMove, true)
         window.addEventListener("resize", onMove)
@@ -717,14 +773,13 @@ function TourOverlay({ step, index, total, onPrev, onNext, onClose }: {
 
   return (
     <div style={{ position: "fixed", inset: 0, zIndex: 2000, pointerEvents: "none" }}>
-      {/* Spotlight with dimmed surroundings */}
+      {/* Spotlight with dimmed surroundings (no animation — sterile, instant) */}
       <div style={{
         position: "fixed", top: spotTop, left: spotLeft, width: spotW, height: spotH,
         borderRadius: 12, boxShadow: "0 0 0 3px rgba(13,148,136,0.9), 0 0 0 9999px rgba(15,40,70,0.55)",
-        transition: "top 0.3s cubic-bezier(0.4,0,0.2,1), left 0.3s cubic-bezier(0.4,0,0.2,1), width 0.3s cubic-bezier(0.4,0,0.2,1), height 0.3s cubic-bezier(0.4,0,0.2,1)",
-        willChange: "top, left, width, height", pointerEvents: "none",
+        pointerEvents: "none",
       }} />
-      <div style={{ position: "fixed", top: tipTop, left: tipLeft, transition: "top 0.3s cubic-bezier(0.4,0,0.2,1), left 0.3s cubic-bezier(0.4,0,0.2,1)" }}>{tip}</div>
+      <div style={{ position: "fixed", top: tipTop, left: tipLeft }}>{tip}</div>
     </div>
   )
 }

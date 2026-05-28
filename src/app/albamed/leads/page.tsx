@@ -276,7 +276,7 @@ export default function LeadsPage() {
       {/* Header + Search */}
       <div className="ab-leads-search-wrap">
         <div>
-          <h1 style={{ fontSize: 22, fontWeight: 700, color: "#1a1a1a", margin: "0 0 4px" }}>Лиды</h1>
+          <h1 style={{ fontSize: 22, fontWeight: 700, color: "#1a1a1a", margin: "0 0 4px" }}>Клиенты</h1>
           <p style={{ fontSize: 14, color: "#999", margin: 0 }}>Заявки от пациентов через бота</p>
         </div>
         <div className="ab-leads-search-box">
@@ -390,7 +390,7 @@ export default function LeadsPage() {
                   ? (
                       <tr>
                         <td colSpan={6} style={{ padding: "50px 16px", textAlign: "center", color: "#bbb", fontSize: 14 }}>
-                          Лидов нет
+                          Клиентов нет
                         </td>
                       </tr>
                     )
@@ -458,7 +458,7 @@ export default function LeadsPage() {
             : leads.length === 0
             ? (
                 <div style={{ padding: "40px 0", textAlign: "center", color: "#bbb", fontSize: 14 }}>
-                  Лидов нет
+                  Клиентов нет
                 </div>
               )
             : leads.map((lead) => (
