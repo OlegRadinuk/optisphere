@@ -312,8 +312,7 @@
     fetch(API_BASE + "/api/bots/" + BOT_SLUG + "/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ messages: messages, sessionId: sessionId }),
-      credentials: "include"
+      body: JSON.stringify({ messages: messages, sessionId: sessionId })
     })
       .then(function (res) {
         if (!res.ok) throw new Error("HTTP " + res.status);
@@ -393,8 +392,7 @@
       fetch(API_BASE + "/api/bots/" + BOT_SLUG + "/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: name, phone: phone, sessionId: sessionId }),
-        credentials: "include"
+        body: JSON.stringify({ name: name, phone: phone, sessionId: sessionId })
       })
         .then(function (r) { return r.json(); })
         .then(function () {
