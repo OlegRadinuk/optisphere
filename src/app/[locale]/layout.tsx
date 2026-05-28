@@ -109,7 +109,7 @@ function buildSchemaOrg(locale: string): string {
         description: isRu
           ? "Первая AI-нативная веб-студия. Создаём сайты и AI-ассистентов для гостиниц, клиник, строительных компаний."
           : "First AI-native web studio. We build websites and AI assistants for hotels, clinics, and construction companies.",
-        email: "hello@optisphere.ru",
+        email: "radinuko@gmail.com",
         telephone: "+79785768451",
         address: {
           "@type": "PostalAddress",

@@ -202,9 +202,9 @@
     "rights_title": "Data subject rights",
     "rights_text": "You have the right at any time to:",
     "rights_items": ["Withdraw consent to personal data processing", "Request information about data being processed", "Request correction or deletion of your data"],
-    "rights_contact": "To exercise your rights, send a request to: hello@optisphere.ru",
+    "rights_contact": "To exercise your rights, send a request to: radinuko@gmail.com",
     "revoke_title": "Withdrawal of consent",
-    "revoke_text": "Consent may be withdrawn by sending a written request to hello@optisphere.ru. Data will be deleted within 30 (thirty) days of receiving the request.",
+    "revoke_text": "Consent may be withdrawn by sending a written request to radinuko@gmail.com. Data will be deleted within 30 (thirty) days of receiving the request.",
     "security_title": "Data security",
     "security_text": "Organisational and technical measures are in place to protect personal data: data is transmitted over encrypted HTTPS, and database access is restricted.",
     "updated": "Last updated: April 2026"
@@ -226,7 +226,7 @@
     "control_title": "Cookie management",
     "control_text": "You can disable cookies in your browser settings. Disabling technical cookies may affect the chat and other site features.",
     "contact_title": "Contact",
-    "contact_text": "For questions about cookies: hello@optisphere.ru",
+    "contact_text": "For questions about cookies: radinuko@gmail.com",
     "updated": "Last updated: April 2026"
   },
   "demo": {
@@ -445,7 +445,7 @@
       "consent_link": "privacy policy",
       "success_title": "Thank you!",
       "success_text": "I'll reply within an hour via Telegram or phone.",
-      "error_server": "Sending error. Try again or write directly: hi@optisphere.ru"
+      "error_server": "Sending error. Try again or write directly: radinuko@gmail.com"
     },
     "telegram_label": "Telegram",
     "email_label": "Email",

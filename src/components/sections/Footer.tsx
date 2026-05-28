@@ -109,10 +109,9 @@ export default function Footer() {
               { label: t('legal_offer'),   href: '#' },
             ]}/>
             <Col title={t('col_contacts')} items={[
-              { label: '+7 (978) 576-84-51',  href: 'tel:+79785768451' },
-              { label: 'hello@optisphere.ru', href: 'mailto:hello@optisphere.ru' },
-              { label: '@optisphere',         href: 'https://t.me/optisphere' },
-              { label: 'Telegram · VK',       href: '#' },
+              { label: '+7 (978) 576-84-51',   href: 'tel:+79785768451' },
+              { label: 'radinuko@gmail.com',   href: 'mailto:radinuko@gmail.com' },
+              { label: '@aleg_rad',            href: 'https://t.me/aleg_rad' },
             ]}/>
           </div>
           <div style={{ display:'flex', justifyContent:'space-between', gap:16, paddingTop:24, borderTop:'1px solid var(--op-border)', flexWrap:'wrap', font:"400 12px/1.4 'JetBrains Mono',monospace", color:'var(--op-text-muted)', letterSpacing:'.06em' }}>

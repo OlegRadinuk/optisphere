@@ -210,7 +210,7 @@ export default function CTASection() {
             </motion.button>
 
             <a
-              href="https://t.me/optisphere"
+              href="https://t.me/aleg_rad"
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-ghost"
@@ -221,7 +221,7 @@ export default function CTASection() {
               }}
             >
               <TelegramIcon />
-              @optisphere
+              @aleg_rad
             </a>
           </motion.div>
 

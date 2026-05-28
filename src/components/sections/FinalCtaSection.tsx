@@ -19,9 +19,18 @@ export default function FinalCtaSection() {
           Открыть чат с ассистентом →
         </button>
         <div style={{ marginTop:16, display:'flex', gap:28, flexWrap:'wrap', justifyContent:'center', font:"400 13px/1.4 'Inter',sans-serif", color:'var(--op-text-muted)' }}>
-          <span>📞 +7 (978) 576-84-51</span>
-          <span>✉ hello@optisphere.ru</span>
-          <span>✈ @optisphere</span>
+          <span style={{ display:'inline-flex', alignItems:'center', gap:7 }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            +7 (978) 576-84-51
+          </span>
+          <span style={{ display:'inline-flex', alignItems:'center', gap:7 }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+            radinuko@gmail.com
+          </span>
+          <span style={{ display:'inline-flex', alignItems:'center', gap:7 }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+            @aleg_rad
+          </span>
         </div>
       </div>
     </section>

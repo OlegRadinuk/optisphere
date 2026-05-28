@@ -623,7 +623,7 @@ export default function Navbar() {
             letterSpacing: '.12em',
           }}
         >
-          ОТ 30 000 ₽ · hi@optisphere.ru
+          ОТ 30 000 ₽ · radinuko@gmail.com
         </div>
       </div>
 

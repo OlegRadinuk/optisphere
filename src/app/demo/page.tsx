@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useLayoutEffect } from "react"
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Демо панели управления клиникой. Полностью статичные данные, без auth и API.
@@ -30,6 +30,36 @@ const TABS: { id: Tab; label: string }[] = [
   { id: "doctors", label: "Врачи" },
 ]
 
+interface TourStep { tab: Tab; selector?: string; title: string; text: string }
+const TOUR: TourStep[] = [
+  { tab: "overview", title: "Это панель управления вашей клиникой", text: "Покажу за минуту, что она умеет. Можно листать самому — все элементы кликаются." },
+  { tab: "overview", selector: "[data-tour='stat-leads']", title: "Сводка за день", text: "Заявки, диалоги, конверсия — обновляются автоматически. Видно пульс клиники с утра." },
+  { tab: "overview", selector: "[data-tour='night-insight']", title: "Вот это — деньги", text: "Заявки приходят ночью и в выходные, когда регистратура не работает. Их ловит ассистент — иначе пациенты ушли бы к конкурентам." },
+  { tab: "leads", selector: "[data-tour='lead-0']", title: "Каждая заявка под рукой", text: "Имя, услуга, телефон и статус. Нажал на номер — позвонил. Ничего не теряется в переписке." },
+  { tab: "calendar", selector: "[data-tour='calendar']", title: "Живое расписание", text: "Записи можно перетаскивать мышкой на другое время — попробуйте прямо сейчас. Кнопкой «+ Запись» добавляется новая." },
+  { tab: "chats", selector: "[data-tour='chat-0']", title: "Диалоги с ассистентом", text: "Вся переписка пациента — видно, что человека волновало, ещё до звонка. Нажмите, чтобы раскрыть." },
+  { tab: "doctors", selector: "[data-tour='doctor-0']", title: "Врачи и график", text: "Кто принимает и в какие дни. Нажмите на день — он включится или выключится." },
+  { tab: "overview", title: "Понравилось?", text: "У вашей клиники будет так же — со своим логотипом, врачами и реальными заявками. Подключается за пару дней." },
+]
+
+const MoonIcon = ({ size = 14, color = "currentColor" }: { size?: number; color?: string }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+  </svg>
+)
+
+const PlayIcon = ({ size = 15, color = "currentColor" }: { size?: number; color?: string }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill={color} style={{ flexShrink: 0 }}>
+    <path d="M8 5v14l11-7z" />
+  </svg>
+)
+
+const ToothIcon = ({ size = 30, color = PRIMARY }: { size?: number; color?: string }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 5.5C10.5 4 8.5 3.5 7 4.2 5 5 4 7 4.5 10c.4 2.3 1 3.8 1.4 6 .3 1.6.5 4 1.6 4 1 0 1.1-1.7 1.4-3.2.3-1.5.6-2.6 1.1-2.6.5 0 .8 1.1 1.1 2.6.3 1.5.4 3.2 1.4 3.2 1.1 0 1.3-2.4 1.6-4 .4-2.2 1-3.7 1.4-6 .5-3-.5-5-2.5-5.8-1.5-.7-3.5-.2-5 1.3z" />
+  </svg>
+)
+
 // ── Демо-данные ──────────────────────────────────────────────────────────────
 const LEADS = [
   { name: "Марина К.", phone: "+7 978 412-08-90", service: "Имплантация", status: "new", when: "сегодня, 23:41", night: true },
@@ -55,7 +85,7 @@ const CHATS = [
       { role: "user", text: "Да, можно на эту неделю" },
       { role: "bot", text: "Отлично. Оставьте, пожалуйста, имя и телефон — администратор позвонит и подтвердит время." },
       { role: "user", text: "Марина, +7 978 412-08-90" },
-      { role: "bot", text: "Записал, Марина. Администратор свяжется с вами завтра с 9:00. Хорошего вечера! 🦷" },
+      { role: "bot", text: "Записал, Марина. Администратор свяжется с вами завтра с 9:00. Хорошего вечера!" },
     ],
   },
   {
@@ -79,12 +109,13 @@ const DOCTORS = [
 ]
 const DAY_LABELS = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
 
-const APPTS = [
-  { time: "09:00", patient: "Ольга П.", service: "Чистка", doctor: "Гигиенист", color: "#0891b2" },
-  { time: "10:30", patient: "Сергей В.", service: "Кариес", doctor: "Терапевт", color: "#16a34a" },
-  { time: "12:00", patient: "Марина К.", service: "Имплант — консультация", doctor: "Ураков А.В.", color: PRIMARY },
-  { time: "14:30", patient: "Ирина М.", service: "Коронка", doctor: "Ортопед", color: "#9333ea" },
-  { time: "16:00", patient: "Алексей Д.", service: "Брекеты", doctor: "Ортодонт", color: "#d97706" },
+interface Appt { id: number; time: string; dur: number; patient: string; service: string; doctor: string; color: string }
+const APPTS: Appt[] = [
+  { id: 1, time: "09:00", dur: 30, patient: "Ольга П.", service: "Чистка", doctor: "Гигиенист", color: "#0891b2" },
+  { id: 2, time: "10:30", dur: 60, patient: "Сергей В.", service: "Кариес", doctor: "Терапевт", color: "#16a34a" },
+  { id: 3, time: "12:00", dur: 60, patient: "Марина К.", service: "Имплант — консультация", doctor: "Ураков А.В.", color: PRIMARY },
+  { id: 4, time: "14:30", dur: 45, patient: "Ирина М.", service: "Коронка", doctor: "Ортопед", color: "#9333ea" },
+  { id: 5, time: "16:00", dur: 90, patient: "Алексей Д.", service: "Брекеты", doctor: "Ортодонт", color: "#d97706" },
 ]
 
 const ACTIVITY = [3, 5, 4, 7, 6, 9, 5, 8, 11, 7, 10, 6, 9, 14]
@@ -93,6 +124,27 @@ const ACTIVITY = [3, 5, 4, 7, 6, 9, 5, 8, 11, 7, 10, 6, 9, 14]
 export default function DemoPage() {
   const [tab, setTab] = useState<Tab>("overview")
   const [nudge, setNudge] = useState(false)
+  const [tourStep, setTourStep] = useState(-1)
+
+  // Auto-start tour once per browser
+  useEffect(() => {
+    try {
+      if (!localStorage.getItem("demo-tour-v1")) {
+        const t = setTimeout(() => setTourStep(0), 700)
+        return () => clearTimeout(t)
+      }
+    } catch { /* ignore */ }
+  }, [])
+
+  // Switch to the tab a tour step belongs to
+  useEffect(() => {
+    if (tourStep >= 0 && tourStep < TOUR.length) setTab(TOUR[tourStep].tab)
+  }, [tourStep])
+
+  const endTour = () => {
+    setTourStep(-1)
+    try { localStorage.setItem("demo-tour-v1", "1") } catch { /* ignore */ }
+  }
 
   const card: React.CSSProperties = {
     background: "#fff", border: "1px solid #E2E8F0", borderRadius: 14,
@@ -114,8 +166,9 @@ export default function DemoPage() {
         display: "flex", alignItems: "center", justifyContent: "center", gap: 14, flexWrap: "wrap",
         textAlign: "center",
       }}>
-        <span style={{ fontSize: 13.5, fontWeight: 500 }}>
-          🎬 Это <b>демо</b>. У вашей клиники будет так же — со своим логотипом и реальными заявками пациентов.
+        <span style={{ fontSize: 13.5, fontWeight: 500, display: "inline-flex", alignItems: "center", gap: 7 }}>
+          <PlayIcon size={14} color="#fff" />
+          Это <b>демо</b>. У вашей клиники будет так же — со своим логотипом и реальными заявками пациентов.
         </span>
         <a href={CONTACT_URL} style={{
           background: "#fff", color: PRIMARY, fontWeight: 700, fontSize: 13,
@@ -180,9 +233,9 @@ export default function DemoPage() {
       <main className="demo-main">
         {tab === "overview" && <Overview card={card} h1={h1} sub={sub} />}
         {tab === "leads" && <Leads card={card} h1={h1} sub={sub} onAction={() => setNudge(true)} />}
-        {tab === "calendar" && <Calendar card={card} h1={h1} sub={sub} onAction={() => setNudge(true)} />}
+        {tab === "calendar" && <Calendar card={card} h1={h1} sub={sub} />}
         {tab === "chats" && <Chats card={card} h1={h1} sub={sub} />}
-        {tab === "doctors" && <Doctors card={card} h1={h1} sub={sub} onAction={() => setNudge(true)} />}
+        {tab === "doctors" && <Doctors card={card} h1={h1} sub={sub} />}
       </main>
 
       {/* ── Mobile bottom nav ── */}
@@ -214,11 +267,35 @@ export default function DemoPage() {
         Подключить →
       </a>
 
+      {/* ── Help / replay tour ── */}
+      <button onClick={() => setTourStep(0)} aria-label="Запустить обучение" style={{
+        position: "fixed", left: 18, bottom: 18, zIndex: 130,
+        width: 44, height: 44, borderRadius: "50%", border: "1px solid #E2E8F0",
+        background: "#fff", color: PRIMARY, cursor: "pointer",
+        boxShadow: "0 4px 14px rgba(15,23,42,0.12)", display: "flex", alignItems: "center", justifyContent: "center",
+      }}>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </button>
+
+      {/* ── Onboarding tour ── */}
+      {tourStep >= 0 && (
+        <TourOverlay
+          step={TOUR[tourStep]}
+          index={tourStep}
+          total={TOUR.length}
+          onPrev={() => setTourStep((s) => Math.max(0, s - 1))}
+          onNext={() => { if (tourStep + 1 >= TOUR.length) endTour(); else setTourStep(tourStep + 1) }}
+          onClose={endTour}
+        />
+      )}
+
       {/* ── Nudge modal ── */}
       {nudge && (
         <div onClick={() => setNudge(false)} style={{ position: "fixed", inset: 0, background: "rgba(15,40,70,0.4)", zIndex: 1000, display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}>
           <div onClick={(e) => e.stopPropagation()} style={{ ...card, maxWidth: 380, padding: 28, textAlign: "center" }}>
-            <div style={{ fontSize: 38, marginBottom: 8 }}>🦷</div>
+            <div style={{ width: 56, height: 56, borderRadius: 16, background: PRIMARY_SOFT, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 14px" }}>
+              <ToothIcon size={30} />
+            </div>
             <h3 style={{ fontFamily: "var(--font-oxanium)", fontSize: 19, fontWeight: 700, margin: "0 0 8px", color: "#0F172A" }}>Это демо-режим</h3>
             <p style={{ fontSize: 14, color: "#475569", lineHeight: 1.5, margin: "0 0 20px" }}>
               Здесь изменения не сохраняются. В вашей версии всё по-настоящему: реальные заявки пациентов, ваши врачи, ваше расписание — и всё это работает 24/7.
@@ -286,15 +363,17 @@ function Overview({ card, h1, sub }: { card: React.CSSProperties; h1: React.CSSP
       <p style={sub}>Что происходит в клинике прямо сейчас</p>
 
       <div className="demo-stats" style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 14, marginBottom: 20 }}>
-        <StatCard label="Новых лидов" value="14" accent />
+        <div data-tour="stat-leads"><StatCard label="Новых лидов" value="14" accent /></div>
         <StatCard label="Всего за месяц" value="87" />
         <StatCard label="Диалогов сегодня" value="9" />
         <StatCard label="Конверсия в заявку" value="19%" />
       </div>
 
       {/* Highlight callout — продающий инсайт */}
-      <div style={{ ...card, padding: "16px 20px", marginBottom: 20, display: "flex", gap: 12, alignItems: "center", background: PRIMARY_SOFT, border: "1px solid #99F6E4" }}>
-        <div style={{ fontSize: 26 }}>💤</div>
+      <div data-tour="night-insight" style={{ ...card, padding: "16px 20px", marginBottom: 20, display: "flex", gap: 12, alignItems: "center", background: PRIMARY_SOFT, border: "1px solid #99F6E4" }}>
+        <div style={{ width: 40, height: 40, borderRadius: 10, background: "#fff", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+          <MoonIcon size={20} color={PRIMARY} />
+        </div>
         <div style={{ fontSize: 14, color: "#0F766E", lineHeight: 1.5 }}>
           <b>4 из 14 заявок пришли ночью и в выходные</b>, когда регистратура не работала. Их поймал AI-ассистент — иначе эти пациенты ушли бы к конкурентам.
         </div>
@@ -323,12 +402,12 @@ function Leads({ card, h1, sub, onAction }: { card: React.CSSProperties; h1: Rea
         {LEADS.map((l, i) => {
           const s = STATUS_MAP[l.status]
           return (
-            <div key={i} style={{ ...card, padding: "14px 16px" }}>
+            <div key={i} data-tour={i === 0 ? "lead-0" : undefined} style={{ ...card, padding: "14px 16px" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10 }}>
                 <div style={{ minWidth: 0 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
                     <span style={{ fontSize: 15, fontWeight: 600, color: "#0F172A" }}>{l.name}</span>
-                    {l.night && <span style={{ fontSize: 11, background: "#fff7ed", color: "#c2410c", border: "1px solid #fed7aa", borderRadius: 6, padding: "1px 7px" }}>💤 пока вы спали</span>}
+                    {l.night && <span style={{ fontSize: 11, background: "#fff7ed", color: "#c2410c", border: "1px solid #fed7aa", borderRadius: 6, padding: "2px 7px", display: "inline-flex", alignItems: "center", gap: 4 }}><MoonIcon size={11} color="#c2410c" />пока вы спали</span>}
                   </div>
                   <div style={{ fontSize: 13, color: "#64748B", marginTop: 3 }}>{l.service}</div>
                   <a href="#" onClick={(e) => { e.preventDefault(); onAction() }} style={{ fontSize: 14, color: PRIMARY, fontWeight: 600, textDecoration: "none", display: "inline-block", marginTop: 6 }}>{l.phone}</a>
@@ -346,7 +425,43 @@ function Leads({ card, h1, sub, onAction }: { card: React.CSSProperties; h1: Rea
   )
 }
 
-function Calendar({ card, h1, sub, onAction }: { card: React.CSSProperties; h1: React.CSSProperties; sub: React.CSSProperties; onAction: () => void }) {
+const CAL_START = 9   // 09:00
+const CAL_END = 19    // 19:00
+const SLOT_H = 56     // px per hour
+
+function toMin(t: string) { const [h, m] = t.split(":").map(Number); return h * 60 + m }
+function toTime(min: number) { return `${String(Math.floor(min / 60)).padStart(2, "0")}:${String(min % 60).padStart(2, "0")}` }
+
+let demoApptSeq = 100
+
+function Calendar({ card, h1, sub }: { card: React.CSSProperties; h1: React.CSSProperties; sub: React.CSSProperties }) {
+  const [appts, setAppts] = useState<Appt[]>(APPTS)
+  const [dragId, setDragId] = useState<number | null>(null)
+  const [hint, setHint] = useState("Перетащите запись на другое время — расписание обновится")
+
+  const hours = Array.from({ length: CAL_END - CAL_START }, (_, i) => CAL_START + i)
+  const totalH = (CAL_END - CAL_START) * SLOT_H
+
+  function moveTo(id: number, hour: number, half: boolean) {
+    const newMin = hour * 60 + (half ? 30 : 0)
+    setAppts((prev) => prev.map((a) => a.id === id ? { ...a, time: toTime(newMin) } : a))
+    setHint("Готово — запись перенесена. В вашей версии это сразу видит регистратура.")
+  }
+
+  function addDemo() {
+    // find first free-ish slot
+    const used = new Set(appts.map((a) => a.time))
+    let slot = "11:30"
+    for (let h = CAL_START; h < CAL_END; h++) {
+      for (const m of ["00", "30"]) {
+        const t = `${String(h).padStart(2, "0")}:${m}`
+        if (!used.has(t)) { slot = t; break }
+      }
+    }
+    setAppts((prev) => [...prev, { id: ++demoApptSeq, time: slot, dur: 30, patient: "Новый пациент", service: "Консультация", doctor: "Врач", color: "#0d9488" }])
+    setHint("Запись добавлена. Перетащите её на нужное время.")
+  }
+
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 10 }}>
@@ -354,23 +469,58 @@ function Calendar({ card, h1, sub, onAction }: { card: React.CSSProperties; h1: 
           <h1 style={h1}>Запись</h1>
           <p style={sub}>Расписание приёмов на сегодня</p>
         </div>
-        <button onClick={onAction} style={{ background: PRIMARY, color: "#fff", border: "none", borderRadius: 10, padding: "9px 16px", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "inherit", boxShadow: "0 2px 8px rgba(13,148,136,0.3)" }}>+ Запись</button>
+        <button data-tour="add-appt" onClick={addDemo} style={{ background: PRIMARY, color: "#fff", border: "none", borderRadius: 10, padding: "9px 16px", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "inherit", boxShadow: "0 2px 8px rgba(13,148,136,0.3)" }}>+ Запись</button>
       </div>
-      <div style={{ ...card, padding: 8 }}>
-        {APPTS.map((a, i) => (
-          <button key={i} onClick={onAction} style={{
-            display: "flex", alignItems: "stretch", gap: 12, width: "100%", textAlign: "left",
-            padding: "12px 12px", border: "none", borderBottom: i < APPTS.length - 1 ? "1px solid #F1F5F9" : "none",
-            background: "transparent", cursor: "pointer", borderRadius: 8, fontFamily: "inherit",
-          }}>
-            <div style={{ fontFamily: "var(--font-oxanium)", fontSize: 15, fontWeight: 700, color: "#0F172A", width: 52, flexShrink: 0 }}>{a.time}</div>
-            <div style={{ width: 3, borderRadius: 2, background: a.color, flexShrink: 0 }} />
-            <div style={{ minWidth: 0 }}>
-              <div style={{ fontSize: 14, fontWeight: 600, color: "#0F172A" }}>{a.patient}</div>
-              <div style={{ fontSize: 12.5, color: "#64748B" }}>{a.service} · {a.doctor}</div>
+
+      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12, fontSize: 12.5, color: "#0F766E", background: PRIMARY_SOFT, border: "1px solid #99F6E4", borderRadius: 8, padding: "8px 12px" }}>
+        <MoonIcon size={14} color={PRIMARY} />
+        <span style={{ color: "#475569" }}>{hint}</span>
+      </div>
+
+      <div data-tour="calendar" style={{ ...card, padding: "8px 8px 8px 0", overflow: "hidden" }}>
+        <div style={{ position: "relative", height: totalH }}>
+          {/* hour grid + drop zones */}
+          {hours.map((h) => (
+            <div key={h}>
+              {[0, 1].map((half) => (
+                <div
+                  key={half}
+                  onDragOver={(e) => { e.preventDefault(); (e.currentTarget as HTMLElement).style.background = "rgba(13,148,136,0.07)" }}
+                  onDragLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "" }}
+                  onDrop={(e) => { e.preventDefault(); (e.currentTarget as HTMLElement).style.background = ""; if (dragId != null) moveTo(dragId, h, half === 1) }}
+                  style={{ position: "absolute", left: 56, right: 8, top: (h - CAL_START) * SLOT_H + half * (SLOT_H / 2), height: SLOT_H / 2, borderTop: half === 0 ? "1px solid #F1F5F9" : "1px dashed #F1F5F9" }}
+                />
+              ))}
+              <span style={{ position: "absolute", left: 10, top: (h - CAL_START) * SLOT_H + 3, fontSize: 11, color: "#94A3B8", fontFamily: "var(--font-oxanium)" }}>{String(h).padStart(2, "0")}:00</span>
             </div>
-          </button>
-        ))}
+          ))}
+          {/* appointments */}
+          {appts.map((a) => {
+            const top = ((toMin(a.time) - CAL_START * 60) / 60) * SLOT_H
+            const height = Math.max(26, (a.dur / 60) * SLOT_H - 3)
+            const dragging = dragId === a.id
+            return (
+              <div
+                key={a.id}
+                draggable
+                onDragStart={() => setDragId(a.id)}
+                onDragEnd={() => setDragId(null)}
+                style={{
+                  position: "absolute", left: 56, right: 8, top, height,
+                  background: `${a.color}14`, border: `1.5px solid ${a.color}`, borderLeft: `3px solid ${a.color}`,
+                  borderRadius: 8, padding: "4px 10px", boxSizing: "border-box", cursor: "grab",
+                  opacity: dragging ? 0.4 : 1, overflow: "hidden", userSelect: "none",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                  <span style={{ fontFamily: "var(--font-oxanium)", fontSize: 12.5, fontWeight: 700, color: a.color }}>{a.time}</span>
+                  <span style={{ fontSize: 13, fontWeight: 600, color: "#0F172A", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{a.patient}</span>
+                </div>
+                {height > 34 && <div style={{ fontSize: 11.5, color: "#64748B", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{a.service} · {a.doctor}</div>}
+              </div>
+            )
+          })}
+        </div>
       </div>
     </div>
   )
@@ -384,7 +534,7 @@ function Chats({ card, h1, sub }: { card: React.CSSProperties; h1: React.CSSProp
       <p style={sub}>Переписка пациентов с AI-ассистентом — видно, что человека волновало</p>
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
         {CHATS.map((c, i) => (
-          <div key={i} style={{ ...card, overflow: "hidden" }}>
+          <div key={i} data-tour={i === 0 ? "chat-0" : undefined} style={{ ...card, overflow: "hidden" }}>
             <button onClick={() => setOpen(open === i ? -1 : i)} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%", padding: "14px 16px", border: "none", background: "transparent", cursor: "pointer", fontFamily: "inherit" }}>
               <div style={{ textAlign: "left" }}>
                 <div style={{ fontSize: 14, fontWeight: 600, color: "#0F172A" }}>{c.name}</div>
@@ -411,21 +561,24 @@ function Chats({ card, h1, sub }: { card: React.CSSProperties; h1: React.CSSProp
   )
 }
 
-function Doctors({ card, h1, sub, onAction }: { card: React.CSSProperties; h1: React.CSSProperties; sub: React.CSSProperties; onAction: () => void }) {
+function Doctors({ card, h1, sub }: { card: React.CSSProperties; h1: React.CSSProperties; sub: React.CSSProperties }) {
+  const [docs, setDocs] = useState(DOCTORS.map((d) => ({ ...d, days: [...d.days] })))
+  const toggle = (di: number, dj: number) =>
+    setDocs((prev) => prev.map((d, i) => i === di ? { ...d, days: d.days.map((v, j) => j === dj ? (v ? 0 : 1) : v) } : d))
   return (
     <div>
       <h1 style={h1}>Врачи</h1>
-      <p style={sub}>Расписание по дням недели</p>
+      <p style={sub}>Расписание по дням недели — нажмите на день, чтобы включить/выключить</p>
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-        {DOCTORS.map((d, i) => (
-          <div key={i} style={{ ...card, padding: 16 }}>
+        {docs.map((d, i) => (
+          <div key={i} data-tour={i === 0 ? "doctor-0" : undefined} style={{ ...card, padding: 16 }}>
             <div style={{ fontSize: 15, fontWeight: 600, color: "#0F172A" }}>{d.name}</div>
             <div style={{ fontSize: 13, color: "#64748B", marginBottom: 12 }}>{d.specialty}</div>
             <div style={{ display: "flex", gap: 6 }}>
               {DAY_LABELS.map((lbl, j) => (
-                <button key={j} onClick={onAction} style={{
+                <button key={j} onClick={() => toggle(i, j)} style={{
                   width: 34, height: 34, borderRadius: 8, border: "none", cursor: "pointer", fontFamily: "inherit",
-                  fontSize: 11, fontWeight: 600,
+                  fontSize: 11, fontWeight: 600, transition: "background 120ms",
                   background: d.days[j] ? PRIMARY : "#eef3f8",
                   color: d.days[j] ? "#fff" : "#94A3B8",
                 }}>{lbl}</button>
@@ -434,6 +587,119 @@ function Doctors({ card, h1, sub, onAction }: { card: React.CSSProperties; h1: R
           </div>
         ))}
       </div>
+    </div>
+  )
+}
+
+// ── Onboarding tour overlay ──────────────────────────────────────────────────
+interface Box { top: number; left: number; width: number; height: number }
+
+function TourOverlay({ step, index, total, onPrev, onNext, onClose }: {
+  step: TourStep; index: number; total: number; onPrev: () => void; onNext: () => void; onClose: () => void
+}) {
+  const [box, setBox] = useState<Box | null>(null)
+
+  useLayoutEffect(() => {
+    let cancelled = false
+    let tries = 0
+    setBox(null)
+
+    const read = (el: HTMLElement) => {
+      const r = el.getBoundingClientRect()
+      if (!cancelled) setBox({ top: r.top, left: r.left, width: r.width, height: r.height })
+    }
+
+    const find = () => {
+      if (cancelled) return
+      if (!step.selector) { setBox(null); return }
+      const el = document.querySelector(step.selector) as HTMLElement | null
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "center" })
+        setTimeout(() => !cancelled && read(el), 340)
+        const onMove = () => { const cur = document.querySelector(step.selector!) as HTMLElement | null; if (cur) read(cur) }
+        window.addEventListener("scroll", onMove, true)
+        window.addEventListener("resize", onMove)
+        ;(find as unknown as { cleanup?: () => void }).cleanup = () => {
+          window.removeEventListener("scroll", onMove, true)
+          window.removeEventListener("resize", onMove)
+        }
+      } else if (tries < 15) {
+        tries++
+        setTimeout(find, 60)
+      } else {
+        setBox(null)
+      }
+    }
+    find()
+    return () => {
+      cancelled = true
+      ;(find as unknown as { cleanup?: () => void }).cleanup?.()
+    }
+  }, [step])
+
+  const PAD = 6
+  const isLast = index === total - 1
+  const isFirst = index === 0
+
+  // Tooltip card content
+  const tip = (
+    <div style={{
+      background: "#fff", borderRadius: 14, padding: 18, width: 300, maxWidth: "calc(100vw - 32px)",
+      boxShadow: "0 12px 40px rgba(15,23,42,0.25)", pointerEvents: "auto",
+    }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+        <span style={{ fontFamily: "var(--font-oxanium)", fontSize: 11, fontWeight: 700, color: PRIMARY, letterSpacing: "0.5px" }}>
+          ШАГ {index + 1} / {total}
+        </span>
+        <button onClick={onClose} style={{ background: "none", border: "none", color: "#94A3B8", fontSize: 18, cursor: "pointer", lineHeight: 1, fontFamily: "inherit" }}>×</button>
+      </div>
+      <h3 style={{ fontFamily: "var(--font-oxanium)", fontSize: 17, fontWeight: 700, color: "#0F172A", margin: "0 0 6px" }}>{step.title}</h3>
+      <p style={{ fontSize: 13.5, color: "#475569", lineHeight: 1.5, margin: "0 0 16px" }}>{step.text}</p>
+      {isLast ? (
+        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+          <a href={CONTACT_URL} style={{ display: "block", textAlign: "center", background: PRIMARY, color: "#fff", fontWeight: 600, fontSize: 14, padding: "11px 0", borderRadius: 10, textDecoration: "none", boxShadow: "0 4px 12px rgba(13,148,136,0.3)" }}>
+            Подключить за {PRICE}
+          </a>
+          <button onClick={onClose} style={{ background: "none", border: "none", color: "#94A3B8", fontSize: 13, cursor: "pointer", fontFamily: "inherit" }}>Закрыть</button>
+        </div>
+      ) : (
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <button onClick={onClose} style={{ background: "none", border: "none", color: "#94A3B8", fontSize: 13, cursor: "pointer", fontFamily: "inherit" }}>Пропустить</button>
+          <div style={{ display: "flex", gap: 8 }}>
+            {!isFirst && <button onClick={onPrev} style={{ background: "#F1F5F9", border: "none", color: "#475569", fontSize: 13, fontWeight: 600, padding: "8px 14px", borderRadius: 8, cursor: "pointer", fontFamily: "inherit" }}>Назад</button>}
+            <button onClick={onNext} style={{ background: PRIMARY, border: "none", color: "#fff", fontSize: 13, fontWeight: 600, padding: "8px 16px", borderRadius: 8, cursor: "pointer", fontFamily: "inherit" }}>Далее</button>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+
+  // Centered (no target)
+  if (!box) {
+    return (
+      <div style={{ position: "fixed", inset: 0, zIndex: 2000, background: "rgba(15,40,70,0.5)", display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}>
+        {tip}
+      </div>
+    )
+  }
+
+  // Tooltip placement: below the spotlight if room, else above
+  const spotTop = box.top - PAD, spotLeft = box.left - PAD
+  const spotW = box.width + PAD * 2, spotH = box.height + PAD * 2
+  const below = spotTop + spotH + 16 + 220 < window.innerHeight
+  const tipTop = below ? spotTop + spotH + 12 : Math.max(12, spotTop - 12 - 220)
+  let tipLeft = spotLeft + spotW / 2 - 150
+  tipLeft = Math.max(12, Math.min(tipLeft, window.innerWidth - 312))
+
+  return (
+    <div style={{ position: "fixed", inset: 0, zIndex: 2000, pointerEvents: "none" }}>
+      {/* Spotlight with dimmed surroundings */}
+      <div style={{
+        position: "fixed", top: spotTop, left: spotLeft, width: spotW, height: spotH,
+        borderRadius: 12, boxShadow: "0 0 0 3px rgba(13,148,136,0.9), 0 0 0 9999px rgba(15,40,70,0.55)",
+        transition: "all 0.25s ease", pointerEvents: "none",
+      }} />
+      <div style={{ position: "fixed", top: tipTop, left: tipLeft }}>{tip}</div>
     </div>
   )
 }

@@ -1,7 +1,6 @@
 'use client';
 import { useState, useId } from 'react';
 import Navbar from '@/components/sections/Navbar';
-import Footer from '@/components/sections/Footer';
 import { HudStatusBar, HudCorners, HudRail } from '@/components/hud/HudChrome';
 import { useLocale } from 'next-intl';
 import { Link } from '@/i18n/navigation';
@@ -91,8 +90,8 @@ function ContactForm() {
     } catch {
       setServerError(
         isRu
-          ? 'Ошибка отправки. Попробуйте ещё раз или напишите напрямую: hi@optisphere.ru'
-          : 'Sending error. Try again or write directly: hi@optisphere.ru'
+          ? 'Ошибка отправки. Попробуйте ещё раз или напишите напрямую: radinuko@gmail.com'
+          : 'Sending error. Try again or write directly: radinuko@gmail.com'
       );
     } finally {
       setBusy(false);
@@ -509,7 +508,7 @@ export default function ContactPageClient() {
                       Telegram
                     </p>
                     <a
-                      href="https://t.me/optisphere"
+                      href="https://t.me/aleg_rad"
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{
@@ -518,7 +517,7 @@ export default function ContactPageClient() {
                         textDecoration: 'none',
                       }}
                     >
-                      @optisphere
+                      @aleg_rad
                     </a>
                   </div>
                 </div>
@@ -563,14 +562,14 @@ export default function ContactPageClient() {
                       Email
                     </p>
                     <a
-                      href="mailto:hi@optisphere.ru"
+                      href="mailto:radinuko@gmail.com"
                       style={{
                         font: "400 15px/1 'Inter',sans-serif",
                         color: 'var(--op-text)',
                         textDecoration: 'none',
                       }}
                     >
-                      hi@optisphere.ru
+                      radinuko@gmail.com
                     </a>
                   </div>
                 </div>
@@ -618,8 +617,6 @@ export default function ContactPageClient() {
           </div>
         </div>
       </section>
-
-      <Footer />
 
       <style>{`
         @media (max-width: 900px) {

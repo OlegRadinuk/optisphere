@@ -772,7 +772,7 @@ export default function CalendarPage() {
               {/* Empty state */}
               {getApptsByDay(selectedDate).length === 0 && (
                 <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", pointerEvents: "none" }}>
-                  <div style={{ fontSize: 32, marginBottom: 8 }}>📅</div>
+                  <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" strokeWidth="1.6" style={{ marginBottom: 8 }}><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                   <div style={{ fontSize: 14, color: "#bbb" }}>Записей нет</div>
                   <div style={{ fontSize: 12, color: "#ddd", marginTop: 4 }}>Нажмите на слот, чтобы добавить</div>
                 </div>
