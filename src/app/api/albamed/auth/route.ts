@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server"
 import { cookies } from "next/headers"
+import { createSessionToken, verifySessionToken } from "@/lib/session"
 
 export const SESSION_COOKIE = "albamed_session"
-const SESSION_VALUE = "authenticated"
+const SESSION_SCOPE = "albamed"
 
 const authAttempts = new Map<string, { count: number; resetAt: number }>()
 const RATE_LIMIT_MAX = 5
@@ -51,7 +52,7 @@ export async function POST(req: NextRequest): Promise<Response> {
   authAttempts.delete(ip)
 
   const cookieStore = await cookies()
-  cookieStore.set(SESSION_COOKIE, SESSION_VALUE, {
+  cookieStore.set(SESSION_COOKIE, createSessionToken(SESSION_SCOPE), {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
@@ -70,5 +71,5 @@ export async function DELETE(): Promise<Response> {
 
 export async function isAlbamedAuthenticated(): Promise<boolean> {
   const cookieStore = await cookies()
-  return cookieStore.get(SESSION_COOKIE)?.value === SESSION_VALUE
+  return verifySessionToken(SESSION_SCOPE, cookieStore.get(SESSION_COOKIE)?.value)
 }

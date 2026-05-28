@@ -31,6 +31,7 @@ export default function LeadForm({ messages, onSubmitted, accentColor = '#E82020
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [telegram, setTelegram] = useState('');
+  const [consent, setConsent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
 
@@ -48,7 +49,7 @@ export default function LeadForm({ messages, onSubmitted, accentColor = '#E82020
     setTelegram(v);
   };
 
-  const canSubmit = name.trim() && (phone.replace(/\D/g, '').length >= 11 || telegram.trim().length >= 3);
+  const canSubmit = consent && name.trim() && (phone.replace(/\D/g, '').length >= 11 || telegram.trim().length >= 3);
 
   const inputStyle: React.CSSProperties = {
     width: '100%',
@@ -113,6 +114,24 @@ export default function LeadForm({ messages, onSubmitted, accentColor = '#E82020
         placeholder="@telegram (необязательно)"
         style={{ ...inputStyle, marginBottom: 12 }}
       />
+
+      <label style={{
+        display: 'flex', alignItems: 'flex-start', gap: 8, marginBottom: 12,
+        cursor: 'pointer', font: "400 11px/1.4 'Inter',sans-serif", color: 'rgba(240,240,255,0.65)',
+      }}>
+        <input
+          type="checkbox"
+          checked={consent}
+          onChange={e => setConsent(e.target.checked)}
+          style={{ marginTop: 1, accentColor, flexShrink: 0, width: 14, height: 14, cursor: 'pointer' }}
+        />
+        <span>
+          Согласен на обработку персональных данных в соответствии с{' '}
+          <a href="/privacy" target="_blank" rel="noopener noreferrer" style={{ color: accentColor, textDecoration: 'underline' }}>
+            политикой конфиденциальности
+          </a>
+        </span>
+      </label>
 
       <button
         disabled={submitting || !canSubmit}

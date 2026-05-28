@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import Anthropic from "@anthropic-ai/sdk"
 import { getClientBySlug, saveMessage, getMessagesBySession, getDb } from "@/lib/db"
+import { isSafeFetchUrl } from "@/lib/safe-url"
 
 // ── Telegram helper (same proxy as lead route) ────────────────────────────────
 async function sendTelegram(token: string, chatId: string, text: string) {
@@ -82,7 +83,6 @@ export async function POST(
     "Access-Control-Allow-Origin": origin,
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
-    "Access-Control-Allow-Credentials": "true",
   }
 
   const client = getClientBySlug(slug)
@@ -183,6 +183,7 @@ ${openStatus}${afterHoursRule}
   let detectedUrl: string | null = null
   if (lastUserMsg?.role === "user") {
     detectedUrl = extractURL(lastUserMsg.content)
+    if (detectedUrl && !isSafeFetchUrl(detectedUrl)) detectedUrl = null
     if (detectedUrl) urlFetchPromise = fetchPage(detectedUrl)
   }
 
@@ -295,7 +296,6 @@ export async function OPTIONS(request: NextRequest): Promise<Response> {
       "Access-Control-Allow-Origin": origin,
       "Access-Control-Allow-Methods": "POST, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type",
-      "Access-Control-Allow-Credentials": "true",
     },
   })
 }

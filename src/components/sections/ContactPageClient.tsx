@@ -17,6 +17,7 @@ interface FormState {
 
 interface FormErrors {
   contact?: string;
+  consent?: string;
 }
 
 function ContactForm() {
@@ -34,6 +35,7 @@ function ContactForm() {
     message: '',
   });
   const [errors, setErrors] = useState<FormErrors>({});
+  const [consent, setConsent] = useState(false);
   const [busy, setBusy] = useState(false);
   const [success, setSuccess] = useState(false);
   const [serverError, setServerError] = useState('');
@@ -44,6 +46,11 @@ function ContactForm() {
       newErrors.contact = isRu
         ? 'Укажите телефон или Telegram (не менее 5 символов)'
         : 'Enter a phone or Telegram (at least 5 chars)';
+    }
+    if (!consent) {
+      newErrors.consent = isRu
+        ? 'Необходимо согласие на обработку персональных данных'
+        : 'Consent to personal data processing is required';
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -298,6 +305,29 @@ function ContactForm() {
           onBlur={(e) => (e.currentTarget.style.borderColor = 'var(--op-border)')}
         />
       </div>
+
+      <label style={{
+        display: 'flex', alignItems: 'flex-start', gap: 10,
+        cursor: 'pointer', font: "400 13px/1.5 'Inter',sans-serif", color: 'var(--op-text-muted)',
+      }}>
+        <input
+          type="checkbox"
+          checked={consent}
+          onChange={(e) => setConsent(e.target.checked)}
+          style={{ marginTop: 2, width: 16, height: 16, accentColor: 'var(--op-accent)', flexShrink: 0, cursor: 'pointer' }}
+        />
+        <span>
+          {isRu ? 'Согласен на обработку персональных данных в соответствии с ' : 'I consent to personal data processing per the '}
+          <a href={isRu ? '/privacy' : '/en/privacy'} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--op-accent)', textDecoration: 'underline' }}>
+            {isRu ? 'политикой конфиденциальности' : 'privacy policy'}
+          </a>
+        </span>
+      </label>
+      {errors.consent && (
+        <p style={errorStyle} role="alert" aria-live="polite">
+          {errors.consent}
+        </p>
+      )}
 
       {serverError && (
         <p style={errorStyle} role="alert" aria-live="polite">

@@ -315,17 +315,25 @@ export function createClient(
     .get(result.lastInsertRowid) as Client
 }
 
+// Whitelist of updatable columns — prevents SQL injection via attacker-controlled
+// object keys being interpolated into the SET clause.
+const UPDATABLE_CLIENT_FIELDS = new Set([
+  "name", "description", "system_prompt", "api_key", "base_url", "model",
+  "tg_token", "tg_chat_id", "widget_color", "widget_title", "widget_placeholder",
+  "rate_limit", "active", "context_url", "quick_replies",
+])
+
 export function updateClient(
   slug: string,
   data: Partial<Omit<Client, "id" | "slug" | "created_at">>
 ): void {
-  const fields = Object.keys(data)
-    .map((k) => `${k} = @${k}`)
-    .join(", ")
+  const keys = Object.keys(data).filter((k) => UPDATABLE_CLIENT_FIELDS.has(k))
+  const fields = keys.map((k) => `${k} = @${k}`).join(", ")
   if (!fields) return
+  const safeData = Object.fromEntries(keys.map((k) => [k, (data as Record<string, unknown>)[k]]))
   getDb()
     .prepare(`UPDATE clients SET ${fields} WHERE slug = @slug`)
-    .run({ ...data, slug })
+    .run({ ...safeData, slug })
   // Keep seed file in sync so credentials survive DB wipe
   if (data.tg_token !== undefined || data.tg_chat_id !== undefined) {
     syncClientToSeed(slug)
@@ -458,17 +466,19 @@ export function getDoctors(clientId: number): Doctor[] {
     .all(clientId) as Doctor[]
 }
 
+const UPDATABLE_DOCTOR_FIELDS = new Set(["name", "specialty", "branch", "schedule", "active"])
+
 export function updateDoctor(
   id: number,
   data: Partial<Pick<Doctor, "name" | "specialty" | "branch" | "schedule" | "active">>
 ): void {
-  const fields = Object.keys(data)
-    .map((k) => `${k} = @${k}`)
-    .join(", ")
+  const keys = Object.keys(data).filter((k) => UPDATABLE_DOCTOR_FIELDS.has(k))
+  const fields = keys.map((k) => `${k} = @${k}`).join(", ")
   if (!fields) return
+  const safeData = Object.fromEntries(keys.map((k) => [k, (data as Record<string, unknown>)[k]]))
   getDb()
     .prepare(`UPDATE doctors SET ${fields} WHERE id = @id`)
-    .run({ ...data, id })
+    .run({ ...safeData, id })
 }
 
 export function updateLeadStatus(id: number, status: "new" | "working" | "closed"): void {
