@@ -101,6 +101,11 @@ function initSchema(db: Database.Database) {
   } catch {
     // Column already exists — ignore
   }
+  try {
+    db.exec(`ALTER TABLE leads ADD COLUMN source TEXT NOT NULL DEFAULT 'chat'`)
+  } catch {
+    // Column already exists — ignore
+  }
 }
 
 const DEFAULT_SCHEDULE = '{"mon":true,"tue":true,"wed":true,"thu":true,"fri":true,"sat":false,"sun":false}'
@@ -255,11 +260,12 @@ export type Lead = {
   email: string
   message: string
   status: "new" | "working" | "closed"
+  source: string
   created_at: string
 }
 
-// Omit status from insert — DB sets DEFAULT 'new'
-export type LeadInsert = Omit<Lead, "id" | "created_at" | "status">
+// Omit status from insert — DB sets DEFAULT 'new'. source optional — DB defaults to 'chat'
+export type LeadInsert = Omit<Lead, "id" | "created_at" | "status" | "source"> & { source?: string }
 
 export type Doctor = {
   id: number
@@ -377,10 +383,10 @@ export function saveMessage(
 export function saveLead(lead: LeadInsert): void {
   getDb()
     .prepare(
-      `INSERT INTO leads (client_id, session_id, name, phone, email, message)
-       VALUES (@client_id, @session_id, @name, @phone, @email, @message)`
+      `INSERT INTO leads (client_id, session_id, name, phone, email, message, source)
+       VALUES (@client_id, @session_id, @name, @phone, @email, @message, @source)`
     )
-    .run(lead)
+    .run({ ...lead, source: lead.source ?? "chat" })
 }
 
 export function getClientStats(clientId: number): {

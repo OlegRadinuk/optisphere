@@ -36,18 +36,21 @@ export async function POST(
     return NextResponse.json({ error: "Bot not found" }, { status: 404, headers: cors })
   }
 
-  let body: { name?: string; phone?: string; email?: string; message?: string; sessionId?: string }
+  let body: { name?: string; phone?: string; email?: string; message?: string; sessionId?: string; source?: string }
   try {
     body = await request.json()
   } catch {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400, headers: cors })
   }
 
-  const { name = "", phone = "", email = "", message = "", sessionId = "" } = body
+  const { name = "", phone = "", email = "", message = "", sessionId = "", source = "chat" } = body
 
   if (!phone && !email) {
     return NextResponse.json({ error: "phone or email required" }, { status: 400, headers: cors })
   }
+
+  const allowedSources = ["chat", "cf7", "booking", "import"]
+  const safeSource = allowedSources.includes(source) ? source : "chat"
 
   saveLead({
     client_id: client.id,
@@ -56,6 +59,7 @@ export async function POST(
     phone,
     email,
     message,
+    source: safeSource,
   })
 
   // Telegram notification
@@ -69,8 +73,14 @@ export async function POST(
       minute: "2-digit",
     })
 
+    const sourceLabel: Record<string, string> = {
+      chat: "💬 из чата",
+      cf7: "📝 с формы сайта",
+      booking: "📅 запись с сайта",
+      import: "📥 импорт",
+    }
     const header = [
-      `🔔 <b>Новая заявка — ${client.name}</b>`,
+      `🔔 <b>Новая заявка — ${client.name}</b> (${sourceLabel[safeSource] ?? safeSource})`,
       "",
       `👤 ${name || "—"}`,
       ...(phone ? [`📞 ${phone}`] : []),
