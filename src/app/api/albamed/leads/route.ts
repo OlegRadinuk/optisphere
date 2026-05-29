@@ -59,7 +59,7 @@ export async function GET(req: NextRequest): Promise<Response> {
     const rows = db
       .prepare(
         `SELECT
-           l.id, l.name, l.phone, l.message, l.status, l.created_at, l.session_id,
+           l.id, l.name, l.phone, l.message, l.status, l.created_at, l.session_id, l.source,
            CASE WHEN EXISTS (
              SELECT 1 FROM messages m
              WHERE m.client_id = l.client_id AND m.session_id = l.session_id

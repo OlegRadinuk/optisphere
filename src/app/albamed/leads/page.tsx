@@ -15,7 +15,24 @@ interface Lead {
   status: LeadStatus
   created_at: string
   session_id: string | null
+  source?: string
   hasChat: boolean
+}
+
+function SourceBadge({ source }: { source?: string }) {
+  const map: Record<string, { label: string; bg: string; color: string }> = {
+    chat: { label: "Чат", bg: "#eef2ff", color: "#4f46e5" },
+    cf7: { label: "Форма", bg: "#ecfeff", color: "#0e7490" },
+    booking: { label: "Запись", bg: "#f0fdfa", color: "#0d9488" },
+    import: { label: "Импорт", bg: "#f5f5f5", color: "#888" },
+  }
+  const s = map[source ?? ""] ?? null
+  if (!s) return null
+  return (
+    <span style={{ fontSize: 10, fontWeight: 600, padding: "2px 7px", borderRadius: 9999, background: s.bg, color: s.color, whiteSpace: "nowrap" }}>
+      {s.label}
+    </span>
+  )
 }
 
 interface LeadsResponse {
@@ -405,7 +422,10 @@ export default function LeadsPage() {
                           {formatDate(lead.created_at)}
                         </td>
                         <td style={{ padding: "13px 16px", color: "#1a1a1a", fontWeight: 500, borderBottom: idx < leads.length - 1 ? "1px solid #f5f5f5" : "none" }}>
-                          {lead.name || "—"}
+                          <span style={{ display: "inline-flex", alignItems: "center", gap: 7 }}>
+                            {lead.name || "—"}
+                            <SourceBadge source={lead.source} />
+                          </span>
                         </td>
                         <td style={{ padding: "13px 16px", color: "#555", borderBottom: idx < leads.length - 1 ? "1px solid #f5f5f5" : "none", whiteSpace: "nowrap" }}>
                           {lead.phone}
@@ -471,7 +491,10 @@ export default function LeadsPage() {
                 >
                   {/* Row 1: Name + Status badge */}
                   <div className="ab-card-row1">
-                    <span className="ab-card-name">{lead.name || "—"}</span>
+                    <span className="ab-card-name" style={{ display: "inline-flex", alignItems: "center", gap: 7 }}>
+                      {lead.name || "—"}
+                      <SourceBadge source={lead.source} />
+                    </span>
                     <StatusBadge status={lead.status} />
                   </div>
 
