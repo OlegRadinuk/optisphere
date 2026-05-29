@@ -83,6 +83,18 @@ function initSchema(db: Database.Database) {
 
     CREATE INDEX IF NOT EXISTS idx_doctors_client ON doctors(client_id);
     CREATE INDEX IF NOT EXISTS idx_leads_status   ON leads(client_id, status);
+
+    CREATE TABLE IF NOT EXISTS services (
+      id          INTEGER PRIMARY KEY AUTOINCREMENT,
+      client_id   INTEGER NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
+      name        TEXT    NOT NULL,
+      category    TEXT    NOT NULL DEFAULT '',
+      price       TEXT    NOT NULL DEFAULT '',
+      sort_order  INTEGER NOT NULL DEFAULT 0,
+      active      INTEGER NOT NULL DEFAULT 1,
+      created_at  TEXT    DEFAULT (datetime('now'))
+    );
+    CREATE INDEX IF NOT EXISTS idx_services_client ON services(client_id);
   `)
 
   // Migrations — safe to run on every start
@@ -503,4 +515,58 @@ export function updateLeadStatus(id: number, status: "new" | "working" | "closed
   getDb()
     .prepare("UPDATE leads SET status = ? WHERE id = ?")
     .run(status, id)
+}
+
+// ── Services (прайс клиники) ───────────────────────────────────────────────
+export type Service = {
+  id: number
+  client_id: number
+  name: string
+  category: string
+  price: string
+  sort_order: number
+  active: number
+  created_at: string
+}
+
+export function getServices(clientId: number, search = ""): Service[] {
+  const s = search.trim()
+  if (s) {
+    return getDb()
+      .prepare(
+        `SELECT * FROM services WHERE client_id = ? AND (name LIKE @q OR category LIKE @q)
+         ORDER BY category, sort_order, name`
+      )
+      .all(clientId, { q: `%${s}%` } as never) as Service[]
+  }
+  return getDb()
+    .prepare("SELECT * FROM services WHERE client_id = ? ORDER BY category, sort_order, name")
+    .all(clientId) as Service[]
+}
+
+export function createService(
+  clientId: number,
+  data: { name: string; category?: string; price?: string }
+): Service {
+  const result = getDb()
+    .prepare("INSERT INTO services (client_id, name, category, price, active) VALUES (?, ?, ?, ?, 1)")
+    .run(clientId, data.name, data.category ?? "", data.price ?? "")
+  return getDb().prepare("SELECT * FROM services WHERE id = ?").get(result.lastInsertRowid) as Service
+}
+
+const UPDATABLE_SERVICE_FIELDS = new Set(["name", "category", "price", "active", "sort_order"])
+
+export function updateService(
+  id: number,
+  data: Partial<Pick<Service, "name" | "category" | "price" | "active" | "sort_order">>
+): void {
+  const keys = Object.keys(data).filter((k) => UPDATABLE_SERVICE_FIELDS.has(k))
+  const fields = keys.map((k) => `${k} = @${k}`).join(", ")
+  if (!fields) return
+  const safeData = Object.fromEntries(keys.map((k) => [k, (data as Record<string, unknown>)[k]]))
+  getDb().prepare(`UPDATE services SET ${fields} WHERE id = @id`).run({ ...safeData, id })
+}
+
+export function deleteService(id: number, clientId: number): void {
+  getDb().prepare("DELETE FROM services WHERE id = ? AND client_id = ?").run(id, clientId)
 }
