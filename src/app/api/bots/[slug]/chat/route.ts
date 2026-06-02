@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import Anthropic from "@anthropic-ai/sdk"
 import { getClientBySlug, saveMessage, getMessagesBySession, getDb } from "@/lib/db"
 import { isSafeFetchUrl } from "@/lib/safe-url"
+import { resolveBaseURL } from "@/lib/ai-config"
 
 // ── Telegram helper (same proxy as lead route) ────────────────────────────────
 async function sendTelegram(token: string, chatId: string, text: string) {
@@ -187,11 +188,7 @@ ${openStatus}${afterHoursRule}
     if (detectedUrl) urlFetchPromise = fetchPage(detectedUrl)
   }
 
-  const PROXY_HOSTS = ["aiprime.store", "aiprimetech.io"]
-  const rawBaseURL = client.base_url || process.env.AI_BASE_URL || ""
-  const isProxy = PROXY_HOSTS.some((h) => rawBaseURL.includes(h))
-  const baseURL = (isProxy || !rawBaseURL ? "https://api.anthropic.com" : rawBaseURL)
-    .replace(/\/v1\/?$/, "")
+  const baseURL = resolveBaseURL(client.base_url || process.env.AI_BASE_URL)
 
   const ai = new Anthropic({
     apiKey: client.api_key || process.env.ANTHROPIC_API_KEY || "",

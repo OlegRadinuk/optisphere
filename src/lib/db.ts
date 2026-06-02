@@ -1,6 +1,7 @@
 import Database from "better-sqlite3"
 import path from "path"
 import fs from "fs"
+import { WORKING_PROXY } from "@/lib/ai-config"
 
 const DB_PATH =
   process.env.DB_PATH ?? path.join(process.cwd(), "data", "bots.db")
@@ -33,7 +34,7 @@ function initSchema(db: Database.Database) {
       description TEXT    DEFAULT '',
       system_prompt TEXT  NOT NULL DEFAULT '',
       api_key     TEXT    NOT NULL DEFAULT '',
-      base_url    TEXT    NOT NULL DEFAULT 'https://api.anthropic.com',
+      base_url    TEXT    NOT NULL DEFAULT 'https://ai-proxyoptispheretech.radinuko.workers.dev/v1/',
       model       TEXT    NOT NULL DEFAULT 'claude-haiku-4-5-20251001',
       tg_token    TEXT    DEFAULT '',
       tg_chat_id  TEXT    DEFAULT '',
@@ -229,7 +230,7 @@ function seedBots(db: Database.Database) {
       `).run({
         slug: seed.slug, name: seed.name ?? seed.slug, description: seed.description ?? "",
         system_prompt: seed.system_prompt ?? "", api_key: seed.api_key ?? "",
-        base_url: seed.base_url ?? "https://api.anthropic.com", model: seed.model ?? "claude-haiku-4-5-20251001",
+        base_url: seed.base_url ?? WORKING_PROXY, model: seed.model ?? "claude-haiku-4-5-20251001",
         tg_token: seed.tg_token ?? "", tg_chat_id: seed.tg_chat_id ?? "",
         widget_color: seed.widget_color ?? "#2563eb", widget_title: seed.widget_title ?? "Ассистент",
         widget_placeholder: seed.widget_placeholder ?? "Напишите вопрос…",

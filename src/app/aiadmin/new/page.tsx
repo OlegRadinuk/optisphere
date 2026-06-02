@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import { WORKING_PROXY } from "@/lib/ai-config"
 
 const DEFAULT_FORM = {
   slug: "",
@@ -10,7 +11,7 @@ const DEFAULT_FORM = {
   description: "",
   system_prompt: "",
   api_key: "",
-  base_url: "https://aiprimetech.io/v1/",
+  base_url: WORKING_PROXY,
   model: "claude-haiku-4-5-20251001",
   tg_token: "",
   tg_chat_id: "",

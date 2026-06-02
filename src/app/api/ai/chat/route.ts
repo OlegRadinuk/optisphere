@@ -1,15 +1,12 @@
 import { NextRequest, NextResponse } from "next/server"
 import Anthropic from "@anthropic-ai/sdk"
 import { isSafeFetchUrl } from "@/lib/safe-url"
+import { resolveBaseURL } from "@/lib/ai-config"
 
 function getAI() {
-  const rawBase = process.env.AI_BASE_URL ?? ""
-  const baseURL = rawBase
-    ? rawBase.replace(/\/v1\/?$/, "")
-    : "https://api.anthropic.com"
   return new Anthropic({
     apiKey: process.env.ANTHROPIC_API_KEY ?? process.env.AI_API_KEY ?? "placeholder",
-    baseURL,
+    baseURL: resolveBaseURL(process.env.AI_BASE_URL),
   })
 }
 

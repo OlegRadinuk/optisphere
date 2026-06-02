@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
+import { resolveBaseURL } from '@/lib/ai-config';
 
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY ?? '',
-  baseURL: process.env.AI_BASE_URL,
+  baseURL: resolveBaseURL(process.env.AI_BASE_URL),
 });
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
