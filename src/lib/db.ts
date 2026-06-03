@@ -119,6 +119,11 @@ function initSchema(db: Database.Database) {
   } catch {
     // Column already exists — ignore
   }
+  try {
+    db.exec(`ALTER TABLE clients ADD COLUMN greeting TEXT NOT NULL DEFAULT ''`)
+  } catch {
+    // Column already exists — ignore
+  }
 }
 
 const DEFAULT_SCHEDULE = '{"mon":true,"tue":true,"wed":true,"thu":true,"fri":true,"sat":false,"sun":false}'
@@ -197,7 +202,12 @@ function seedBots(db: Database.Database) {
   if (!fs.existsSync(SEED_PATH)) return
   let seeds: Partial<Client>[]
   try {
-    seeds = JSON.parse(fs.readFileSync(SEED_PATH, "utf-8"))
+    const raw = JSON.parse(fs.readFileSync(SEED_PATH, "utf-8"))
+    if (!Array.isArray(raw)) {
+      console.error("[db] bots-seed.json is not an array, skip seedBots")
+      return
+    }
+    seeds = raw
   } catch {
     console.error("[db] Failed to parse bots-seed.json")
     return
@@ -206,7 +216,7 @@ function seedBots(db: Database.Database) {
     if (!seed.slug) continue
     const existing = db.prepare("SELECT id FROM clients WHERE slug = ?").get(seed.slug) as { id: number } | undefined
     if (existing) {
-      const safeFields = ["name","widget_title","widget_color","widget_placeholder","context_url","quick_replies","system_prompt","model","rate_limit","active"] as const
+      const safeFields = ["name","widget_title","widget_color","widget_placeholder","context_url","quick_replies","system_prompt","model","rate_limit","active","greeting"] as const
       const updates: Partial<Client> = {}
       for (const f of safeFields) {
         if (seed[f] !== undefined) (updates as Record<string, unknown>)[f] = seed[f]
@@ -223,10 +233,10 @@ function seedBots(db: Database.Database) {
       db.prepare(`
         INSERT OR IGNORE INTO clients
           (slug,name,description,system_prompt,api_key,base_url,model,tg_token,tg_chat_id,
-           widget_color,widget_title,widget_placeholder,rate_limit,active,context_url,quick_replies)
+           widget_color,widget_title,widget_placeholder,rate_limit,active,context_url,quick_replies,greeting)
         VALUES
           (@slug,@name,@description,@system_prompt,@api_key,@base_url,@model,@tg_token,@tg_chat_id,
-           @widget_color,@widget_title,@widget_placeholder,@rate_limit,@active,@context_url,@quick_replies)
+           @widget_color,@widget_title,@widget_placeholder,@rate_limit,@active,@context_url,@quick_replies,@greeting)
       `).run({
         slug: seed.slug, name: seed.name ?? seed.slug, description: seed.description ?? "",
         system_prompt: seed.system_prompt ?? "", api_key: seed.api_key ?? "",
@@ -236,6 +246,7 @@ function seedBots(db: Database.Database) {
         widget_placeholder: seed.widget_placeholder ?? "Напишите вопрос…",
         rate_limit: seed.rate_limit ?? 30, active: seed.active ?? 1,
         context_url: seed.context_url ?? "", quick_replies: seed.quick_replies ?? "",
+        greeting: seed.greeting ?? "",
       })
     }
   }
@@ -261,6 +272,7 @@ export type Client = {
   active: number
   context_url: string
   quick_replies: string
+  greeting: string
   created_at: string
 }
 
@@ -322,11 +334,11 @@ export function createClient(
     INSERT INTO clients
       (slug, name, description, system_prompt, api_key, base_url, model,
        tg_token, tg_chat_id, widget_color, widget_title, widget_placeholder,
-       rate_limit, active, quick_replies)
+       rate_limit, active, quick_replies, greeting)
     VALUES
       (@slug, @name, @description, @system_prompt, @api_key, @base_url, @model,
        @tg_token, @tg_chat_id, @widget_color, @widget_title, @widget_placeholder,
-       @rate_limit, @active, @quick_replies)
+       @rate_limit, @active, @quick_replies, @greeting)
   `)
   const result = stmt.run(data)
   return getDb()
@@ -339,7 +351,7 @@ export function createClient(
 const UPDATABLE_CLIENT_FIELDS = new Set([
   "name", "description", "system_prompt", "api_key", "base_url", "model",
   "tg_token", "tg_chat_id", "widget_color", "widget_title", "widget_placeholder",
-  "rate_limit", "active", "context_url", "quick_replies",
+  "rate_limit", "active", "context_url", "quick_replies", "greeting",
 ])
 
 export function updateClient(
@@ -353,24 +365,44 @@ export function updateClient(
   getDb()
     .prepare(`UPDATE clients SET ${fields} WHERE slug = @slug`)
     .run({ ...safeData, slug })
-  // Keep seed file in sync so credentials survive DB wipe
-  if (data.tg_token !== undefined || data.tg_chat_id !== undefined) {
-    syncClientToSeed(slug)
-  }
+  // Keep seed file in sync — all config changes must survive DB wipe
+  syncClientToSeed(slug)
 }
 
 function syncClientToSeed(slug: string): void {
   try {
     if (!fs.existsSync(SEED_PATH)) return
-    const seeds: Partial<Client>[] = JSON.parse(fs.readFileSync(SEED_PATH, "utf-8"))
+    const raw = JSON.parse(fs.readFileSync(SEED_PATH, "utf-8"))
+    if (!Array.isArray(raw)) {
+      console.error("[db] bots-seed.json is not an array, skip syncClientToSeed")
+      return
+    }
+    const seeds: Partial<Client>[] = raw
     const client = getDb().prepare("SELECT * FROM clients WHERE slug = ?").get(slug) as Client | undefined
     if (!client) return
     const idx = seeds.findIndex((s) => s.slug === slug)
-    const entry = idx >= 0 ? seeds[idx] : { slug }
-    entry.tg_token = client.tg_token
-    entry.tg_chat_id = client.tg_chat_id
+    const entry: Partial<Client> = idx >= 0 ? seeds[idx] : { slug }
+    // Sync all config fields (no secrets: api_key, base_url excluded)
+    // null-coalescing ensures no undefined/null leaks into JSON
+    entry.name               = client.name               ?? ""
+    entry.widget_title       = client.widget_title       ?? "Ассистент"
+    entry.widget_color       = client.widget_color       ?? "#2563eb"
+    entry.widget_placeholder = client.widget_placeholder ?? "Напишите вопрос…"
+    entry.context_url        = client.context_url        ?? ""
+    entry.quick_replies      = client.quick_replies      ?? ""
+    entry.system_prompt      = client.system_prompt      ?? ""
+    entry.model              = client.model              ?? "claude-haiku-4-5-20251001"
+    entry.rate_limit         = client.rate_limit         ?? 30
+    entry.active             = client.active             ?? 1
+    entry.greeting           = client.greeting           ?? ""
+    entry.tg_token           = client.tg_token           ?? ""
+    entry.tg_chat_id         = client.tg_chat_id         ?? ""
     if (idx < 0) seeds.push(entry)
-    fs.writeFileSync(SEED_PATH, JSON.stringify(seeds, null, 2), "utf-8")
+    // Атомарная запись: пишем во временный файл, затем переименовываем.
+    // Это защищает от обрезанного JSON при краше/PM2 reload в момент записи.
+    const tmp = SEED_PATH + ".tmp"
+    fs.writeFileSync(tmp, JSON.stringify(seeds, null, 2), "utf-8")
+    fs.renameSync(tmp, SEED_PATH)
   } catch (e) {
     console.error("[db] syncClientToSeed failed", e)
   }

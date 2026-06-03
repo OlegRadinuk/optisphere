@@ -46,6 +46,7 @@ type ClientData = {
   active: number
   context_url: string
   quick_replies: string
+  greeting: string
 }
 
 export default function EditClientPage() {
@@ -234,6 +235,15 @@ export default function EditClientPage() {
               </Field>
               <Field label="Placeholder">
                 <input style={styles.input} value={form.widget_placeholder} onChange={(e) => set("widget_placeholder", e.target.value)} />
+              </Field>
+              <Field label="Приветствие (greeting)">
+                <textarea
+                  style={{ ...styles.input, height: 80, resize: "vertical" }}
+                  value={form.greeting}
+                  onChange={(e) => set("greeting", e.target.value)}
+                  placeholder="Привет! Чем могу помочь? Расскажите о своём вопросе."
+                  maxLength={1000}
+                />
               </Field>
               <Field label="Цвет">
                 <div style={{ display: "flex", gap: 10, alignItems: "center" }}>

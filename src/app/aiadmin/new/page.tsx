@@ -19,6 +19,7 @@ const DEFAULT_FORM = {
   widget_title: "Ассистент",
   widget_placeholder: "Напишите вопрос…",
   quick_replies: "",
+  greeting: "",
   rate_limit: 30,
   active: 1,
 }
@@ -117,6 +118,15 @@ export default function NewClientPage() {
             </Field>
             <Field label="Placeholder">
               <input style={styles.input} value={form.widget_placeholder} onChange={(e) => set("widget_placeholder", e.target.value)} />
+            </Field>
+            <Field label="Приветствие (greeting)" hint="первое сообщение виджета клиенту">
+              <textarea
+                style={{ ...styles.input, height: 80, resize: "vertical" }}
+                value={form.greeting}
+                onChange={(e) => set("greeting", e.target.value)}
+                placeholder="Привет! Чем могу помочь? Расскажите о своём вопросе."
+                maxLength={1000}
+              />
             </Field>
             <Field label="Цвет">
               <div style={{ display: "flex", gap: 10, alignItems: "center" }}>

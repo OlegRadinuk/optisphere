@@ -24,6 +24,8 @@
   var COLOR     = PRIMARY || "#e85d04";
   var CHAR_NAME = TITLE   || "Ассистент";
   var AVA_LETTER = CHAR_NAME.charAt(0).toUpperCase();
+  var GREETING  = "";
+  var DEFAULT_GREETING = "Здравствуйте! 👋 Подскажу и отвечу на ваши вопросы — напишите, что вас интересует.";
 
   function makeAvaHtml(size) {
     if (AVATAR_URL) {
@@ -241,7 +243,7 @@
         '<span id="opsph-bubble-name">' + escHtml(CHAR_NAME) + '</span>',
         '<button id="opsph-bubble-close" aria-label="Закрыть">✕</button>',
       '</div>',
-      '<div id="opsph-bubble-text">Здравствуйте! Я ' + escHtml(CHAR_NAME) + ' — ваш ИИ-ассистент 👋<br>Чем могу помочь?</div>',
+      '<div id="opsph-bubble-text">' + (GREETING ? escHtml(GREETING).replace(/\n/g, "<br>") : escHtml(DEFAULT_GREETING)) + '</div>',
       '<button id="opsph-bubble-cta">Написать →</button>',
     ].join("");
     document.body.appendChild(el);
@@ -283,7 +285,7 @@
 
   // ── Greeting message in chat ──────────────────────────────────────────────────
   function showGreeting() {
-    appendBotRow("Здравствуйте! Я " + CHAR_NAME + ". Чем могу помочь?");
+    appendBotRow(GREETING || DEFAULT_GREETING);
     appendQuickReplies();
   }
 
@@ -560,6 +562,7 @@
           if (cfg.title)       CHAR_NAME  = cfg.title;
           if (cfg.placeholder) script.setAttribute("data-placeholder", cfg.placeholder);
           if (Array.isArray(cfg.quick_replies) && cfg.quick_replies.length) QUICK_REPLIES = cfg.quick_replies;
+          if (cfg.greeting) GREETING = cfg.greeting;
           AVA_LETTER = CHAR_NAME.charAt(0).toUpperCase();
         }
         render();

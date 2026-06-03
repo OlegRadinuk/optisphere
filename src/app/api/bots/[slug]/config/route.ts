@@ -29,6 +29,7 @@ export async function GET(
       color: client.widget_color,
       placeholder: client.widget_placeholder,
       quick_replies: quickReplies,
+      greeting: client.greeting,
     },
     { headers: corsHeaders }
   )

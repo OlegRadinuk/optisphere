@@ -85,6 +85,7 @@ export async function POST(request: NextRequest): Promise<Response> {
       active: data.active ?? 1,
       context_url: data.context_url ?? "",
       quick_replies: data.quick_replies ?? "",
+      greeting: (data.greeting ?? "").slice(0, 1000),
     })
     return NextResponse.json(client, { status: 201 })
   } catch (err: unknown) {
@@ -111,6 +112,10 @@ export async function PATCH(request: NextRequest): Promise<Response> {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 })
   }
 
+  // Серверная страховка: ограничиваем длину greeting независимо от клиента
+  if (typeof data.greeting === "string") {
+    data.greeting = data.greeting.slice(0, 1000)
+  }
   updateClient(slug, data)
   return NextResponse.json({ ok: true })
 }
