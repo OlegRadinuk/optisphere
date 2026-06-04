@@ -124,6 +124,22 @@ function initSchema(db: Database.Database) {
   } catch {
     // Column already exists — ignore
   }
+
+  // Журнал событий по заявкам (смена статуса и т.п.) — основа сервис-тайма
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS lead_events (
+      id          INTEGER PRIMARY KEY AUTOINCREMENT,
+      client_id   INTEGER NOT NULL,
+      lead_id     INTEGER NOT NULL,
+      type        TEXT    NOT NULL DEFAULT 'status_change',
+      from_status TEXT,
+      to_status   TEXT,
+      actor       TEXT    DEFAULT '',
+      created_at  TEXT    DEFAULT (datetime('now'))
+    );
+    CREATE INDEX IF NOT EXISTS idx_lead_events_client ON lead_events(client_id, created_at);
+    CREATE INDEX IF NOT EXISTS idx_lead_events_lead   ON lead_events(lead_id);
+  `)
 }
 
 const DEFAULT_SCHEDULE = '{"mon":true,"tue":true,"wed":true,"thu":true,"fri":true,"sat":false,"sun":false}'
@@ -544,10 +560,79 @@ export function updateDoctor(
     .run({ ...safeData, id })
 }
 
-export function updateLeadStatus(id: number, status: "new" | "working" | "closed"): void {
-  getDb()
-    .prepare("UPDATE leads SET status = ? WHERE id = ?")
-    .run(status, id)
+export function updateLeadStatus(
+  id: number,
+  status: "new" | "working" | "closed",
+  actor = ""
+): void {
+  const db = getDb()
+  const row = db
+    .prepare("SELECT status, client_id FROM leads WHERE id = ?")
+    .get(id) as { status: string; client_id: number } | undefined
+  if (!row) return
+  db.prepare("UPDATE leads SET status = ? WHERE id = ?").run(status, id)
+  // Логируем только реальное изменение
+  if (row.status !== status) {
+    db.prepare(
+      `INSERT INTO lead_events (client_id, lead_id, type, from_status, to_status, actor)
+       VALUES (?, ?, 'status_change', ?, ?, ?)`
+    ).run(row.client_id, id, row.status, status, actor)
+  }
+}
+
+export type LeadEvent = {
+  id: number
+  lead_id: number
+  from_status: string | null
+  to_status: string | null
+  actor: string
+  created_at: string
+  name: string
+}
+
+// Сервис-тайм: среднее время до первого ответа и до закрытия (минуты)
+export function getServiceTimeStats(clientId: number): {
+  avgResponseMin: number | null
+  avgResolutionMin: number | null
+  handledToday: number
+  closedToday: number
+} {
+  const db = getDb()
+  const avg = (whereExtra: string): number | null => {
+    const r = db
+      .prepare(
+        `SELECT AVG(m) AS a FROM (
+           SELECT (julianday(MIN(e.created_at)) - julianday(l.created_at)) * 1440 AS m
+           FROM lead_events e JOIN leads l ON l.id = e.lead_id
+           WHERE e.client_id = ? AND e.type = 'status_change' ${whereExtra}
+           GROUP BY e.lead_id
+         )`
+      )
+      .get(clientId) as { a: number | null }
+    return r.a != null ? Math.max(0, Math.round(r.a)) : null
+  }
+  const count = (sql: string): number =>
+    (db.prepare(sql).get(clientId) as { n: number }).n
+
+  return {
+    avgResponseMin: avg("AND e.from_status = 'new'"),
+    avgResolutionMin: avg("AND e.to_status = 'closed'"),
+    handledToday: count("SELECT COUNT(*) AS n FROM lead_events WHERE client_id = ? AND date(created_at) = date('now')"),
+    closedToday: count("SELECT COUNT(*) AS n FROM lead_events WHERE client_id = ? AND to_status = 'closed' AND date(created_at) = date('now')"),
+  }
+}
+
+export function getRecentLeadEvents(clientId: number, limit = 8): LeadEvent[] {
+  return getDb()
+    .prepare(
+      `SELECT e.id, e.lead_id, e.from_status, e.to_status, e.actor, e.created_at,
+              COALESCE(NULLIF(l.name, ''), 'Без имени') AS name
+       FROM lead_events e LEFT JOIN leads l ON l.id = e.lead_id
+       WHERE e.client_id = ?
+       ORDER BY e.created_at DESC
+       LIMIT ?`
+    )
+    .all(clientId, limit) as LeadEvent[]
 }
 
 // ── Services (прайс клиники) ───────────────────────────────────────────────

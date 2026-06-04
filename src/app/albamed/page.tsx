@@ -4,6 +4,16 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { LeadsTrendChart } from "@/components/albamed/LeadsTrendChart"
 
+interface LeadEvent {
+  id: number
+  lead_id: number
+  from_status: string | null
+  to_status: string | null
+  actor: string
+  created_at: string
+  name: string
+}
+
 interface StatsData {
   leadsTotal: number
   leadsNew: number
@@ -18,6 +28,32 @@ interface StatsData {
   chatSessions: number
   chatConversion: number
   leadsByDay: { date: string; count: number }[]
+  serviceTime: {
+    avgResponseMin: number | null
+    avgResolutionMin: number | null
+    handledToday: number
+    closedToday: number
+  }
+  recentEvents: LeadEvent[]
+}
+
+function formatDuration(min: number | null): string {
+  if (min == null) return "—"
+  if (min < 1) return "< 1 мин"
+  if (min < 60) return `${min} мин`
+  if (min < 1440) { const h = Math.floor(min / 60); const m = min % 60; return m ? `${h} ч ${m} мин` : `${h} ч` }
+  const d = Math.floor(min / 1440); const h = Math.floor((min % 1440) / 60); return h ? `${d} д ${h} ч` : `${d} д`
+}
+
+const ST_LABELS: Record<string, string> = { new: "Новый", working: "В работе", closed: "Закрыт" }
+
+function timeAgo(iso: string): string {
+  const m = Math.floor((Date.now() - new Date(iso).getTime()) / 60000)
+  if (m < 1) return "только что"
+  if (m < 60) return `${m} мин назад`
+  const h = Math.floor(m / 60)
+  if (h < 24) return `${h} ч назад`
+  return `${Math.floor(h / 24)} дн назад`
 }
 
 interface Lead {
@@ -40,11 +76,15 @@ const SOURCE_COLORS: Record<string, string> = {
 function ageDays(iso: string): number {
   return Math.floor((Date.now() - new Date(iso).getTime()) / 86400000)
 }
+function plDays(n: number): string {
+  const m10 = n % 10, m100 = n % 100
+  if (m10 === 1 && m100 !== 11) return "день"
+  if (m10 >= 2 && m10 <= 4 && !(m100 >= 12 && m100 <= 14)) return "дня"
+  return "дней"
+}
 function ageLabel(d: number): string {
   if (d === 0) return "сегодня"
-  if (d === 1) return "1 день"
-  if (d < 5) return `${d} дня`
-  return `${d} дней`
+  return `${d} ${plDays(d)}`
 }
 
 // ── Карточка метрики ──────────────────────────────────────────
@@ -76,6 +116,19 @@ function StatCard({ label, value, sub, icon, tone, href, loading }: {
     </div>
   )
   return href ? <Link href={href} style={{ textDecoration: "none", display: "block", height: "100%" }}>{inner}</Link> : inner
+}
+
+// ── Мини-карточка сервис-тайма ────────────────────────────────
+function SvcCard({ label, value, hint, loading }: { label: string; value: string; hint: string; loading: boolean }) {
+  return (
+    <div style={{ background: "#fff", border: "1px solid #e8e8e8", borderRadius: 10, padding: "14px 16px", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
+      <div style={{ fontSize: 12, color: "#888", marginBottom: 6 }}>{label}</div>
+      {loading
+        ? <div style={{ width: 70, height: 22, background: "#f0f0f0", borderRadius: 5, animation: "pulse 1.5s ease infinite" }} />
+        : <div style={{ fontSize: 21, fontWeight: 700, color: "#1a1a1a", lineHeight: 1.1 }}>{value}</div>}
+      <div style={{ fontSize: 11.5, color: "#aaa", marginTop: 4 }}>{hint}</div>
+    </div>
+  )
 }
 
 export default function AlbamedOverviewPage() {
@@ -135,6 +188,13 @@ export default function AlbamedOverviewPage() {
           sub={stats ? `${stats.leadsClosed} закрыто · ${stats.leadsToday} сегодня` : ""}
           icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>}
         />
+      </div>
+
+      {/* Сервис-тайм */}
+      <div className="ab-svc-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 14, marginTop: 14 }}>
+        <SvcCard label="⏱ Среднее время ответа" value={formatDuration(stats?.serviceTime?.avgResponseMin ?? null)} hint="от заявки до «В работе»" loading={loading} />
+        <SvcCard label="✅ Среднее до закрытия" value={formatDuration(stats?.serviceTime?.avgResolutionMin ?? null)} hint="от заявки до «Закрыт»" loading={loading} />
+        <SvcCard label="📋 Обработано сегодня" value={String(stats?.serviceTime?.handledToday ?? 0)} hint={`${stats?.serviceTime?.closedToday ?? 0} закрыто сегодня`} loading={loading} />
       </div>
 
       {/* Тренд */}
@@ -203,10 +263,35 @@ export default function AlbamedOverviewPage() {
         </div>
       </div>
 
+      {/* Журнал действий */}
+      <div style={{ background: "#fff", border: "1px solid #e8e8e8", borderRadius: 10, padding: 20, marginTop: 16, boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
+        <div style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a", marginBottom: 14 }}>Журнал действий</div>
+        {loading ? (
+          <div style={{ height: 80, background: "#f0f0f0", borderRadius: 6, animation: "pulse 1.5s ease infinite" }} />
+        ) : (stats?.recentEvents?.length ?? 0) === 0 ? (
+          <div style={{ color: "#bbb", fontSize: 13, padding: "16px 0", textAlign: "center" }}>
+            Пока нет действий — журнал заполнится, когда заявки начнут обрабатывать
+          </div>
+        ) : (
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            {stats!.recentEvents.map((e, i) => (
+              <div key={e.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 0", borderBottom: i < stats!.recentEvents.length - 1 ? "1px solid #f5f5f5" : "none" }}>
+                <span style={{ width: 7, height: 7, borderRadius: 9999, flexShrink: 0, background: e.to_status === "closed" ? "#9ca3af" : e.to_status === "working" ? "#2563eb" : "#f47920" }} />
+                <div style={{ flex: 1, minWidth: 0, fontSize: 13, color: "#555" }}>
+                  <b style={{ color: "#1a1a1a" }}>{e.name}</b>: {ST_LABELS[e.from_status ?? ""] ?? e.from_status} → <b>{ST_LABELS[e.to_status ?? ""] ?? e.to_status}</b>
+                  {e.actor ? <span style={{ color: "#aaa" }}> · {e.actor}</span> : null}
+                </div>
+                <span style={{ fontSize: 12, color: "#bbb", whiteSpace: "nowrap" }}>{timeAgo(e.created_at)}</span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
       <style>{`
         @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
         @media (max-width: 900px) { .ab-two-col { grid-template-columns: 1fr !important; } }
-        @media (max-width: 767px) { .ab-stat-grid { grid-template-columns: repeat(2, 1fr) !important; } }
+        @media (max-width: 767px) { .ab-stat-grid { grid-template-columns: repeat(2, 1fr) !important; } .ab-svc-grid { grid-template-columns: 1fr !important; } }
       `}</style>
     </div>
   )

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { isAlbamedAuthenticated } from "@/app/api/albamed/auth/route"
-import { getDb } from "@/lib/db"
+import { getDb, getServiceTimeStats, getRecentLeadEvents } from "@/lib/db"
 
 const CLIENT_ID = 1
 
@@ -64,7 +64,14 @@ export async function GET(): Promise<Response> {
       )
       .all(CLIENT_ID) as Array<{ date: string; count: number }>
 
+    // ── Сервис-тайм + журнал действий ────────────────────────
+    const serviceTime = getServiceTimeStats(CLIENT_ID)
+    const recentEvents = getRecentLeadEvents(CLIENT_ID, 8)
+
     return NextResponse.json({
+      // сервис-тайм
+      serviceTime,
+      recentEvents,
       // заявки
       leadsTotal,
       leadsNew,            // нужен шеллу для бейджа

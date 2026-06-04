@@ -5,7 +5,7 @@ interface StatusBadgeProps {
 const STATUS_CONFIG = {
   new:     { bg: "#fff4ec", color: "#f47920", border: "#fdd9b5", label: "Новый" },
   working: { bg: "#eff6ff", color: "#2563eb", border: "#bfdbfe", label: "В работе" },
-  closed:  { bg: "#f0fdf4", color: "#16a34a", border: "#bbf7d0", label: "Закрыт" },
+  closed:  { bg: "#f3f4f6", color: "#6b7280", border: "#e5e7eb", label: "Закрыт" },
 } as const
 
 export function StatusBadge({ status }: StatusBadgeProps) {

@@ -66,6 +66,14 @@ export async function POST(req: NextRequest): Promise<Response> {
     maxAge: 60 * 60 * 24 * 7,
     path: "/",
   })
+  // Роль для журнала действий (не security — только подпись в логе)
+  cookieStore.set("albamed_actor", matchesClinic ? "Менеджер" : "Администратор", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    maxAge: 60 * 60 * 24 * 7,
+    path: "/",
+  })
 
   return NextResponse.json({ ok: true })
 }

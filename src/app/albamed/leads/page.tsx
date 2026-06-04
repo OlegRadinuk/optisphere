@@ -59,12 +59,18 @@ function formatDate(iso: string) {
 function ageDays(iso: string): number {
   return Math.floor((Date.now() - new Date(iso).getTime()) / 86400000)
 }
+function plDays(n: number): string {
+  const m10 = n % 10, m100 = n % 100
+  if (m10 === 1 && m100 !== 11) return "день"
+  if (m10 >= 2 && m10 <= 4 && !(m100 >= 12 && m100 <= 14)) return "дня"
+  return "дней"
+}
 
 // Бейдж «сколько ждёт» — только для необработанных (new)
 function AgeBadge({ status, created_at }: { status: LeadStatus; created_at: string }) {
   if (status !== "new") return null
   const d = ageDays(created_at)
-  const label = d === 0 ? "сегодня" : d === 1 ? "1 день" : d < 5 ? `${d} дня` : `${d} дней`
+  const label = d === 0 ? "сегодня" : `${d} ${plDays(d)}`
   const color = d >= 3 ? "#dc2626" : d >= 1 ? "#c2410c" : "#16a34a"
   const bg = d >= 3 ? "#fef2f2" : d >= 1 ? "#fff7ed" : "#f0fdf4"
   return (
@@ -78,7 +84,7 @@ function StatusBadge({ status }: { status: LeadStatus }) {
   const map: Record<LeadStatus, { label: string; bg: string; color: string; border: string }> = {
     new:     { label: "Новый",    bg: "#eff6ff", color: "#1d4ed8", border: "#bfdbfe" },
     working: { label: "В работе", bg: "#fff7ed", color: "#c2410c", border: "#fed7aa" },
-    closed:  { label: "Закрыт",  bg: "#f0fdf4", color: "#16a34a", border: "#bbf7d0" },
+    closed:  { label: "Закрыт",  bg: "#f3f4f6", color: "#6b7280", border: "#e5e7eb" },
   }
   const s = map[status] ?? map.new
   return (

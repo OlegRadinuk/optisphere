@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
+import { cookies } from "next/headers"
 import { z } from "zod"
 import { isAlbamedAuthenticated } from "@/app/api/albamed/auth/route"
 import { getDb, updateLeadStatus } from "@/lib/db"
@@ -113,7 +114,8 @@ export async function PATCH(req: NextRequest): Promise<Response> {
       return NextResponse.json({ error: "Lead not found" }, { status: 404 })
     }
 
-    updateLeadStatus(id, status)
+    const actor = (await cookies()).get("albamed_actor")?.value || "Кабинет"
+    updateLeadStatus(id, status, actor)
     return NextResponse.json({ ok: true })
   } catch (err) {
     console.error("[albamed/leads PATCH] Error:", err)

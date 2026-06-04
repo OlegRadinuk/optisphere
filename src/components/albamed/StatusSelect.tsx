@@ -13,7 +13,7 @@ interface StatusSelectProps {
 const STATUS_STYLES: Record<LeadStatus, React.CSSProperties> = {
   new:     { background: "#fff4ec", color: "#f47920", borderColor: "#fdd9b5" },
   working: { background: "#eff6ff", color: "#2563eb", borderColor: "#bfdbfe" },
-  closed:  { background: "#f0fdf4", color: "#16a34a", borderColor: "#bbf7d0" },
+  closed:  { background: "#f3f4f6", color: "#6b7280", borderColor: "#e5e7eb" },
 }
 
 export function StatusSelect({ leadId, current, onChange }: StatusSelectProps) {
