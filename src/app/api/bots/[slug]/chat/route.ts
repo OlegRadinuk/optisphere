@@ -125,39 +125,23 @@ export async function POST(
   const addDays = (d: Date, n: number) => { const r = new Date(d); r.setDate(r.getDate() + n); return r }
   const fmt = (d: Date) => d.toLocaleDateString("ru-RU", { weekday: "short", day: "numeric", month: "long" })
 
+  const tomorrow = addDays(now, 1)
   // This Saturday (0 days ahead if today is Sat, else find next Sat)
   const daysToThisSat = dayOfWeek === 6 ? 0 : (6 - dayOfWeek + 7) % 7
   const thisSat = addDays(now, daysToThisSat)
   const thisSun = addDays(thisSat, 1)
   const nextSat = addDays(thisSat, 7)
   const nextSun = addDays(nextSat, 1)
-  const nextNextSat = addDays(thisSat, 14)
-  const nextNextSun = addDays(nextNextSat, 1)
 
-  const isWeekend = dayOfWeek === 0 || dayOfWeek === 6
   const timeStr = now.toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" })
-  const hour = now.getHours()
-  const isSunday = dayOfWeek === 0
-  // Mon–Sat 08:00–20:00; Sun by appointment only
-  const clinicOpen = !isSunday && hour >= 8 && hour < 20
 
-  const openStatus = clinicOpen
-    ? `Клиника СЕЙЧАС ОТКРЫТА (работает до 20:00).`
-    : isSunday
-    ? `Клиника СЕЙЧАС ЗАКРЫТА — воскресенье, только предварительная запись.`
-    : `Клиника СЕЙЧАС ЗАКРЫТА (часы работы: пн–сб 08:00–20:00).`
-
-  const afterHoursRule = !clinicOpen
-    ? `\nВАЖНО: НЕ предлагай "позвонить прямо сейчас" и НЕ говори "постараемся принять сегодня" — клиника закрыта. Вместо этого: предложи оставить имя и телефон, чтобы администратор перезвонил завтра с 08:00.`
-    : ``
-
-  const calendarCtx = `\n\n— Текущее время и статус клиники —
-Сейчас: ${timeStr} МСК, ${todayStr}.
-${openStatus}${afterHoursRule}
-
-— Ближайшие выходные (для записи) —
-Эти выходные: ${fmt(thisSat)} — ${fmt(thisSun)}.
-Следующие выходные: ${fmt(nextSat)} — ${fmt(nextSun)}.`
+  // Universal, business-neutral time context. Every bot gets a clean "now" and
+  // reasons about its OWN working hours from its system prompt — no clinic-specific
+  // text leaks into apartment/construction bots.
+  const calendarCtx = `\n\n━━━ ТЕКУЩИЕ ДАТА И ВРЕМЯ (Москва) ━━━
+Сейчас: ${timeStr}, ${todayStr}.
+Завтра — ${fmt(tomorrow)}. Ближайшие выходные: ${fmt(thisSat)} – ${fmt(thisSun)}; следующие: ${fmt(nextSat)} – ${fmt(nextSun)}.
+Это РЕАЛЬНОЕ текущее время. Считай его «сейчас» и «сегодня». Сам даты не вычисляй — бери только отсюда. На слова клиента «сегодня», «завтра», «на выходные» опирайся на эти числа.`
 
   let systemPrompt = client.system_prompt + calendarCtx
 
@@ -247,7 +231,7 @@ ${openStatus}${afterHoursRule}
               if (!hasLead) {
                 const recentMsgs = getMessagesBySession(client.id, sessionId, 4).reverse()
                 const history = recentMsgs
-                  .map((m) => `${m.role === "user" ? "Клиент" : "Ассистент"}: ${m.content.slice(0, 300)}`)
+                  .map((m) => `${m.role === "user" ? "Клиент" : "Ассистент"}: ${m.content.replace(/\[SAVE_LEAD\]/g, "").replace(/\[SHOW_FORM\]/g, "").trim().slice(0, 300)}`)
                   .join("\n")
 
                 const text = [
