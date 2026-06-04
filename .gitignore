@@ -49,3 +49,6 @@ agents/artifacts/
 .claude/settings.local.json
 scripts/get-gsc-token.js
 data/bots.db
+data/bots.db-wal
+data/bots.db-shm
+data/bots-seed.json
