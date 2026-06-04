@@ -56,6 +56,24 @@ function formatDate(iso: string) {
   })
 }
 
+function ageDays(iso: string): number {
+  return Math.floor((Date.now() - new Date(iso).getTime()) / 86400000)
+}
+
+// Бейдж «сколько ждёт» — только для необработанных (new)
+function AgeBadge({ status, created_at }: { status: LeadStatus; created_at: string }) {
+  if (status !== "new") return null
+  const d = ageDays(created_at)
+  const label = d === 0 ? "сегодня" : d === 1 ? "1 день" : d < 5 ? `${d} дня` : `${d} дней`
+  const color = d >= 3 ? "#dc2626" : d >= 1 ? "#c2410c" : "#16a34a"
+  const bg = d >= 3 ? "#fef2f2" : d >= 1 ? "#fff7ed" : "#f0fdf4"
+  return (
+    <span style={{ fontSize: 10.5, fontWeight: 600, padding: "2px 7px", borderRadius: 9999, background: bg, color, whiteSpace: "nowrap" }}>
+      {d >= 3 ? "🔥 " : ""}ждёт {label}
+    </span>
+  )
+}
+
 function StatusBadge({ status }: { status: LeadStatus }) {
   const map: Record<LeadStatus, { label: string; bg: string; color: string; border: string }> = {
     new:     { label: "Новый",    bg: "#eff6ff", color: "#1d4ed8", border: "#bfdbfe" },
@@ -419,7 +437,10 @@ export default function LeadsPage() {
                         onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent" }}
                       >
                         <td style={{ padding: "13px 16px", color: "#999", fontSize: 13, borderBottom: idx < leads.length - 1 ? "1px solid #f5f5f5" : "none", whiteSpace: "nowrap" }}>
-                          {formatDate(lead.created_at)}
+                          <div style={{ display: "flex", flexDirection: "column", gap: 4, alignItems: "flex-start" }}>
+                            <span>{formatDate(lead.created_at)}</span>
+                            <AgeBadge status={lead.status} created_at={lead.created_at} />
+                          </div>
                         </td>
                         <td style={{ padding: "13px 16px", color: "#1a1a1a", fontWeight: 500, borderBottom: idx < leads.length - 1 ? "1px solid #f5f5f5" : "none" }}>
                           <span style={{ display: "inline-flex", alignItems: "center", gap: 7 }}>
@@ -507,7 +528,10 @@ export default function LeadsPage() {
                     >
                       {lead.phone}
                     </a>
-                    <span className="ab-card-date">{formatDate(lead.created_at)}</span>
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                      <AgeBadge status={lead.status} created_at={lead.created_at} />
+                      <span className="ab-card-date">{formatDate(lead.created_at)}</span>
+                    </span>
                   </div>
 
                   {/* Message preview */}

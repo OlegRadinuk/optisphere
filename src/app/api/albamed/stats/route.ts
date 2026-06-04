@@ -11,71 +11,79 @@ export async function GET(): Promise<Response> {
 
   try {
     const db = getDb()
+    const count = (sql: string): number =>
+      (db.prepare(sql).get(CLIENT_ID) as { n: number }).n
 
-    const leadsTotal = (
-      db
-        .prepare("SELECT COUNT(*) as n FROM leads WHERE client_id = ?")
-        .get(CLIENT_ID) as { n: number }
-    ).n
+    // ── Заявки ────────────────────────────────────────────────
+    const leadsTotal = count("SELECT COUNT(*) as n FROM leads WHERE client_id = ?")
+    const leadsNew = count("SELECT COUNT(*) as n FROM leads WHERE client_id = ? AND status = 'new'")
+    const leadsClosed = count("SELECT COUNT(*) as n FROM leads WHERE client_id = ? AND status = 'closed'")
+    const leadsToday = count("SELECT COUNT(*) as n FROM leads WHERE client_id = ? AND date(created_at) = date('now')")
 
-    const leadsNew = (
-      db
-        .prepare("SELECT COUNT(*) as n FROM leads WHERE client_id = ? AND status = 'new'")
-        .get(CLIENT_ID) as { n: number }
-    ).n
+    // Поток за 30 дней + тренд к предыдущим 30 дням
+    const leads30d = count("SELECT COUNT(*) as n FROM leads WHERE client_id = ? AND created_at >= datetime('now','-30 days')")
+    const leads30dPrev = count("SELECT COUNT(*) as n FROM leads WHERE client_id = ? AND created_at >= datetime('now','-60 days') AND created_at < datetime('now','-30 days')")
+    const trendPct = leads30dPrev > 0
+      ? Math.round(((leads30d - leads30dPrev) / leads30dPrev) * 100)
+      : (leads30d > 0 ? 100 : 0)
 
-    const sessionsTotal = (
-      db
-        .prepare(
-          "SELECT COUNT(DISTINCT session_id) as n FROM messages WHERE client_id = ?"
-        )
-        .get(CLIENT_ID) as { n: number }
+    // Возраст самой старой необработанной заявки (дни)
+    const oldestNewRow = db
+      .prepare("SELECT MIN(created_at) as oldest FROM leads WHERE client_id = ? AND status = 'new'")
+      .get(CLIENT_ID) as { oldest: string | null }
+    const oldestNewDays = oldestNewRow.oldest
+      ? Math.floor((Date.now() - new Date(oldestNewRow.oldest).getTime()) / 86400000)
+      : 0
+
+    // ── Источники ─────────────────────────────────────────────
+    const leadsBySource = db
+      .prepare(`SELECT COALESCE(NULLIF(source,''),'other') as source, COUNT(*) as count
+                FROM leads WHERE client_id = ? GROUP BY source ORDER BY count DESC`)
+      .all(CLIENT_ID) as Array<{ source: string; count: number }>
+
+    // ── Чат-конверсия (честная: заявки из чата / чат-сессии) ──
+    const chatLeads = count("SELECT COUNT(*) as n FROM leads WHERE client_id = ? AND source = 'chat'")
+    const chatSessions = (
+      db.prepare("SELECT COUNT(DISTINCT session_id) as n FROM messages WHERE client_id = ?").get(CLIENT_ID) as { n: number }
     ).n
+    const chatConversion = chatSessions > 0
+      ? Math.round((chatLeads / chatSessions) * 1000) / 10
+      : 0
 
     const sessionsToday = (
-      db
-        .prepare(
-          "SELECT COUNT(DISTINCT session_id) as n FROM messages WHERE client_id = ? AND date(created_at) = date('now')"
-        )
-        .get(CLIENT_ID) as { n: number }
+      db.prepare("SELECT COUNT(DISTINCT session_id) as n FROM messages WHERE client_id = ? AND date(created_at) = date('now')").get(CLIENT_ID) as { n: number }
     ).n
 
-    const conversionRate =
-      sessionsTotal > 0
-        ? Math.round((leadsTotal / sessionsTotal) * 1000) / 10
-        : 0
-
+    // ── Заявки по дням за 30 дней (тренд) ─────────────────────
     const leadsByDay = db
       .prepare(
         `SELECT date(created_at) as date, COUNT(*) as count
          FROM leads
-         WHERE client_id = ?
-           AND created_at >= datetime('now', '-14 days')
-         GROUP BY date(created_at)
-         ORDER BY date ASC`
+         WHERE client_id = ? AND created_at >= datetime('now','-30 days')
+         GROUP BY date(created_at) ORDER BY date ASC`
       )
       .all(CLIENT_ID) as Array<{ date: string; count: number }>
 
-    const topHours = db
-      .prepare(
-        `SELECT CAST(strftime('%H', created_at) AS INTEGER) as hour, COUNT(*) as count
-         FROM messages
-         WHERE client_id = ?
-           AND created_at >= datetime('now', '-30 days')
-         GROUP BY strftime('%H', created_at)
-         ORDER BY count DESC
-         LIMIT 5`
-      )
-      .all(CLIENT_ID) as Array<{ hour: number; count: number }>
-
     return NextResponse.json({
+      // заявки
       leadsTotal,
-      leadsNew,
-      sessionsTotal,
+      leadsNew,            // нужен шеллу для бейджа
+      leadsUnhandled: leadsNew,
+      leadsClosed,
+      leadsToday,
+      leads30d,
+      leads30dPrev,
+      trendPct,
+      oldestNewDays,
+      // источники
+      leadsBySource,
+      // чат
+      chatLeads,
+      chatSessions,
+      chatConversion,
       sessionsToday,
-      conversionRate,
+      // тренд-график
       leadsByDay,
-      topHours,
     })
   } catch (err) {
     console.error("[albamed/stats] Error:", err)

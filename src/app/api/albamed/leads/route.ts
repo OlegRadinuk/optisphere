@@ -36,6 +36,7 @@ export async function GET(req: NextRequest): Promise<Response> {
 
     const db = getDb()
 
+    const sort = searchParams.get("sort") === "oldest" ? "ASC" : "DESC"
     const search = (searchParams.get("search") ?? "").trim()
     const whereStatus = status !== "all" ? "AND l.status = @status" : ""
     const whereSearch = search ? "AND (l.name LIKE @search OR l.phone LIKE @search)" : ""
@@ -66,7 +67,7 @@ export async function GET(req: NextRequest): Promise<Response> {
            ) THEN 1 ELSE 0 END as has_chat
          FROM leads l
          WHERE l.client_id = @clientId ${whereStatus} ${whereSearch}
-         ORDER BY l.created_at DESC
+         ORDER BY l.created_at ${sort}
          LIMIT @limit OFFSET @offset`
       )
       .all({ clientId: CLIENT_ID, status, search: searchLike, limit, offset }) as Array<
