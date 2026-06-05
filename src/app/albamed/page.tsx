@@ -99,7 +99,8 @@ function StatCard({ label, value, sub, icon, tone, href, loading }: {
   const inner = (
     <div style={{
       background: bg, border: filled ? "none" : "1px solid #e8e8e8", borderRadius: 12,
-      padding: "18px 20px", height: "100%", boxShadow: filled ? "0 4px 16px rgba(0,0,0,0.12)" : "0 1px 4px rgba(0,0,0,0.04)",
+      padding: "18px 20px", minHeight: 118, boxSizing: "border-box",
+      boxShadow: filled ? "0 2px 10px rgba(0,0,0,0.10)" : "0 1px 4px rgba(0,0,0,0.04)",
       cursor: href ? "pointer" : "default", transition: "transform 150ms",
     }}>
       <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
@@ -193,7 +194,7 @@ export default function AlbamedOverviewPage() {
       </div>
 
       {/* Скорость обработки (сервис-тайм) — единый блок, без плавающих карточек */}
-      <div style={{ background: "#fff", border: "1px solid #e8e8e8", borderRadius: 12, padding: "16px 20px", marginTop: 16, boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
+      <div style={{ background: "#fff", border: "1px solid #e8e8e8", borderRadius: 12, padding: "16px 20px", marginTop: 20, boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
         <div style={{ fontSize: 13, fontWeight: 600, color: "#1a1a1a", marginBottom: 14 }}>Скорость обработки</div>
         <div className="ab-svc-row">
           <SvcStat label="Среднее время ответа" value={formatDuration(stats?.serviceTime?.avgResponseMin ?? null)} hint="от заявки до «В работе»" loading={loading} />
