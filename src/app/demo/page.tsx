@@ -35,10 +35,11 @@ const TABS: { id: Tab; label: string }[] = [
 interface TourStep { tab: Tab; selector?: string; title: string; text: string }
 const TOUR: TourStep[] = [
   { tab: "overview", title: "Привет! Давайте покажу за минуту", text: "Это рабочее место клиники: владельцу — контроль и цифры, администратору — меньше рутины. Дальше листайте сами, тут всё кликается." },
-  { tab: "overview", selector: "[data-tour='stat-leads']", title: "Владельцу — пульс клиники с утра", text: "Новые пациенты, диалоги, конверсия в запись — цифры собираются сами, без таблиц. Сразу видно: окупается ли реклама и растёт ли поток." },
-  { tab: "overview", selector: "[data-tour='night-insight']", title: "Здесь прячутся ваши деньги", text: "Треть обращений приходит ночью и в выходные, когда регистратура не работает. Ассистент отвечает мгновенно и берёт контакт — иначе человек уходит к соседям. Один имплант окупает панель на год вперёд." },
-  { tab: "leads", selector: "[data-tour='lead-0']", title: "Администратору — ни одной потерянной заявки", text: "Имя, услуга, телефон и статус в одном списке. Нажал на номер — позвонил. Видно, кто ещё не обработан, — ничего не тонет в мессенджерах и стикерах на мониторе." },
-  { tab: "calendar", selector: "[data-tour='calendar']", title: "Запись, которую не страшно вести", text: "Вся неделя по дням и часам перед глазами. Нажмите на приём — откроется аккуратная карточка с деталями; перенести можно перетаскиванием или кнопкой. «+ Запись» добавляет пациента в пару кликов." },
+  { tab: "overview", selector: "[data-tour='stat-leads']", title: "Сразу видно, что горит", text: "Необработанные заявки — крупно и красным, чтобы ни одна не потерялась. Рядом — поток за месяц с динамикой, конверсия чат-бота и скорость обработки. Пульс клиники без единой таблицы." },
+  { tab: "overview", selector: "[data-tour='hot-leads']", title: "Самые срочные — наверх", text: "Заявки, которым давно не перезвонили, поднимаются вверх и подсвечиваются. Нажал «Позвонить» — и закрыл. Скорость ответа = записанный пациент, а не ушедший к соседям." },
+  { tab: "overview", selector: "[data-tour='night-insight']", title: "Здесь прячутся ваши деньги", text: "Треть обращений приходит ночью и в выходные, когда регистратура не работает. Ассистент отвечает мгновенно и берёт контакт. Один имплант окупает панель на год вперёд." },
+  { tab: "leads", selector: "[data-tour='lead-0']", title: "Ни одной потерянной заявки", text: "Имя, услуга, телефон и статус в одном списке. Нажал на номер — позвонил. Видно, кто ещё не обработан и сколько ждёт, — ничего не тонет в мессенджерах и стикерах на мониторе." },
+  { tab: "calendar", selector: "[data-tour='calendar']", title: "Запись, которую не страшно вести", text: "Вся неделя по дням и часам перед глазами. Нажмите на приём — откроется карточка с деталями; перенести можно перетаскиванием или кнопкой. «+ Запись» добавляет пациента в пару кликов." },
   { tab: "chats", selector: "[data-tour='chat-0']", title: "Вы знаете о пациенте до звонка", text: "Вся переписка с ассистентом сохраняется. Администратор перезванивает, уже зная, что человека волнует и на какую сумму он рассчитывает, — разговор теплее и короче. Нажмите, чтобы раскрыть диалог." },
   { tab: "doctors", selector: "[data-tour='doctor-0']", title: "Врачи и график — под рукой", text: "Кто принимает и в какие дни — настраивается в один тап. Когда график меняется, администратор не путается, на кого записывать. Нажмите на день — он включится или выключится." },
   { tab: "overview", title: "Это будет работать на вас 24/7", text: "У вашей клиники будет так же — свой логотип, свои врачи, реальные пациенты. Владельцу — больше записей и прозрачность, администратору — спокойная смена без хаоса. Запуск за пару дней." },
@@ -370,6 +371,15 @@ export default function DemoPage() {
         .demo-bottomnav { display: none; }
         .demo-main { margin-left: 220px; padding: 28px; }
         .demo-help { position: fixed; right: 18px; bottom: 18px; z-index: 130; }
+        .demo-two-col { display: grid; grid-template-columns: 1fr 1.3fr; gap: 16px; }
+        .demo-svc-row { display: grid; grid-template-columns: repeat(3, 1fr); }
+        .demo-svc-stat { padding-left: 24px; border-left: 1px solid #F1F5F9; }
+        .demo-svc-stat:first-child { padding-left: 0; border-left: none; }
+        @media (max-width: 900px) { .demo-two-col { grid-template-columns: 1fr; } }
+        @media (max-width: 640px) {
+          .demo-svc-row { grid-template-columns: 1fr; gap: 16px; }
+          .demo-svc-stat { padding-left: 0; border-left: none; }
+        }
         @media (max-width: 767px) {
           .demo-sidebar { display: none; }
           .demo-fab { display: none !important; }
@@ -393,35 +403,66 @@ export default function DemoPage() {
 }
 
 // ── Sections ─────────────────────────────────────────────────────────────────
-function StatCard({ label, value, accent }: { label: string; value: string; accent?: boolean }) {
+function StatCard({ label, value, sub, tone = "plain", icon }: {
+  label: string; value: string; sub?: React.ReactNode
+  tone?: "danger" | "brand" | "plain"; icon?: React.ReactNode
+}) {
+  const filled = tone !== "plain"
+  const bg = tone === "danger" ? "#DC2626" : tone === "brand" ? "linear-gradient(135deg,#0D9488,#0891B2)" : "#fff"
   return (
     <div style={{
-      background: accent ? "linear-gradient(135deg,#0D9488,#0891B2)" : "#fff",
-      border: accent ? "none" : "1px solid #E2E8F0", borderRadius: 14, padding: "18px 20px",
-      boxShadow: accent ? "0 6px 20px rgba(13,148,136,0.28)" : "0 1px 2px rgba(15,23,42,0.04), 0 4px 12px rgba(15,23,42,0.05)",
+      background: bg, border: filled ? "none" : "1px solid #E2E8F0", borderRadius: 14,
+      padding: "16px 18px", minHeight: 118, boxSizing: "border-box",
+      boxShadow: filled ? "0 4px 14px rgba(15,23,42,0.12)" : "0 1px 2px rgba(15,23,42,0.04), 0 4px 12px rgba(15,23,42,0.05)",
     }}>
-      <div style={{ fontSize: 12, color: accent ? "rgba(255,255,255,0.8)" : "#94A3B8", marginBottom: 6 }}>{label}</div>
-      <div style={{ fontFamily: "var(--font-oxanium)", fontSize: 30, fontWeight: 700, letterSpacing: "-0.8px", color: accent ? "#fff" : "#0F172A", lineHeight: 1 }}>{value}</div>
+      <div style={{ display: "flex", alignItems: "center", gap: 9, marginBottom: 11 }}>
+        {icon && <div style={{ width: 32, height: 32, borderRadius: 9, display: "flex", alignItems: "center", justifyContent: "center", background: filled ? "rgba(255,255,255,0.2)" : PRIMARY_SOFT, color: filled ? "#fff" : PRIMARY, flexShrink: 0 }}>{icon}</div>}
+        <span style={{ fontSize: 12.5, color: filled ? "rgba(255,255,255,0.85)" : "#94A3B8", fontWeight: 500 }}>{label}</span>
+      </div>
+      <div style={{ fontFamily: "var(--font-oxanium)", fontSize: 30, fontWeight: 700, letterSpacing: "-0.8px", color: filled ? "#fff" : "#0F172A", lineHeight: 1.05 }}>{value}</div>
+      {sub && <div style={{ fontSize: 12, marginTop: 6, color: filled ? "rgba(255,255,255,0.85)" : "#94A3B8" }}>{sub}</div>}
     </div>
   )
 }
 
+const ic = {
+  alert: <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>,
+  trend: <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>,
+  chat: <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>,
+  users: <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>,
+}
+
+const DEMO_SOURCES = [
+  { label: "Сайт / форма", n: 38, color: "#0891B2" },
+  { label: "Чат-бот", n: 31, color: PRIMARY },
+  { label: "Звонок", n: 18, color: "#94A3B8" },
+]
+const DEMO_JOURNAL = [
+  { name: "Марина К.", from: "Новый", to: "В работе", actor: "Администратор", ago: "12 мин назад", dot: "#2563EB" },
+  { name: "Ольга П.", from: "В работе", to: "Закрыт", actor: "Администратор", ago: "40 мин назад", dot: "#9CA3AF" },
+  { name: "Сергей В.", from: "Новый", to: "В работе", actor: "Администратор", ago: "1 ч назад", dot: "#2563EB" },
+]
+
 function Overview({ card, h1, sub }: { card: React.CSSProperties; h1: React.CSSProperties; sub: React.CSSProperties }) {
   const max = Math.max(...ACTIVITY)
+  const srcTotal = DEMO_SOURCES.reduce((a, s) => a + s.n, 0)
+  const hot = LEADS.filter((l) => l.status === "new")
+
   return (
     <div>
       <h1 style={h1}>Обзор</h1>
-      <p style={sub}>Что происходит в клинике прямо сейчас</p>
+      <p style={sub}>Заявки, источники и что требует внимания</p>
 
-      <div className="demo-stats" style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 14, marginBottom: 20 }}>
-        <div data-tour="stat-leads"><StatCard label="Новых клиентов" value="14" accent /></div>
-        <StatCard label="Всего за месяц" value="87" />
-        <StatCard label="Диалогов сегодня" value="9" />
-        <StatCard label="Конверсия в заявку" value="19%" />
+      {/* Карточки */}
+      <div className="demo-stats" style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 14 }}>
+        <div data-tour="stat-leads"><StatCard tone="danger" icon={ic.alert} label="Не обработано" value="6" sub="самая старая ждёт 1 день" /></div>
+        <StatCard icon={ic.trend} label="Заявок за 30 дней" value="87" sub={<span style={{ color: "#16A34A", fontWeight: 600 }}>↑ 34% к прошлым 30 дням</span>} />
+        <StatCard tone="brand" icon={ic.chat} label="Конверсия чат-бота" value="23%" sub="14 заявок из 61 диалога" />
+        <StatCard icon={ic.users} label="Записей на приём" value="31" sub="из 87 заявок за месяц" />
       </div>
 
-      {/* Highlight callout — продающий инсайт */}
-      <div data-tour="night-insight" style={{ ...card, padding: "16px 20px", marginBottom: 20, display: "flex", gap: 12, alignItems: "center", background: PRIMARY_SOFT, border: "1px solid #99F6E4" }}>
+      {/* Продающий инсайт */}
+      <div data-tour="night-insight" style={{ ...card, padding: "16px 20px", marginTop: 16, display: "flex", gap: 12, alignItems: "center", background: PRIMARY_SOFT, border: "1px solid #99F6E4" }}>
         <div style={{ width: 40, height: 40, borderRadius: 10, background: "#fff", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
           <MoonIcon size={20} color={PRIMARY} />
         </div>
@@ -430,12 +471,91 @@ function Overview({ card, h1, sub }: { card: React.CSSProperties; h1: React.CSSP
         </div>
       </div>
 
-      <div style={{ ...card, padding: "20px 24px" }}>
-        <div style={{ fontSize: 14, fontWeight: 600, color: "#0F172A", marginBottom: 16 }}>Заявки за 14 дней</div>
+      {/* Скорость обработки */}
+      <div style={{ ...card, padding: "16px 20px", marginTop: 16 }}>
+        <div style={{ fontSize: 13, fontWeight: 600, color: "#0F172A", marginBottom: 14 }}>Скорость обработки</div>
+        <div className="demo-svc-row">
+          {[
+            { label: "Среднее время ответа", value: "6 мин", hint: "от заявки до «В работе»" },
+            { label: "Среднее до записи", value: "2 ч", hint: "от заявки до записи на приём" },
+            { label: "Обработано сегодня", value: "11", hint: "3 записаны на приём" },
+          ].map((s, i) => (
+            <div key={i} className="demo-svc-stat">
+              <div style={{ fontSize: 12, color: "#94A3B8", marginBottom: 6 }}>{s.label}</div>
+              <div style={{ fontFamily: "var(--font-oxanium)", fontSize: 22, fontWeight: 700, color: "#0F172A", lineHeight: 1.1 }}>{s.value}</div>
+              <div style={{ fontSize: 11.5, color: "#B6C2CF", marginTop: 4 }}>{s.hint}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Тренд */}
+      <div style={{ ...card, padding: "20px 24px", marginTop: 16 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 16 }}>
+          <span style={{ fontSize: 14, fontWeight: 600, color: "#0F172A" }}>Заявки по дням · 14 дней</span>
+          <span style={{ fontSize: 12, color: "#94A3B8" }}>{ACTIVITY.reduce((a, b) => a + b, 0)} заявок</span>
+        </div>
         <div style={{ display: "flex", alignItems: "flex-end", gap: 6, height: 90 }}>
           {ACTIVITY.map((v, i) => (
             <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
               <div style={{ width: "100%", height: Math.max(4, Math.round((v / max) * 74)), background: i === ACTIVITY.length - 1 ? PRIMARY : "#99F6E4", borderRadius: "3px 3px 0 0" }} title={`${v} заявок`} />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Источники + Требуют звонка */}
+      <div className="demo-two-col" style={{ marginTop: 16 }}>
+        <div style={{ ...card, padding: "20px 24px" }}>
+          <div style={{ fontSize: 14, fontWeight: 600, color: "#0F172A", marginBottom: 16 }}>Откуда приходят заявки</div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+            {DEMO_SOURCES.map((s) => {
+              const pct = Math.round((s.n / srcTotal) * 100)
+              return (
+                <div key={s.label}>
+                  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5, fontSize: 13 }}>
+                    <span style={{ color: "#334155", fontWeight: 500 }}>{s.label}</span>
+                    <span style={{ color: "#94A3B8" }}>{s.n} · {pct}%</span>
+                  </div>
+                  <div style={{ height: 8, background: "#F1F5F9", borderRadius: 4, overflow: "hidden" }}>
+                    <div style={{ width: `${pct}%`, height: "100%", background: s.color, borderRadius: 4 }} />
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+
+        <div data-tour="hot-leads" style={{ ...card, padding: "20px 24px" }}>
+          <div style={{ fontSize: 14, fontWeight: 600, color: "#0F172A", marginBottom: 14 }}>🔥 Требуют звонка</div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {hot.map((l, i) => (
+              <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 10px", border: "1px solid #F1F5F9", borderRadius: 9, background: i === 0 ? "#FEF2F2" : "#fff" }}>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: 13.5, fontWeight: 600, color: "#0F172A", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{l.name} · {l.service}</div>
+                  <div style={{ fontSize: 12, color: l.night ? "#C2410C" : "#16A34A", fontWeight: 500 }}>{l.night ? "пришла ночью · " : ""}{l.when}</div>
+                </div>
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 5, background: PRIMARY_SOFT, border: "1px solid #99F6E4", color: PRIMARY, borderRadius: 8, padding: "7px 12px", fontSize: 13, fontWeight: 600, whiteSpace: "nowrap" }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.97.36 1.91.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.84.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  Позвонить
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Журнал действий */}
+      <div style={{ ...card, padding: "20px 24px", marginTop: 16 }}>
+        <div style={{ fontSize: 14, fontWeight: 600, color: "#0F172A", marginBottom: 14 }}>Журнал действий</div>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          {DEMO_JOURNAL.map((e, i) => (
+            <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 0", borderBottom: i < DEMO_JOURNAL.length - 1 ? "1px solid #F1F5F9" : "none" }}>
+              <span style={{ width: 7, height: 7, borderRadius: 9999, flexShrink: 0, background: e.dot }} />
+              <div style={{ flex: 1, minWidth: 0, fontSize: 13, color: "#475569" }}>
+                <b style={{ color: "#0F172A" }}>{e.name}</b>: {e.from} → <b>{e.to}</b><span style={{ color: "#94A3B8" }}> · {e.actor}</span>
+              </div>
+              <span style={{ fontSize: 12, color: "#94A3B8", whiteSpace: "nowrap" }}>{e.ago}</span>
             </div>
           ))}
         </div>
