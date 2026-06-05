@@ -120,14 +120,14 @@ function StatCard({ label, value, sub, icon, tone, href, loading }: {
   return href ? <Link href={href} style={{ textDecoration: "none", display: "block", height: "100%" }}>{inner}</Link> : inner
 }
 
-// ── Мини-карточка сервис-тайма ────────────────────────────────
-function SvcCard({ label, value, hint, loading }: { label: string; value: string; hint: string; loading: boolean }) {
+// ── Колонка сервис-тайма внутри сгруппированного блока ────────
+function SvcStat({ label, value, hint, loading }: { label: string; value: string; hint: string; loading: boolean }) {
   return (
-    <div style={{ background: "#fff", border: "1px solid #e8e8e8", borderRadius: 10, padding: "14px 16px", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
+    <div className="ab-svc-stat">
       <div style={{ fontSize: 12, color: "#888", marginBottom: 6 }}>{label}</div>
       {loading
         ? <div style={{ width: 70, height: 22, background: "#f0f0f0", borderRadius: 5, animation: "pulse 1.5s ease infinite" }} />
-        : <div style={{ fontSize: 21, fontWeight: 700, color: "#1a1a1a", lineHeight: 1.1 }}>{value}</div>}
+        : <div style={{ fontSize: 22, fontWeight: 700, color: "#1a1a1a", lineHeight: 1.1 }}>{value}</div>}
       <div style={{ fontSize: 11.5, color: "#aaa", marginTop: 4 }}>{hint}</div>
     </div>
   )
@@ -192,11 +192,14 @@ export default function AlbamedOverviewPage() {
         />
       </div>
 
-      {/* Сервис-тайм */}
-      <div className="ab-svc-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 14, marginTop: 14 }}>
-        <SvcCard label="⏱ Среднее время ответа" value={formatDuration(stats?.serviceTime?.avgResponseMin ?? null)} hint="от заявки до «В работе»" loading={loading} />
-        <SvcCard label="✅ Среднее до закрытия" value={formatDuration(stats?.serviceTime?.avgResolutionMin ?? null)} hint="от заявки до «Закрыт»" loading={loading} />
-        <SvcCard label="📋 Обработано сегодня" value={String(stats?.serviceTime?.handledToday ?? 0)} hint={`${stats?.serviceTime?.closedToday ?? 0} закрыто сегодня`} loading={loading} />
+      {/* Скорость обработки (сервис-тайм) — единый блок, без плавающих карточек */}
+      <div style={{ background: "#fff", border: "1px solid #e8e8e8", borderRadius: 12, padding: "16px 20px", marginTop: 16, boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
+        <div style={{ fontSize: 13, fontWeight: 600, color: "#1a1a1a", marginBottom: 14 }}>Скорость обработки</div>
+        <div className="ab-svc-row">
+          <SvcStat label="Среднее время ответа" value={formatDuration(stats?.serviceTime?.avgResponseMin ?? null)} hint="от заявки до «В работе»" loading={loading} />
+          <SvcStat label="Среднее до закрытия" value={formatDuration(stats?.serviceTime?.avgResolutionMin ?? null)} hint="от заявки до «Закрыт»" loading={loading} />
+          <SvcStat label="Обработано сегодня" value={String(stats?.serviceTime?.handledToday ?? 0)} hint={`${stats?.serviceTime?.closedToday ?? 0} закрыто сегодня`} loading={loading} />
+        </div>
       </div>
 
       {/* Тренд */}
@@ -292,8 +295,15 @@ export default function AlbamedOverviewPage() {
 
       <style>{`
         @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+        .ab-svc-row { display: grid; grid-template-columns: repeat(3, 1fr); }
+        .ab-svc-stat { padding-left: 24px; border-left: 1px solid #f0f0f0; }
+        .ab-svc-stat:first-child { padding-left: 0; border-left: none; }
         @media (max-width: 900px) { .ab-two-col { grid-template-columns: 1fr !important; } }
-        @media (max-width: 767px) { .ab-stat-grid { grid-template-columns: repeat(2, 1fr) !important; } .ab-svc-grid { grid-template-columns: 1fr !important; } }
+        @media (max-width: 640px) {
+          .ab-svc-row { grid-template-columns: 1fr; gap: 16px; }
+          .ab-svc-stat { padding-left: 0; border-left: none; }
+        }
+        @media (max-width: 767px) { .ab-stat-grid { grid-template-columns: repeat(2, 1fr) !important; } }
       `}</style>
     </div>
   )
