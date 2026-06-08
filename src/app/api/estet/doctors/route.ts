@@ -4,7 +4,8 @@ import { isEstetAuthenticated } from "@/app/api/estet/auth/route"
 import { getDb, getDoctors, updateDoctor, createDoctor } from "@/lib/db"
 import type { Doctor } from "@/lib/db"
 
-const CLIENT_ID = 4
+// estet = client id 3 in БД (slug 'estet'); id 4 не существует (пропущен при чистке)
+const CLIENT_ID = 3
 
 const CreateSchema = z.object({
   name: z.string().min(1).max(200),

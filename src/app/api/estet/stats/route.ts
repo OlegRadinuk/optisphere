@@ -2,7 +2,8 @@ import { NextResponse } from "next/server"
 import { isEstetAuthenticated } from "@/app/api/estet/auth/route"
 import { getDb } from "@/lib/db"
 
-const CLIENT_ID = 4
+// estet = client id 3 in БД (slug 'estet'); id 4 не существует (пропущен при чистке)
+const CLIENT_ID = 3
 
 export async function GET(): Promise<Response> {
   if (!(await isEstetAuthenticated())) {

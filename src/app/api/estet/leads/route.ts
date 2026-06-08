@@ -4,7 +4,8 @@ import { isEstetAuthenticated } from "@/app/api/estet/auth/route"
 import { getDb, updateLeadStatus } from "@/lib/db"
 import type { Lead } from "@/lib/db"
 
-const CLIENT_ID = 4
+// estet = client id 3 in БД (slug 'estet'); id 4 не существует (пропущен при чистке)
+const CLIENT_ID = 3
 
 const VALID_STATUSES = ["new", "working", "closed", "all"] as const
 type StatusFilter = (typeof VALID_STATUSES)[number]
