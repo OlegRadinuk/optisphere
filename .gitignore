@@ -52,3 +52,14 @@ data/bots.db
 data/bots.db-wal
 data/bots.db-shm
 data/bots-seed.json
+
+# Внутренняя кухня студии — НЕ публиковать
+CLAUDE.md
+AGENTS.md
+HANDOFF_CONTEXT.md
+/sales/
+/agents/
+/spec/
+/docs/
+/.claude/
+/.serena/
