@@ -63,3 +63,6 @@ HANDOFF_CONTEXT.md
 /docs/
 /.claude/
 /.serena/
+
+# temp files
+*.tmp.*
