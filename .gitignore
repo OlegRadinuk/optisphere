@@ -66,3 +66,8 @@ HANDOFF_CONTEXT.md
 
 # temp files
 *.tmp.*
+data/
+*.db
+*.sqlite
+*.sqlite3
+https___optisphere.tech_-Coverage-*/
