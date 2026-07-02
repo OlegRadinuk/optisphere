@@ -285,8 +285,7 @@ export default function WarmupClient() {
       <header className={styles.topbar}>
         <div className={styles.brandRow}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/optisphere-ring-light.png" alt="" className={styles.brandRing} />
-          <span className={styles.brandWordmark}>ptisphere</span>
+          <img src="/optisphere-logo-light.png" alt="Optisphere" className={styles.brandLogo} />
         </div>
         {current !== 'niche' && current !== 'final' && (
           <>
