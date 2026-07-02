@@ -83,7 +83,6 @@ function initSchema(db: Database.Database) {
     );
 
     CREATE INDEX IF NOT EXISTS idx_doctors_client ON doctors(client_id);
-    CREATE INDEX IF NOT EXISTS idx_leads_status   ON leads(client_id, status);
 
     CREATE TABLE IF NOT EXISTS services (
       id          INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -96,6 +95,25 @@ function initSchema(db: Database.Database) {
       created_at  TEXT    DEFAULT (datetime('now'))
     );
     CREATE INDEX IF NOT EXISTS idx_services_client ON services(client_id);
+
+    CREATE TABLE IF NOT EXISTS appointments (
+      id               INTEGER PRIMARY KEY AUTOINCREMENT,
+      client_id        INTEGER NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
+      lead_id          INTEGER REFERENCES leads(id) ON DELETE SET NULL,
+      doctor_id        INTEGER REFERENCES doctors(id) ON DELETE SET NULL,
+      patient_name     TEXT    NOT NULL DEFAULT '',
+      patient_phone    TEXT    NOT NULL DEFAULT '',
+      service          TEXT    NOT NULL DEFAULT '',
+      notes            TEXT    NOT NULL DEFAULT '',
+      appointment_date TEXT    NOT NULL,
+      appointment_time TEXT    NOT NULL,
+      duration_min     INTEGER NOT NULL DEFAULT 30,
+      status           TEXT    NOT NULL DEFAULT 'scheduled',
+      source           TEXT    NOT NULL DEFAULT 'admin',
+      created_at       TEXT    DEFAULT (datetime('now'))
+    );
+    CREATE INDEX IF NOT EXISTS idx_appointments_client ON appointments(client_id, appointment_date);
+    CREATE INDEX IF NOT EXISTS idx_appointments_doctor ON appointments(doctor_id, appointment_date);
   `)
 
   // Migrations — safe to run on every start
@@ -114,6 +132,12 @@ function initSchema(db: Database.Database) {
   } catch {
     // Column already exists — ignore
   }
+  // Index on status — must be created after the status column migration above
+  try {
+    db.exec(`CREATE INDEX IF NOT EXISTS idx_leads_status ON leads(client_id, status)`)
+  } catch {
+    // Index already exists — ignore
+  }
   try {
     db.exec(`ALTER TABLE leads ADD COLUMN source TEXT NOT NULL DEFAULT 'chat'`)
   } catch {
@@ -121,6 +145,22 @@ function initSchema(db: Database.Database) {
   }
   try {
     db.exec(`ALTER TABLE clients ADD COLUMN greeting TEXT NOT NULL DEFAULT ''`)
+  } catch {
+    // Column already exists — ignore
+  }
+  // ── Booking layer migrations ───────────────────────────────────────────────
+  try {
+    db.exec(`ALTER TABLE appointments ADD COLUMN source TEXT NOT NULL DEFAULT 'admin'`)
+  } catch {
+    // Column already exists — ignore
+  }
+  try {
+    db.exec(`ALTER TABLE doctors ADD COLUMN photo_url TEXT`)
+  } catch {
+    // Column already exists — ignore
+  }
+  try {
+    db.exec(`ALTER TABLE doctors ADD COLUMN appointment_price TEXT`)
   } catch {
     // Column already exists — ignore
   }
@@ -316,6 +356,8 @@ export type Doctor = {
   branch: number
   schedule: string
   active: number
+  photo_url: string | null
+  appointment_price: string | null
   created_at: string
 }
 
@@ -545,11 +587,28 @@ export function createDoctor(
   return getDb().prepare("SELECT * FROM doctors WHERE id = ?").get(result.lastInsertRowid) as Doctor
 }
 
-const UPDATABLE_DOCTOR_FIELDS = new Set(["name", "specialty", "branch", "schedule", "active"])
+export type Appointment = {
+  id: number
+  client_id: number
+  lead_id: number | null
+  doctor_id: number | null
+  patient_name: string
+  patient_phone: string
+  service: string
+  notes: string
+  appointment_date: string
+  appointment_time: string
+  duration_min: number
+  status: string
+  source: string
+  created_at: string
+}
+
+const UPDATABLE_DOCTOR_FIELDS = new Set(["name", "specialty", "branch", "schedule", "active", "photo_url", "appointment_price"])
 
 export function updateDoctor(
   id: number,
-  data: Partial<Pick<Doctor, "name" | "specialty" | "branch" | "schedule" | "active">>
+  data: Partial<Pick<Doctor, "name" | "specialty" | "branch" | "schedule" | "active" | "photo_url" | "appointment_price">>
 ): void {
   const keys = Object.keys(data).filter((k) => UPDATABLE_DOCTOR_FIELDS.has(k))
   const fields = keys.map((k) => `${k} = @${k}`).join(", ")

@@ -1,0 +1,1640 @@
+"use client"
+
+import { useState, useEffect, useCallback } from "react"
+
+// ── Types ──────────────────────────────────────────────────────────────────────
+
+interface PublicDoctor {
+  id: number
+  name: string
+  specialty: string
+  branch: number
+  photo_url: string | null
+  appointment_price: string | null
+}
+
+type Step = "doctor" | "date" | "time" | "contact" | "success"
+
+interface BookingState {
+  doctor: PublicDoctor | null
+  date: string | null
+  time: string | null
+}
+
+// ── Helpers ────────────────────────────────────────────────────────────────────
+
+function getInitials(name: string): string {
+  return name
+    .split(" ")
+    .slice(0, 2)
+    .map((part) => part[0] ?? "")
+    .join("")
+    .toUpperCase()
+}
+
+// Deterministic color per doctor name (soft medical palette)
+const AVATAR_COLORS = [
+  "#0ea5e9", // sky
+  "#0d9488", // teal
+  "#2563eb", // blue
+  "#7c3aed", // violet
+  "#059669", // emerald
+  "#0891b2", // cyan
+  "#4f46e5", // indigo
+  "#0369a1", // dark blue
+]
+
+function getAvatarColor(name: string): string {
+  let hash = 0
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash)
+  }
+  return AVATAR_COLORS[Math.abs(hash) % AVATAR_COLORS.length]
+}
+
+function formatDate(dateStr: string): string {
+  const d = new Date(dateStr + "T00:00:00")
+  return d.toLocaleDateString("ru-RU", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  })
+}
+
+function getDayLabel(dateStr: string): { dow: string; day: number } {
+  const d = new Date(dateStr + "T00:00:00")
+  const dow = d.toLocaleDateString("ru-RU", { weekday: "short" })
+  return { dow: dow.replace(".", ""), day: d.getDate() }
+}
+
+function generate14Days(): string[] {
+  const days: string[] = []
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  for (let i = 0; i < 14; i++) {
+    const d = new Date(today)
+    d.setDate(today.getDate() + i)
+    days.push(d.toISOString().slice(0, 10))
+  }
+  return days
+}
+
+// Russian phone mask: +7 (XXX) XXX-XX-XX
+function formatPhone(raw: string): string {
+  const digits = raw.replace(/\D/g, "")
+  // Normalise leading 8 → 7
+  const normalised = digits.startsWith("8")
+    ? "7" + digits.slice(1)
+    : digits.startsWith("7")
+    ? digits
+    : digits.length > 0
+    ? "7" + digits
+    : digits
+  const d = normalised.slice(1, 11) // up to 10 digits after country code
+
+  let result = "+7"
+  if (d.length > 0) result += " (" + d.slice(0, 3)
+  if (d.length >= 3) result += ") " + d.slice(3, 6)
+  if (d.length >= 6) result += "-" + d.slice(6, 8)
+  if (d.length >= 8) result += "-" + d.slice(8, 10)
+  return result
+}
+
+function isPhoneValid(phone: string): boolean {
+  const digits = phone.replace(/\D/g, "")
+  const normalised = digits.startsWith("8")
+    ? "7" + digits.slice(1)
+    : digits.startsWith("7")
+    ? digits
+    : "7" + digits
+  return normalised.length === 11
+}
+
+// ── Sub-components ─────────────────────────────────────────────────────────────
+
+function StepIndicator({
+  current,
+  canGoTo,
+}: {
+  current: Step
+  canGoTo: (step: Step) => boolean
+}) {
+  const steps: { key: Step; label: string }[] = [
+    { key: "doctor", label: "Врач" },
+    { key: "date", label: "Дата" },
+    { key: "time", label: "Время" },
+    { key: "contact", label: "Контакт" },
+  ]
+
+  const currentIndex = steps.findIndex((s) => s.key === current)
+
+  if (current === "success") return null
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 0,
+        padding: "0 0 24px",
+        overflowX: "auto",
+      }}
+    >
+      {steps.map((step, idx) => {
+        const isDone = idx < currentIndex
+        const isActive = step.key === current
+        const isClickable = isDone && canGoTo(step.key)
+
+        return (
+          <div
+            key={step.key}
+            style={{ display: "flex", alignItems: "center", flex: idx < steps.length - 1 ? 1 : "none" }}
+          >
+            <button
+              type="button"
+              onClick={isClickable ? () => canGoTo(step.key) : undefined}
+              disabled={!isClickable && !isActive}
+              aria-current={isActive ? "step" : undefined}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                background: "none",
+                border: "none",
+                cursor: isClickable ? "pointer" : "default",
+                padding: "4px 2px",
+                flexShrink: 0,
+              }}
+            >
+              <span
+                style={{
+                  width: 28,
+                  height: 28,
+                  borderRadius: "50%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 13,
+                  fontWeight: 700,
+                  background: isActive
+                    ? "#0ea5e9"
+                    : isDone
+                    ? "#0d9488"
+                    : "#e5e7eb",
+                  color: isActive || isDone ? "#fff" : "#9ca3af",
+                  flexShrink: 0,
+                  transition: "background 0.2s",
+                }}
+              >
+                {isDone ? (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                ) : (
+                  idx + 1
+                )}
+              </span>
+              <span
+                style={{
+                  fontSize: 13,
+                  fontWeight: isActive ? 600 : 400,
+                  color: isActive ? "#0ea5e9" : isDone ? "#374151" : "#9ca3af",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {step.label}
+              </span>
+            </button>
+            {idx < steps.length - 1 && (
+              <div
+                style={{
+                  flex: 1,
+                  height: 2,
+                  background: isDone ? "#0d9488" : "#e5e7eb",
+                  margin: "0 6px",
+                  borderRadius: 1,
+                  minWidth: 16,
+                  transition: "background 0.2s",
+                }}
+              />
+            )}
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+function DoctorAvatar({
+  doctor,
+  size = 56,
+}: {
+  doctor: PublicDoctor
+  size?: number
+}) {
+  const [imgError, setImgError] = useState(false)
+
+  if (doctor.photo_url && !imgError) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={doctor.photo_url}
+        alt={doctor.name}
+        onError={() => setImgError(true)}
+        style={{
+          width: size,
+          height: size,
+          borderRadius: "50%",
+          objectFit: "cover",
+          flexShrink: 0,
+        }}
+      />
+    )
+  }
+
+  const color = getAvatarColor(doctor.name)
+  return (
+    <div
+      aria-label={`Аватар ${doctor.name}`}
+      style={{
+        width: size,
+        height: size,
+        borderRadius: "50%",
+        background: color,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        color: "#fff",
+        fontSize: size * 0.31,
+        fontWeight: 700,
+        flexShrink: 0,
+        userSelect: "none",
+      }}
+    >
+      {getInitials(doctor.name)}
+    </div>
+  )
+}
+
+// ── Skeleton loaders ───────────────────────────────────────────────────────────
+
+function SkeletonCard() {
+  return (
+    <div
+      style={{
+        border: "1.5px solid #e5e7eb",
+        borderRadius: 14,
+        padding: "16px 14px",
+        display: "flex",
+        gap: 12,
+        alignItems: "center",
+      }}
+    >
+      <div
+        style={{
+          width: 56,
+          height: 56,
+          borderRadius: "50%",
+          background: "#e5e7eb",
+          flexShrink: 0,
+          animation: "bkPulse 1.4s ease infinite",
+        }}
+      />
+      <div style={{ flex: 1 }}>
+        <div
+          style={{
+            height: 15,
+            background: "#e5e7eb",
+            borderRadius: 6,
+            marginBottom: 8,
+            width: "70%",
+            animation: "bkPulse 1.4s ease infinite",
+          }}
+        />
+        <div
+          style={{
+            height: 13,
+            background: "#e5e7eb",
+            borderRadius: 6,
+            width: "50%",
+            animation: "bkPulse 1.4s ease infinite",
+          }}
+        />
+      </div>
+    </div>
+  )
+}
+
+// ── Step 1: Doctor selection ───────────────────────────────────────────────────
+
+function StepDoctor({
+  onSelect,
+}: {
+  onSelect: (doctor: PublicDoctor) => void
+}) {
+  const [doctors, setDoctors] = useState<PublicDoctor[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [query, setQuery] = useState("")
+
+  useEffect(() => {
+    fetch("/api/booking/albamed/doctors")
+      .then((r) => {
+        if (!r.ok) throw new Error("Не удалось загрузить список врачей")
+        return r.json() as Promise<{ doctors: PublicDoctor[] }>
+      })
+      .then((d) => {
+        setDoctors(d.doctors)
+        setLoading(false)
+      })
+      .catch((e: unknown) => {
+        setError(e instanceof Error ? e.message : "Ошибка загрузки")
+        setLoading(false)
+      })
+  }, [])
+
+  const filtered = query.trim()
+    ? doctors.filter(
+        (d) =>
+          d.name.toLowerCase().includes(query.toLowerCase()) ||
+          d.specialty.toLowerCase().includes(query.toLowerCase())
+      )
+    : doctors
+
+  if (error) {
+    return (
+      <div
+        style={{
+          background: "#fef2f2",
+          border: "1px solid #fca5a5",
+          borderRadius: 10,
+          padding: "14px 16px",
+          color: "#b91c1c",
+          fontSize: 14,
+        }}
+      >
+        {error}
+      </div>
+    )
+  }
+
+  return (
+    <div>
+      <h2 style={{ fontSize: 20, fontWeight: 700, margin: "0 0 4px", color: "#111827" }}>
+        Выберите врача
+      </h2>
+      <p style={{ fontSize: 14, color: "#6b7280", margin: "0 0 16px" }}>
+        Запись онлайн — администратор подтвердит время
+      </p>
+
+      {/* Search */}
+      <div style={{ position: "relative", marginBottom: 16 }}>
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#9ca3af"
+          strokeWidth="2"
+          style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)" }}
+        >
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+        <input
+          type="search"
+          placeholder="Поиск по имени или специальности"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          aria-label="Поиск врача"
+          style={{
+            width: "100%",
+            boxSizing: "border-box",
+            padding: "10px 12px 10px 38px",
+            border: "1.5px solid #d1d5db",
+            borderRadius: 10,
+            fontSize: 14,
+            outline: "none",
+            background: "#fff",
+            color: "#111827",
+            transition: "border-color 0.15s",
+          }}
+          onFocus={(e) => {
+            e.currentTarget.style.borderColor = "#0ea5e9"
+          }}
+          onBlur={(e) => {
+            e.currentTarget.style.borderColor = "#d1d5db"
+          }}
+        />
+      </div>
+
+      {/* Doctor grid */}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+          gap: 10,
+        }}
+      >
+        {loading
+          ? Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)
+          : filtered.length === 0
+          ? (
+            <p style={{ gridColumn: "1 / -1", color: "#6b7280", fontSize: 14, padding: "16px 0" }}>
+              {query ? "Ничего не найдено" : "Список врачей пуст"}
+            </p>
+          )
+          : filtered.map((doctor) => (
+            <button
+              key={doctor.id}
+              type="button"
+              onClick={() => onSelect(doctor)}
+              style={{
+                display: "flex",
+                gap: 12,
+                alignItems: "center",
+                background: "#fff",
+                border: "1.5px solid #e5e7eb",
+                borderRadius: 14,
+                padding: "14px 14px",
+                cursor: "pointer",
+                textAlign: "left",
+                transition: "border-color 0.15s, box-shadow 0.15s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = "#0ea5e9"
+                e.currentTarget.style.boxShadow = "0 2px 12px rgba(14,165,233,0.12)"
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = "#e5e7eb"
+                e.currentTarget.style.boxShadow = "none"
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.borderColor = "#0ea5e9"
+                e.currentTarget.style.outline = "2px solid #bae6fd"
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.borderColor = "#e5e7eb"
+                e.currentTarget.style.outline = "none"
+              }}
+              aria-label={`Записаться к ${doctor.name}`}
+            >
+              <DoctorAvatar doctor={doctor} size={52} />
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div
+                  style={{
+                    fontSize: 14,
+                    fontWeight: 600,
+                    color: "#111827",
+                    lineHeight: 1.35,
+                    marginBottom: 3,
+                  }}
+                >
+                  {doctor.name}
+                </div>
+                <div
+                  style={{
+                    fontSize: 13,
+                    color: "#6b7280",
+                    lineHeight: 1.3,
+                    marginBottom: doctor.appointment_price ? 6 : 0,
+                  }}
+                >
+                  {doctor.specialty}
+                </div>
+                {doctor.appointment_price && (
+                  <div
+                    style={{
+                      fontSize: 13,
+                      fontWeight: 600,
+                      color: "#0d9488",
+                    }}
+                  >
+                    {doctor.appointment_price}
+                  </div>
+                )}
+              </div>
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#d1d5db"
+                strokeWidth="2"
+                style={{ flexShrink: 0 }}
+              >
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+            </button>
+          ))}
+      </div>
+    </div>
+  )
+}
+
+// ── Step 2: Date selection ─────────────────────────────────────────────────────
+
+function StepDate({
+  doctor,
+  onSelect,
+  onBack,
+}: {
+  doctor: PublicDoctor
+  onSelect: (date: string) => void
+  onBack: () => void
+}) {
+  const days = generate14Days()
+  const today = days[0]
+
+  const ruMonths: Record<number, string> = {
+    0: "января", 1: "февраля", 2: "марта", 3: "апреля",
+    4: "мая", 5: "июня", 6: "июля", 7: "августа",
+    8: "сентября", 9: "октября", 10: "ноября", 11: "декабря",
+  }
+
+  return (
+    <div>
+      <BackButton onClick={onBack} />
+      <h2 style={{ fontSize: 20, fontWeight: 700, margin: "0 0 4px", color: "#111827" }}>
+        Выберите дату
+      </h2>
+      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
+        <DoctorAvatar doctor={doctor} size={32} />
+        <span style={{ fontSize: 14, color: "#374151", fontWeight: 500 }}>
+          {doctor.name}
+        </span>
+      </div>
+
+      {/* Horizontal date strip — scrollable on mobile */}
+      <div
+        style={{
+          display: "flex",
+          gap: 8,
+          overflowX: "auto",
+          paddingBottom: 8,
+          scrollbarWidth: "none",
+          WebkitOverflowScrolling: "touch",
+        }}
+        role="group"
+        aria-label="Выбор даты"
+      >
+        {days.map((dateStr) => {
+          const { dow, day } = getDayLabel(dateStr)
+          const d = new Date(dateStr + "T00:00:00")
+          const month = ruMonths[d.getMonth()]
+          const isToday = dateStr === today
+
+          return (
+            <button
+              key={dateStr}
+              type="button"
+              onClick={() => onSelect(dateStr)}
+              aria-label={`${dow}, ${day} ${month}`}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                minWidth: 58,
+                height: 72,
+                border: "1.5px solid #e5e7eb",
+                borderRadius: 12,
+                background: "#fff",
+                cursor: "pointer",
+                padding: "8px 4px",
+                flexShrink: 0,
+                transition: "border-color 0.15s, background 0.15s",
+                position: "relative",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = "#0ea5e9"
+                e.currentTarget.style.background = "#f0f9ff"
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = "#e5e7eb"
+                e.currentTarget.style.background = "#fff"
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.borderColor = "#0ea5e9"
+                e.currentTarget.style.outline = "2px solid #bae6fd"
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.borderColor = "#e5e7eb"
+                e.currentTarget.style.outline = "none"
+              }}
+            >
+              {isToday && (
+                <span
+                  style={{
+                    position: "absolute",
+                    top: 4,
+                    fontSize: 9,
+                    fontWeight: 700,
+                    color: "#0ea5e9",
+                    textTransform: "uppercase",
+                    letterSpacing: 0.4,
+                  }}
+                >
+                  сегодня
+                </span>
+              )}
+              <span style={{ fontSize: 11, color: "#6b7280", marginTop: isToday ? 4 : 0 }}>
+                {dow}
+              </span>
+              <span style={{ fontSize: 20, fontWeight: 700, color: "#111827", lineHeight: 1.2 }}>
+                {day}
+              </span>
+              <span style={{ fontSize: 11, color: "#9ca3af" }}>{month}</span>
+            </button>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+// ── Step 3: Time selection ─────────────────────────────────────────────────────
+
+function StepTime({
+  doctor,
+  date,
+  onSelect,
+  onBack,
+  refreshTrigger,
+}: {
+  doctor: PublicDoctor
+  date: string
+  onSelect: (time: string) => void
+  onBack: () => void
+  refreshTrigger?: number
+}) {
+  const [slots, setSlots] = useState<string[]>([])
+  const [loading, setLoading] = useState(true)
+  const [noSlotMessage, setNoSlotMessage] = useState<string | null>(null)
+
+  const loadSlots = useCallback(() => {
+    setLoading(true)
+    setNoSlotMessage(null)
+    fetch(
+      `/api/booking/albamed/slots?doctor_id=${doctor.id}&date=${date}`
+    )
+      .then((r) => r.json() as Promise<{ slots: string[]; message?: string }>)
+      .then((d) => {
+        setSlots(d.slots)
+        if (d.slots.length === 0) {
+          setNoSlotMessage(d.message ?? "На эту дату нет свободного времени")
+        }
+        setLoading(false)
+      })
+      .catch(() => {
+        setSlots([])
+        setNoSlotMessage("Не удалось загрузить слоты")
+        setLoading(false)
+      })
+  }, [doctor.id, date])
+
+  useEffect(() => {
+    loadSlots()
+  }, [loadSlots, refreshTrigger])
+
+  return (
+    <div>
+      <BackButton onClick={onBack} />
+      <h2 style={{ fontSize: 20, fontWeight: 700, margin: "0 0 4px", color: "#111827" }}>
+        Выберите желаемое время
+      </h2>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 10,
+          marginBottom: 16,
+          flexWrap: "wrap",
+        }}
+      >
+        <DoctorAvatar doctor={doctor} size={28} />
+        <span style={{ fontSize: 14, color: "#374151", fontWeight: 500 }}>
+          {doctor.name}
+        </span>
+        <span style={{ fontSize: 14, color: "#6b7280" }}>·</span>
+        <span style={{ fontSize: 14, color: "#374151" }}>{formatDate(date)}</span>
+      </div>
+
+      {loading ? (
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(76px, 1fr))",
+            gap: 8,
+          }}
+        >
+          {Array.from({ length: 12 }).map((_, i) => (
+            <div
+              key={i}
+              style={{
+                height: 44,
+                background: "#e5e7eb",
+                borderRadius: 10,
+                animation: "bkPulse 1.4s ease infinite",
+              }}
+            />
+          ))}
+        </div>
+      ) : noSlotMessage ? (
+        <div
+          style={{
+            background: "#fffbeb",
+            border: "1px solid #fcd34d",
+            borderRadius: 10,
+            padding: "14px 16px",
+            color: "#92400e",
+            fontSize: 14,
+          }}
+        >
+          {noSlotMessage}.{" "}
+          <button
+            type="button"
+            onClick={onBack}
+            style={{
+              background: "none",
+              border: "none",
+              color: "#0ea5e9",
+              cursor: "pointer",
+              padding: 0,
+              fontSize: 14,
+              fontWeight: 600,
+            }}
+          >
+            Выбрать другой день
+          </button>
+        </div>
+      ) : (
+        <>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(76px, 1fr))",
+            gap: 8,
+          }}
+          role="group"
+          aria-label="Доступное время"
+        >
+          {slots.map((slot) => (
+            <button
+              key={slot}
+              type="button"
+              onClick={() => onSelect(slot)}
+              aria-label={`Время ${slot}`}
+              style={{
+                height: 44,
+                border: "1.5px solid #e5e7eb",
+                borderRadius: 10,
+                background: "#fff",
+                cursor: "pointer",
+                fontSize: 15,
+                fontWeight: 600,
+                color: "#111827",
+                transition: "border-color 0.15s, background 0.15s, color 0.15s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = "#0ea5e9"
+                e.currentTarget.style.background = "#0ea5e9"
+                e.currentTarget.style.color = "#fff"
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = "#e5e7eb"
+                e.currentTarget.style.background = "#fff"
+                e.currentTarget.style.color = "#111827"
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.outline = "2px solid #bae6fd"
+                e.currentTarget.style.borderColor = "#0ea5e9"
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.outline = "none"
+                e.currentTarget.style.borderColor = "#e5e7eb"
+              }}
+            >
+              {slot}
+            </button>
+          ))}
+        </div>
+        <p
+          style={{
+            marginTop: 12,
+            fontSize: 13,
+            color: "#6b7280",
+            lineHeight: 1.5,
+          }}
+        >
+          Это предварительная запись. Администратор перезвонит и подтвердит точное время.
+        </p>
+        </>
+      )}
+    </div>
+  )
+}
+
+// ── Step 4: Contact form ───────────────────────────────────────────────────────
+
+interface ContactFormData {
+  name: string
+  phone: string
+  comment: string
+  consent: boolean
+}
+
+interface ContactFormErrors {
+  name?: string
+  phone?: string
+}
+
+function StepContact({
+  doctor,
+  date,
+  time,
+  onSubmit,
+  onBack,
+}: {
+  doctor: PublicDoctor
+  date: string
+  time: string
+  onSubmit: (data: ContactFormData) => Promise<void>
+  onBack: () => void
+}) {
+  const [form, setForm] = useState<ContactFormData>({
+    name: "",
+    phone: "",
+    comment: "",
+    consent: false,
+  })
+  const [errors, setErrors] = useState<ContactFormErrors>({})
+  const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
+
+  function validate(): boolean {
+    const newErrors: ContactFormErrors = {}
+    if (form.name.trim().length < 2) {
+      newErrors.name = "Введите ФИО (минимум 2 символа)"
+    }
+    if (!isPhoneValid(form.phone)) {
+      newErrors.phone = "Введите корректный телефон (+7 или 8, 11 цифр)"
+    }
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    if (!validate()) return
+    setSubmitting(true)
+    setSubmitError(null)
+    try {
+      await onSubmit({
+        name: form.name.trim(),
+        phone: form.phone,
+        comment: form.comment.trim(),
+        consent: form.consent,
+      })
+    } catch (err: unknown) {
+      setSubmitError(err instanceof Error ? err.message : "Ошибка отправки")
+      setSubmitting(false)
+    }
+  }
+
+  const canSubmit =
+    form.consent &&
+    form.name.trim().length >= 2 &&
+    isPhoneValid(form.phone) &&
+    !submitting
+
+  return (
+    <div>
+      <BackButton onClick={onBack} />
+      <h2 style={{ fontSize: 20, fontWeight: 700, margin: "0 0 4px", color: "#111827" }}>
+        Ваши контакты
+      </h2>
+      <p style={{ fontSize: 14, color: "#6b7280", margin: "0 0 16px" }}>
+        Администратор позвонит для подтверждения времени
+      </p>
+
+      {/* Booking summary */}
+      <div
+        style={{
+          background: "#f0f9ff",
+          border: "1px solid #bae6fd",
+          borderRadius: 12,
+          padding: "12px 14px",
+          marginBottom: 20,
+          display: "flex",
+          gap: 12,
+          alignItems: "flex-start",
+        }}
+      >
+        <DoctorAvatar doctor={doctor} size={40} />
+        <div>
+          <div style={{ fontSize: 14, fontWeight: 600, color: "#111827" }}>
+            {doctor.name}
+          </div>
+          <div style={{ fontSize: 13, color: "#6b7280" }}>{doctor.specialty}</div>
+          <div style={{ fontSize: 13, color: "#0ea5e9", fontWeight: 600, marginTop: 3 }}>
+            {formatDate(date)} · {time}
+          </div>
+        </div>
+      </div>
+
+      <form onSubmit={handleSubmit} noValidate>
+        {/* Name */}
+        <div style={{ marginBottom: 14 }}>
+          <label
+            htmlFor="bk-name"
+            style={{
+              display: "block",
+              fontSize: 13,
+              fontWeight: 600,
+              color: "#374151",
+              marginBottom: 5,
+            }}
+          >
+            ФИО <span style={{ color: "#ef4444" }}>*</span>
+          </label>
+          <input
+            id="bk-name"
+            type="text"
+            autoComplete="name"
+            placeholder="Фамилия Имя Отчество"
+            value={form.name}
+            onChange={(e) => {
+              setForm((f) => ({ ...f, name: e.target.value }))
+              if (errors.name) setErrors((er) => ({ ...er, name: undefined }))
+            }}
+            aria-describedby={errors.name ? "bk-name-error" : undefined}
+            aria-invalid={!!errors.name}
+            style={{
+              width: "100%",
+              boxSizing: "border-box",
+              padding: "10px 12px",
+              border: `1.5px solid ${errors.name ? "#f87171" : "#d1d5db"}`,
+              borderRadius: 10,
+              fontSize: 15,
+              color: "#111827",
+              background: "#fff",
+              outline: "none",
+            }}
+            onFocus={(e) => {
+              e.currentTarget.style.borderColor = errors.name ? "#f87171" : "#0ea5e9"
+            }}
+            onBlur={(e) => {
+              e.currentTarget.style.borderColor = errors.name ? "#f87171" : "#d1d5db"
+            }}
+          />
+          {errors.name && (
+            <p
+              id="bk-name-error"
+              role="alert"
+              aria-live="polite"
+              style={{ margin: "4px 0 0", fontSize: 12, color: "#dc2626" }}
+            >
+              {errors.name}
+            </p>
+          )}
+        </div>
+
+        {/* Phone */}
+        <div style={{ marginBottom: 14 }}>
+          <label
+            htmlFor="bk-phone"
+            style={{
+              display: "block",
+              fontSize: 13,
+              fontWeight: 600,
+              color: "#374151",
+              marginBottom: 5,
+            }}
+          >
+            Телефон <span style={{ color: "#ef4444" }}>*</span>
+          </label>
+          <input
+            id="bk-phone"
+            type="tel"
+            autoComplete="tel"
+            placeholder="+7 (___) ___-__-__"
+            value={form.phone}
+            onChange={(e) => {
+              const masked = formatPhone(e.target.value)
+              setForm((f) => ({ ...f, phone: masked }))
+              if (errors.phone) setErrors((er) => ({ ...er, phone: undefined }))
+            }}
+            aria-describedby={errors.phone ? "bk-phone-error" : undefined}
+            aria-invalid={!!errors.phone}
+            inputMode="tel"
+            style={{
+              width: "100%",
+              boxSizing: "border-box",
+              padding: "10px 12px",
+              border: `1.5px solid ${errors.phone ? "#f87171" : "#d1d5db"}`,
+              borderRadius: 10,
+              fontSize: 15,
+              color: "#111827",
+              background: "#fff",
+              outline: "none",
+            }}
+            onFocus={(e) => {
+              e.currentTarget.style.borderColor = errors.phone ? "#f87171" : "#0ea5e9"
+              // Auto-fill +7 prefix on focus if empty
+              if (!form.phone) {
+                setForm((f) => ({ ...f, phone: "+7 (" }))
+              }
+            }}
+            onBlur={(e) => {
+              e.currentTarget.style.borderColor = errors.phone ? "#f87171" : "#d1d5db"
+              // Clear incomplete prefix
+              if (form.phone === "+7 (") {
+                setForm((f) => ({ ...f, phone: "" }))
+              }
+            }}
+          />
+          {errors.phone && (
+            <p
+              id="bk-phone-error"
+              role="alert"
+              aria-live="polite"
+              style={{ margin: "4px 0 0", fontSize: 12, color: "#dc2626" }}
+            >
+              {errors.phone}
+            </p>
+          )}
+        </div>
+
+        {/* Comment */}
+        <div style={{ marginBottom: 18 }}>
+          <label
+            htmlFor="bk-comment"
+            style={{
+              display: "block",
+              fontSize: 13,
+              fontWeight: 600,
+              color: "#374151",
+              marginBottom: 5,
+            }}
+          >
+            Комментарий{" "}
+            <span style={{ fontWeight: 400, color: "#9ca3af" }}>(необязательно)</span>
+          </label>
+          <textarea
+            id="bk-comment"
+            placeholder="Желаемая услуга или уточняющий вопрос"
+            value={form.comment}
+            onChange={(e) => setForm((f) => ({ ...f, comment: e.target.value }))}
+            rows={3}
+            maxLength={1000}
+            style={{
+              width: "100%",
+              boxSizing: "border-box",
+              padding: "10px 12px",
+              border: "1.5px solid #d1d5db",
+              borderRadius: 10,
+              fontSize: 15,
+              color: "#111827",
+              background: "#fff",
+              outline: "none",
+              resize: "vertical",
+              fontFamily: "inherit",
+            }}
+            onFocus={(e) => {
+              e.currentTarget.style.borderColor = "#0ea5e9"
+            }}
+            onBlur={(e) => {
+              e.currentTarget.style.borderColor = "#d1d5db"
+            }}
+          />
+        </div>
+
+        {/* Consent */}
+        <div style={{ marginBottom: 20, display: "flex", gap: 10, alignItems: "flex-start" }}>
+          <input
+            id="bk-consent"
+            type="checkbox"
+            checked={form.consent}
+            onChange={(e) => setForm((f) => ({ ...f, consent: e.target.checked }))}
+            style={{ width: 18, height: 18, marginTop: 2, cursor: "pointer", accentColor: "#0ea5e9", flexShrink: 0 }}
+          />
+          <label
+            htmlFor="bk-consent"
+            style={{ fontSize: 13, color: "#374151", lineHeight: 1.5, cursor: "pointer" }}
+          >
+            Я даю согласие на обработку персональных данных в соответствии с{" "}
+            <a
+              href="https://alba-medcenter.ru/privacy"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "#0ea5e9", textDecoration: "underline" }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              политикой конфиденциальности
+            </a>
+          </label>
+        </div>
+
+        {/* Submit error */}
+        {submitError && (
+          <div
+            role="alert"
+            aria-live="polite"
+            style={{
+              background: "#fef2f2",
+              border: "1px solid #fca5a5",
+              borderRadius: 10,
+              padding: "10px 14px",
+              color: "#b91c1c",
+              fontSize: 14,
+              marginBottom: 14,
+            }}
+          >
+            {submitError}
+          </div>
+        )}
+
+        <button
+          type="submit"
+          disabled={!canSubmit}
+          aria-disabled={!canSubmit}
+          style={{
+            width: "100%",
+            padding: "14px",
+            background: canSubmit ? "#0ea5e9" : "#e5e7eb",
+            color: canSubmit ? "#fff" : "#9ca3af",
+            border: "none",
+            borderRadius: 12,
+            fontSize: 16,
+            fontWeight: 700,
+            cursor: canSubmit ? "pointer" : "not-allowed",
+            transition: "background 0.15s",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 8,
+          }}
+        >
+          {submitting ? (
+            <>
+              <LoadingSpinner size={18} color="#fff" />
+              Отправляем…
+            </>
+          ) : (
+            "Записаться"
+          )}
+        </button>
+      </form>
+    </div>
+  )
+}
+
+// ── Step 5: Success ────────────────────────────────────────────────────────────
+
+function StepSuccess({
+  doctor,
+  date,
+  time,
+  onReset,
+}: {
+  doctor: PublicDoctor
+  date: string
+  time: string
+  onReset: () => void
+}) {
+  return (
+    <div style={{ textAlign: "center", padding: "24px 0" }}>
+      {/* Check icon */}
+      <div
+        style={{
+          width: 72,
+          height: 72,
+          borderRadius: "50%",
+          background: "#dcfce7",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          margin: "0 auto 20px",
+        }}
+      >
+        <svg
+          width="36"
+          height="36"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#16a34a"
+          strokeWidth="2.5"
+        >
+          <polyline points="20 6 9 17 4 12" />
+        </svg>
+      </div>
+
+      <h2
+        style={{
+          fontSize: 22,
+          fontWeight: 700,
+          color: "#111827",
+          margin: "0 0 8px",
+        }}
+      >
+        Заявка принята!
+      </h2>
+      <p
+        style={{
+          fontSize: 15,
+          color: "#6b7280",
+          margin: "0 0 24px",
+          maxWidth: 360,
+          marginLeft: "auto",
+          marginRight: "auto",
+          lineHeight: 1.6,
+        }}
+      >
+        Администратор перезвонит для подтверждения времени записи
+      </p>
+
+      {/* Booking summary card */}
+      <div
+        style={{
+          background: "#f8fafc",
+          border: "1px solid #e2e8f0",
+          borderRadius: 14,
+          padding: "16px 20px",
+          marginBottom: 24,
+          textAlign: "left",
+          display: "inline-block",
+          minWidth: 280,
+          maxWidth: "100%",
+          boxSizing: "border-box",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            gap: 12,
+            alignItems: "center",
+            marginBottom: 12,
+          }}
+        >
+          <DoctorAvatar doctor={doctor} size={44} />
+          <div>
+            <div style={{ fontSize: 14, fontWeight: 600, color: "#111827" }}>
+              {doctor.name}
+            </div>
+            <div style={{ fontSize: 13, color: "#6b7280" }}>{doctor.specialty}</div>
+          </div>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+            padding: "10px 12px",
+            background: "#fff",
+            border: "1px solid #e5e7eb",
+            borderRadius: 10,
+          }}
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#0ea5e9"
+            strokeWidth="2"
+          >
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+          </svg>
+          <span style={{ fontSize: 14, fontWeight: 600, color: "#111827" }}>
+            {formatDate(date)}
+          </span>
+          <span
+            style={{
+              fontSize: 14,
+              fontWeight: 600,
+              color: "#0ea5e9",
+              marginLeft: "auto",
+            }}
+          >
+            {time}
+          </span>
+        </div>
+      </div>
+
+      <div style={{ display: "block" }}>
+        <button
+          type="button"
+          onClick={onReset}
+          style={{
+            padding: "12px 32px",
+            background: "#f1f5f9",
+            color: "#374151",
+            border: "none",
+            borderRadius: 12,
+            fontSize: 15,
+            fontWeight: 600,
+            cursor: "pointer",
+            transition: "background 0.15s",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = "#e2e8f0"
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = "#f1f5f9"
+          }}
+        >
+          Записаться ещё раз
+        </button>
+      </div>
+    </div>
+  )
+}
+
+// ── Shared helpers ─────────────────────────────────────────────────────────────
+
+function BackButton({ onClick }: { onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 6,
+        background: "none",
+        border: "none",
+        cursor: "pointer",
+        color: "#6b7280",
+        fontSize: 13,
+        fontWeight: 500,
+        padding: "0 0 16px",
+        marginLeft: -2,
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.color = "#0ea5e9"
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.color = "#6b7280"
+      }}
+    >
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+      >
+        <polyline points="15 18 9 12 15 6" />
+      </svg>
+      Назад
+    </button>
+  )
+}
+
+function LoadingSpinner({ size = 20, color = "#0ea5e9" }: { size?: number; color?: string }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke={color}
+      strokeWidth="2.5"
+      style={{ animation: "bkSpin 0.7s linear infinite", flexShrink: 0 }}
+      aria-hidden="true"
+    >
+      <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+    </svg>
+  )
+}
+
+// ── Main Widget Component ──────────────────────────────────────────────────────
+
+export default function AlbamedBookingPage() {
+  const [step, setStep] = useState<Step>("doctor")
+  const [booking, setBooking] = useState<BookingState>({
+    doctor: null,
+    date: null,
+    time: null,
+  })
+  const [slotRefreshTrigger, setSlotRefreshTrigger] = useState(0)
+
+  function handleDoctorSelect(doctor: PublicDoctor) {
+    setBooking({ doctor, date: null, time: null })
+    setStep("date")
+  }
+
+  function handleDateSelect(date: string) {
+    setBooking((b) => ({ ...b, date, time: null }))
+    setStep("time")
+  }
+
+  function handleTimeSelect(time: string) {
+    setBooking((b) => ({ ...b, time }))
+    setStep("contact")
+  }
+
+  async function handleContactSubmit(data: {
+    name: string
+    phone: string
+    comment: string
+    consent: boolean
+  }) {
+    if (!booking.doctor || !booking.date || !booking.time) return
+
+    const res = await fetch("/api/booking/albamed/create", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        doctor_id: booking.doctor.id,
+        service: "",
+        date: booking.date,
+        time: booking.time,
+        name: data.name,
+        phone: data.phone,
+        comment: data.comment,
+        consent: data.consent,
+      }),
+    })
+
+    if (res.status === 409) {
+      // Slot taken — go back to time, refresh slots
+      setStep("time")
+      setSlotRefreshTrigger((n) => n + 1)
+      throw new Error("Это время уже занято. Пожалуйста, выберите другое.")
+    }
+
+    if (!res.ok) {
+      const body = (await res.json().catch(() => ({}))) as { error?: string }
+      throw new Error(body.error ?? "Ошибка сервера")
+    }
+
+    setStep("success")
+  }
+
+  function handleReset() {
+    setBooking({ doctor: null, date: null, time: null })
+    setStep("doctor")
+  }
+
+  function canGoToStep(target: Step): boolean {
+    switch (target) {
+      case "doctor":
+        return true
+      case "date":
+        return booking.doctor !== null
+      case "time":
+        return booking.doctor !== null && booking.date !== null
+      case "contact":
+        return booking.doctor !== null && booking.date !== null && booking.time !== null
+      default:
+        return false
+    }
+  }
+
+  // Clicking a completed step navigates back
+  function handleStepClick(target: Step): boolean {
+    if (!canGoToStep(target)) return false
+    const stepOrder: Step[] = ["doctor", "date", "time", "contact"]
+    const currentIdx = stepOrder.indexOf(step)
+    const targetIdx = stepOrder.indexOf(target)
+    if (targetIdx < currentIdx) {
+      setStep(target)
+    }
+    return true
+  }
+
+  return (
+    <>
+      <style>{`
+        @keyframes bkPulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.45; }
+        }
+        @keyframes bkSpin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        /* Remove default button tap highlight on mobile */
+        button { -webkit-tap-highlight-color: transparent; }
+        /* Hide scrollbar visually but keep functionality */
+        ::-webkit-scrollbar { width: 0; height: 0; }
+        /* Focus visible only for keyboard navigation */
+        button:focus:not(:focus-visible) { outline: none; }
+        button:focus-visible { outline: 2px solid #bae6fd; outline-offset: 2px; }
+      `}</style>
+
+      <main
+        role="main"
+        style={{
+          minHeight: "100vh",
+          background: "#f8fafc",
+          padding: "0 0 40px",
+        }}
+      >
+        {/* Header */}
+        {step !== "success" && (
+          <header
+            style={{
+              background: "#fff",
+              borderBottom: "1px solid #e5e7eb",
+              padding: "14px 20px",
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+            }}
+          >
+            {/* Medical cross icon */}
+            <div
+              style={{
+                width: 36,
+                height: 36,
+                background: "#0ea5e9",
+                borderRadius: 10,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexShrink: 0,
+              }}
+              aria-hidden="true"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M11 3h2v7h7v2h-7v7h-2v-7H4v-2h7z"
+                  fill="#fff"
+                />
+              </svg>
+            </div>
+            <div>
+              <div style={{ fontSize: 15, fontWeight: 700, color: "#111827", lineHeight: 1.2 }}>
+                Запись к врачу
+              </div>
+              <div style={{ fontSize: 12, color: "#6b7280" }}>Медицинский центр Альбамед</div>
+            </div>
+          </header>
+        )}
+
+        {/* Content */}
+        <div
+          style={{
+            maxWidth: 720,
+            margin: "0 auto",
+            padding: "24px 20px 0",
+          }}
+        >
+          {/* Progress */}
+          {step !== "success" && (
+            <StepIndicator current={step} canGoTo={handleStepClick} />
+          )}
+
+          {/* Steps */}
+          {step === "doctor" && (
+            <StepDoctor onSelect={handleDoctorSelect} />
+          )}
+
+          {step === "date" && booking.doctor && (
+            <StepDate
+              doctor={booking.doctor}
+              onSelect={handleDateSelect}
+              onBack={() => setStep("doctor")}
+            />
+          )}
+
+          {step === "time" && booking.doctor && booking.date && (
+            <StepTime
+              doctor={booking.doctor}
+              date={booking.date}
+              onSelect={handleTimeSelect}
+              onBack={() => setStep("date")}
+              refreshTrigger={slotRefreshTrigger}
+            />
+          )}
+
+          {step === "contact" && booking.doctor && booking.date && booking.time && (
+            <StepContact
+              doctor={booking.doctor}
+              date={booking.date}
+              time={booking.time}
+              onSubmit={handleContactSubmit}
+              onBack={() => setStep("time")}
+            />
+          )}
+
+          {step === "success" && booking.doctor && booking.date && booking.time && (
+            <StepSuccess
+              doctor={booking.doctor}
+              date={booking.date}
+              time={booking.time}
+              onReset={handleReset}
+            />
+          )}
+        </div>
+      </main>
+    </>
+  )
+}
