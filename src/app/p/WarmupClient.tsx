@@ -187,7 +187,9 @@ export default function WarmupClient() {
 
   const to = sp.get('to')?.trim() || null;
   const company = (sp.get('company') || sp.get('clinic'))?.trim() || null;
-  const tg = sp.get('tg')?.trim() || null;
+  // Дефолт — личный TG Олега; параметром ?tg= можно переопределить (или ?tg=off убрать)
+  const tgParam = sp.get('tg')?.trim();
+  const tg = tgParam === 'off' ? null : tgParam || 'https://t.me/aleg_rad';
   const phone = sp.get('phone')?.trim() || null;
   const mode = sp.get('mode')?.trim() || 'warm';
 
@@ -533,10 +535,13 @@ function FinalScreen({ a, isClinic, rec, tg, phone, buildMessage }: {
       <div className={styles.work}>
         <div className={styles.workTitle}>Как устроена работа</div>
         <p className={styles.workText}>Работаю как самозанятый — Радинюк Олег Анатольевич, режим НПД. После согласования выставляю счёт через «Мой налог» — официальный чек, принимается к учёту. Аванс 50% — до старта, остаток — при сдаче.</p>
-        <div className={styles.req} id="req">
-          <div className={styles.reqHead}><span>Реквизиты на аванс</span><span className={styles.reqMode}>самозанятый · чек «Мой налог»</span></div>
-          <div className={styles.reqGrid}>{REQUISITES.map((r) => <CopyRow key={r.label} label={r.label} value={r.value} />)}</div>
-        </div>
+        <details className={styles.faqItem} id="req">
+          <summary className={styles.faqQ}>Реквизиты на аванс</summary>
+          <div className={styles.faqA}>
+            <div className={styles.reqHead}><span className={styles.reqMode}>самозанятый · чек «Мой налог»</span></div>
+            <div className={styles.reqGrid}>{REQUISITES.map((r) => <CopyRow key={r.label} label={r.label} value={r.value} />)}</div>
+          </div>
+        </details>
       </div>
 
       <SendBlock tg={tg} phone={phone} buildMessage={buildMessage} browsing={browsing} />
