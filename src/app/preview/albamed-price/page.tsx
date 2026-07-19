@@ -1,4 +1,9 @@
-import { getAlbamedPrices, type AlbamedBranch, type AlbamedPricesResponse } from "@/lib/albamed/prices"
+import {
+  getAlbamedPrices,
+  toPricesSummary,
+  type AlbamedBranch,
+  type AlbamedPricesSummary,
+} from "@/lib/albamed/prices"
 import { AlbamedPricePreview } from "./AlbamedPricePreview"
 
 /**
@@ -8,12 +13,17 @@ import { AlbamedPricePreview } from "./AlbamedPricePreview"
  *
  * Данные берём напрямую через getAlbamedPrices() (тот же кэш в памяти
  * процесса, что и у /api/albamed/prices) — без лишнего HTTP-хопа на себя же.
+ *
+ * В разметку уходит только сводка (категории + счётчики услуг), а не сами
+ * 2500+ услуг — иначе RSC-пейлоад раздувает HTML на сотни килобайт, хотя
+ * категории по умолчанию свёрнуты. Полные списки услуг клиент подгружает
+ * лениво через GET /api/albamed/prices (см. AlbamedPricePreview.tsx).
  */
 
 export const dynamic = "force-dynamic"
 
 async function loadBranches(): Promise<{
-  branches: Record<AlbamedBranch, AlbamedPricesResponse> | null
+  branches: Record<AlbamedBranch, AlbamedPricesSummary> | null
   error: string | null
 }> {
   try {
@@ -22,7 +32,7 @@ async function loadBranches(): Promise<{
       getAlbamedPrices("kievskaya"),
     ])
     return {
-      branches: { kantar: kantar.data, kievskaya: kievskaya.data },
+      branches: { kantar: toPricesSummary(kantar.data), kievskaya: toPricesSummary(kievskaya.data) },
       error: null,
     }
   } catch (err) {

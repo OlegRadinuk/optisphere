@@ -53,6 +53,33 @@ export interface AlbamedPricesResponse {
   categories: AlbamedPriceCategory[]
 }
 
+
+/**
+ * Лёгкая версия прайса без списков услуг — только категории и их счётчики.
+ * Используется для первичной серверной разметки страницы-витрины
+ * (src/app/preview/albamed-price), чтобы не отдавать все 2500+ услуг в HTML
+ * до того, как пользователь раскрыл хоть одну категорию. Полные списки
+ * услуг подгружаются клиентом лениво через GET /api/albamed/prices.
+ */
+export interface AlbamedPriceCategorySummary {
+  category: string
+  count: number
+}
+
+export interface AlbamedPricesSummary {
+  branch: AlbamedBranch
+  updatedAt: string
+  categories: AlbamedPriceCategorySummary[]
+}
+
+export function toPricesSummary(data: AlbamedPricesResponse): AlbamedPricesSummary {
+  return {
+    branch: data.branch,
+    updatedAt: data.updatedAt,
+    categories: data.categories.map((c) => ({ category: c.category, count: c.services.length })),
+  }
+}
+
 const CACHE_TTL_MS = 6 * 60 * 60 * 1000 // 6 часов
 
 // Потолок устаревания lastGoodCache: прайс в 1С меняется редко, сутки-двое
