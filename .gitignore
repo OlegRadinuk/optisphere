@@ -43,6 +43,9 @@ next-env.d.ts
 # local agent artifacts (credentials, etc.)
 agents/artifacts/
 
+# working copies of client reports (source of truth is public/reports/, committed separately)
+/reports/
+
 # Claude Code / Playwright MCP artifacts
 .playwright-mcp/
 .claude/worktrees/

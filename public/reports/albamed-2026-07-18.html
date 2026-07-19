@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Альба-Мед — отчёт о работах, 18 июля 2026</title>
+<style>*,*::before,*::after{box-sizing:border-box}img{max-width:100%}</style>
+</head>
+<body>
+<style>
+  :root {
+    --paper:      #ffffff;
+    --surface:    #fbf6f3;
+    --surface-2:  #f5ece7;
+    --ink:        #1c1512;
+    --ink-soft:   #4b3d36;
+    --muted:      #8b7a71;
+    --rule:       #e8dbd3;
+    --accent:     #dc4b27;
+    --accent-2:   #f2a03d;
+    --accent-ink: #a8331a;
+    --good:       #2f6f52;
+
+    --f-text: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    --f-data: ui-monospace, "Cascadia Mono", Consolas, "SF Mono", Menlo, monospace;
+
+    --step--1: clamp(0.78rem, 0.76rem + 0.1vw, 0.84rem);
+    --step-0:  clamp(0.98rem, 0.95rem + 0.14vw, 1.06rem);
+    --step-1:  clamp(1.18rem, 1.1rem + 0.35vw, 1.4rem);
+    --step-2:  clamp(1.5rem, 1.3rem + 0.9vw, 2.1rem);
+    --step-3:  clamp(2rem, 1.6rem + 1.9vw, 3.4rem);
+
+    --wrap: 68rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:      #15100e;
+      --surface:    #1e1714;
+      --surface-2:  #2a201b;
+      --ink:        #f6efeb;
+      --ink-soft:   #d3c4bb;
+      --muted:      #a29086;
+      --rule:       #372b25;
+      --accent:     #f2653c;
+      --accent-2:   #f5b45c;
+      --accent-ink: #ffb59c;
+      --good:       #6cc79b;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #15100e;
+    --surface:    #1e1714;
+    --surface-2:  #2a201b;
+    --ink:        #f6efeb;
+    --ink-soft:   #d3c4bb;
+    --muted:      #a29086;
+    --rule:       #372b25;
+    --accent:     #f2653c;
+    --accent-2:   #f5b45c;
+    --accent-ink: #ffb59c;
+    --good:       #6cc79b;
+  }
+  :root[data-theme="light"] {
+    --paper:      #ffffff;
+    --surface:    #fbf6f3;
+    --surface-2:  #f5ece7;
+    --ink:        #1c1512;
+    --ink-soft:   #4b3d36;
+    --muted:      #8b7a71;
+    --rule:       #e8dbd3;
+    --accent:     #dc4b27;
+    --accent-2:   #f2a03d;
+    --accent-ink: #a8331a;
+    --good:       #2f6f52;
+  }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--f-text);
+    font-size: var(--step-0);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { width: min(100% - 2.5rem, var(--wrap)); margin-inline: auto; }
+
+  .masthead {
+    border-bottom: 1px solid var(--rule);
+    background: linear-gradient(180deg, var(--surface), var(--paper));
+  }
+  .masthead__inner {
+    display: flex; flex-wrap: wrap; gap: 1.5rem 2rem;
+    align-items: flex-end; justify-content: space-between;
+    padding-block: clamp(2.2rem, 6vw, 4rem) 1.6rem;
+  }
+  .brand { display: flex; align-items: center; gap: 0.85rem; }
+  .brand__mark { flex: none; }
+  .brand__name {
+    font-size: var(--step-1); font-weight: 700;
+    letter-spacing: -0.015em; line-height: 1.1;
+  }
+  .brand__sub { color: var(--muted); font-size: var(--step--1); }
+  .eyebrow {
+    font-size: var(--step--1); text-transform: uppercase;
+    letter-spacing: 0.14em; color: var(--accent-ink); font-weight: 600;
+    margin: 0;
+  }
+  .masthead h1 {
+    font-size: var(--step-3); line-height: 1.02; letter-spacing: -0.03em;
+    margin: 0.5rem 0 0; text-wrap: balance; max-width: 20ch;
+  }
+  .dateline {
+    font-family: var(--f-data); font-size: var(--step--1);
+    color: var(--muted); text-align: right; line-height: 1.9;
+  }
+  .dateline b { color: var(--ink-soft); font-weight: 600; }
+
+  .lede {
+    padding-block: 2.4rem;
+    display: grid; gap: 2rem;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    align-items: start;
+    border-bottom: 1px solid var(--rule);
+  }
+  .lede p { margin: 0; font-size: var(--step-1); line-height: 1.5; color: var(--ink-soft); text-wrap: pretty; }
+  .lede p strong { color: var(--ink); font-weight: 600; }
+
+  .tally { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+  .tally > div { background: var(--paper); padding: 0.9rem 1rem; }
+  .tally dt { font-size: var(--step--1); color: var(--muted); }
+  .tally dd {
+    margin: 0.15rem 0 0; font-family: var(--f-data);
+    font-size: var(--step-1); font-weight: 600; letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  section { padding-block: 2.6rem; border-bottom: 1px solid var(--rule); }
+  .sec-head { display: flex; align-items: baseline; gap: 0.9rem; margin-bottom: 1.4rem; }
+  .sec-head h2 {
+    margin: 0; font-size: var(--step-2); letter-spacing: -0.022em;
+    line-height: 1.15; text-wrap: balance;
+  }
+  .sec-head .eyebrow { flex: none; }
+
+  .cols { display: grid; gap: 1.6rem; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
+  .card { background: var(--surface); border: 1px solid var(--rule); padding: 1.15rem 1.25rem; }
+  .card h3 { margin: 0 0 0.4rem; font-size: var(--step-0); font-weight: 650; letter-spacing: -0.01em; }
+  .card p  { margin: 0; color: var(--ink-soft); font-size: var(--step--1); line-height: 1.65; }
+
+  ul.plain { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.7rem; }
+  ul.plain li { display: grid; grid-template-columns: 1.35rem 1fr; gap: 0.6rem; align-items: start; color: var(--ink-soft); }
+  ul.plain svg { margin-top: 0.32em; }
+  ul.plain b { color: var(--ink); font-weight: 600; }
+
+  .metrics { display: grid; gap: 1.1rem; }
+  .metric { display: grid; gap: 0.5rem; padding-block: 0.9rem; border-top: 1px solid var(--rule); }
+  .metric:first-child { border-top: 0; }
+  .metric__top { display: flex; flex-wrap: wrap; gap: 0.3rem 1rem; align-items: baseline; justify-content: space-between; }
+  .metric__name { font-weight: 600; }
+  .metric__nums { font-family: var(--f-data); font-variant-numeric: tabular-nums; font-size: var(--step--1); color: var(--muted); }
+  .metric__nums s { text-decoration-thickness: 1px; }
+  .metric__nums b { color: var(--accent-ink); font-weight: 700; font-size: var(--step-0); }
+
+  .bars { display: grid; gap: 0.34rem; }
+  .bar { display: grid; grid-template-columns: 3.6rem 1fr; gap: 0.7rem; align-items: center; }
+  .bar > span { font-family: var(--f-data); font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+  .bar i { display: block; height: 0.62rem; border-radius: 1px; }
+  .bar--was i { background: var(--surface-2); border: 1px solid var(--rule); }
+  .bar--now i { background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+
+  .next { display: grid; gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+  .next__row { background: var(--paper); display: grid; grid-template-columns: 7.5rem 1fr; gap: 1.2rem; padding: 1rem 1.15rem; }
+  .next__row h3 { margin: 0 0 0.25rem; font-size: var(--step-0); font-weight: 650; }
+  .next__row p { margin: 0; color: var(--ink-soft); font-size: var(--step--1); line-height: 1.65; }
+  .pill {
+    align-self: start; justify-self: start;
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em;
+    padding: 0.28rem 0.55rem; border: 1px solid currentColor; white-space: nowrap;
+  }
+  .pill--now  { color: var(--accent); }
+  .pill--soon { color: var(--muted); }
+
+  .note {
+    margin-top: 1.4rem; padding: 1rem 1.15rem;
+    border-left: 3px solid var(--accent); background: var(--surface);
+    color: var(--ink-soft); font-size: var(--step--1); line-height: 1.7;
+  }
+  .note b { color: var(--ink); }
+
+  .sec-intro { margin: 0 0 1.6rem; max-width: 62ch; color: var(--ink-soft); }
+
+  footer { padding-block: 2rem 3rem; color: var(--muted); font-size: var(--step--1); display: flex; flex-wrap: wrap; gap: 0.6rem 1.5rem; justify-content: space-between; }
+
+  @media (max-width: 44rem) {
+    .lede { grid-template-columns: 1fr; }
+    .next__row { grid-template-columns: 1fr; gap: 0.55rem; }
+    .masthead__inner { flex-direction: column; align-items: flex-start; }
+    .dateline { text-align: left; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .bar i { animation: grow 0.9s cubic-bezier(0.2, 0.7, 0.3, 1) both; transform-origin: left; }
+    @keyframes grow { from { transform: scaleX(0.02); } to { transform: scaleX(1); } }
+  }
+</style>
+
+<header class="masthead">
+  <div class="wrap masthead__inner">
+    <div>
+      <div class="brand">
+        <svg class="brand__mark" width="34" height="34" viewBox="0 0 34 34" aria-hidden="true">
+          <path d="M17 2.4 31 30.4H23.6L17 16.2 10.4 30.4H3z" fill="var(--accent)"/>
+          <path d="M17 16.2 20.6 23.6H13.4z" fill="var(--accent-2)"/>
+        </svg>
+        <div>
+          <div class="brand__name">Альба-Мед</div>
+          <div class="brand__sub">alba-medcenter.ru</div>
+        </div>
+      </div>
+      <p class="eyebrow" style="margin-top:1.8rem">Отчёт о выполненных работах</p>
+      <h1>Сайт стал легче в шесть раз</h1>
+    </div>
+    <div class="dateline">
+      <div><b>18 июля 2026</b></div>
+      <div>сайт клиники</div>
+      <div>WordPress</div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="lede">
+    <p>Обновили <strong>главную страницу</strong>, добавили <strong>двух новых врачей</strong> и заменили портреты ещё десяти, а затем серьёзно ускорили сайт — теперь он открывается быстро даже при слабом мобильном сигнале, а это большая часть визитов.</p>
+    <dl class="tally">
+      <div><dt>Слайдов на главной</dt><dd>8</dd></div>
+      <div><dt>Врачей добавлено</dt><dd>2</dd></div>
+      <div><dt>Фото обновлено</dt><dd>10</dd></div>
+      <div><dt>Форм под защитой</dt><dd>5</dd></div>
+    </dl>
+  </div>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">01</p>
+      <h2>Главная страница: спецпредложения и врачи</h2>
+    </div>
+    <div class="cols">
+      <div class="card">
+        <h3>Четыре акции до конца июля</h3>
+        <p>Женское УЗИ-обследование, УЗИ-комплекс новорождённым, гастроскопия с колоноскопией и приём гинеколога с УЗИ. Старая цена показана зачёркнутой рядом с новой.</p>
+      </div>
+      <div class="card">
+        <h3>Врачи чередуются с услугами</h3>
+        <p>Слайды идут через один: специалист, затем предложение. Так карусель не выглядит сплошной рекламой и знакомит с врачами клиники.</p>
+      </div>
+      <div class="card">
+        <h3>Смена акций — без переделки макетов</h3>
+        <p>Стоимость и зачёркнутая цена вынесены в текст слайда, а не вшиты в картинку. Когда акции сменятся, мы обновим цифры за минуты и не будем перерисовывать изображения.</p>
+      </div>
+    </div>
+    <div class="note">
+      <b>Проверили все ссылки слайдера.</b> Каждая кнопка теперь ведёт на живую страницу — прогнали их автоматически. По пути нашли одну, которая вела на неопубликованный черновик услуги ФГДС, и переключили на действующую страницу видеоколоноскопии. Как только страница ФГДС будет опубликована, вернём ссылку на неё.
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">02</p>
+      <h2>Врачи</h2>
+    </div>
+    <ul class="plain">
+      <li>
+        <svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.6" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span><b>Сейтягяева Лиля Ришатовна</b> — акушер-гинеколог, стаж 19 лет, высшая категория. Карточка создана, фотография размещена.</span>
+      </li>
+      <li>
+        <svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.6" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span><b>Талах Марина Николаевна</b> — акушер-гинеколог и детский гинеколог, стаж 18 лет, первая категория. Карточка создана, фотография размещена.</span>
+      </li>
+      <li>
+        <svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.6" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span><b>Десять портретов обновлены</b> — Мамутова, Милоярова, Мощенская, Муртазаева, Новинская, Оголихина, Покидченко, Сейдаметова, Цветков, Степанов. Все снимки подписаны фамилиями врачей, это помогает поиску находить страницы специалистов.</span>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">03</p>
+      <h2>Скорость: главный результат</h2>
+    </div>
+
+    <p class="sec-intro">Главное улучшение этой недели. Мы привели все фотографии сайта к весу, рассчитанному под экран посетителя, и включили отложенную загрузку — то, что ниже экрана, подгружается по мере прокрутки. Для сравнения: отдельные снимки прежде занимали по 12 мегабайт, потому что хранились ровно в том виде, в каком пришли с камеры.</p>
+
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric__top">
+          <span class="metric__name">Главная страница, первая загрузка</span>
+          <span class="metric__nums"><s>16,3 МБ</s> → <b>2,8 МБ</b></span>
+        </div>
+        <div class="bars">
+          <div class="bar bar--was"><span>было</span><i style="width:100%"></i></div>
+          <div class="bar bar--now"><span>стало</span><i style="width:17%"></i></div>
+        </div>
+      </div>
+
+      <div class="metric">
+        <div class="metric__top">
+          <span class="metric__name">Страница «Врачи»</span>
+          <span class="metric__nums"><s>14,9 МБ</s> → <b>7,2 МБ</b></span>
+        </div>
+        <div class="bars">
+          <div class="bar bar--was"><span>было</span><i style="width:100%"></i></div>
+          <div class="bar bar--now"><span>стало</span><i style="width:48%"></i></div>
+        </div>
+      </div>
+
+      <div class="metric">
+        <div class="metric__top">
+          <span class="metric__name">Все изображения сайта</span>
+          <span class="metric__nums"><s>701,6 МБ</s> → <b>260 МБ</b></span>
+        </div>
+        <div class="bars">
+          <div class="bar bar--was"><span>было</span><i style="width:100%"></i></div>
+          <div class="bar bar--now"><span>стало</span><i style="width:37%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cols" style="margin-top:1.8rem">
+      <div class="card">
+        <h3>789 файлов обработано</h3>
+        <p>Без единой ошибки. Качество проверено на снимках здания и на скане санэпидзаключения — мелкий шрифт документа читается полностью.</p>
+      </div>
+      <div class="card">
+        <h3>Ничего не переверстывали</h3>
+        <p>Адреса файлов остались прежними, поэтому вёрстка, ссылки и позиции в поисковых системах не затронуты.</p>
+      </div>
+      <div class="card">
+        <h3>Оригиналы сохранены</h3>
+        <p>Полные копии всех исходных снимков лежат на сервере. Если что-то не понравится — вернём в исходном виде.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">04</p>
+      <h2>Защита форм от спама</h2>
+    </div>
+    <p class="sec-intro" style="margin-bottom:0">Все пять форм сайта теперь защищены от автоматических рассылок: живой посетитель ничего не замечает, а рассыльщики отсеиваются до того, как заявка дойдёт до администратора. Проверили в обе стороны — спам не проходит, обычные заявки приходят как прежде. Повод был конкретный: через форму записи к врачу пришло рекламное предложение о продаже недвижимости, и такие письма заслоняют настоящие обращения пациентов.</p>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">05</p>
+      <h2>Ссылки в мессенджерах</h2>
+    </div>
+    <p class="sec-intro">Теперь ссылка на сайт, отправленная в WhatsApp, Telegram или ВКонтакте, разворачивается в карточку с фотографией клиники, названием, адресами и телефоном. Такие ссылки открывают заметно охотнее — они выглядят как визитка, а не как строка текста. Раньше превью не подтягивалось из-за технической мелочи в разметке страниц, теперь это работает на всём сайте.</p>
+    <div class="cols">
+      <div class="card">
+        <h3>Сделали карточку клиники</h3>
+        <p>Фотография здания, логотип, название, оба адреса и телефон. Теперь ссылка выглядит как визитка и работает на любой странице сайта.</p>
+      </div>
+      <div class="card">
+        <h3>Появится не мгновенно</h3>
+        <p>Мессенджеры надолго запоминают, как выглядела ссылка раньше. По новым ссылкам карточка видна сразу, по разосланным ранее — обновится позже.</p>
+      </div>
+      <div class="card">
+        <h3>Работает и для рекламы</h3>
+        <p>Та же карточка подтягивается при размещении ссылки в соцсетях и мессенджер-рассылках, отдельно готовить картинку не нужно.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">06</p>
+      <h2>Что делаем дальше</h2>
+    </div>
+    <div class="next">
+      <div class="next__row">
+        <span class="pill pill--now">в работе</span>
+        <div>
+          <h3>Согласие на обработку данных в онлайн-консультанте</h3>
+          <p>Посетители иногда пишут боту о самочувствии. Сведения о здоровье закон защищает строже обычных контактов, поэтому перед началом диалога добавим короткое согласие со ссылкой на политику. Администратору при этом продолжит приходить суть обращения — к какому врачу и на когда, — что и помогает подготовиться к приёму.</p>
+        </div>
+      </div>
+      <div class="next__row">
+        <span class="pill pill--now">в работе</span>
+        <div>
+          <h3>Одна политика конфиденциальности вместо двух</h3>
+          <p>На сайте открываются две версии документа — от 2024 и от 2025 года. Оставим действующую, чтобы не возникало вопросов, какая имеет силу.</p>
+        </div>
+      </div>
+      <div class="next__row">
+        <span class="pill pill--soon">дальше</span>
+        <div>
+          <h3>Счётчик посещаемости после согласия на cookie</h3>
+          <p>Аналитика сейчас запускается до того, как посетитель ответил на уведомление о файлах cookie, и в самом уведомлении нет кнопки отказа. Приведём в порядок, работы примерно на час.</p>
+        </div>
+      </div>
+      <div class="next__row">
+        <span class="pill pill--soon">дальше</span>
+        <div>
+          <h3>Заголовки страниц под поисковые запросы</h3>
+          <p>Заголовки главной и раздела врачей длиннее, чем показывает поиск, и начинаются с названия клиники вместо того, что люди набирают, — например «гинеколог Симферополь». Перепишем так, чтобы страница попадала в запрос с первых слов.</p>
+        </div>
+      </div>
+      <div class="next__row">
+        <span class="pill pill--soon">дальше</span>
+        <div>
+          <h3>Современный формат изображений</h3>
+          <p>Даст дополнительную экономию около четверти веса. Требует настройки на стороне сервера, поэтому вынесено отдельной задачей.</p>
+        </div>
+      </div>
+    </div>
+    <div class="note">
+      <b>Про юридическую часть.</b> Выше — инженерная оценка по 152-ФЗ, она показывает, где техника создаёт риск. Точные формулировки согласий подготовит и выверит наш юрист: медицина регулируется строже других отраслей, а держать профильного специалиста в штате клинике для этого не нужно.
+    </div>
+  </section>
+
+  <footer>
+    <span>Отчёт подготовлен 18 июля 2026</span>
+    <span>Optisphere — разработка и поддержка сайта</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
