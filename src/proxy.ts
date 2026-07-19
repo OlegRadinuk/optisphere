@@ -49,5 +49,5 @@ export default function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api|aiadmin|albamed|estet|demo|booking|saas|p(?:/|$)|_next|_vercel|.*\\..*).*)"],
+  matcher: ["/((?!api|aiadmin|albamed|estet|demo|booking|saas|preview|p(?:/|$)|_next|_vercel|.*\\..*).*)"],
 };

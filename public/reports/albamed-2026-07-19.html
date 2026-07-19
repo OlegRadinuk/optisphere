@@ -1,0 +1,523 @@
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<style>
+  :root {
+    --paper:      #ffffff;
+    --surface:    #fbf6f3;
+    --surface-2:  #f5ece7;
+    --ink:        #1c1512;
+    --ink-soft:   #4b3d36;
+    --muted:      #8b7a71;
+    --rule:       #e8dbd3;
+    --accent:     #dc4b27;
+    --accent-2:   #f2a03d;
+    --accent-ink: #a8331a;
+    --good:       #2f6f52;
+
+    --f-text: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    --f-data: ui-monospace, "Cascadia Mono", Consolas, "SF Mono", Menlo, monospace;
+
+    --step--1: clamp(0.78rem, 0.76rem + 0.1vw, 0.84rem);
+    --step-0:  clamp(0.98rem, 0.95rem + 0.14vw, 1.06rem);
+    --step-1:  clamp(1.18rem, 1.1rem + 0.35vw, 1.4rem);
+    --step-2:  clamp(1.5rem, 1.3rem + 0.9vw, 2.1rem);
+    --step-3:  clamp(2rem, 1.6rem + 1.9vw, 3.4rem);
+
+    --wrap: 68rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:      #15100e;
+      --surface:    #1e1714;
+      --surface-2:  #2a201b;
+      --ink:        #f6efeb;
+      --ink-soft:   #d3c4bb;
+      --muted:      #a29086;
+      --rule:       #372b25;
+      --accent:     #f2653c;
+      --accent-2:   #f5b45c;
+      --accent-ink: #ffb59c;
+      --good:       #6cc79b;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #15100e;
+    --surface:    #1e1714;
+    --surface-2:  #2a201b;
+    --ink:        #f6efeb;
+    --ink-soft:   #d3c4bb;
+    --muted:      #a29086;
+    --rule:       #372b25;
+    --accent:     #f2653c;
+    --accent-2:   #f5b45c;
+    --accent-ink: #ffb59c;
+    --good:       #6cc79b;
+  }
+  :root[data-theme="light"] {
+    --paper:      #ffffff;
+    --surface:    #fbf6f3;
+    --surface-2:  #f5ece7;
+    --ink:        #1c1512;
+    --ink-soft:   #4b3d36;
+    --muted:      #8b7a71;
+    --rule:       #e8dbd3;
+    --accent:     #dc4b27;
+    --accent-2:   #f2a03d;
+    --accent-ink: #a8331a;
+    --good:       #2f6f52;
+  }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--f-text);
+    font-size: var(--step-0);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { width: min(100% - 2.5rem, var(--wrap)); margin-inline: auto; }
+
+  .masthead {
+    border-bottom: 1px solid var(--rule);
+    background: linear-gradient(180deg, var(--surface), var(--paper));
+  }
+  .masthead__inner {
+    display: flex; flex-wrap: wrap; gap: 1.5rem 2rem;
+    align-items: flex-end; justify-content: space-between;
+    padding-block: clamp(2.2rem, 6vw, 4rem) 1.6rem;
+  }
+  .brand { display: flex; align-items: center; gap: 0.85rem; }
+  .brand__mark { flex: none; }
+  .brand__name {
+    font-size: var(--step-1); font-weight: 700;
+    letter-spacing: -0.015em; line-height: 1.1;
+  }
+  .brand__sub { color: var(--muted); font-size: var(--step--1); }
+  .eyebrow {
+    font-size: var(--step--1); text-transform: uppercase;
+    letter-spacing: 0.14em; color: var(--accent-ink); font-weight: 600;
+    margin: 0;
+  }
+  .masthead h1 {
+    font-size: var(--step-3); line-height: 1.02; letter-spacing: -0.03em;
+    margin: 0.5rem 0 0; text-wrap: balance; max-width: 20ch;
+  }
+  .dateline {
+    font-family: var(--f-data); font-size: var(--step--1);
+    color: var(--muted); text-align: right; line-height: 1.9;
+  }
+  .dateline b { color: var(--ink-soft); font-weight: 600; }
+
+  .lede {
+    padding-block: 2.4rem;
+    display: grid; gap: 2rem;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    align-items: start;
+    border-bottom: 1px solid var(--rule);
+  }
+  .lede p { margin: 0; font-size: var(--step-1); line-height: 1.5; color: var(--ink-soft); text-wrap: pretty; }
+  .lede p strong { color: var(--ink); font-weight: 600; }
+
+  .tally { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+  .tally > div { background: var(--paper); padding: 0.9rem 1rem; }
+  .tally dt { font-size: var(--step--1); color: var(--muted); }
+  .tally dd {
+    margin: 0.15rem 0 0; font-family: var(--f-data);
+    font-size: var(--step-1); font-weight: 600; letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  section { padding-block: 2.6rem; border-bottom: 1px solid var(--rule); }
+  .sec-head { display: flex; align-items: baseline; gap: 0.9rem; margin-bottom: 1.4rem; }
+  .sec-head h2 {
+    margin: 0; font-size: var(--step-2); letter-spacing: -0.022em;
+    line-height: 1.15; text-wrap: balance;
+  }
+  .sec-head .eyebrow { flex: none; }
+
+  .cols { display: grid; gap: 1.6rem; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
+  .card { background: var(--surface); border: 1px solid var(--rule); padding: 1.15rem 1.25rem; }
+  .card h3 { margin: 0 0 0.4rem; font-size: var(--step-0); font-weight: 650; letter-spacing: -0.01em; }
+  .card p  { margin: 0; color: var(--ink-soft); font-size: var(--step--1); line-height: 1.65; }
+
+  ul.plain { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.7rem; }
+  ul.plain li { display: grid; grid-template-columns: 1.35rem 1fr; gap: 0.6rem; align-items: start; color: var(--ink-soft); }
+  ul.plain svg { margin-top: 0.32em; }
+  ul.plain b { color: var(--ink); font-weight: 600; }
+
+  .metrics { display: grid; gap: 1.1rem; }
+  .metric { display: grid; gap: 0.5rem; padding-block: 0.9rem; border-top: 1px solid var(--rule); }
+  .metric:first-child { border-top: 0; }
+  .metric__top { display: flex; flex-wrap: wrap; gap: 0.3rem 1rem; align-items: baseline; justify-content: space-between; }
+  .metric__name { font-weight: 600; }
+  .metric__nums { font-family: var(--f-data); font-variant-numeric: tabular-nums; font-size: var(--step--1); color: var(--muted); }
+  .metric__nums s { text-decoration-thickness: 1px; }
+  .metric__nums b { color: var(--accent-ink); font-weight: 700; font-size: var(--step-0); }
+
+  .bars { display: grid; gap: 0.34rem; }
+  .bar { display: grid; grid-template-columns: 3.6rem 1fr; gap: 0.7rem; align-items: center; }
+  .bar > span { font-family: var(--f-data); font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+  .bar i { display: block; height: 0.62rem; border-radius: 1px; }
+  .bar--was i { background: var(--surface-2); border: 1px solid var(--rule); }
+  .bar--now i { background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+
+  .next { display: grid; gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+  .next__row { background: var(--paper); display: grid; grid-template-columns: 7.5rem 1fr; gap: 1.2rem; padding: 1rem 1.15rem; }
+  .next__row h3 { margin: 0 0 0.25rem; font-size: var(--step-0); font-weight: 650; }
+  .next__row p { margin: 0; color: var(--ink-soft); font-size: var(--step--1); line-height: 1.65; }
+  .pill {
+    align-self: start; justify-self: start;
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em;
+    padding: 0.28rem 0.55rem; border: 1px solid currentColor; white-space: nowrap;
+  }
+  .pill--now  { color: var(--accent); }
+  .pill--soon { color: var(--muted); }
+
+  .note {
+    margin-top: 1.4rem; padding: 1rem 1.15rem;
+    border-left: 3px solid var(--accent); background: var(--surface);
+    color: var(--ink-soft); font-size: var(--step--1); line-height: 1.7;
+  }
+  .note b { color: var(--ink); }
+
+  .sec-intro { margin: 0 0 1.6rem; max-width: 62ch; color: var(--ink-soft); }
+
+  footer { padding-block: 2rem 3rem; color: var(--muted); font-size: var(--step--1); display: flex; flex-wrap: wrap; gap: 0.6rem 1.5rem; justify-content: space-between; }
+
+  @media (max-width: 44rem) {
+    .lede { grid-template-columns: 1fr; }
+    .next__row { grid-template-columns: 1fr; gap: 0.55rem; }
+    .masthead__inner { flex-direction: column; align-items: flex-start; }
+    .dateline { text-align: left; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .bar i { animation: grow 0.9s cubic-bezier(0.2, 0.7, 0.3, 1) both; transform-origin: left; }
+    @keyframes grow { from { transform: scaleX(0.02); } to { transform: scaleX(1); } }
+  }
+</style>
+<style>
+  .pill--done{background:#e8f3ec;color:#2f6f52;border-color:#c4e0ce}
+  @media (prefers-color-scheme: dark){.pill--done{background:#1d2f26;color:#6cc79b;border-color:#2c4a3a}}
+  :root[data-theme="dark"] .pill--done{background:#1d2f26;color:#6cc79b;border-color:#2c4a3a}
+  .theme-lead{color:var(--muted);font-size:var(--step--1);margin:0 0 1.2rem}
+</style>
+
+<header class="masthead">
+  <div class="wrap masthead__inner">
+    <div>
+      <div class="brand">
+        <svg class="brand__mark" width="34" height="34" viewBox="0 0 34 34" aria-hidden="true">
+          <path d="M17 2.4 31 30.4H23.6L17 16.2 10.4 30.4H3z" fill="var(--accent)"/>
+          <path d="M17 16.2 20.6 23.6H13.4z" fill="var(--accent-2)"/>
+        </svg>
+        <div>
+          <div class="brand__name">Альба-Мед</div>
+          <div class="brand__sub">alba-medcenter.ru</div>
+        </div>
+      </div>
+      <p class="eyebrow" style="margin-top:1.8rem">Работы по сайту</p>
+      <h1>Что сделано и что делаем дальше</h1>
+    </div>
+    <div class="dateline">
+      <div><b>19 июля 2026</b></div>
+      <div>сайт клиники</div>
+      <div>WordPress</div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="lede">
+    <p>Документ собран по направлениям, а не по датам: в каждом разделе видно, что уже готово и что в работе. За прошедшую неделю сайт стал заметно быстрее, обновилась главная и раздел врачей, а к сегодняшнему дню подготовлены данные для страницы с ценами, которая будет обновляться из вашей 1С сама.</p>
+    <dl class="tally">
+      <div><dt>Изображений обработано</dt><dd>789</dd></div>
+      <div><dt>Сайт стал легче на</dt><dd>441 МБ</dd></div>
+      <div><dt>Услуг подключено из 1С</dt><dd>2597</dd></div>
+      <div><dt>Врачей добавлено</dt><dd>2</dd></div>
+    </dl>
+  </div>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">01</p>
+      <h2>Скорость сайта</h2>
+    </div>
+    <p class="theme-lead">Главный результат прошедшей недели. В Крыму часто слабый мобильный сигнал, и вес страниц решает, откроется сайт вообще или нет.</p>
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric__top">
+          <span class="metric__name">Главная страница, первая загрузка</span>
+          <span class="metric__nums"><s>16,3 МБ</s> → <b>2,8 МБ</b></span>
+        </div>
+        <div class="bars">
+          <div class="bar bar--was"><span>было</span><i style="width:100%"></i></div>
+          <div class="bar bar--now"><span>стало</span><i style="width:17%"></i></div>
+        </div>
+      </div>
+      <div class="metric">
+        <div class="metric__top">
+          <span class="metric__name">Страница «Врачи»</span>
+          <span class="metric__nums"><s>14,9 МБ</s> → <b>7,2 МБ</b></span>
+        </div>
+        <div class="bars">
+          <div class="bar bar--was"><span>было</span><i style="width:100%"></i></div>
+          <div class="bar bar--now"><span>стало</span><i style="width:48%"></i></div>
+        </div>
+      </div>
+      <div class="metric">
+        <div class="metric__top">
+          <span class="metric__name">Все изображения сайта</span>
+          <span class="metric__nums"><s>701,6 МБ</s> → <b>260 МБ</b></span>
+        </div>
+        <div class="bars">
+          <div class="bar bar--was"><span>было</span><i style="width:100%"></i></div>
+          <div class="bar bar--now"><span>стало</span><i style="width:37%"></i></div>
+        </div>
+      </div>
+    </div>
+    <div class="cols">
+      <div class="card">
+        <h3>789 файлов обработано</h3>
+        <p>Без единой ошибки. Качество проверено на снимках здания и на скане санэпидзаключения — мелкий шрифт документа читается полностью. Отдельные снимки прежде занимали по 12 мегабайт, потому что хранились ровно в том виде, в каком пришли с камеры.</p>
+      </div>
+      <div class="card">
+        <h3>Ничего не переверстывали</h3>
+        <p>Адреса файлов остались прежними, поэтому вёрстка, ссылки и позиции в поисковых системах не затронуты. Включена отложенная загрузка: то, что ниже экрана, подгружается по мере прокрутки.</p>
+      </div>
+      <div class="card">
+        <h3>Оригиналы сохранены</h3>
+        <p>Полные копии всех исходных снимков лежат на сервере. Если что-то не понравится — вернём в исходном виде.</p>
+      </div>
+    </div>
+    <div class="next">
+      <div class="next__row">
+        <span class="pill pill--soon">дальше</span>
+        <div>
+          <h3>Современный формат изображений</h3>
+          <p>Даст дополнительную экономию около четверти веса. Требует настройки на стороне сервера, поэтому вынесено отдельной задачей.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">02</p>
+      <h2>Главная страница и врачи</h2>
+    </div>
+    <div class="cols">
+      <div class="card">
+        <h3>Четыре акции до конца июля</h3>
+        <p>Женское УЗИ-обследование, УЗИ-комплекс новорождённым, гастроскопия с колоноскопией и приём гинеколога с УЗИ. Старая цена показана зачёркнутой рядом с новой. Слайды идут через один: специалист, затем предложение.</p>
+      </div>
+      <div class="card">
+        <h3>Двое врачей заведены</h3>
+        <p>Сейтягяева Лиля Ришатовна — акушер-гинеколог, стаж 19 лет, высшая категория. Талах Марина Николаевна — акушер-гинеколог и детский гинеколог, стаж 18 лет, первая категория. Карточки созданы, фотографии размещены.</p>
+      </div>
+      <div class="card">
+        <h3>Десять портретов обновлены</h3>
+        <p>Мамутова, Милоярова, Мощенская, Муртазаева, Новинская, Оголихина, Покидченко, Сейдаметова, Цветков, Степанов. Снимки подписаны фамилиями врачей — это помогает поиску находить страницы специалистов.</p>
+      </div>
+    </div>
+    <div class="note">
+      <b>Смена акций — без переделки макетов.</b> Стоимость и зачёркнутая цена вынесены в текст слайда, а не вшиты в картинку. Когда акции сменятся, мы обновим цифры за минуты и не будем перерисовывать изображения. Все ссылки слайдера проверены автоматически — каждая кнопка ведёт на живую страницу.
+    </div>
+    <div class="next">
+      <div class="next__row">
+        <span class="pill pill--soon">дальше</span>
+        <div>
+          <h3>Страница услуги ФГДС</h3>
+          <p>Одна кнопка слайдера вела на неопубликованный черновик этой услуги — мы временно переключили её на действующую страницу видеоколоноскопии. Опубликуем страницу ФГДС и вернём ссылку на неё.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">03</p>
+      <h2>Цены на сайте</h2>
+    </div>
+    <p class="theme-lead">Полноценной страницы с ценами на сайте сейчас нет: пункт меню «Стоимость услуг» ведёт на несуществующий адрес. При этом в вашей 1С 2597 услуг с ценами, и они уже выгружаются наружу исправно.</p>
+    <div class="next">
+      <div class="next__row">
+        <span class="pill pill--done">готово</span>
+        <div>
+          <h3>Данные из 1С подключены</h3>
+          <p>Мы настроили получение прайса напрямую из вашей программы: 2597 услуг по 114 направлениям, по обоим филиалам, с ценами и длительностью приёма. Данные обновляются автоматически.</p>
+        </div>
+      </div>
+      <div class="next__row">
+        <span class="pill pill--now">в работе</span>
+        <div>
+          <h3>Страница «Стоимость услуг»</h3>
+          <p>Осталось разместить страницу на сайте и оформить её в общем стиле. Посетитель сможет искать услугу по названию и смотреть цены по каждому филиалу отдельно.</p>
+        </div>
+      </div>
+    </div>
+    <div class="note">
+      <b>Цену меняете один раз.</b> Администратор правит стоимость в 1С — на сайте она обновляется сама. Уходит расхождение, когда на сайте одна цена, а в клинике другая: для пациента это частая причина недоверия, а для администратора — лишний разговор по телефону.
+      <br><br>
+      <b>Посмотреть, как это будет выглядеть:</b>
+      <a href="https://optisphere.tech/preview/albamed-price">optisphere.tech/preview/albamed-price</a> — страница собрана на реальных данных из вашей 1С, открывается и с телефона.
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">04</p>
+      <h2>Онлайн-запись</h2>
+    </div>
+    <p class="theme-lead">Вы говорили, что запись через МедФлекс работает с перебоями. Мы получили доступ к кабинету клиники и проверили это запросами напрямую к их системе.</p>
+    <div class="cols">
+      <div class="card">
+        <h3>Прайс выгружается</h3>
+        <p>Все услуги по обоим филиалам приходят из 1С в МедФлекс корректно и обновляются. Канал между вашей программой и МедФлексом рабочий.</p>
+      </div>
+      <div class="card">
+        <h3>Расписание врачей — нет</h3>
+        <p>График приёма в МедФлекс не попадает. На прямой запрос их система отвечает: «У врачей клиник нет расписания». Записываться пациенту фактически некуда.</p>
+      </div>
+      <div class="card">
+        <h3>Это видно и по статистике</h3>
+        <p>В вашем кабинете отмечено, что часть записей за месяц завершается ошибкой, и что из-за этого клиника ранжируется ниже на ПроДокторов. Причина у обеих проблем одна.</p>
+      </div>
+    </div>
+    <div class="note">
+      <b>Что делаем.</b> Выгрузка расписания настраивается на стороне 1С. Мы подготовим точное описание проблемы с результатами наших проверок и созвонимся со специалистом, который обслуживает вашу программу, — для начала нужно выяснить, кто это. Дальше разберёмся сами, от клиники ничего не потребуется.
+    </div>
+    <div class="next">
+      <div class="next__row">
+        <span class="pill pill--now">в работе</span>
+        <div>
+          <h3>Запись на самом сайте</h3>
+          <p>Сейчас на сайте стоит кнопка записи от МедФлекса — их окно поверх вашей страницы. Мы сделаем запись частью сайта: тот же дизайн, выбор филиала, врача и времени, подтверждение пациенту. Данные при этом уходят в вашу 1С, второй базы не появляется. Запустится, как только восстановится выгрузка расписания.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">05</p>
+      <h2>Реклама и карты</h2>
+    </div>
+    <div class="next">
+      <div class="next__row">
+        <span class="pill pill--done">готово</span>
+        <div>
+          <h3>Ссылки в мессенджерах</h3>
+          <p>Ссылка на сайт, отправленная в WhatsApp, Telegram или ВКонтакте, теперь разворачивается в карточку с фотографией клиники, названием, адресами и телефоном. Такие ссылки открывают охотнее — они выглядят как визитка, а не как строка текста. По ранее разосланным ссылкам карточка обновится позже: мессенджеры надолго запоминают прежний вид.</p>
+        </div>
+      </div>
+      <div class="next__row">
+        <span class="pill pill--soon">дальше</span>
+        <div>
+          <h3>Яндекс.Директ под новые бюджеты</h3>
+          <p>Пересобираем кампании под текущие задачи и бюджет: актуальные услуги и цены в объявлениях, чистка запросов, по которым приходят не ваши пациенты, отдельные объявления под направления, которые вы хотите загрузить. Требования к рекламе медицинских услуг строже обычных — корректные формулировки и предупреждение о необходимости консультации специалиста мы берём на себя.</p>
+        </div>
+      </div>
+      <div class="next__row">
+        <span class="pill pill--soon">дальше</span>
+        <div>
+          <h3>Карточка на Яндекс.Картах</h3>
+          <p>Обновляем карточку организации: свежие фотографии, актуальные услуги и цены, истории о клинике и врачах, проверка контактов и режима работы по обоим адресам. Карточка часто оказывается первым, что видит пациент, ещё до сайта.</p>
+        </div>
+      </div>
+      <div class="next__row">
+        <span class="pill pill--soon">дальше</span>
+        <div>
+          <h3>Заголовки страниц под поисковые запросы</h3>
+          <p>Заголовки главной и раздела врачей длиннее, чем показывает поиск, и начинаются с названия клиники вместо того, что люди набирают, — например «гинеколог Симферополь». Перепишем так, чтобы страница попадала в запрос с первых слов.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">06</p>
+      <h2>Защита и юридическая часть</h2>
+    </div>
+    <div class="next">
+      <div class="next__row">
+        <span class="pill pill--done">готово</span>
+        <div>
+          <h3>Защита форм от спама</h3>
+          <p>Все пять форм сайта защищены от автоматических рассылок: живой посетитель ничего не замечает, рассыльщики отсеиваются до того, как заявка дойдёт до администратора. Проверено в обе стороны. Повод был конкретный: через форму записи к врачу пришло рекламное предложение о продаже недвижимости, а такие письма заслоняют настоящие обращения пациентов.</p>
+        </div>
+      </div>
+      <div class="next__row">
+        <span class="pill pill--now">в работе</span>
+        <div>
+          <h3>Согласие на обработку данных в онлайн-консультанте</h3>
+          <p>Посетители иногда пишут боту о самочувствии. Сведения о здоровье закон защищает строже обычных контактов, поэтому перед началом диалога добавим короткое согласие со ссылкой на политику. Администратору при этом продолжит приходить суть обращения — к какому врачу и на когда, — что и помогает подготовиться к приёму.</p>
+        </div>
+      </div>
+      <div class="next__row">
+        <span class="pill pill--now">в работе</span>
+        <div>
+          <h3>Одна политика конфиденциальности вместо двух</h3>
+          <p>На сайте открываются две версии документа — от 2024 и от 2025 года. Оставим действующую, чтобы не возникало вопросов, какая имеет силу.</p>
+        </div>
+      </div>
+      <div class="next__row">
+        <span class="pill pill--soon">дальше</span>
+        <div>
+          <h3>Счётчик посещаемости после согласия на cookie</h3>
+          <p>Аналитика сейчас запускается до того, как посетитель ответил на уведомление о файлах cookie, и в самом уведомлении нет кнопки отказа. Приведём в порядок.</p>
+        </div>
+      </div>
+    </div>
+    <div class="note">
+      <b>Про юридическую часть.</b> Точные формулировки согласий готовит и выверяет наш юрист: медицина регулируется строже других отраслей, и держать профильного специалиста в штате клинике для этого не нужно.
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">07</p>
+      <h2>Объём и стоимость следующего этапа</h2>
+    </div>
+    <p class="theme-lead">Работы, отмеченные выше как «в работе» и «дальше», одним этапом.</p>
+    <div class="cols">
+      <div class="card">
+        <h3>Цены</h3>
+        <p>Страница «Стоимость услуг» на сайте. Автоматическая выгрузка прайса из 1С по обоим филиалам. Поиск по названию услуги. Сопоставление с разделами сайта.</p>
+      </div>
+      <div class="card">
+        <h3>Онлайн-запись</h3>
+        <p>Разбор проблемы с выгрузкой расписания и связь со специалистом по 1С. Страница записи в оформлении сайта: выбор филиала, врача и времени, подтверждение пациенту, передача в 1С.</p>
+      </div>
+      <div class="card">
+        <h3>Реклама</h3>
+        <p>Пересборка кампаний Яндекс.Директа под новый бюджет. Актуальные услуги и цены в объявлениях. Чистка нецелевых запросов. Отдельные объявления под приоритетные направления.</p>
+      </div>
+      <div class="card">
+        <h3>Карты</h3>
+        <p>Карточка организации на Яндекс.Картах: фотографии, услуги, цены, истории, проверка контактов и режима работы по двум адресам.</p>
+      </div>
+      <div class="card">
+        <h3>Юридическая часть</h3>
+        <p>Согласие в онлайн-консультанте. Одна политика конфиденциальности. Счётчик посещаемости после согласия на cookie и кнопка отказа. Формулировки готовит наш юрист.</p>
+      </div>
+      <div class="card">
+        <h3>Сайт и поиск</h3>
+        <p>Заголовки страниц под поисковые запросы. Современный формат изображений — минус около четверти веса. Публикация страницы ФГДС и возврат ссылки со слайдера.</p>
+      </div>
+    </div>
+    <div class="note">
+      <b>Стоимость этапа — 50 000 рублей.</b> Рекламный бюджет Яндекс.Директа оплачивается отдельно и напрямую в Яндекс — в эту сумму он не входит.
+    </div>
+  </section>
+
+  <footer>
+    <span>Отчёт подготовлен 19 июля 2026</span>
+    <span>Optisphere — разработка и поддержка сайта</span>
+  </footer>
+
+</div>
