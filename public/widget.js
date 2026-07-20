@@ -25,7 +25,7 @@
   var CHAR_NAME = TITLE   || "Ассистент";
   var AVA_LETTER = CHAR_NAME.charAt(0).toUpperCase();
   var GREETING  = "";
-  var DEFAULT_GREETING = "Здравствуйте! 👋 Подскажу и отвечу на ваши вопросы — напишите, что вас интересует.";
+  var DEFAULT_GREETING = "Здравствуйте! Подскажу и отвечу на ваши вопросы — напишите, что вас интересует.";
 
   function makeAvaHtml(size) {
     if (AVATAR_URL) {
@@ -169,7 +169,14 @@
       "#opsph-input:focus{border-color:" + COLOR + ";background:#fff;}",
       "#opsph-send{width:38px;height:38px;border-radius:12px;border:none;background:" + COLOR + ";cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}",
       "#opsph-send:disabled{opacity:.45;cursor:default;}",
-      "@media(max-width:480px){#opsph-wrap{width:calc(100vw - 20px);}#opsph-btn{" + (POSITION==="left"?"left:12px":"right:12px") + "}#opsph-bubble{" + (POSITION==="left"?"left:12px":"right:12px") + ";max-width:calc(100vw - 40px);}}",
+      "@media(max-width:480px){" +
+        "#opsph-wrap{width:calc(100vw - 20px);}" +
+        "#opsph-btn{" + (POSITION==="left"?"left:12px":"right:12px") + "}" +
+        "#opsph-bubble{" + (POSITION==="left"?"left:12px":"right:12px") + ";bottom:" + (BOTTOM + PILL_H + 6) + "px;max-width:calc(100vw - 40px);max-height:38vh;overflow-y:auto;padding:11px 13px 11px 12px;gap:6px;}" +
+        "#opsph-bubble-head{gap:6px;}" +
+        "#opsph-bubble-text{font-size:12.5px;line-height:1.4;}" +
+        "#opsph-bubble-cta{padding:7px 12px;}" +
+      "}",
       ".opsph-quick-replies{display:flex;flex-wrap:wrap;margin-top:8px;}",
       ".opsph-qr-chip{display:inline-flex;align-items:center;padding:6px 14px;border-radius:20px;border:1px solid rgba(8,145,178,0.4);background:rgba(8,145,178,0.12);color:" + COLOR + ";font-size:13px;font-family:system-ui,sans-serif;cursor:pointer;margin:4px 4px 0 0;transition:background .15s;line-height:1.3;}",
       ".opsph-qr-chip:hover{background:rgba(8,145,178,0.22);}"
@@ -203,7 +210,7 @@
           '<div id="opsph-head-name">' + escHtml(CHAR_NAME) + '</div>',
           '<div id="opsph-head-sub">● Онлайн · ИИ-ассистент</div>',
         '</div>',
-        '<button id="opsph-close" aria-label="Закрыть">✕</button>',
+        '<button id="opsph-close" aria-label="Закрыть">' + closeIcon() + '</button>',
       '</div>',
       '<div id="opsph-msgs" aria-live="polite"></div>',
       '<div id="opsph-footer">',
@@ -241,7 +248,7 @@
       '<div id="opsph-bubble-head">',
         '<div id="opsph-bubble-ava">' + makeAvaHtml(30) + '</div>',
         '<span id="opsph-bubble-name">' + escHtml(CHAR_NAME) + '</span>',
-        '<button id="opsph-bubble-close" aria-label="Закрыть">✕</button>',
+        '<button id="opsph-bubble-close" aria-label="Закрыть">' + closeIcon() + '</button>',
       '</div>',
       '<div id="opsph-bubble-text">' + (GREETING ? escHtml(GREETING).replace(/\n/g, "<br>") : escHtml(DEFAULT_GREETING)) + '</div>',
       '<button id="opsph-bubble-cta">Написать →</button>',
@@ -376,7 +383,7 @@
     var card = document.createElement("div");
     card.className = "opsph-lead-card";
     card.innerHTML = [
-      '<div class="opsph-lead-title">📋 Оставить заявку</div>',
+      '<div class="opsph-lead-title">Оставить заявку</div>',
       '<input class="opsph-lead-input" id="opsph-lead-name" type="text" placeholder="Ваше имя" autocomplete="name">',
       '<input class="opsph-lead-input" id="opsph-lead-phone" type="tel" placeholder="+7 (___) ___ __ __" autocomplete="tel">',
       '<button class="opsph-lead-btn" id="opsph-lead-submit">Отправить заявку</button>'
@@ -398,7 +405,7 @@
       })
         .then(function (r) { return r.json(); })
         .then(function () {
-          card.innerHTML = '<div class="opsph-lead-ok">✓ Заявка принята! Скоро с вами свяжутся.</div>';
+          card.innerHTML = '<div class="opsph-lead-ok">' + checkIcon() + 'Заявка принята! Скоро с вами свяжутся.</div>';
           appendBotRow("Отлично, принял заявку! С вами скоро свяжутся.");
         })
         .catch(function () {
@@ -542,6 +549,14 @@
 
   function sendIcon() {
     return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 2L15 22l-4-9-9-4 20-7z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  }
+
+  function closeIcon() {
+    return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+  }
+
+  function checkIcon() {
+    return '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" style="vertical-align:-2px;margin-right:5px;"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   }
 
   // ── Init — fetch config first, then render ────────────────────────────────────
