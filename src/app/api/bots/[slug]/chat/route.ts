@@ -3,6 +3,7 @@ import Anthropic from "@anthropic-ai/sdk"
 import { getClientBySlug, saveMessage, getMessagesBySession, getDb } from "@/lib/db"
 import { isSafeFetchUrl } from "@/lib/safe-url"
 import { resolveBaseURL } from "@/lib/ai-config"
+import { guessService } from "@/lib/bot-summary"
 
 // ── Telegram helper (same proxy as lead route) ────────────────────────────────
 async function sendTelegram(token: string, chatId: string, text: string) {
@@ -229,18 +230,35 @@ export async function POST(
                 .get(client.id, sessionId) as { n: number }).n > 0
 
               if (!hasLead) {
-                const recentMsgs = getMessagesBySession(client.id, sessionId, 4).reverse()
-                const history = recentMsgs
-                  .map((m) => `${m.role === "user" ? "Клиент" : "Ассистент"}: ${m.content.replace(/\[SAVE_LEAD\]/g, "").replace(/\[SHOW_FORM\]/g, "").trim().slice(0, 300)}`)
-                  .join("\n")
+                // consent_required clients (medical, per d:\projects\albamed\spec\bot-compliance.md §4) never get
+                // raw dialog quotes in Telegram — chat content may be special-category PD
+                // (health data). Other bots (vlad, lifestyle-crimea) keep the full quote,
+                // it's a useful ops tool there and nothing sensitive.
+                let text: string
+                if (client.consent_required) {
+                  const userMsgs = getMessagesBySession(client.id, sessionId, 6)
+                    .filter((m) => m.role === "user")
+                    .map((m) => m.content)
+                  const service = guessService(userMsgs, client.quick_replies)
+                  text = [
+                    `Активный диалог — ${client.name}`,
+                    `Интересуется: ${service}`,
+                    `Контакт: не оставлен`,
+                  ].join("\n")
+                } else {
+                  const recentMsgs = getMessagesBySession(client.id, sessionId, 4).reverse()
+                  const history = recentMsgs
+                    .map((m) => `${m.role === "user" ? "Клиент" : "Ассистент"}: ${m.content.replace(/\[SAVE_LEAD\]/g, "").replace(/\[SHOW_FORM\]/g, "").trim().slice(0, 300)}`)
+                    .join("\n")
 
-                const text = [
-                  `💬 <b>Активный диалог — ${client.name}</b>`,
-                  "",
-                  history,
-                  "",
-                  "Контакт пока не оставил",
-                ].join("\n")
+                  text = [
+                    `💬 <b>Активный диалог — ${client.name}</b>`,
+                    "",
+                    history,
+                    "",
+                    "Контакт пока не оставил",
+                  ].join("\n")
+                }
 
                 const chatIds = client.tg_chat_id.split(",").map((id: string) => id.trim()).filter(Boolean)
                 await Promise.all(chatIds.map((chatId: string) => sendTelegram(client.tg_token, chatId, text)))

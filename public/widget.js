@@ -27,6 +27,15 @@
   var GREETING  = "";
   var DEFAULT_GREETING = "Здравствуйте! Подскажу и отвечу на ваши вопросы — напишите, что вас интересует.";
 
+  // ── Consent gate (per-client, default OFF) ────────────────────────────────────
+  // See d:\projects\albamed\spec\bot-compliance.md. Off for every bot unless the client's config
+  // explicitly returns consent_required — the widget is shared across 4 bots and
+  // most of them (apartments, construction) have no legal reason to gate the chat.
+  var CONSENT_REQUIRED = false;
+  var CONSENT_TEXT     = "";
+  var POLICY_URL       = "";
+  var DEFAULT_CONSENT_TEXT = "Это ИИ-ассистент. Он не заменяет консультацию специалиста. Переписка обрабатывается, в том числе с использованием зарубежного ИИ-сервиса. Продолжая, вы соглашаетесь на обработку персональных данных согласно Политике конфиденциальности.";
+
   function makeAvaHtml(size) {
     if (AVATAR_URL) {
       return '<img src="' + escHtml(AVATAR_URL) + '" style="width:' + size + 'px;height:' + size + 'px;border-radius:50%;object-fit:cover;display:block;" alt="">';
@@ -52,9 +61,13 @@
   var leadFormShown = false;
   var bubbleDismissed = false;
   var quickRepliesShown = false;
+  var consentGiven      = false;
+  var consentGateShown  = false;
 
   var STORAGE_KEY    = "opsph_chat_" + BOT_SLUG;
   var SESSION_FLAG   = "opsph_alive_" + BOT_SLUG; // sessionStorage flag — cleared on reload/new tab
+  var CONSENT_KEY    = "opsph_consent_" + BOT_SLUG;
+  var GATE_FLAG_KEY  = "opsph_gate_" + BOT_SLUG; // remembers "this bot needs consent" across config outages
   var MAX_MESSAGES   = 50;
 
   function loadSession() {
@@ -94,7 +107,48 @@
     quickRepliesShown = false;
     var msgsEl = msgs();
     if (msgsEl) msgsEl.innerHTML = "";
-    showGreeting();
+    if (CONSENT_REQUIRED) {
+      // New session id → old consent record no longer applies, gate again.
+      consentGiven     = false;
+      consentGateShown = false;
+      setInputLocked(true);
+      showConsentGate();
+    } else {
+      showGreeting();
+    }
+  }
+
+  // ── Consent gate storage/network ───────────────────────────────────────────────
+  function loadConsent() {
+    try {
+      var raw = localStorage.getItem(CONSENT_KEY);
+      if (!raw) return;
+      var data = JSON.parse(raw);
+      if (data && data.sessionId === sessionId) consentGiven = true;
+    } catch (e) { /* storage unavailable or JSON parse error */ }
+  }
+
+  function saveConsentLocal() {
+    try {
+      localStorage.setItem(CONSENT_KEY, JSON.stringify({ sessionId: sessionId, at: Date.now() }));
+    } catch (e) {}
+  }
+
+  function postConsent(scope) {
+    try {
+      fetch(API_BASE + "/api/bots/" + BOT_SLUG + "/consent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ session_id: sessionId, scope: scope })
+      }).catch(function () {});
+    } catch (e) {}
+  }
+
+  function setInputLocked(locked) {
+    var inp  = document.getElementById("opsph-input");
+    var send = document.getElementById("opsph-send");
+    if (inp)  inp.disabled  = locked;
+    if (send) send.disabled = locked;
   }
 
   function restoreMessages() {
@@ -161,6 +215,11 @@
       ".opsph-lead-btn{width:100%;padding:9px;border:none;border-radius:9px;background:" + COLOR + ";color:#fff;font-weight:600;font-size:13px;font-family:system-ui,sans-serif;cursor:pointer;}",
       ".opsph-lead-btn:disabled{opacity:.5;cursor:default;}",
       ".opsph-lead-ok{color:#059669;font-size:13px;font-family:system-ui,sans-serif;font-weight:600;text-align:center;padding:6px 0;}",
+      ".opsph-consent-text{font-size:12.5px;line-height:1.5;color:#475569;font-family:system-ui,sans-serif;margin-bottom:8px;white-space:pre-wrap;}",
+      ".opsph-consent-link{display:inline-block;font-size:12px;color:" + COLOR + ";font-family:system-ui,sans-serif;text-decoration:underline;margin-bottom:10px;}",
+      ".opsph-consent-check{display:flex;align-items:flex-start;gap:7px;margin-bottom:10px;cursor:pointer;font-size:11.5px;line-height:1.4;color:#64748b;font-family:system-ui,sans-serif;}",
+      ".opsph-consent-check input{margin-top:2px;flex-shrink:0;width:14px;height:14px;cursor:pointer;}",
+      ".opsph-consent-check a{color:" + COLOR + ";text-decoration:underline;}",
       "#opsph-footer{display:flex;flex-direction:column;flex-shrink:0;background:#fff;border-top:1px solid #e2e8f0;}",
       "#opsph-form{display:flex;padding:10px 12px 6px;gap:8px;}",
       "#opsph-clear{background:none;border:none;cursor:pointer;font-size:11px;color:#94a3b8;font-family:system-ui,sans-serif;padding:0 12px 8px;text-align:center;width:100%;transition:color .15s;}",
@@ -279,7 +338,11 @@
     if (isOpen) {
       wrap.classList.add("open");
       if (label) label.textContent = "Закрыть";
-      if (messages.length === 0) showGreeting();
+      if (CONSENT_REQUIRED && !consentGiven) {
+        if (!consentGateShown) showConsentGate();
+      } else if (messages.length === 0) {
+        showGreeting();
+      }
       setTimeout(function () {
         var i = document.getElementById("opsph-input");
         if (i) i.focus();
@@ -296,10 +359,40 @@
     appendQuickReplies();
   }
 
+  // ── Consent gate screen (shown instead of the greeting) ───────────────────────
+  function showConsentGate() {
+    consentGateShown = true;
+    var card = document.createElement("div");
+    card.className = "opsph-lead-card";
+    card.id = "opsph-consent-gate";
+    var text = CONSENT_TEXT || DEFAULT_CONSENT_TEXT;
+    var html = '<div class="opsph-lead-title">Прежде чем начнём</div>' +
+      '<div class="opsph-consent-text">' + escHtml(text).replace(/\n/g, "<br>") + '</div>';
+    if (POLICY_URL) {
+      html += '<a class="opsph-consent-link" href="' + escHtml(POLICY_URL) + '" target="_blank" rel="noopener">Политика конфиденциальности</a>';
+    }
+    html += '<button class="opsph-lead-btn" id="opsph-consent-btn">Согласен, продолжить</button>';
+    card.innerHTML = html;
+    msgs().appendChild(card);
+    scrollToBottom();
+
+    card.querySelector("#opsph-consent-btn").addEventListener("click", function () {
+      consentGiven = true;
+      saveConsentLocal();
+      postConsent("chat_gate");
+      card.remove();
+      setInputLocked(false);
+      if (messages.length === 0) showGreeting();
+      var i = document.getElementById("opsph-input");
+      if (i) i.focus();
+    });
+  }
+
   // ── Submit ────────────────────────────────────────────────────────────────────
   function onSubmit(e) {
     e.preventDefault();
     if (isStreaming) return;
+    if (CONSENT_REQUIRED && !consentGiven) return;
     var inp = document.getElementById("opsph-input");
     var text = inp.value.trim();
     if (!text) return;
@@ -380,24 +473,44 @@
   // ── Lead Form ─────────────────────────────────────────────────────────────────
   function showLeadForm() {
     leadFormShown = true;
+    var hasPolicy = !!POLICY_URL;
     var card = document.createElement("div");
     card.className = "opsph-lead-card";
-    card.innerHTML = [
+    var parts = [
       '<div class="opsph-lead-title">Оставить заявку</div>',
-      '<input class="opsph-lead-input" id="opsph-lead-name" type="text" placeholder="Ваше имя" autocomplete="name">',
-      '<input class="opsph-lead-input" id="opsph-lead-phone" type="tel" placeholder="+7 (___) ___ __ __" autocomplete="tel">',
-      '<button class="opsph-lead-btn" id="opsph-lead-submit">Отправить заявку</button>'
-    ].join("");
+      '<input class="opsph-lead-input" id="opsph-lead-name" type="text" placeholder="Как к вам обращаться" autocomplete="name">',
+      '<input class="opsph-lead-input" id="opsph-lead-phone" type="tel" placeholder="+7 (___) ___ __ __" autocomplete="tel">'
+    ];
+    if (hasPolicy) {
+      parts.push(
+        '<label class="opsph-consent-check">' +
+          '<input type="checkbox" id="opsph-lead-consent">' +
+          '<span>Согласен на обработку персональных данных (имя, телефон) в соответствии с ' +
+          '<a href="' + escHtml(POLICY_URL) + '" target="_blank" rel="noopener">Политикой конфиденциальности</a>' +
+          ' и на связь по указанному номеру.</span>' +
+        '</label>'
+      );
+    }
+    parts.push('<button class="opsph-lead-btn" id="opsph-lead-submit"' + (hasPolicy ? " disabled" : "") + '>Отправить заявку</button>');
+    card.innerHTML = parts.join("");
     msgs().appendChild(card);
     scrollToBottom();
 
-    var submitBtn = card.querySelector("#opsph-lead-submit");
+    var submitBtn  = card.querySelector("#opsph-lead-submit");
+    var consentCb  = hasPolicy ? card.querySelector("#opsph-lead-consent") : null;
+    if (consentCb) {
+      consentCb.addEventListener("change", function () {
+        submitBtn.disabled = !consentCb.checked;
+      });
+    }
     submitBtn.addEventListener("click", function () {
+      if (hasPolicy && !consentCb.checked) return;
       var name  = card.querySelector("#opsph-lead-name").value.trim();
       var phone = card.querySelector("#opsph-lead-phone").value.trim();
       if (!phone) { card.querySelector("#opsph-lead-phone").focus(); return; }
       submitBtn.disabled = true;
       submitBtn.textContent = "Отправляем…";
+      if (hasPolicy) postConsent("lead_form");
       fetch(API_BASE + "/api/bots/" + BOT_SLUG + "/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -465,6 +578,7 @@
 
   function sendQuickReply(text) {
     if (isStreaming) return;
+    if (CONSENT_REQUIRED && !consentGiven) return;
     messages.push({ role: "user", content: text });
     saveSession();
     appendUserMsg(text);
@@ -531,7 +645,7 @@
   function msgs()          { return document.getElementById("opsph-msgs"); }
   function scrollToBottom(){ var m = msgs(); if (m) m.scrollTop = m.scrollHeight; }
   function setSendDisabled(v){ var b = document.getElementById("opsph-send"); if (b) b.disabled = v; }
-  function escHtml(s)      { return ("" + s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+  function escHtml(s)      { return ("" + s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
 
   function formatPhone(val) {
     var digits = val.replace(/\D/g, "");
@@ -559,11 +673,49 @@
     return '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" style="vertical-align:-2px;margin-right:5px;"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   }
 
+  // ── Fail-closed fallback ────────────────────────────────────────────────────────
+  // If GET /config fails outright (network/CORS/timeout — NOT a valid "bot not found"
+  // response, which still resolves normally below) and this bot was known to require
+  // consent last time it loaded successfully, we must NOT silently fail-open into an
+  // ungated chat. Show a minimal "temporarily unavailable" bubble instead — no chat
+  // window, no input, nothing can reach /chat.
+  function renderUnavailable() {
+    injectCSS();
+    var btn = document.createElement("button");
+    btn.id = "opsph-btn";
+    btn.setAttribute("aria-label", "Чат с " + CHAR_NAME);
+    btn.innerHTML =
+      '<div id="opsph-btn-ava">' + makeAvaHtml(32) + '</div>' +
+      '<span id="opsph-btn-label">' + escHtml(CHAR_NAME) + '</span>';
+    btn.addEventListener("click", function () {
+      var existing = document.getElementById("opsph-bubble");
+      if (existing) { existing.remove(); return; }
+      var el = document.createElement("div");
+      el.id = "opsph-bubble";
+      el.innerHTML = [
+        '<div id="opsph-bubble-head">',
+          '<div id="opsph-bubble-ava">' + makeAvaHtml(30) + '</div>',
+          '<span id="opsph-bubble-name">' + escHtml(CHAR_NAME) + '</span>',
+          '<button id="opsph-bubble-close" aria-label="Закрыть">' + closeIcon() + '</button>',
+        '</div>',
+        '<div id="opsph-bubble-text">Чат временно недоступен. Попробуйте обновить страницу через минуту.</div>'
+      ].join("");
+      document.body.appendChild(el);
+      el.querySelector("#opsph-bubble-close").addEventListener("click", function (e) {
+        e.stopPropagation();
+        el.remove();
+      });
+    });
+    document.body.appendChild(btn);
+  }
+
   // ── Init — fetch config first, then render ────────────────────────────────────
   function render() {
     injectCSS();
     buildDOM();
     restoreMessages();
+    loadConsent();
+    if (CONSENT_REQUIRED && !consentGiven) setInputLocked(true);
     if (GREETING_DELAY >= 0) setTimeout(showBubble, GREETING_DELAY);
   }
 
@@ -578,11 +730,26 @@
           if (cfg.placeholder) script.setAttribute("data-placeholder", cfg.placeholder);
           if (Array.isArray(cfg.quick_replies) && cfg.quick_replies.length) QUICK_REPLIES = cfg.quick_replies;
           if (cfg.greeting) GREETING = cfg.greeting;
+          CONSENT_REQUIRED = !!cfg.consent_required;
+          CONSENT_TEXT     = cfg.consent_text || "";
+          POLICY_URL       = cfg.policy_url   || "";
+          try {
+            if (CONSENT_REQUIRED) localStorage.setItem(GATE_FLAG_KEY, "1");
+            else localStorage.removeItem(GATE_FLAG_KEY);
+          } catch (e) {}
           AVA_LETTER = CHAR_NAME.charAt(0).toUpperCase();
         }
         render();
       })
-      .catch(function () { render(); });
+      .catch(function () {
+        var wasGated = false;
+        try { wasGated = localStorage.getItem(GATE_FLAG_KEY) === "1"; } catch (e) {}
+        if (wasGated) {
+          renderUnavailable();
+        } else {
+          render();
+        }
+      });
   }
 
   if (document.readyState === "loading") {

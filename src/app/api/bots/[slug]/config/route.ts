@@ -30,6 +30,11 @@ export async function GET(
       placeholder: client.widget_placeholder,
       quick_replies: quickReplies,
       greeting: client.greeting,
+      // Consent gate — per-client, defaults OFF (see d:\projects\albamed\spec\bot-compliance.md).
+      // The widget only shows the gate/checkbox when these are present.
+      consent_required: client.consent_required === 1,
+      consent_text: client.consent_text || "",
+      policy_url: client.policy_url || "",
     },
     { headers: corsHeaders }
   )

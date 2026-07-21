@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { getClientBySlug, saveLead, getMessagesBySession } from "@/lib/db"
+import { guessService } from "@/lib/bot-summary"
 
 const corsHeaders = (origin: string) => ({
   "Access-Control-Allow-Origin": origin,
@@ -73,32 +74,60 @@ export async function POST(
       minute: "2-digit",
     })
 
-    const sourceLabel: Record<string, string> = {
-      chat: "💬 из чата",
-      cf7: "📝 с формы сайта",
-      booking: "📅 запись с сайта",
-      import: "📥 импорт",
-    }
-    const header = [
-      `🔔 <b>Новая заявка — ${client.name}</b> (${sourceLabel[safeSource] ?? safeSource})`,
-      "",
-      `👤 ${name || "—"}`,
-      ...(phone ? [`📞 ${phone}`] : []),
-      ...(email ? [`✉️ ${email}`] : []),
-      ...(message ? [`💬 ${message}`] : []),
-    ].join("\n")
+    let fullText: string
 
-    let fullText = header
+    if (client.consent_required) {
+      // consent_required clients (medical, per d:\projects\albamed\spec\bot-compliance.md §4)
+      // never get raw dialog quotes in Telegram — chat content may include special-category
+      // personal data (health info). Structured facts only, no cited free text.
+      // `message` is deliberately IGNORED here even when non-empty: /lead also accepts
+      // source=cf7/booking/import, and a CF7 form on albamed could map a "жалоба"/"вопрос"
+      // field to `message` — that raw text must never reach Telegram unfiltered.
+      const sourceLabelPlain: Record<string, string> = {
+        chat: "из чата",
+        cf7: "с формы сайта",
+        booking: "запись с сайта",
+        import: "импорт",
+      }
+      let service = "уточняется"
+      if (sessionId) {
+        const userMsgs = getMessagesBySession(client.id, sessionId, 10)
+          .filter((m) => m.role === "user")
+          .map((m) => m.content)
+        service = guessService(userMsgs, client.quick_replies)
+      }
+      fullText = [
+        `Новая заявка — ${client.name} (${sourceLabelPlain[safeSource] ?? safeSource})`,
+        `Имя: ${name || "—"}`,
+        `Телефон: ${phone || "—"}`,
+        `Услуга/повод: ${service || "уточняется"}`,
+      ].join("\n")
+    } else {
+      const sourceLabel: Record<string, string> = {
+        chat: "💬 из чата",
+        cf7: "📝 с формы сайта",
+        booking: "📅 запись с сайта",
+        import: "📥 импорт",
+      }
+      fullText = [
+        `🔔 <b>Новая заявка — ${client.name}</b> (${sourceLabel[safeSource] ?? safeSource})`,
+        "",
+        `👤 ${name || "—"}`,
+        ...(phone ? [`📞 ${phone}`] : []),
+        ...(email ? [`✉️ ${email}`] : []),
+        ...(message ? [`💬 ${message}`] : []),
+      ].join("\n")
 
-    // Append last 10 messages from this session
-    if (sessionId) {
-      const msgs = getMessagesBySession(client.id, sessionId, 10).reverse()
-      if (msgs.length > 0) {
-        const botName = client.widget_title || client.name
-        const history = msgs
-          .map((m) => `${m.role === "user" ? "👤 Клиент" : `🤖 ${botName}`}: ${m.content.replace(/\[SAVE_LEAD\]/g, "").replace(/\[SHOW_FORM\]/g, "").trim().slice(0, 500)}`)
-          .join("\n\n")
-        fullText += `\n\n<b>💬 Переписка:</b>\n${history}`
+      // Append last 10 messages from this session
+      if (sessionId) {
+        const msgs = getMessagesBySession(client.id, sessionId, 10).reverse()
+        if (msgs.length > 0) {
+          const botName = client.widget_title || client.name
+          const history = msgs
+            .map((m) => `${m.role === "user" ? "👤 Клиент" : `🤖 ${botName}`}: ${m.content.replace(/\[SAVE_LEAD\]/g, "").replace(/\[SHOW_FORM\]/g, "").trim().slice(0, 500)}`)
+            .join("\n\n")
+          fullText += `\n\n<b>💬 Переписка:</b>\n${history}`
+        }
       }
     }
 

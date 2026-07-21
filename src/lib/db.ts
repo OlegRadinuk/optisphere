@@ -165,6 +165,38 @@ function initSchema(db: Database.Database) {
     // Column already exists — ignore
   }
 
+  // ── Compliance layer migrations ─────────────────────────────────────────────
+  // consent_required defaults to 0 for every existing client — the consent gate
+  // stays OFF unless a client is explicitly opted in (see d:\projects\albamed\spec\bot-compliance.md).
+  // Uses PRAGMA table_info instead of try/catch-ALTER so a missing column is
+  // detected explicitly rather than inferred from a thrown error.
+  const clientCols = (
+    db.prepare("PRAGMA table_info(clients)").all() as { name: string }[]
+  ).map((c) => c.name)
+  if (!clientCols.includes("consent_required")) {
+    db.exec(`ALTER TABLE clients ADD COLUMN consent_required INTEGER DEFAULT 0`)
+  }
+  if (!clientCols.includes("consent_text")) {
+    db.exec(`ALTER TABLE clients ADD COLUMN consent_text TEXT DEFAULT ''`)
+  }
+  if (!clientCols.includes("policy_url")) {
+    db.exec(`ALTER TABLE clients ADD COLUMN policy_url TEXT DEFAULT ''`)
+  }
+
+  // Факт согласия — фиксируется из widget.js (гейт перед чатом и/или чекбокс формы заявки)
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS consents (
+      id             INTEGER PRIMARY KEY AUTOINCREMENT,
+      client_id      INTEGER NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
+      session_id     TEXT NOT NULL,
+      scope          TEXT NOT NULL,        -- 'chat_gate' | 'lead_form'
+      policy_version TEXT NOT NULL DEFAULT '',
+      ip_hash        TEXT DEFAULT '',      -- ХЕШ IP (sha256 + соль из env), не сырой
+      created_at     TEXT DEFAULT (datetime('now'))
+    );
+    CREATE INDEX IF NOT EXISTS idx_consents_client ON consents(client_id, session_id);
+  `)
+
   // Журнал событий по заявкам (смена статуса и т.п.) — основа сервис-тайма
   db.exec(`
     CREATE TABLE IF NOT EXISTS lead_events (
@@ -272,7 +304,7 @@ function seedBots(db: Database.Database) {
     if (!seed.slug) continue
     const existing = db.prepare("SELECT id FROM clients WHERE slug = ?").get(seed.slug) as { id: number } | undefined
     if (existing) {
-      const safeFields = ["name","widget_title","widget_color","widget_placeholder","context_url","quick_replies","system_prompt","model","rate_limit","active","greeting"] as const
+      const safeFields = ["name","widget_title","widget_color","widget_placeholder","context_url","quick_replies","system_prompt","model","rate_limit","active","greeting","consent_required","consent_text","policy_url"] as const
       const updates: Partial<Client> = {}
       for (const f of safeFields) {
         if (seed[f] !== undefined) (updates as Record<string, unknown>)[f] = seed[f]
@@ -285,14 +317,18 @@ function seedBots(db: Database.Database) {
         db.prepare(`UPDATE clients SET ${fields} WHERE slug = @slug`).run({ ...updates, slug: seed.slug })
       }
     } else {
-      // Insert full record from seed
+      // Insert full record from seed — this is the actual "DB recreated from scratch"
+      // path (client row doesn't exist yet at all), so consent fields must be seeded
+      // here too, not just in the UPDATE-existing branch above.
       db.prepare(`
         INSERT OR IGNORE INTO clients
           (slug,name,description,system_prompt,api_key,base_url,model,tg_token,tg_chat_id,
-           widget_color,widget_title,widget_placeholder,rate_limit,active,context_url,quick_replies,greeting)
+           widget_color,widget_title,widget_placeholder,rate_limit,active,context_url,quick_replies,greeting,
+           consent_required,consent_text,policy_url)
         VALUES
           (@slug,@name,@description,@system_prompt,@api_key,@base_url,@model,@tg_token,@tg_chat_id,
-           @widget_color,@widget_title,@widget_placeholder,@rate_limit,@active,@context_url,@quick_replies,@greeting)
+           @widget_color,@widget_title,@widget_placeholder,@rate_limit,@active,@context_url,@quick_replies,@greeting,
+           @consent_required,@consent_text,@policy_url)
       `).run({
         slug: seed.slug, name: seed.name ?? seed.slug, description: seed.description ?? "",
         system_prompt: seed.system_prompt ?? "", api_key: seed.api_key ?? "",
@@ -303,6 +339,8 @@ function seedBots(db: Database.Database) {
         rate_limit: seed.rate_limit ?? 30, active: seed.active ?? 1,
         context_url: seed.context_url ?? "", quick_replies: seed.quick_replies ?? "",
         greeting: seed.greeting ?? "",
+        consent_required: seed.consent_required ?? 0, consent_text: seed.consent_text ?? "",
+        policy_url: seed.policy_url ?? "",
       })
     }
   }
@@ -329,6 +367,9 @@ export type Client = {
   context_url: string
   quick_replies: string
   greeting: string
+  consent_required: number
+  consent_text: string
+  policy_url: string
   created_at: string
 }
 
@@ -385,7 +426,8 @@ export function getAllClients(): Client[] {
 }
 
 export function createClient(
-  data: Omit<Client, "id" | "created_at">
+  data: Omit<Client, "id" | "created_at" | "consent_required" | "consent_text" | "policy_url"> &
+    Partial<Pick<Client, "consent_required" | "consent_text" | "policy_url">>
 ): Client {
   const db = getDb()
   const stmt = db.prepare(`
@@ -410,6 +452,7 @@ const UPDATABLE_CLIENT_FIELDS = new Set([
   "name", "description", "system_prompt", "api_key", "base_url", "model",
   "tg_token", "tg_chat_id", "widget_color", "widget_title", "widget_placeholder",
   "rate_limit", "active", "context_url", "quick_replies", "greeting",
+  "consent_required", "consent_text", "policy_url",
 ])
 
 export function updateClient(
@@ -455,6 +498,9 @@ function syncClientToSeed(slug: string): void {
     entry.greeting           = client.greeting           ?? ""
     entry.tg_token           = client.tg_token           ?? ""
     entry.tg_chat_id         = client.tg_chat_id         ?? ""
+    entry.consent_required   = client.consent_required   ?? 0
+    entry.consent_text       = client.consent_text       ?? ""
+    entry.policy_url         = client.policy_url         ?? ""
     if (idx < 0) seeds.push(entry)
     // Атомарная запись: пишем во временный файл, затем переименовываем.
     // Это защищает от обрезанного JSON при краше/PM2 reload в момент записи.
@@ -490,6 +536,30 @@ export function saveLead(lead: LeadInsert): void {
        VALUES (@client_id, @session_id, @name, @phone, @email, @message, @source)`
     )
     .run({ ...lead, source: lead.source ?? "chat" })
+}
+
+
+export type ConsentInsert = {
+  client_id: number
+  session_id: string
+  scope: "chat_gate" | "lead_form"
+  policy_version?: string
+  ip_hash?: string
+}
+
+export function saveConsent(consent: ConsentInsert): void {
+  getDb()
+    .prepare(
+      `INSERT INTO consents (client_id, session_id, scope, policy_version, ip_hash)
+       VALUES (@client_id, @session_id, @scope, @policy_version, @ip_hash)`
+    )
+    .run({
+      client_id: consent.client_id,
+      session_id: consent.session_id,
+      scope: consent.scope,
+      policy_version: consent.policy_version ?? "",
+      ip_hash: consent.ip_hash ?? "",
+    })
 }
 
 export function getClientStats(clientId: number): {
