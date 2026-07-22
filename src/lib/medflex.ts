@@ -287,7 +287,7 @@ export interface MedflexExecuteResponse {
 
 /** Тело запроса к /direct_appointment/doctor/cancel/ */
 export interface MedflexCancelPayload {
-  claim_id: string
+  uuid: string   // МедФлекс использует uuid, не claim_id (измерено 2026-07-23)
 }
 
 /**
@@ -318,7 +318,7 @@ export async function createMedflexAppointment(
  * Таймаут стандартный 15 с.
  */
 export async function cancelMedflexAppointment(claimId: string): Promise<void> {
-  const payload: MedflexCancelPayload = { claim_id: claimId }
+  const payload: MedflexCancelPayload = { uuid: claimId }
   await medflexPost<unknown>("/direct_appointment/doctor/cancel/", payload)
 }
 
