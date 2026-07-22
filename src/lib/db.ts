@@ -212,6 +212,62 @@ function initSchema(db: Database.Database) {
     CREATE INDEX IF NOT EXISTS idx_lead_events_client ON lead_events(client_id, created_at);
     CREATE INDEX IF NOT EXISTS idx_lead_events_lead   ON lead_events(lead_id);
   `)
+
+  // ── МедФлекс: кэш справочников и лог записей ──────────────────────────────
+
+  // Кэш врачей из /models/doctor/ (💰 ПЛАТНЫЙ — обновляется по вебхуку, не по таймеру)
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS medflex_doctors_cache (
+      doctor_id    INTEGER PRIMARY KEY,
+      last_name    TEXT    NOT NULL DEFAULT '',
+      first_name   TEXT    NOT NULL DEFAULT '',
+      second_name  TEXT    NOT NULL DEFAULT '',
+      specialities TEXT    NOT NULL DEFAULT '[]',   -- JSON: [{id, name?}]
+      raw_json     TEXT    NOT NULL DEFAULT '{}',   -- сырой ответ для отладки
+      updated_at   TEXT    NOT NULL DEFAULT (datetime('now'))
+    )
+  `)
+
+  // Кэш специальностей из /models/speciality/ (предположительно бесплатный)
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS medflex_specialities_cache (
+      speciality_id INTEGER PRIMARY KEY,
+      name          TEXT    NOT NULL DEFAULT '',
+      updated_at    TEXT    NOT NULL DEFAULT (datetime('now'))
+    )
+  `)
+
+  // Лог МедФлекс-записей: идемпотентность + история (claim_id для возможной отмены)
+  // Ключ: doctor_id + dt_start + phone — уникальная заявка.
+  // Статус 'pending' — запрос ушёл; 'success' — claim_id получен; 'error' — можно повторить.
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS medflex_booking_log (
+      idempotency_key TEXT    PRIMARY KEY,
+      status          TEXT    NOT NULL DEFAULT 'pending',
+      claim_id        TEXT    NOT NULL DEFAULT '',
+      doctor_id       INTEGER NOT NULL,
+      lpu_id          INTEGER NOT NULL DEFAULT 0,
+      speciality_id   INTEGER NOT NULL DEFAULT 0,
+      dt_start        TEXT    NOT NULL,
+      phone           TEXT    NOT NULL,
+      patient_name    TEXT    NOT NULL DEFAULT '',
+      error_msg       TEXT    NOT NULL DEFAULT '',
+      created_at      TEXT    NOT NULL DEFAULT (datetime('now')),
+      finished_at     TEXT
+    );
+    CREATE INDEX IF NOT EXISTS idx_mf_log_status ON medflex_booking_log(status, created_at);
+  `)
+
+  // Rate limiting: общий для всех воркеров PM2, переживает рестарт
+  // window_start — начало минуты в Unix-секундах
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS rate_limit_booking (
+      ip           TEXT    NOT NULL,
+      window_start INTEGER NOT NULL,
+      count        INTEGER NOT NULL DEFAULT 0,
+      PRIMARY KEY (ip, window_start)
+    )
+  `)
 }
 
 const DEFAULT_SCHEDULE = '{"mon":true,"tue":true,"wed":true,"thu":true,"fri":true,"sat":false,"sun":false}'

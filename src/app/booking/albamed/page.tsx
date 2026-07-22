@@ -11,6 +11,17 @@ interface PublicDoctor {
   branch: number
   photo_url: string | null
   appointment_price: string | null
+  speciality_ids?: number[]
+}
+
+/** Один доступный слот — объект из /api/booking/albamed/slots. */
+interface AvailableSlot {
+  time: string          // "HH:MM" для отображения
+  dtStart?: string      // "YYYY-MM-DD HH:MM"
+  dtEnd?: string        // "YYYY-MM-DD HH:MM"
+  specialityId?: number
+  price?: number
+  lpuId?: number
 }
 
 type Step = "doctor" | "date" | "time" | "contact" | "success"
@@ -19,6 +30,7 @@ interface BookingState {
   doctor: PublicDoctor | null
   date: string | null
   time: string | null
+  slot: AvailableSlot | null
 }
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
@@ -115,9 +127,11 @@ function isPhoneValid(phone: string): boolean {
 function StepIndicator({
   current,
   canGoTo,
+  onNavigate,
 }: {
   current: Step
   canGoTo: (step: Step) => boolean
+  onNavigate: (step: Step) => void
 }) {
   const steps: { key: Step; label: string }[] = [
     { key: "doctor", label: "Врач" },
@@ -152,7 +166,7 @@ function StepIndicator({
           >
             <button
               type="button"
-              onClick={isClickable ? () => canGoTo(step.key) : undefined}
+              onClick={isClickable ? () => onNavigate(step.key) : undefined}
               disabled={!isClickable && !isActive}
               aria-current={isActive ? "step" : undefined}
               style={{
@@ -664,11 +678,11 @@ function StepTime({
 }: {
   doctor: PublicDoctor
   date: string
-  onSelect: (time: string) => void
+  onSelect: (slot: AvailableSlot) => void
   onBack: () => void
   refreshTrigger?: number
 }) {
-  const [slots, setSlots] = useState<string[]>([])
+  const [slots, setSlots] = useState<AvailableSlot[]>([])
   const [loading, setLoading] = useState(true)
   const [noSlotMessage, setNoSlotMessage] = useState<string | null>(null)
 
@@ -678,7 +692,7 @@ function StepTime({
     fetch(
       `/api/booking/albamed/slots?doctor_id=${doctor.id}&date=${date}`
     )
-      .then((r) => r.json() as Promise<{ slots: string[]; message?: string }>)
+      .then((r) => r.json() as Promise<{ slots: AvailableSlot[]; message?: string }>)
       .then((d) => {
         setSlots(d.slots)
         if (d.slots.length === 0) {
@@ -781,12 +795,13 @@ function StepTime({
         >
           {slots.map((slot) => (
             <button
-              key={slot}
+              key={slot.time + (slot.dtStart ?? "")}
               type="button"
               onClick={() => onSelect(slot)}
-              aria-label={`Время ${slot}`}
+              aria-label={`Время ${slot.time}${slot.price != null && slot.price > 0 ? `, ${slot.price.toLocaleString("ru-RU")} ₽` : ""}`}
               style={{
-                height: 44,
+                minHeight: 44,
+                padding: "6px 4px",
                 border: "1.5px solid #e5e7eb",
                 borderRadius: 10,
                 background: "#fff",
@@ -795,6 +810,11 @@ function StepTime({
                 fontWeight: 600,
                 color: "#111827",
                 transition: "border-color 0.15s, background 0.15s, color 0.15s",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 2,
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.borderColor = "#0ea5e9"
@@ -815,7 +835,12 @@ function StepTime({
                 e.currentTarget.style.borderColor = "#e5e7eb"
               }}
             >
-              {slot}
+              <span>{slot.time}</span>
+              {slot.price != null && slot.price > 0 && (
+                <span style={{ fontSize: 11, color: "inherit", fontWeight: 500, opacity: 0.8 }}>
+                  {slot.price.toLocaleString("ru-RU")}&nbsp;₽
+                </span>
+              )}
             </button>
           ))}
         </div>
@@ -838,14 +863,19 @@ function StepTime({
 // ── Step 4: Contact form ───────────────────────────────────────────────────────
 
 interface ContactFormData {
-  name: string
+  lastName: string
+  firstName: string
+  secondName: string  // отчество — необязательно (second_name_is_required: false)
+  birthday: string    // YYYY-MM-DD, обязательна для МедФлекс execute/
   phone: string
   comment: string
   consent: boolean
 }
 
 interface ContactFormErrors {
-  name?: string
+  lastName?: string
+  firstName?: string
+  birthday?: string
   phone?: string
 }
 
@@ -853,17 +883,22 @@ function StepContact({
   doctor,
   date,
   time,
+  selectedSlot,
   onSubmit,
   onBack,
 }: {
   doctor: PublicDoctor
   date: string
   time: string
+  selectedSlot: AvailableSlot | null
   onSubmit: (data: ContactFormData) => Promise<void>
   onBack: () => void
 }) {
   const [form, setForm] = useState<ContactFormData>({
-    name: "",
+    lastName: "",
+    firstName: "",
+    secondName: "",
+    birthday: "",
     phone: "",
     comment: "",
     consent: false,
@@ -874,8 +909,19 @@ function StepContact({
 
   function validate(): boolean {
     const newErrors: ContactFormErrors = {}
-    if (form.name.trim().length < 2) {
-      newErrors.name = "Введите ФИО (минимум 2 символа)"
+    if (form.lastName.trim().length < 1) {
+      newErrors.lastName = "Введите фамилию"
+    }
+    if (form.firstName.trim().length < 1) {
+      newErrors.firstName = "Введите имя"
+    }
+    if (!form.birthday) {
+      newErrors.birthday = "Укажите дату рождения"
+    } else {
+      const bd = new Date(form.birthday + "T00:00:00")
+      if (isNaN(bd.getTime()) || bd >= new Date()) {
+        newErrors.birthday = "Укажите корректную дату рождения"
+      }
     }
     if (!isPhoneValid(form.phone)) {
       newErrors.phone = "Введите корректный телефон (+7 или 8, 11 цифр)"
@@ -891,7 +937,10 @@ function StepContact({
     setSubmitError(null)
     try {
       await onSubmit({
-        name: form.name.trim(),
+        lastName: form.lastName.trim(),
+        firstName: form.firstName.trim(),
+        secondName: form.secondName.trim(),
+        birthday: form.birthday,
         phone: form.phone,
         comment: form.comment.trim(),
         consent: form.consent,
@@ -904,7 +953,9 @@ function StepContact({
 
   const canSubmit =
     form.consent &&
-    form.name.trim().length >= 2 &&
+    form.lastName.trim().length >= 1 &&
+    form.firstName.trim().length >= 1 &&
+    Boolean(form.birthday) &&
     isPhoneValid(form.phone) &&
     !submitting
 
@@ -940,62 +991,172 @@ function StepContact({
           <div style={{ fontSize: 13, color: "#0ea5e9", fontWeight: 600, marginTop: 3 }}>
             {formatDate(date)} · {time}
           </div>
+          {selectedSlot?.price != null && selectedSlot.price > 0 && (
+            <div style={{ fontSize: 13, color: "#0d9488", fontWeight: 600, marginTop: 2 }}>
+              {selectedSlot.price.toLocaleString("ru-RU")}&nbsp;₽
+            </div>
+          )}
         </div>
       </div>
 
       <form onSubmit={handleSubmit} noValidate>
-        {/* Name */}
+        {/* ФИО: три отдельных поля */}
+        <div style={{ marginBottom: 14 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 10 }}>
+            {/* Фамилия */}
+            <div>
+              <label
+                htmlFor="bk-last-name"
+                style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#374151", marginBottom: 5 }}
+              >
+                Фамилия <span style={{ color: "#ef4444" }}>*</span>
+              </label>
+              <input
+                id="bk-last-name"
+                type="text"
+                autoComplete="family-name"
+                placeholder="Иванова"
+                value={form.lastName}
+                onChange={(e) => {
+                  setForm((f) => ({ ...f, lastName: e.target.value }))
+                  if (errors.lastName) setErrors((er) => ({ ...er, lastName: undefined }))
+                }}
+                aria-describedby={errors.lastName ? "bk-last-name-error" : undefined}
+                aria-invalid={!!errors.lastName}
+                style={{
+                  width: "100%",
+                  boxSizing: "border-box",
+                  padding: "10px 12px",
+                  border: `1.5px solid ${errors.lastName ? "#f87171" : "#d1d5db"}`,
+                  borderRadius: 10,
+                  fontSize: 15,
+                  color: "#111827",
+                  background: "#fff",
+                  outline: "none",
+                }}
+                onFocus={(e) => { e.currentTarget.style.borderColor = errors.lastName ? "#f87171" : "#0ea5e9" }}
+                onBlur={(e) => { e.currentTarget.style.borderColor = errors.lastName ? "#f87171" : "#d1d5db" }}
+              />
+              {errors.lastName && (
+                <p id="bk-last-name-error" role="alert" aria-live="polite"
+                  style={{ margin: "4px 0 0", fontSize: 12, color: "#dc2626" }}>
+                  {errors.lastName}
+                </p>
+              )}
+            </div>
+            {/* Имя */}
+            <div>
+              <label
+                htmlFor="bk-first-name"
+                style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#374151", marginBottom: 5 }}
+              >
+                Имя <span style={{ color: "#ef4444" }}>*</span>
+              </label>
+              <input
+                id="bk-first-name"
+                type="text"
+                autoComplete="given-name"
+                placeholder="Мария"
+                value={form.firstName}
+                onChange={(e) => {
+                  setForm((f) => ({ ...f, firstName: e.target.value }))
+                  if (errors.firstName) setErrors((er) => ({ ...er, firstName: undefined }))
+                }}
+                aria-describedby={errors.firstName ? "bk-first-name-error" : undefined}
+                aria-invalid={!!errors.firstName}
+                style={{
+                  width: "100%",
+                  boxSizing: "border-box",
+                  padding: "10px 12px",
+                  border: `1.5px solid ${errors.firstName ? "#f87171" : "#d1d5db"}`,
+                  borderRadius: 10,
+                  fontSize: 15,
+                  color: "#111827",
+                  background: "#fff",
+                  outline: "none",
+                }}
+                onFocus={(e) => { e.currentTarget.style.borderColor = errors.firstName ? "#f87171" : "#0ea5e9" }}
+                onBlur={(e) => { e.currentTarget.style.borderColor = errors.firstName ? "#f87171" : "#d1d5db" }}
+              />
+              {errors.firstName && (
+                <p id="bk-first-name-error" role="alert" aria-live="polite"
+                  style={{ margin: "4px 0 0", fontSize: 12, color: "#dc2626" }}>
+                  {errors.firstName}
+                </p>
+              )}
+            </div>
+          </div>
+          {/* Отчество (необязательно) */}
+          <div>
+            <label
+              htmlFor="bk-second-name"
+              style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#374151", marginBottom: 5 }}
+            >
+              Отчество{" "}
+              <span style={{ fontWeight: 400, color: "#9ca3af" }}>(необязательно)</span>
+            </label>
+            <input
+              id="bk-second-name"
+              type="text"
+              autoComplete="additional-name"
+              placeholder="Сергеевна"
+              value={form.secondName}
+              onChange={(e) => setForm((f) => ({ ...f, secondName: e.target.value }))}
+              style={{
+                width: "100%",
+                boxSizing: "border-box",
+                padding: "10px 12px",
+                border: "1.5px solid #d1d5db",
+                borderRadius: 10,
+                fontSize: 15,
+                color: "#111827",
+                background: "#fff",
+                outline: "none",
+              }}
+              onFocus={(e) => { e.currentTarget.style.borderColor = "#0ea5e9" }}
+              onBlur={(e) => { e.currentTarget.style.borderColor = "#d1d5db" }}
+            />
+          </div>
+        </div>
+
+        {/* Дата рождения — обязательна для МедФлекс */}
         <div style={{ marginBottom: 14 }}>
           <label
-            htmlFor="bk-name"
-            style={{
-              display: "block",
-              fontSize: 13,
-              fontWeight: 600,
-              color: "#374151",
-              marginBottom: 5,
-            }}
+            htmlFor="bk-birthday"
+            style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#374151", marginBottom: 5 }}
           >
-            ФИО <span style={{ color: "#ef4444" }}>*</span>
+            Дата рождения <span style={{ color: "#ef4444" }}>*</span>
           </label>
           <input
-            id="bk-name"
-            type="text"
-            autoComplete="name"
-            placeholder="Фамилия Имя Отчество"
-            value={form.name}
+            id="bk-birthday"
+            type="date"
+            autoComplete="bday"
+            value={form.birthday}
+            max={new Date().toISOString().slice(0, 10)}
             onChange={(e) => {
-              setForm((f) => ({ ...f, name: e.target.value }))
-              if (errors.name) setErrors((er) => ({ ...er, name: undefined }))
+              setForm((f) => ({ ...f, birthday: e.target.value }))
+              if (errors.birthday) setErrors((er) => ({ ...er, birthday: undefined }))
             }}
-            aria-describedby={errors.name ? "bk-name-error" : undefined}
-            aria-invalid={!!errors.name}
+            aria-describedby={errors.birthday ? "bk-birthday-error" : undefined}
+            aria-invalid={!!errors.birthday}
             style={{
               width: "100%",
               boxSizing: "border-box",
               padding: "10px 12px",
-              border: `1.5px solid ${errors.name ? "#f87171" : "#d1d5db"}`,
+              border: `1.5px solid ${errors.birthday ? "#f87171" : "#d1d5db"}`,
               borderRadius: 10,
               fontSize: 15,
-              color: "#111827",
+              color: form.birthday ? "#111827" : "#9ca3af",
               background: "#fff",
               outline: "none",
             }}
-            onFocus={(e) => {
-              e.currentTarget.style.borderColor = errors.name ? "#f87171" : "#0ea5e9"
-            }}
-            onBlur={(e) => {
-              e.currentTarget.style.borderColor = errors.name ? "#f87171" : "#d1d5db"
-            }}
+            onFocus={(e) => { e.currentTarget.style.borderColor = errors.birthday ? "#f87171" : "#0ea5e9" }}
+            onBlur={(e) => { e.currentTarget.style.borderColor = errors.birthday ? "#f87171" : "#d1d5db" }}
           />
-          {errors.name && (
-            <p
-              id="bk-name-error"
-              role="alert"
-              aria-live="polite"
-              style={{ margin: "4px 0 0", fontSize: 12, color: "#dc2626" }}
-            >
-              {errors.name}
+          {errors.birthday && (
+            <p id="bk-birthday-error" role="alert" aria-live="polite"
+              style={{ margin: "4px 0 0", fontSize: 12, color: "#dc2626" }}>
+              {errors.birthday}
             </p>
           )}
         </div>
@@ -1123,9 +1284,14 @@ function StepContact({
             htmlFor="bk-consent"
             style={{ fontSize: 13, color: "#374151", lineHeight: 1.5, cursor: "pointer" }}
           >
-            Я даю согласие на обработку персональных данных в соответствии с{" "}
+            Даю ООО «Альба-Мед» (ИНН&nbsp;9102040753) согласие на обработку персональных данных, в
+            том числе специальных категорий (сведения о записи к врачу как факт обращения за
+            медицинской помощью): фамилии, имени, отчества, даты рождения, номера телефона,
+            выбранного врача, специальности, даты и времени приёма — в целях записи на приём.
+            Данные передаются ООО «МедРокет» (МедФлекс) как обработчику по поручению клиники.
+            Ознакомлен(а) с{" "}
             <a
-              href="https://alba-medcenter.ru/privacy"
+              href="https://alba-medcenter.ru/wp-content/uploads/2025/10/%D0%9F%D0%BE%D0%BB%D0%B8%D1%82%D0%B8%D0%BA%D0%B0-%D0%BA%D0%BE%D0%BD%D1%84%D0%B8%D0%B4%D0%B5%D0%BD%D1%86%D0%B8%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D1%81%D1%82%D0%B8-%D0%90%D0%BB%D1%8C%D0%B1%D0%B0-%D0%BC%D0%B5%D0%B4.pdf"
               target="_blank"
               rel="noopener noreferrer"
               style={{ color: "#0ea5e9", textDecoration: "underline" }}
@@ -1133,6 +1299,7 @@ function StepContact({
             >
               политикой конфиденциальности
             </a>
+            .
           </label>
         </div>
 
@@ -1413,6 +1580,266 @@ function LoadingSpinner({ size = 20, color = "#0ea5e9" }: { size?: number; color
   )
 }
 
+// ── Callback section: fallback «перезвоните мне» ──────────────────────────────
+
+type CallbackState = "idle" | "submitting" | "success" | "error"
+
+function CallbackSection() {
+  const [name, setName] = useState("")
+  const [phone, setPhone] = useState("")
+  const [consent, setConsent] = useState(false)
+  const [phoneError, setPhoneError] = useState<string | null>(null)
+  const [state, setState] = useState<CallbackState>("idle")
+  const [errorMsg, setErrorMsg] = useState<string | null>(null)
+
+  const canSubmit =
+    consent &&
+    name.trim().length >= 2 &&
+    isPhoneValid(phone) &&
+    state === "idle"
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    if (!isPhoneValid(phone)) {
+      setPhoneError("Введите корректный телефон (+7 или 8, 11 цифр)")
+      return
+    }
+    setState("submitting")
+    setErrorMsg(null)
+    try {
+      const res = await fetch("/api/booking/albamed/callback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ website: "", name: name.trim(), phone, consent: true }),
+      })
+      if (!res.ok) {
+        const body = (await res.json().catch(() => ({}))) as { error?: string }
+        throw new Error(body.error ?? "Ошибка сервера")
+      }
+      setState("success")
+    } catch (err: unknown) {
+      setErrorMsg(err instanceof Error ? err.message : "Ошибка отправки")
+      setState("error")
+    }
+  }
+
+  const POLICY_URL =
+    "https://alba-medcenter.ru/wp-content/uploads/2025/10/%D0%9F%D0%BE%D0%BB%D0%B8%D1%82%D0%B8%D0%BA%D0%B0-%D0%BA%D0%BE%D0%BD%D1%84%D0%B8%D0%B4%D0%B5%D0%BD%D1%86%D0%B8%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D1%81%D1%82%D0%B8-%D0%90%D0%BB%D1%8C%D0%B1%D0%B0-%D0%BC%D0%B5%D0%B4.pdf"
+
+  if (state === "success") {
+    return (
+      <div
+        style={{
+          background: "#f0fdf4",
+          border: "1px solid #86efac",
+          borderRadius: 14,
+          padding: "20px",
+          textAlign: "center",
+        }}
+      >
+        <svg
+          width="28"
+          height="28"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#16a34a"
+          strokeWidth="2.5"
+          style={{ marginBottom: 8 }}
+          aria-hidden="true"
+        >
+          <polyline points="20 6 9 17 4 12" />
+        </svg>
+        <p style={{ fontSize: 15, fontWeight: 600, color: "#15803d", margin: 0 }}>
+          Заявка принята!
+        </p>
+        <p style={{ fontSize: 13, color: "#6b7280", margin: "6px 0 0" }}>
+          Администратор перезвонит вам в ближайшее время.
+        </p>
+      </div>
+    )
+  }
+
+  return (
+    <div
+      style={{
+        background: "#fff1ed",
+        border: "1px solid #fdba74",
+        borderRadius: 14,
+        padding: "20px",
+      }}
+    >
+      <h3 style={{ fontSize: 15, fontWeight: 700, color: "#9a3412", margin: "0 0 4px" }}>
+        Не хотите заполнять форму?
+      </h3>
+      <p style={{ fontSize: 13, color: "#7c2d12", margin: "0 0 14px", lineHeight: 1.5 }}>
+        Оставьте имя и телефон — администратор перезвонит и запишет вас сам.
+      </p>
+      <form onSubmit={handleSubmit} noValidate>
+        {/* Honeypot */}
+        <input
+          type="text"
+          name="website"
+          style={{ display: "none" }}
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+        />
+
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+          {/* Имя */}
+          <input
+            type="text"
+            autoComplete="given-name"
+            placeholder="Ваше имя *"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            aria-label="Ваше имя"
+            style={{
+              padding: "10px 12px",
+              border: "1.5px solid #fdba74",
+              borderRadius: 10,
+              fontSize: 14,
+              background: "#fff",
+              outline: "none",
+              width: "100%",
+              boxSizing: "border-box",
+              color: "#111827",
+            }}
+            onFocus={(e) => { e.currentTarget.style.borderColor = "#e0502e" }}
+            onBlur={(e) => { e.currentTarget.style.borderColor = "#fdba74" }}
+          />
+          {/* Телефон */}
+          <div>
+            <input
+              type="tel"
+              autoComplete="tel"
+              placeholder="+7 (___) ___-__-__"
+              value={phone}
+              onChange={(e) => {
+                const masked = formatPhone(e.target.value)
+                setPhone(masked)
+                if (phoneError) setPhoneError(null)
+              }}
+              inputMode="tel"
+              required
+              aria-label="Телефон"
+              aria-describedby={phoneError ? "cb-phone-error" : undefined}
+              aria-invalid={!!phoneError}
+              style={{
+                padding: "10px 12px",
+                border: `1.5px solid ${phoneError ? "#f87171" : "#fdba74"}`,
+                borderRadius: 10,
+                fontSize: 14,
+                background: "#fff",
+                outline: "none",
+                width: "100%",
+                boxSizing: "border-box",
+                color: "#111827",
+              }}
+              onFocus={(e) => {
+                if (!phone) setPhone("+7 (")
+                e.currentTarget.style.borderColor = phoneError ? "#f87171" : "#e0502e"
+              }}
+              onBlur={(e) => {
+                if (phone === "+7 (") setPhone("")
+                e.currentTarget.style.borderColor = phoneError ? "#f87171" : "#fdba74"
+              }}
+            />
+            {phoneError && (
+              <p
+                id="cb-phone-error"
+                role="alert"
+                aria-live="polite"
+                style={{ fontSize: 12, color: "#dc2626", margin: "4px 0 0" }}
+              >
+                {phoneError}
+              </p>
+            )}
+          </div>
+        </div>
+
+        {/* Согласие */}
+        <div style={{ display: "flex", gap: 8, alignItems: "flex-start", margin: "12px 0" }}>
+          <input
+            id="cb-consent"
+            type="checkbox"
+            checked={consent}
+            onChange={(e) => setConsent(e.target.checked)}
+            style={{
+              width: 16,
+              height: 16,
+              marginTop: 2,
+              cursor: "pointer",
+              accentColor: "#e0502e",
+              flexShrink: 0,
+            }}
+          />
+          <label
+            htmlFor="cb-consent"
+            style={{ fontSize: 12, color: "#7c2d12", lineHeight: 1.5, cursor: "pointer" }}
+          >
+            Даю ООО «Альба-Мед» согласие на обработку персональных данных (имя, телефон) в целях
+            обратного звонка. Ознакомлен(а) с{" "}
+            <a
+              href={POLICY_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "#9a3412", textDecoration: "underline" }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              политикой конфиденциальности
+            </a>
+            .
+          </label>
+        </div>
+
+        {/* Error */}
+        {state === "error" && errorMsg && (
+          <p
+            role="alert"
+            aria-live="polite"
+            style={{ fontSize: 13, color: "#b91c1c", margin: "0 0 10px" }}
+          >
+            {errorMsg}
+          </p>
+        )}
+
+        <button
+          type="submit"
+          disabled={!canSubmit}
+          aria-disabled={!canSubmit}
+          style={{
+            width: "100%",
+            padding: "12px",
+            background: canSubmit ? "#e0502e" : "#e5e7eb",
+            color: canSubmit ? "#fff" : "#9ca3af",
+            border: "none",
+            borderRadius: 10,
+            fontSize: 15,
+            fontWeight: 700,
+            cursor: canSubmit ? "pointer" : "not-allowed",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 8,
+            transition: "background 0.15s",
+          }}
+        >
+          {state === "submitting" ? (
+            <>
+              <LoadingSpinner size={16} color="#fff" />
+              Отправляем…
+            </>
+          ) : (
+            "Перезвоните мне"
+          )}
+        </button>
+      </form>
+    </div>
+  )
+}
+
 // ── Main Widget Component ──────────────────────────────────────────────────────
 
 export default function AlbamedBookingPage() {
@@ -1421,44 +1848,49 @@ export default function AlbamedBookingPage() {
     doctor: null,
     date: null,
     time: null,
+    slot: null,
   })
   const [slotRefreshTrigger, setSlotRefreshTrigger] = useState(0)
 
   function handleDoctorSelect(doctor: PublicDoctor) {
-    setBooking({ doctor, date: null, time: null })
+    setBooking({ doctor, date: null, time: null, slot: null })
     setStep("date")
   }
 
   function handleDateSelect(date: string) {
-    setBooking((b) => ({ ...b, date, time: null }))
+    setBooking((b) => ({ ...b, date, time: null, slot: null }))
     setStep("time")
   }
 
-  function handleTimeSelect(time: string) {
-    setBooking((b) => ({ ...b, time }))
+  function handleTimeSelect(slot: AvailableSlot) {
+    setBooking((b) => ({ ...b, time: slot.time, slot }))
     setStep("contact")
   }
 
-  async function handleContactSubmit(data: {
-    name: string
-    phone: string
-    comment: string
-    consent: boolean
-  }) {
+  async function handleContactSubmit(data: ContactFormData) {
     if (!booking.doctor || !booking.date || !booking.time) return
 
     const res = await fetch("/api/booking/albamed/create", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
+        website: "",
         doctor_id: booking.doctor.id,
         service: "",
         date: booking.date,
         time: booking.time,
-        name: data.name,
+        last_name: data.lastName,
+        first_name: data.firstName,
+        second_name: data.secondName,
+        birthday: data.birthday,
         phone: data.phone,
         comment: data.comment,
         consent: data.consent,
+        lpu_id: booking.slot?.lpuId,
+        speciality_id: booking.slot?.specialityId,
+        dt_start: booking.slot?.dtStart,
+        dt_end: booking.slot?.dtEnd,
+        price: booking.slot?.price,
       }),
     })
 
@@ -1478,7 +1910,7 @@ export default function AlbamedBookingPage() {
   }
 
   function handleReset() {
-    setBooking({ doctor: null, date: null, time: null })
+    setBooking({ doctor: null, date: null, time: null, slot: null })
     setStep("doctor")
   }
 
@@ -1589,7 +2021,7 @@ export default function AlbamedBookingPage() {
         >
           {/* Progress */}
           {step !== "success" && (
-            <StepIndicator current={step} canGoTo={handleStepClick} />
+            <StepIndicator current={step} canGoTo={canGoToStep} onNavigate={handleStepClick} />
           )}
 
           {/* Steps */}
@@ -1620,6 +2052,7 @@ export default function AlbamedBookingPage() {
               doctor={booking.doctor}
               date={booking.date}
               time={booking.time}
+              selectedSlot={booking.slot}
               onSubmit={handleContactSubmit}
               onBack={() => setStep("time")}
             />
@@ -1634,6 +2067,33 @@ export default function AlbamedBookingPage() {
             />
           )}
         </div>
+
+        {/* Fallback «перезвоните мне» — всегда виден кроме экрана успеха */}
+        {step !== "success" && (
+          <div
+            style={{
+              maxWidth: 720,
+              margin: "24px auto 0",
+              padding: "0 20px",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 12,
+                margin: "0 0 16px",
+              }}
+            >
+              <div style={{ flex: 1, height: 1, background: "#e5e7eb" }} />
+              <span style={{ fontSize: 13, color: "#9ca3af", whiteSpace: "nowrap" }}>
+                или быстрый вариант
+              </span>
+              <div style={{ flex: 1, height: 1, background: "#e5e7eb" }} />
+            </div>
+            <CallbackSection />
+          </div>
+        )}
       </main>
     </>
   )
