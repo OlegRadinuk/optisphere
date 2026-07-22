@@ -418,11 +418,15 @@ export async function fetchMedflexSpecialities(): Promise<MedflexSpecialityModel
 // ── Вспомогательные конвертеры для форматов дат ─────────────────────────────
 
 /**
- * Конвертирует "YYYY-MM-DD HH:MM" (формат cells в /schedule/) в ISO "YYYY-MM-DDTHH:MM:SS"
- * для передачи в /direct_appointment/doctor/execute/.
+ * Возвращает дату-время в формате, принимаемом /direct_appointment/doctor/execute/.
+ * МедФлекс принимает "YYYY-MM-DD HH:MM" (формат cells в /schedule/) —
+ * ISO-формат "YYYY-MM-DDTHH:MM:SS" API отклоняет с ошибкой 400.
+ * Измерено: 2026-07-23, execute/ вернул {"dt_start":["Неправильный формат datetime.
+ * Используйте один из этих форматов: YYYY-MM-DD hh:mm."]}.
  */
 export function scheduleToIso(dt: string): string {
-  return dt.replace(" ", "T") + ":00"
+  // Принимаем "YYYY-MM-DD HH:MM" как есть — МедФлекс хочет именно этот формат
+  return dt
 }
 
 /**
