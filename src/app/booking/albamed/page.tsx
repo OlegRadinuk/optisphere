@@ -46,9 +46,8 @@ function getInitials(name: string): string {
 
 // Deterministic color per doctor name (soft medical palette)
 const AVATAR_COLORS = [
-  "#0ea5e9", // sky
+  "#0284c7", // blue
   "#0d9488", // teal
-  "#2563eb", // blue
   "#7c3aed", // violet
   "#059669", // emerald
   "#0891b2", // cyan
@@ -191,7 +190,7 @@ function StepIndicator({
                   fontSize: 13,
                   fontWeight: 700,
                   background: isActive
-                    ? "#0ea5e9"
+                    ? "#e0502e"
                     : isDone
                     ? "#0d9488"
                     : "#e5e7eb",
@@ -212,7 +211,7 @@ function StepIndicator({
                 style={{
                   fontSize: 13,
                   fontWeight: isActive ? 600 : 400,
-                  color: isActive ? "#0ea5e9" : isDone ? "#374151" : "#9ca3af",
+                  color: isActive ? "#e0502e" : isDone ? "#374151" : "#9ca3af",
                   whiteSpace: "nowrap",
                 }}
               >
@@ -434,7 +433,7 @@ function StepDoctor({
             transition: "border-color 0.15s",
           }}
           onFocus={(e) => {
-            e.currentTarget.style.borderColor = "#0ea5e9"
+            e.currentTarget.style.borderColor = "#e0502e"
           }}
           onBlur={(e) => {
             e.currentTarget.style.borderColor = "#d1d5db"
@@ -478,16 +477,16 @@ function StepDoctor({
                 transition: "border-color 0.15s, box-shadow 0.15s",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "#0ea5e9"
-                e.currentTarget.style.boxShadow = "0 2px 12px rgba(14,165,233,0.12)"
+                e.currentTarget.style.borderColor = "#e0502e"
+                e.currentTarget.style.boxShadow = "0 2px 12px rgba(224,80,46,0.14)"
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.borderColor = "#e5e7eb"
                 e.currentTarget.style.boxShadow = "none"
               }}
               onFocus={(e) => {
-                e.currentTarget.style.borderColor = "#0ea5e9"
-                e.currentTarget.style.outline = "2px solid #bae6fd"
+                e.currentTarget.style.borderColor = "#e0502e"
+                e.currentTarget.style.outline = "2px solid #f5c4b2"
               }}
               onBlur={(e) => {
                 e.currentTarget.style.borderColor = "#e5e7eb"
@@ -623,16 +622,16 @@ function StepDate({
                 position: "relative",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "#0ea5e9"
-                e.currentTarget.style.background = "#f0f9ff"
+                e.currentTarget.style.borderColor = "#e0502e"
+                e.currentTarget.style.background = "#fdf4f1"
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.borderColor = "#e5e7eb"
                 e.currentTarget.style.background = "#fff"
               }}
               onFocus={(e) => {
-                e.currentTarget.style.borderColor = "#0ea5e9"
-                e.currentTarget.style.outline = "2px solid #bae6fd"
+                e.currentTarget.style.borderColor = "#e0502e"
+                e.currentTarget.style.outline = "2px solid #f5c4b2"
               }}
               onBlur={(e) => {
                 e.currentTarget.style.borderColor = "#e5e7eb"
@@ -646,7 +645,7 @@ function StepDate({
                     top: 4,
                     fontSize: 9,
                     fontWeight: 700,
-                    color: "#0ea5e9",
+                    color: "#e0502e",
                     textTransform: "uppercase",
                     letterSpacing: 0.4,
                   }}
@@ -774,7 +773,7 @@ function StepTime({
             style={{
               background: "none",
               border: "none",
-              color: "#0ea5e9",
+              color: "#e0502e",
               cursor: "pointer",
               padding: 0,
               fontSize: 14,
@@ -819,8 +818,8 @@ function StepTime({
                 gap: 2,
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "#0ea5e9"
-                e.currentTarget.style.background = "#0ea5e9"
+                e.currentTarget.style.borderColor = "#e0502e"
+                e.currentTarget.style.background = "#e0502e"
                 e.currentTarget.style.color = "#fff"
               }}
               onMouseLeave={(e) => {
@@ -829,8 +828,8 @@ function StepTime({
                 e.currentTarget.style.color = "#111827"
               }}
               onFocus={(e) => {
-                e.currentTarget.style.outline = "2px solid #bae6fd"
-                e.currentTarget.style.borderColor = "#0ea5e9"
+                e.currentTarget.style.outline = "2px solid #f5c4b2"
+                e.currentTarget.style.borderColor = "#e0502e"
               }}
               onBlur={(e) => {
                 e.currentTarget.style.outline = "none"
@@ -974,8 +973,8 @@ function StepContact({
       {/* Booking summary */}
       <div
         style={{
-          background: "#f0f9ff",
-          border: "1px solid #bae6fd",
+          background: "#fdf4f1",
+          border: "1px solid #f5c4b2",
           borderRadius: 12,
           padding: "12px 14px",
           marginBottom: 20,
@@ -990,7 +989,7 @@ function StepContact({
             {doctor.name}
           </div>
           <div style={{ fontSize: 13, color: "#6b7280" }}>{doctor.specialty}</div>
-          <div style={{ fontSize: 13, color: "#0ea5e9", fontWeight: 600, marginTop: 3 }}>
+          <div style={{ fontSize: 13, color: "#e0502e", fontWeight: 600, marginTop: 3 }}>
             {formatDate(date)} · {time}
           </div>
           {selectedSlot?.price != null && selectedSlot.price > 0 && (
@@ -1036,7 +1035,7 @@ function StepContact({
                   background: "#fff",
                   outline: "none",
                 }}
-                onFocus={(e) => { e.currentTarget.style.borderColor = errors.lastName ? "#f87171" : "#0ea5e9" }}
+                onFocus={(e) => { e.currentTarget.style.borderColor = errors.lastName ? "#f87171" : "#e0502e" }}
                 onBlur={(e) => { e.currentTarget.style.borderColor = errors.lastName ? "#f87171" : "#d1d5db" }}
               />
               {errors.lastName && (
@@ -1077,7 +1076,7 @@ function StepContact({
                   background: "#fff",
                   outline: "none",
                 }}
-                onFocus={(e) => { e.currentTarget.style.borderColor = errors.firstName ? "#f87171" : "#0ea5e9" }}
+                onFocus={(e) => { e.currentTarget.style.borderColor = errors.firstName ? "#f87171" : "#e0502e" }}
                 onBlur={(e) => { e.currentTarget.style.borderColor = errors.firstName ? "#f87171" : "#d1d5db" }}
               />
               {errors.firstName && (
@@ -1115,7 +1114,7 @@ function StepContact({
                 background: "#fff",
                 outline: "none",
               }}
-              onFocus={(e) => { e.currentTarget.style.borderColor = "#0ea5e9" }}
+              onFocus={(e) => { e.currentTarget.style.borderColor = "#e0502e" }}
               onBlur={(e) => { e.currentTarget.style.borderColor = "#d1d5db" }}
             />
           </div>
@@ -1152,7 +1151,7 @@ function StepContact({
               background: "#fff",
               outline: "none",
             }}
-            onFocus={(e) => { e.currentTarget.style.borderColor = errors.birthday ? "#f87171" : "#0ea5e9" }}
+            onFocus={(e) => { e.currentTarget.style.borderColor = errors.birthday ? "#f87171" : "#e0502e" }}
             onBlur={(e) => { e.currentTarget.style.borderColor = errors.birthday ? "#f87171" : "#d1d5db" }}
           />
           {errors.birthday && (
@@ -1203,7 +1202,7 @@ function StepContact({
               outline: "none",
             }}
             onFocus={(e) => {
-              e.currentTarget.style.borderColor = errors.phone ? "#f87171" : "#0ea5e9"
+              e.currentTarget.style.borderColor = errors.phone ? "#f87171" : "#e0502e"
               // Auto-fill +7 prefix on focus if empty
               if (!form.phone) {
                 setForm((f) => ({ ...f, phone: "+7 (" }))
@@ -1265,7 +1264,7 @@ function StepContact({
               fontFamily: "inherit",
             }}
             onFocus={(e) => {
-              e.currentTarget.style.borderColor = "#0ea5e9"
+              e.currentTarget.style.borderColor = "#e0502e"
             }}
             onBlur={(e) => {
               e.currentTarget.style.borderColor = "#d1d5db"
@@ -1280,7 +1279,7 @@ function StepContact({
             type="checkbox"
             checked={form.consent}
             onChange={(e) => setForm((f) => ({ ...f, consent: e.target.checked }))}
-            style={{ width: 18, height: 18, marginTop: 2, cursor: "pointer", accentColor: "#0ea5e9", flexShrink: 0 }}
+            style={{ width: 18, height: 18, marginTop: 2, cursor: "pointer", accentColor: "#e0502e", flexShrink: 0 }}
           />
           <label
             htmlFor="bk-consent"
@@ -1296,7 +1295,7 @@ function StepContact({
               href="https://alba-medcenter.ru/wp-content/uploads/2025/10/%D0%9F%D0%BE%D0%BB%D0%B8%D1%82%D0%B8%D0%BA%D0%B0-%D0%BA%D0%BE%D0%BD%D1%84%D0%B8%D0%B4%D0%B5%D0%BD%D1%86%D0%B8%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D1%81%D1%82%D0%B8-%D0%90%D0%BB%D1%8C%D0%B1%D0%B0-%D0%BC%D0%B5%D0%B4.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: "#0ea5e9", textDecoration: "underline" }}
+              style={{ color: "#e0502e", textDecoration: "underline" }}
               onClick={(e) => e.stopPropagation()}
             >
               политикой конфиденциальности
@@ -1331,7 +1330,7 @@ function StepContact({
           style={{
             width: "100%",
             padding: "14px",
-            background: canSubmit ? "#0ea5e9" : "#e5e7eb",
+            background: canSubmit ? "#e0502e" : "#e5e7eb",
             color: canSubmit ? "#fff" : "#9ca3af",
             border: "none",
             borderRadius: 12,
@@ -1470,7 +1469,7 @@ function StepSuccess({
             height="16"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#0ea5e9"
+            stroke="#e0502e"
             strokeWidth="2"
           >
             <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
@@ -1485,7 +1484,7 @@ function StepSuccess({
             style={{
               fontSize: 14,
               fontWeight: 600,
-              color: "#0ea5e9",
+              color: "#e0502e",
               marginLeft: "auto",
             }}
           >
@@ -1544,7 +1543,7 @@ function BackButton({ onClick }: { onClick: () => void }) {
         marginLeft: -2,
       }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.color = "#0ea5e9"
+        e.currentTarget.style.color = "#e0502e"
       }}
       onMouseLeave={(e) => {
         e.currentTarget.style.color = "#6b7280"
@@ -1565,7 +1564,7 @@ function BackButton({ onClick }: { onClick: () => void }) {
   )
 }
 
-function LoadingSpinner({ size = 20, color = "#0ea5e9" }: { size?: number; color?: string }) {
+function LoadingSpinner({ size = 20, color = "#e0502e" }: { size?: number; color?: string }) {
   return (
     <svg
       width={size}
@@ -1853,6 +1852,11 @@ export default function AlbamedBookingPage() {
     slot: null,
   })
   const [slotRefreshTrigger, setSlotRefreshTrigger] = useState(0)
+  // Внутри виджета-iframe своя шапка уже есть (модалка) — прячем дублирующую.
+  const [embedded, setEmbedded] = useState(false)
+  useEffect(() => {
+    try { setEmbedded(window.self !== window.top) } catch { setEmbedded(true) }
+  }, [])
 
   function handleDoctorSelect(doctor: PublicDoctor) {
     setBooking({ doctor, date: null, time: null, slot: null })
@@ -1960,7 +1964,7 @@ export default function AlbamedBookingPage() {
         ::-webkit-scrollbar { width: 0; height: 0; }
         /* Focus visible only for keyboard navigation */
         button:focus:not(:focus-visible) { outline: none; }
-        button:focus-visible { outline: 2px solid #bae6fd; outline-offset: 2px; }
+        button:focus-visible { outline: 2px solid #f5c4b2; outline-offset: 2px; }
       `}</style>
 
       <main
@@ -1972,7 +1976,7 @@ export default function AlbamedBookingPage() {
         }}
       >
         {/* Header */}
-        {step !== "success" && (
+        {step !== "success" && !embedded && (
           <header
             style={{
               background: "#fff",
@@ -1988,7 +1992,7 @@ export default function AlbamedBookingPage() {
               style={{
                 width: 36,
                 height: 36,
-                background: "#0ea5e9",
+                background: "#e0502e",
                 borderRadius: 10,
                 display: "flex",
                 alignItems: "center",
@@ -2096,6 +2100,30 @@ export default function AlbamedBookingPage() {
             <CallbackSection />
           </div>
         )}
+
+        {/* Trust-подвал: онлайн-запись работает на платформе ПроДокторов/МедФлекс */}
+        <div
+          style={{
+            maxWidth: 720,
+            margin: "28px auto 0",
+            padding: "0 20px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 8,
+            flexWrap: "wrap",
+          }}
+        >
+          <span style={{ fontSize: 12, color: "#9ca3af" }}>
+            Онлайн-запись работает на платформе
+          </span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/albamed/prodoctorov-logo.svg"
+            alt="ПроДокторов"
+            style={{ height: 16, width: "auto", display: "block", opacity: 0.85 }}
+          />
+        </div>
       </main>
     </>
   )
