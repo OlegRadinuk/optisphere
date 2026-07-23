@@ -454,8 +454,10 @@ function StepDoctor({
           ? Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)
           : filtered.length === 0
           ? (
-            <p style={{ gridColumn: "1 / -1", color: "#6b7280", fontSize: 14, padding: "16px 0" }}>
-              {query ? "Ничего не найдено" : "Список врачей пуст"}
+            <p style={{ gridColumn: "1 / -1", color: "#6b7280", fontSize: 14, padding: "16px 0", lineHeight: 1.5 }}>
+              {query
+                ? "Ничего не найдено"
+                : "Онлайн-запись сейчас недоступна. Оставьте имя и телефон ниже — администратор перезвонит и запишет вас."}
             </p>
           )
           : filtered.map((doctor) => (

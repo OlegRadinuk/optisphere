@@ -60,6 +60,23 @@ let _specialitySyncInProgress = false
  * 💰 Каждый вызов этой функции тарифицируется за каждого врача.
  * Вызывать ТОЛЬКО один раз (через ensureDoctorsCache или webhook).
  */
+/**
+ * МедФлекс `/models/doctor/` обычно отдаёт ФИО одной строкой `efio`
+ * ("Фамилия Имя Отчество"), а раздельных last_name/first_name может не быть.
+ * Берём раздельные поля, если пришли; иначе разбираем `efio` по пробелам.
+ */
+function resolveDoctorName(d: MedflexDoctorModel): { last: string; first: string; second: string } {
+  if (d.last_name || d.first_name) {
+    return { last: d.last_name ?? "", first: d.first_name ?? "", second: d.second_name ?? "" }
+  }
+  const parts = (d.efio ?? "").trim().split(/\s+/).filter(Boolean)
+  return {
+    last: parts[0] ?? "",
+    first: parts[1] ?? "",
+    second: parts.slice(2).join(" "),
+  }
+}
+
 export async function syncDoctorsToCache(): Promise<number> {
   if (_doctorSyncInProgress) {
     console.warn("[medflex-cache] syncDoctorsToCache: already in progress, skip")
@@ -79,11 +96,12 @@ export async function syncDoctorsToCache(): Promise<number> {
 
     const batchInsert = db.transaction((rows: MedflexDoctorModel[]) => {
       for (const d of rows) {
+        const { last, first, second } = resolveDoctorName(d)
         upsert.run(
           d.id,
-          d.last_name ?? "",
-          d.first_name ?? "",
-          d.second_name ?? "",
+          last,
+          first,
+          second,
           JSON.stringify(d.specialities ?? []),
           JSON.stringify(d)
         )

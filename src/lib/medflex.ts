@@ -335,6 +335,7 @@ export interface MedflexDoctorModel {
   last_name: string
   first_name: string
   second_name: string
+  efio?: string            // МедФлекс часто отдаёт ФИО склеенной строкой вместо раздельных полей
   specialities: Array<{ id: number; name?: string }>
   lpu_ids?: number[]       // может присутствовать, может нет
   [key: string]: unknown   // другие поля, которые нас не касаются
