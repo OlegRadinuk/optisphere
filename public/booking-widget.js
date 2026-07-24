@@ -24,9 +24,21 @@
   // data-float="true" → показать плавающую кнопку в углу.
   var FLOAT       = attr("data-float", "false") === "true";
   var FLOAT_POS   = attr("data-position", "right"); // right | left
+  // Селектор карточек врачей — под каждую вставляется кнопка «Записаться» (только
+  // для тех, кто реально записывается онлайн). "" → не вставлять.
+  var CARD_SELECTOR = attr("data-doctor-card", ".doctorspage-staff__card");
 
   var overlay = null;
   var lastFocused = null;
+
+  // Нормализация ФИО для сверки карточки сайта со списком записываемых врачей.
+  function normName(s) {
+    return (s || "").toLowerCase().replace(/ё/g, "е").replace(/[^а-яa-z]+/g, "");
+  }
+  function nameKey(full) {
+    var p = (full || "").replace(/\s+/g, " ").trim().split(" ");
+    return normName((p[0] || "") + (p[1] || "")); // фамилия+имя, без отчества
+  }
 
   // ── SVG-иконки (без эмодзи) ─────────────────────────────────────────────────
   function closeIcon() {
@@ -72,8 +84,11 @@
   }
 
   // ── Открытие / закрытие модалки ─────────────────────────────────────────────
-  function open() {
+  // doctorName (опц.) — открыть сразу с преселектом врача (?doctor=ФИО).
+  // Защита: при использовании как обработчик события сюда прилетит Event — игнорируем.
+  function open(doctorName) {
     if (overlay) return;
+    var doc = (typeof doctorName === "string" && doctorName.trim()) ? doctorName.trim() : null;
     injectCSS();
     lastFocused = document.activeElement;
 
@@ -107,7 +122,9 @@
     frame.id = "albk-frame";
     frame.title = TITLE;
     frame.setAttribute("allow", "clipboard-write");
-    frame.src = BOOKING_URL;
+    frame.src = doc
+      ? BOOKING_URL + (BOOKING_URL.indexOf("?") > -1 ? "&" : "?") + "doctor=" + encodeURIComponent(doc)
+      : BOOKING_URL;
     frame.addEventListener("load", function () {
       var sp = document.getElementById("albk-spin");
       if (sp) sp.style.display = "none";
@@ -208,12 +225,62 @@
     document.body.appendChild(b);
   }
 
+  // ── Кнопки «Записаться» под карточками врачей ───────────────────────────────
+  function apiOrigin() {
+    try { return new URL(BOOKING_URL, location.href).origin; } catch (e) { return ""; }
+  }
+  function enhanceDoctorCards() {
+    if (!CARD_SELECTOR || !document.querySelector(CARD_SELECTOR)) return;
+    fetch(apiOrigin() + "/api/booking/albamed/doctors")
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        if (!d || !d.doctors) return;
+        var keys = {};
+        for (var i = 0; i < d.doctors.length; i++) keys[nameKey(d.doctors[i].name)] = true;
+        var cards = document.querySelectorAll(CARD_SELECTOR);
+        for (var j = 0; j < cards.length; j++) {
+          var card = cards[j];
+          if (card.getAttribute("data-albk-done")) continue;
+          var h3 = card.querySelector("h3");
+          if (!h3) continue;
+          var name = (h3.innerText || h3.textContent || "").replace(/\s+/g, " ").trim();
+          if (!name || !keys[nameKey(name)]) continue; // не записывается онлайн — без кнопки
+          card.setAttribute("data-albk-done", "1");
+          injectCardButton(card, name);
+        }
+      })
+      .catch(function () {});
+  }
+  function injectCardButton(card, name) {
+    try { if (getComputedStyle(card).position === "static") card.style.position = "relative"; } catch (e) {}
+    var overlayLink = card.querySelector("a[href]");
+    if (overlayLink) overlayLink.style.zIndex = "1"; // опустить overlay-ссылку под кнопку
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.textContent = "Записаться";
+    btn.setAttribute("data-albk-doctor", name);
+    btn.style.cssText = "position:relative;z-index:30;display:block;width:100%;box-sizing:border-box;margin-top:12px;padding:10px 12px;border:none;border-radius:9px;background:" + ACCENT + ";color:#fff;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:opacity .15s;";
+    btn.addEventListener("mouseenter", function () { this.style.opacity = ".9"; });
+    btn.addEventListener("mouseleave", function () { this.style.opacity = "1"; });
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      open(name);
+    });
+    card.appendChild(btn);
+  }
+
   // ── Публичный API ───────────────────────────────────────────────────────────
   window.AlbamedBooking = { open: open, close: close };
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", mountFab);
-  } else {
+  function boot() {
     mountFab();
+    enhanceDoctorCards();
+    setTimeout(enhanceDoctorCards, 1800); // добор поздно отрисованных карточек
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
   }
 })();

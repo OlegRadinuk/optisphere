@@ -35,6 +35,24 @@ interface BookingState {
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
 
+// Нормализация имени для матчинга WP-карточки ↔ врач из МедФлекса
+function normName(s: string): string {
+  return s.toLowerCase().replace(/ё/g, "е").replace(/[^а-яa-z]+/g, "")
+}
+function nameKey(full: string): string {
+  const parts = full.replace(/ /g, " ").trim().split(/\s+/)
+  return normName((parts[0] ?? "") + (parts[1] ?? "")) // фамилия+имя, без отчества
+}
+function findDoctorByName(list: PublicDoctor[], q: string): PublicDoctor | null {
+  const qFull = normName(q)
+  let m = list.filter((d) => normName(d.name) === qFull)
+  if (m.length === 1) return m[0]
+  const qk = nameKey(q)
+  m = list.filter((d) => nameKey(d.name) === qk)
+  if (m.length === 1) return m[0]
+  return null
+}
+
 function getInitials(name: string): string {
   return name
     .split(" ")
@@ -342,8 +360,10 @@ function SkeletonCard() {
 
 function StepDoctor({
   onSelect,
+  preselectName,
 }: {
   onSelect: (doctor: PublicDoctor) => void
+  preselectName?: string | null
 }) {
   const [doctors, setDoctors] = useState<PublicDoctor[]>([])
   const [loading, setLoading] = useState(true)
@@ -359,11 +379,18 @@ function StepDoctor({
       .then((d) => {
         setDoctors(d.doctors)
         setLoading(false)
+        // Пришли с карточки конкретного врача (?doctor=Имя) — сразу перескочить на дату.
+        if (preselectName) {
+          const match = findDoctorByName(d.doctors, preselectName)
+          if (match) onSelect(match)
+        }
       })
       .catch((e: unknown) => {
         setError(e instanceof Error ? e.message : "Ошибка загрузки")
         setLoading(false)
       })
+    // preselectName стабилен (читается один раз из URL), onSelect — из родителя
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const filtered = query.trim()
@@ -1852,6 +1879,12 @@ export default function AlbamedBookingPage() {
     slot: null,
   })
   const [slotRefreshTrigger, setSlotRefreshTrigger] = useState(0)
+  // Пришли с карточки конкретного врача: ?doctor=<ФИО> → преселект + перескок на дату.
+  // Читается синхронно один раз (lazy) — на SSR window нет, там дефолтный шаг «врач».
+  const [preselectDoctor] = useState<string | null>(() => {
+    if (typeof window === "undefined") return null
+    try { return new URLSearchParams(window.location.search).get("doctor") } catch { return null }
+  })
   // Внутри виджета-iframe своя шапка уже есть (модалка) — прячем дублирующую.
   const [embedded, setEmbedded] = useState(false)
   useEffect(() => {
@@ -2032,7 +2065,7 @@ export default function AlbamedBookingPage() {
 
           {/* Steps */}
           {step === "doctor" && (
-            <StepDoctor onSelect={handleDoctorSelect} />
+            <StepDoctor onSelect={handleDoctorSelect} preselectName={preselectDoctor} />
           )}
 
           {step === "date" && booking.doctor && (
