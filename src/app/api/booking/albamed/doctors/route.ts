@@ -22,6 +22,24 @@ import {
   getDoctorFullName,
   getSpecialityName,
 } from "@/lib/albamed/medflex-cache"
+import doctorPhotos from "@/lib/albamed/doctor-photos.json"
+
+// ── Фото врачей (с сайта alba-medcenter.ru) ────────────────────────────────
+// МедФлекс фото не отдаёт — подставляем по ФИО из статической карты.
+function photoNameKey(full: string): string {
+  const p = (full || "").replace(/\s+/g, " ").trim().split(" ")
+  const sn = (p[0] ?? "") + (p[1] ?? "") // фамилия+имя, без отчества
+  return sn.toLowerCase().replace(/ё/g, "е").replace(/[^а-яa-z]+/g, "")
+}
+const PHOTO_MAP: Map<string, string> = new Map(
+  (doctorPhotos as Array<{ name: string; photo: string }>).map((d) => [
+    photoNameKey(d.name),
+    d.photo,
+  ])
+)
+function resolvePhoto(fullName: string): string | null {
+  return PHOTO_MAP.get(photoNameKey(fullName)) ?? null
+}
 
 // ── CORS whitelist ─────────────────────────────────────────────────────────
 
@@ -178,7 +196,7 @@ async function getMedflexDoctors(cors: Record<string, string>): Promise<Response
       name: fullName,
       specialty,
       branch,
-      photo_url: null,    // МедФлекс не предоставляет фото
+      photo_url: resolvePhoto(fullName),   // МедФлекс фото не отдаёт — из карты по ФИО
       appointment_price: appointmentPrice,
       speciality_ids: Array.from(allSpecialities),
     })
