@@ -188,6 +188,9 @@
       // Пропускаем Ctrl/Cmd/Shift+клик и не-левую кнопку — нативное «открыть в новой вкладке».
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
       e.preventDefault();
+      // Подавляем собственный обработчик сайта (напр. .openModal открывает свою форму),
+      // иначе поверх нашей модалки откроется ещё и родной попап.
+      e.stopImmediatePropagation();
       open();
     }
   }, true);
