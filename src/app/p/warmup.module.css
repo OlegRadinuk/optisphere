@@ -247,11 +247,64 @@ details[open] .faqQ::after { content: '−'; }
 
 .footNote { font-size: 13px; line-height: 1.5; color: var(--op-text-muted); }
 
+/* ── ИНТРО ПРЕСЕТА: что уже делаем ── */
+.factsLabel { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--op-text-secondary); margin-bottom: 12px; }
+.facts { list-style: none; padding: 0; margin: 0; display: grid; gap: 11px; }
+.fact { display: flex; align-items: flex-start; gap: 11px; font-size: 15px; line-height: 1.45; color: var(--op-text); }
+.factIcon {
+  flex: 0 0 24px; height: 24px; border-radius: 8px; display: grid; place-items: center;
+  background: var(--op-accent-subtle); color: var(--op-accent);
+}
+
+/* ── КОНСТРУКТОР КЛИНИКИ ── */
+.contentTall { padding-bottom: calc(var(--nav-h) + 120px); }
+.baseDesc { font-size: 13.5px; line-height: 1.5; color: var(--op-text-secondary); margin: 12px 0 24px; }
+.mod { align-items: flex-start; justify-content: flex-start; padding: 15px 16px; gap: 12px; min-height: 0; }
+.mod::after, .mod.answerOn::after { content: none; }
+.modCheck {
+  flex: 0 0 22px; height: 22px; margin-top: 1px; border-radius: 7px;
+  border: 1.5px solid var(--op-border-strong); background: var(--op-base);
+  display: grid; place-items: center; color: var(--op-text-on-accent);
+  transition: background var(--op-dur-fast) var(--op-ease), border-color var(--op-dur-fast) var(--op-ease);
+}
+.modOn .modCheck { background: var(--op-accent); border-color: var(--op-accent); }
+.modBody { flex: 1; min-width: 0; display: grid; gap: 4px; }
+.modName { font-weight: 700; font-size: 15.5px; line-height: 1.3; }
+.modDesc { font-weight: 400; font-size: 13.5px; line-height: 1.45; color: var(--op-text-secondary); }
+.modTag { font-size: 12px; font-weight: 600; color: var(--op-accent); }
+.modPrice { flex: 0 0 auto; text-align: right; font-weight: 700; font-size: 14.5px; white-space: nowrap; }
+.modPriceSub { display: block; margin-top: 2px; font-weight: 500; font-size: 12px; color: var(--op-text-secondary); }
+
+/* итог в нижней панели */
+.navSummary { flex: 1 0 100%; display: grid; gap: 7px; padding-bottom: 2px; }
+.sumRow { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.sumTotal { font-family: var(--op-font-display); font-weight: 700; font-size: 20px; letter-spacing: -0.01em; }
+.sumMeta { font-size: 13px; color: var(--op-text-secondary); text-align: right; }
+.sumMonthly { font-family: var(--op-font-body); font-weight: 500; font-size: 12.5px; letter-spacing: 0; color: var(--op-text-secondary); }
+.meter { height: 6px; border-radius: 3px; background: var(--op-border-strong); overflow: hidden; }
+.meterFill { height: 100%; border-radius: 3px; background: var(--op-accent); transition: width var(--op-dur-base) var(--op-ease); }
+.meterOver { background: #d97706; }
+
+/* финал: смета списком */
+.stageTitle { font-weight: 700; font-size: 14px; margin: 14px 0 10px; }
+.stageTitle:first-of-type { margin-top: 4px; }
+.recList { list-style: none; padding: 0; margin: 0 0 12px; display: grid; gap: 9px; }
+.recItem { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; line-height: 1.4; }
+.recItemIcon { flex: 0 0 16px; margin-top: 2px; color: var(--op-accent); display: grid; }
+.recItemName { flex: 1; min-width: 0; }
+.recItemPrice { white-space: nowrap; color: var(--op-text-secondary); font-weight: 600; }
+.stageSum {
+  display: flex; justify-content: space-between; gap: 10px;
+  font-weight: 700; font-size: 15px;
+  border-top: 1px solid var(--op-divider); padding-top: 10px; margin-bottom: 6px;
+}
+.recCaseNext { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--op-divider); }
+
 /* ── НАВИГАЦИЯ ── */
 .navbar {
   position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
   width: 100%; max-width: var(--col);
-  display: flex; gap: 10px; align-items: center;
+  display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
   padding: 14px var(--pad) calc(14px + env(safe-area-inset-bottom));
   background: color-mix(in srgb, var(--op-base) 90%, transparent);
   backdrop-filter: blur(12px); border-top: 1px solid var(--op-divider);
