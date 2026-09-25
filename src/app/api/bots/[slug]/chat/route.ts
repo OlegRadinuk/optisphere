@@ -36,16 +36,45 @@ function checkRateLimit(key: string, limit: number): boolean {
 // Сжимает тело запроса >8 КБ перед отправкой через CF Worker.
 // Причина: CF-воркер обрывает входящий поток при теле >~30 КБ;
 // gzip даёт коэф. ~4× на русском тексте → все промпты под порогом.
+// Cloudflare с РФ-сервера душит часть соединений: запрос либо проходит за ~2 сек,
+// либо стопорится наглухо. Середины нет, замерено — 4 успеха из 6. Поэтому каждая
+// попытка получает СВОЙ короткий таймаут, а не один длинный на весь вызов:
+// зависшую попытку дешевле бросить и повторить, чем ждать её до конца.
+const ATTEMPT_TIMEOUT_MS = 10_000
+const MAX_ATTEMPTS = 3
+
 const gzipFetch: typeof fetch = async (input, init) => {
-  const b = init?.body
-  if (typeof b === "string" && Buffer.byteLength(b, "utf8") > 8192) {
-    const gz = zlib.gzipSync(Buffer.from(b, "utf8"))
-    const h = new Headers(init?.headers)
-    h.set("content-encoding", "gzip")
-    h.delete("content-length")
-    return fetch(input, { ...init, body: gz, headers: h })
+  const raw = init?.body
+  let body = raw
+  const headers = new Headers(init?.headers)
+
+  // Тело сжимаем один раз, до повторов — русский текст жмётся примерно вчетверо.
+  if (typeof raw === "string" && Buffer.byteLength(raw, "utf8") > 8192) {
+    body = zlib.gzipSync(Buffer.from(raw, "utf8")) as unknown as BodyInit
+    headers.set("content-encoding", "gzip")
+    headers.delete("content-length")
   }
-  return fetch(input as RequestInfo | URL, init)
+
+  const outer = init?.signal as AbortSignal | null | undefined
+  let lastErr: unknown
+
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+    const signal = outer
+      ? AbortSignal.any([outer, AbortSignal.timeout(ATTEMPT_TIMEOUT_MS)])
+      : AbortSignal.timeout(ATTEMPT_TIMEOUT_MS)
+    try {
+      return await fetch(input as RequestInfo | URL, { ...init, body, headers, signal })
+    } catch (err) {
+      lastErr = err
+      // Внешний таймаут/отмена — повторять бессмысленно, вызов уже никому не нужен.
+      if (outer?.aborted) throw err
+      console.warn(
+        `[bots/fetch] попытка ${attempt}/${MAX_ATTEMPTS} не прошла: ${(err as Error)?.name ?? "Error"}`
+      )
+      if (attempt < MAX_ATTEMPTS) await new Promise((r) => setTimeout(r, 400))
+    }
+  }
+  throw lastErr
 }
 
 // ── URL fetcher ────────────────────────────────────────────────────────────────
@@ -247,9 +276,10 @@ export async function POST(
             .replace(/[\uFFFD\u0080-\u00BF]+$/u, "")
         }
 
-        // ── 20-second timeout via AbortController ─────────────────────────────
+        // Общий потолок на вызов. Должен быть больше, чем MAX_ATTEMPTS попыток
+        // по ATTEMPT_TIMEOUT_MS каждая, иначе внешний таймаут срежет повторы.
         const abortCtrl = new AbortController()
-        const timeoutId = setTimeout(() => abortCtrl.abort(), 20_000)
+        const timeoutId = setTimeout(() => abortCtrl.abort(), 38_000)
 
         let timedOut = false
         try {
