@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import Anthropic from "@anthropic-ai/sdk"
+import zlib from "zlib"
 import { getClientBySlug, saveMessage, getMessagesBySession, getDb } from "@/lib/db"
 import { isSafeFetchUrl } from "@/lib/safe-url"
 import { resolveBaseURL } from "@/lib/ai-config"
@@ -29,6 +30,22 @@ function checkRateLimit(key: string, limit: number): boolean {
   ts.push(now)
   rateLimitMap.set(key, ts)
   return true
+}
+
+// ── GZIP fetch wrapper ─────────────────────────────────────────────────────────
+// Сжимает тело запроса >8 КБ перед отправкой через CF Worker.
+// Причина: CF-воркер обрывает входящий поток при теле >~30 КБ;
+// gzip даёт коэф. ~4× на русском тексте → все промпты под порогом.
+const gzipFetch: typeof fetch = async (input, init) => {
+  const b = init?.body
+  if (typeof b === "string" && Buffer.byteLength(b, "utf8") > 8192) {
+    const gz = zlib.gzipSync(Buffer.from(b, "utf8"))
+    const h = new Headers(init?.headers)
+    h.set("content-encoding", "gzip")
+    h.delete("content-length")
+    return fetch(input, { ...init, body: gz, headers: h })
+  }
+  return fetch(input as RequestInfo | URL, init)
 }
 
 // ── URL fetcher ────────────────────────────────────────────────────────────────
@@ -66,6 +83,27 @@ async function fetchPage(url: string): Promise<string | null> {
   } catch {
     return null
   }
+}
+
+// ── Context cleaner ────────────────────────────────────────────────────────────
+// Если context_url вернул HTML — снять теги. Обрезать до maxBytes.
+function cleanContextText(raw: string, maxBytes: number): string {
+  const prefix = raw.slice(0, 500).toLowerCase()
+  let text = raw
+  if (prefix.includes("<html") || prefix.includes("<!doctype")) {
+    text = raw
+      .replace(/<script[\s\S]*?<\/script>/gi, "")
+      .replace(/<style[\s\S]*?<\/style>/gi, "")
+      .replace(/<head[\s\S]*?<\/head>/gi, "")
+      .replace(/<[^>]+>/g, " ")
+      .replace(/&nbsp;/g, " ")
+      .replace(/\s{2,}/g, " ")
+      .trim()
+  }
+  const buf = Buffer.from(text, "utf8")
+  if (buf.length <= maxBytes) return text
+  // Срезаем по байтам; последний символ может быть битым — убираем с конца
+  return buf.slice(0, maxBytes).toString("utf8").replace(/[\uFFFD\u0080-\u00BF]+$/u, "")
 }
 
 // ── Types ──────────────────────────────────────────────────────────────────────
@@ -147,6 +185,7 @@ export async function POST(
   let systemPrompt = client.system_prompt + calendarCtx
 
   // Fetch external context (availability, hot deals, etc.)
+  // HTML-страницы очищаем от тегов, обрезаем до 12 КБ чтобы не раздувать тело запроса.
   if (client.context_url) {
     try {
       const ctxRes = await fetch(client.context_url, {
@@ -154,9 +193,13 @@ export async function POST(
         headers: { "User-Agent": "Optisphere-Bot/1.0", "Accept-Encoding": "gzip, deflate" },
       })
       if (ctxRes.ok) {
-        const ctxText = await ctxRes.text()
-        if (ctxText.trim()) {
-          systemPrompt += "\n\n" + ctxText.trim()
+        const ctxRaw = await ctxRes.text()
+        if (ctxRaw.trim()) {
+          const ctxCleaned = cleanContextText(ctxRaw.trim(), 12_000)
+          const rawBytes = Buffer.byteLength(ctxRaw, "utf8")
+          const cleanedBytes = Buffer.byteLength(ctxCleaned, "utf8")
+          console.info(`[bots/${slug}/context] raw=${rawBytes}b → cleaned=${cleanedBytes}b`)
+          systemPrompt += "\n\n" + ctxCleaned
         }
       }
     } catch {
@@ -178,6 +221,7 @@ export async function POST(
   const ai = new Anthropic({
     apiKey: client.api_key || process.env.ANTHROPIC_API_KEY || "",
     baseURL,
+    fetch: gzipFetch as unknown as typeof fetch,
   })
 
   const encoder = new TextEncoder()
@@ -193,22 +237,56 @@ export async function POST(
           }
         }
 
-        const response = await ai.messages.stream({
-          model: client.model,
-          max_tokens: 1024,
-          system: systemPrompt,
-          messages: body.messages,
-        })
+        // ── System prompt size audit ───────────────────────────────────────────
+        const promptBytes = Buffer.byteLength(systemPrompt, "utf8")
+        console.info(`[bots/${slug}/prompt] systemPrompt=${promptBytes}b`)
+        if (promptBytes > 60_000) {
+          console.warn(`[bots/${slug}/prompt] TRUNCATED: ${promptBytes}b > 60000b limit`)
+          // Срезаем системный промпт: оставляем первые 60 КБ
+          systemPrompt = Buffer.from(systemPrompt, "utf8").slice(0, 60_000).toString("utf8")
+            .replace(/[\uFFFD\u0080-\u00BF]+$/u, "")
+        }
 
-        for await (const chunk of response) {
-          if (chunk.type === "content_block_delta" && chunk.delta.type === "text_delta") {
-            const text = chunk.delta.text
-            if (text) {
-              assistantReply += text
-              controller.enqueue(encoder.encode(text))
+        // ── 20-second timeout via AbortController ─────────────────────────────
+        const abortCtrl = new AbortController()
+        const timeoutId = setTimeout(() => abortCtrl.abort(), 20_000)
+
+        let timedOut = false
+        try {
+          const response = await ai.messages.stream(
+            {
+              model: client.model,
+              max_tokens: 1024,
+              system: systemPrompt,
+              messages: body.messages,
+            },
+            { signal: abortCtrl.signal }
+          )
+          clearTimeout(timeoutId)
+
+          for await (const chunk of response) {
+            if (chunk.type === "content_block_delta" && chunk.delta.type === "text_delta") {
+              const text = chunk.delta.text
+              if (text) {
+                assistantReply += text
+                controller.enqueue(encoder.encode(text))
+              }
             }
           }
+        } catch (aiErr: unknown) {
+          clearTimeout(timeoutId)
+          if (abortCtrl.signal.aborted) {
+            timedOut = true
+            console.warn(`[bots/${slug}/chat] timeout after 20s`)
+            controller.enqueue(
+              encoder.encode("Извините, запрос занял слишком долго. Пожалуйста, попробуйте ещё раз.")
+            )
+          } else {
+            throw aiErr
+          }
         }
+
+        if (timedOut) return
 
         // Persist assistant reply
         if (assistantReply) {
