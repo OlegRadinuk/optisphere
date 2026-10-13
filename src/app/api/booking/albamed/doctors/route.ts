@@ -162,12 +162,16 @@ async function getMedflexDoctors(cors: Record<string, string>): Promise<Response
       record.specialities.forEach((s) => entry.allSpecialities.add(s))
     }
 
-    // Собираем минимальную цену
+    // Собираем минимальную цену основной специальности записи —
+    // той, по которой открыты слоты (specialities[0]).
+    // Нельзя брать минимум по всем speciality_id: у кардиолога есть ЭКГ за 700 ₽,
+    // хотя запись на приём идёт за 2500 ₽.
     const entry = doctorMap.get(record.doctor_id)!
-    for (const p of record.prices) {
-      if (p.price > 0 && (entry.minPrice === null || p.price < entry.minPrice)) {
-        entry.minPrice = p.price
-      }
+    const primarySpecialityId = record.specialities[0]
+    const primaryPriceEntry = record.prices.find((p) => p.speciality_id === primarySpecialityId)
+    const primaryPrice = primaryPriceEntry?.price ?? 0
+    if (primaryPrice > 0 && (entry.minPrice === null || primaryPrice < entry.minPrice)) {
+      entry.minPrice = primaryPrice
     }
   }
 
