@@ -38,8 +38,9 @@ function initSchema(db: Database.Database) {
       model       TEXT    NOT NULL DEFAULT 'claude-haiku-4-5-20251001',
       tg_token    TEXT    DEFAULT '',
       tg_chat_id  TEXT    DEFAULT '',
-      widget_color   TEXT DEFAULT '#2563eb',
-      widget_title   TEXT DEFAULT 'Ассистент',
+      widget_color      TEXT DEFAULT '#2563eb',
+      widget_text_color TEXT NOT NULL DEFAULT '#ffffff',
+      widget_title      TEXT DEFAULT 'Ассистент',
       widget_placeholder TEXT DEFAULT 'Напишите вопрос…',
       rate_limit  INTEGER DEFAULT 30,
       active      INTEGER DEFAULT 1,
@@ -181,6 +182,9 @@ function initSchema(db: Database.Database) {
   }
   if (!clientCols.includes("policy_url")) {
     db.exec(`ALTER TABLE clients ADD COLUMN policy_url TEXT DEFAULT ''`)
+  }
+  if (!clientCols.includes("widget_text_color")) {
+    db.exec(`ALTER TABLE clients ADD COLUMN widget_text_color TEXT NOT NULL DEFAULT '#ffffff'`)
   }
 
   // Факт согласия — фиксируется из widget.js (гейт перед чатом и/или чекбокс формы заявки)
@@ -360,7 +364,7 @@ function seedBots(db: Database.Database) {
     if (!seed.slug) continue
     const existing = db.prepare("SELECT id FROM clients WHERE slug = ?").get(seed.slug) as { id: number } | undefined
     if (existing) {
-      const safeFields = ["name","widget_title","widget_color","widget_placeholder","context_url","quick_replies","system_prompt","model","rate_limit","active","greeting","consent_required","consent_text","policy_url"] as const
+      const safeFields = ["name","widget_title","widget_color","widget_text_color","widget_placeholder","context_url","quick_replies","system_prompt","model","rate_limit","active","greeting","consent_required","consent_text","policy_url"] as const
       const updates: Partial<Client> = {}
       for (const f of safeFields) {
         if (seed[f] !== undefined) (updates as Record<string, unknown>)[f] = seed[f]
@@ -379,18 +383,18 @@ function seedBots(db: Database.Database) {
       db.prepare(`
         INSERT OR IGNORE INTO clients
           (slug,name,description,system_prompt,api_key,base_url,model,tg_token,tg_chat_id,
-           widget_color,widget_title,widget_placeholder,rate_limit,active,context_url,quick_replies,greeting,
+           widget_color,widget_text_color,widget_title,widget_placeholder,rate_limit,active,context_url,quick_replies,greeting,
            consent_required,consent_text,policy_url)
         VALUES
           (@slug,@name,@description,@system_prompt,@api_key,@base_url,@model,@tg_token,@tg_chat_id,
-           @widget_color,@widget_title,@widget_placeholder,@rate_limit,@active,@context_url,@quick_replies,@greeting,
+           @widget_color,@widget_text_color,@widget_title,@widget_placeholder,@rate_limit,@active,@context_url,@quick_replies,@greeting,
            @consent_required,@consent_text,@policy_url)
       `).run({
         slug: seed.slug, name: seed.name ?? seed.slug, description: seed.description ?? "",
         system_prompt: seed.system_prompt ?? "", api_key: seed.api_key ?? "",
         base_url: seed.base_url ?? WORKING_PROXY, model: seed.model ?? "claude-haiku-4-5-20251001",
         tg_token: seed.tg_token ?? "", tg_chat_id: seed.tg_chat_id ?? "",
-        widget_color: seed.widget_color ?? "#2563eb", widget_title: seed.widget_title ?? "Ассистент",
+        widget_color: seed.widget_color ?? "#2563eb", widget_text_color: seed.widget_text_color ?? "#ffffff", widget_title: seed.widget_title ?? "Ассистент",
         widget_placeholder: seed.widget_placeholder ?? "Напишите вопрос…",
         rate_limit: seed.rate_limit ?? 30, active: seed.active ?? 1,
         context_url: seed.context_url ?? "", quick_replies: seed.quick_replies ?? "",
@@ -416,6 +420,7 @@ export type Client = {
   tg_token: string
   tg_chat_id: string
   widget_color: string
+  widget_text_color: string
   widget_title: string
   widget_placeholder: string
   rate_limit: number
@@ -489,11 +494,11 @@ export function createClient(
   const stmt = db.prepare(`
     INSERT INTO clients
       (slug, name, description, system_prompt, api_key, base_url, model,
-       tg_token, tg_chat_id, widget_color, widget_title, widget_placeholder,
+       tg_token, tg_chat_id, widget_color, widget_text_color, widget_title, widget_placeholder,
        rate_limit, active, quick_replies, greeting)
     VALUES
       (@slug, @name, @description, @system_prompt, @api_key, @base_url, @model,
-       @tg_token, @tg_chat_id, @widget_color, @widget_title, @widget_placeholder,
+       @tg_token, @tg_chat_id, @widget_color, @widget_text_color, @widget_title, @widget_placeholder,
        @rate_limit, @active, @quick_replies, @greeting)
   `)
   const result = stmt.run(data)
@@ -506,7 +511,7 @@ export function createClient(
 // object keys being interpolated into the SET clause.
 const UPDATABLE_CLIENT_FIELDS = new Set([
   "name", "description", "system_prompt", "api_key", "base_url", "model",
-  "tg_token", "tg_chat_id", "widget_color", "widget_title", "widget_placeholder",
+  "tg_token", "tg_chat_id", "widget_color", "widget_text_color", "widget_title", "widget_placeholder",
   "rate_limit", "active", "context_url", "quick_replies", "greeting",
   "consent_required", "consent_text", "policy_url",
 ])
@@ -544,6 +549,7 @@ function syncClientToSeed(slug: string): void {
     entry.name               = client.name               ?? ""
     entry.widget_title       = client.widget_title       ?? "Ассистент"
     entry.widget_color       = client.widget_color       ?? "#2563eb"
+    entry.widget_text_color  = client.widget_text_color  ?? "#ffffff"
     entry.widget_placeholder = client.widget_placeholder ?? "Напишите вопрос…"
     entry.context_url        = client.context_url        ?? ""
     entry.quick_replies      = client.quick_replies      ?? ""

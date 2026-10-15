@@ -44,6 +44,7 @@ db.exec(`
     tg_token            TEXT    DEFAULT '',
     tg_chat_id          TEXT    DEFAULT '',
     widget_color        TEXT    DEFAULT '#2563eb',
+    widget_text_color   TEXT    NOT NULL DEFAULT '#ffffff',
     widget_title        TEXT    DEFAULT 'Ассистент',
     widget_placeholder  TEXT    DEFAULT 'Напишите вопрос…',
     rate_limit          INTEGER DEFAULT 30,
@@ -95,6 +96,7 @@ for (const col of [
   "ALTER TABLE clients ADD COLUMN consent_required INTEGER DEFAULT 0",
   "ALTER TABLE clients ADD COLUMN consent_text TEXT DEFAULT ''",
   "ALTER TABLE clients ADD COLUMN policy_url TEXT DEFAULT ''",
+  "ALTER TABLE clients ADD COLUMN widget_text_color TEXT NOT NULL DEFAULT '#ffffff'",
 ]) {
   try { db.exec(col); } catch { /* column already exists */ }
 }
@@ -351,10 +353,11 @@ const BOT_DATA = {
   model: "claude-haiku-4-5-20251001",
   tg_token: resolvedTgToken,
   tg_chat_id: resolvedTgChat,
-  // Graphite #171310: white text on dark = excellent contrast (≈19:1)
-  // Gold #DAA759 rejected: widget uses white text, contrast on gold ≈2.2:1 (fails WCAG AA)
-  widget_color: "#171310",
-  widget_title: "Ассистент клиники",
+  // Gold accent #DAA759 — brand color of «Врач у дома».
+  // White text fails WCAG AA on gold (2.2:1), so widget_text_color = dark graphite #171310 (≈19:1 contrast).
+  widget_color: "#DAA759",
+  widget_text_color: "#171310",
+  widget_title: "Онлайн администратор",
   widget_placeholder: "Задайте вопрос или запишитесь на приём…",
   rate_limit: 20,
   context_url: "",
@@ -365,7 +368,7 @@ const BOT_DATA = {
     { label: "Позвонить",          action: "tel",  href: "tel:+79785622262" },
   ]),
   greeting:
-    "Здравствуйте! Я ассистент клиники «Врач у дома» (Бахчисарай). " +
+    "Здравствуйте! Я ИИ-ассистент клиники «Врач у дома» (Бахчисарай). " +
     "Помогу выбрать специалиста и записаться на приём. Задайте вопрос.",
   consent_required: 1,
   consent_text: CONSENT_TEXT,
@@ -384,6 +387,7 @@ if (existing) {
       tg_token            = @tg_token,
       tg_chat_id          = @tg_chat_id,
       widget_color        = @widget_color,
+      widget_text_color   = @widget_text_color,
       widget_title        = @widget_title,
       widget_placeholder  = @widget_placeholder,
       rate_limit          = @rate_limit,
@@ -401,12 +405,12 @@ if (existing) {
   const r = db.prepare(`
     INSERT INTO clients
       (slug, name, description, system_prompt, api_key, base_url, model,
-       tg_token, tg_chat_id, widget_color, widget_title, widget_placeholder,
+       tg_token, tg_chat_id, widget_color, widget_text_color, widget_title, widget_placeholder,
        rate_limit, active, context_url, quick_replies, greeting,
        consent_required, consent_text, policy_url)
     VALUES
       (@slug, @name, @description, @system_prompt, @api_key, @base_url, @model,
-       @tg_token, @tg_chat_id, @widget_color, @widget_title, @widget_placeholder,
+       @tg_token, @tg_chat_id, @widget_color, @widget_text_color, @widget_title, @widget_placeholder,
        @rate_limit, 1, @context_url, @quick_replies, @greeting,
        @consent_required, @consent_text, @policy_url)
   `).run({ slug: SLUG, ...BOT_DATA });

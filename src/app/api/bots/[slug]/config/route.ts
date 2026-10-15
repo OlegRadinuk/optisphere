@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server"
 import { getClientBySlug } from "@/lib/db"
 
+const HEX_RE = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i
+function safeHexCfg(v: string | undefined | null, def: string): string {
+  return v && HEX_RE.test(v) ? v : def
+}
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ slug: string }> }
@@ -26,7 +31,8 @@ export async function GET(
   return NextResponse.json(
     {
       title: client.widget_title,
-      color: client.widget_color,
+      color: safeHexCfg(client.widget_color, "#2563eb"),
+      text_color: safeHexCfg(client.widget_text_color, "#ffffff"),
       placeholder: client.widget_placeholder,
       quick_replies: quickReplies,
       greeting: client.greeting,

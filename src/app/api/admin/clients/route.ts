@@ -1,6 +1,14 @@
 import { NextRequest, NextResponse } from "next/server"
 import { isAuthenticated } from "@/lib/auth"
 import { WORKING_PROXY } from "@/lib/ai-config"
+
+const HEX_RE = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i
+function validateHex(v: unknown, field: string): { error: string } | null {
+  if (v !== undefined && (typeof v !== "string" || !HEX_RE.test(v))) {
+    return { error: `${field}: must be a valid CSS hex color (#rgb or #rrggbb)` }
+  }
+  return null
+}
 import {
   getAllClients,
   createClient,
@@ -67,6 +75,10 @@ export async function POST(request: NextRequest): Promise<Response> {
     )
   }
 
+  // Validate hex colors
+  const colorErr = validateHex(data.widget_color, "widget_color") ?? validateHex(data.widget_text_color, "widget_text_color")
+  if (colorErr) return NextResponse.json(colorErr, { status: 400 })
+
   try {
     const client = createClient({
       slug: data.slug,
@@ -79,6 +91,7 @@ export async function POST(request: NextRequest): Promise<Response> {
       tg_token: data.tg_token ?? "",
       tg_chat_id: data.tg_chat_id ?? "",
       widget_color: data.widget_color ?? "#2563eb",
+      widget_text_color: data.widget_text_color ?? "#ffffff",
       widget_title: data.widget_title ?? "Ассистент",
       widget_placeholder: data.widget_placeholder ?? "Напишите вопрос…",
       rate_limit: data.rate_limit ?? 30,
@@ -116,6 +129,11 @@ export async function PATCH(request: NextRequest): Promise<Response> {
   if (typeof data.greeting === "string") {
     data.greeting = data.greeting.slice(0, 1000)
   }
+
+  // Validate hex colors
+  const patchColorErr = validateHex(data.widget_color, "widget_color") ?? validateHex(data.widget_text_color, "widget_text_color")
+  if (patchColorErr) return NextResponse.json(patchColorErr, { status: 400 })
+
   updateClient(slug, data)
   return NextResponse.json({ ok: true })
 }

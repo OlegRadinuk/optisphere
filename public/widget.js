@@ -21,8 +21,41 @@
   var _cfg = (window._opsphCfg && window._opsphCfg[BOT_SLUG]) || {};
   var AVATAR_URL = script.getAttribute("data-avatar") || _cfg.avatar || null;
 
-  var COLOR     = PRIMARY || "#e85d04";
-  var CHAR_NAME = TITLE   || "Ассистент";
+  var COLOR               = PRIMARY || "#e85d04";
+  var TEXT_COLOR          = "#fff"; // text/icon color ON the accent background — overridden from config
+  var HAS_CUSTOM_TEXT_COLOR = false; // true only when config delivers a non-white text_color
+  var CHAR_NAME  = TITLE   || "Ассистент";
+
+  // ── Color utilities ────────────────────────────────────────────────────────
+  function expandHex(h) {
+    return h.replace(/^#([a-f\d])([a-f\d])([a-f\d])$/i, "#$1$1$2$2$3$3");
+  }
+  function alphaColor(hex, a) {
+    var h = expandHex(hex);
+    var r = parseInt(h.slice(1, 3) || "ff", 16);
+    var g = parseInt(h.slice(3, 5) || "ff", 16);
+    var b = parseInt(h.slice(5, 7) || "ff", 16);
+    return "rgba(" + r + "," + g + "," + b + "," + a + ")";
+  }
+  // WCAG 2.1 relative luminance (linearized sRGB). Returns true when COLOR has
+  // insufficient contrast as text on white (contrast ratio < 4.5:1, fails AA).
+  // Only called from the HAS_CUSTOM_TEXT_COLOR branch — never affects default bots.
+  function isLight(hex) {
+    var h = expandHex(hex.toLowerCase());
+    function lin(c) {
+      return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+    }
+    var r = lin(parseInt(h.slice(1, 3) || "ff", 16) / 255);
+    var g = lin(parseInt(h.slice(3, 5) || "ff", 16) / 255);
+    var b = lin(parseInt(h.slice(5, 7) || "ff", 16) / 255);
+    var L = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    return (1.05 / (L + 0.05)) < 4.5; // contrast with white < WCAG AA
+  }
+  // Validates a CSS hex color. Returns v if valid, def otherwise.
+  var SAFE_HEX_RE = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i;
+  function safeHex(v, def) {
+    return (typeof v === "string" && SAFE_HEX_RE.test(v)) ? v : def;
+  }
   var AVA_LETTER = CHAR_NAME.charAt(0).toUpperCase();
   var GREETING  = "";
   var DEFAULT_GREETING = "Здравствуйте! Подскажу и отвечу на ваши вопросы — напишите, что вас интересует.";
@@ -170,37 +203,46 @@
     var isLeft = POSITION === "left";
     var hEdge = isLeft ? ("left:" + LEFT + "px") : ("right:" + RIGHT + "px");
     var hEdgeChat = isLeft ? ("left:" + (LEFT - 4) + "px") : ("right:" + (RIGHT - 4) + "px");
+    // For text/border that use COLOR on white (consent links, chips): only switch to
+    // TEXT_COLOR when a custom text color is explicitly set AND COLOR fails WCAG AA
+    // on white. Default bots always get COLOR — original behavior, zero regression.
+    var LINK_COLOR = (HAS_CUSTOM_TEXT_COLOR && isLight(COLOR)) ? TEXT_COLOR : COLOR;
+    // Chip tint: use COLOR-derived alpha only when client has a custom text color
+    // (implying a light accent); otherwise keep original teal so existing bots are unchanged.
+    var CHIP_BG     = HAS_CUSTOM_TEXT_COLOR ? alphaColor(COLOR, .12) : "rgba(8,145,178,0.12)";
+    var CHIP_BORDER = HAS_CUSTOM_TEXT_COLOR ? alphaColor(COLOR, .4)  : "rgba(8,145,178,0.4)";
+    var CHIP_HOVER  = HAS_CUSTOM_TEXT_COLOR ? alphaColor(COLOR, .22) : "rgba(8,145,178,0.22)";
     var css = [
       "#opsph-btn{position:fixed;bottom:" + BOTTOM + "px;" + hEdge + ";z-index:9999;height:" + PILL_H + "px;padding:0 18px 0 10px;border-radius:24px;background:" + COLOR + ";border:none;cursor:pointer;box-shadow:0 4px 18px rgba(0,0,0,.22);display:flex;align-items:center;gap:9px;transition:transform .2s,box-shadow .2s;}",
       "#opsph-btn:hover{transform:scale(1.05);box-shadow:0 6px 24px rgba(0,0,0,.3);}",
-      "#opsph-btn-ava{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:#fff;font-family:system-ui,sans-serif;flex-shrink:0;}",
-      "#opsph-btn-label{font-weight:700;font-size:14px;color:#fff;font-family:system-ui,sans-serif;letter-spacing:.2px;white-space:nowrap;}",
+      "#opsph-btn-ava{width:32px;height:32px;border-radius:50%;background:" + alphaColor(TEXT_COLOR,.25) + ";display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:" + TEXT_COLOR + ";font-family:system-ui,sans-serif;flex-shrink:0;}",
+      "#opsph-btn-label{font-weight:700;font-size:14px;color:" + TEXT_COLOR + ";font-family:system-ui,sans-serif;letter-spacing:.2px;white-space:nowrap;}",
       "#opsph-bubble{position:fixed;bottom:" + (BOTTOM + PILL_H + 10) + "px;" + hEdge + ";z-index:9998;background:#fff;border-radius:16px;border-bottom-" + (isLeft ? "left" : "right") + "-radius:4px;box-shadow:0 4px 20px rgba(0,0,0,.13);padding:14px 16px 14px 14px;max-width:260px;display:flex;flex-direction:column;gap:8px;animation:opsph-pop .3s ease;border:1.5px solid #f0f0f0;}",
       "#opsph-bubble.hide{display:none;}",
       "@keyframes opsph-pop{from{opacity:0;transform:translateY(8px) scale(.96)}to{opacity:1;transform:none}}",
       "#opsph-bubble-head{display:flex;align-items:center;gap:8px;}",
-      "#opsph-bubble-ava{width:30px;height:30px;border-radius:50%;background:" + COLOR + ";display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fff;font-family:system-ui,sans-serif;flex-shrink:0;}",
+      "#opsph-bubble-ava{width:30px;height:30px;border-radius:50%;background:" + COLOR + ";display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:" + TEXT_COLOR + ";font-family:system-ui,sans-serif;flex-shrink:0;}",
       "#opsph-bubble-name{font-weight:700;font-size:13px;color:#1e293b;font-family:system-ui,sans-serif;}",
       "#opsph-bubble-close{margin-left:auto;width:20px;height:20px;border:none;background:none;cursor:pointer;color:#94a3b8;font-size:16px;padding:0;line-height:1;display:flex;align-items:center;justify-content:center;}",
       "#opsph-bubble-text{font-size:13px;color:#334155;font-family:system-ui,sans-serif;line-height:1.5;}",
-      "#opsph-bubble-cta{background:" + COLOR + ";color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;font-family:system-ui,sans-serif;cursor:pointer;transition:opacity .15s;text-align:left;}",
+      "#opsph-bubble-cta{background:" + COLOR + ";color:" + TEXT_COLOR + ";border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;font-family:system-ui,sans-serif;cursor:pointer;transition:opacity .15s;text-align:left;}",
       "#opsph-bubble-cta:hover{opacity:.88;}",
       "#opsph-wrap{position:fixed;bottom:" + (BOTTOM + PILL_H + 12) + "px;" + hEdgeChat + ";z-index:9997;width:368px;max-width:calc(100vw - 32px);height:530px;max-height:calc(100vh - 120px);background:#fff;border-radius:20px;box-shadow:0 12px 48px rgba(0,0,0,.16);display:flex;flex-direction:column;overflow:hidden;transition:opacity .22s,transform .22s;opacity:0;transform:translateY(14px) scale(.97);pointer-events:none;}",
       "#opsph-wrap.open{opacity:1;transform:none;pointer-events:all;}",
       "#opsph-head{background:" + COLOR + ";padding:14px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0;}",
-      "#opsph-head-ava{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;color:#fff;font-family:system-ui,sans-serif;flex-shrink:0;}",
+      "#opsph-head-ava{width:36px;height:36px;border-radius:50%;background:" + alphaColor(TEXT_COLOR,.22) + ";display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;color:" + TEXT_COLOR + ";font-family:system-ui,sans-serif;flex-shrink:0;}",
       "#opsph-head-info{flex:1;min-width:0;}",
-      "#opsph-head-name{font-weight:700;font-size:15px;color:#fff;font-family:system-ui,sans-serif;}",
-      "#opsph-head-sub{font-size:11px;color:rgba(255,255,255,.75);font-family:system-ui,sans-serif;margin-top:1px;}",
-      "#opsph-close{background:rgba(255,255,255,.15);border:none;color:#fff;cursor:pointer;border-radius:50%;width:30px;height:30px;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}",
-      "#opsph-close:hover{background:rgba(255,255,255,.28);}",
+      "#opsph-head-name{font-weight:700;font-size:15px;color:" + TEXT_COLOR + ";font-family:system-ui,sans-serif;}",
+      "#opsph-head-sub{font-size:11px;color:" + alphaColor(TEXT_COLOR,.75) + ";font-family:system-ui,sans-serif;margin-top:1px;}",
+      "#opsph-close{background:" + alphaColor(TEXT_COLOR,.15) + ";border:none;color:" + TEXT_COLOR + ";cursor:pointer;border-radius:50%;width:30px;height:30px;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}",
+      "#opsph-close:hover{background:" + alphaColor(TEXT_COLOR,.28) + ";}",
       "#opsph-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;font-family:system-ui,sans-serif;font-size:14px;background:#f8fafc;}",
       "#opsph-msgs::-webkit-scrollbar{width:3px;}",
       "#opsph-msgs::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:3px;}",
       ".opsph-row{display:flex;align-items:flex-end;gap:7px;}",
-      ".opsph-row-ava{width:26px;height:26px;border-radius:50%;background:" + COLOR + ";display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px;color:#fff;font-family:system-ui,sans-serif;flex-shrink:0;}",
+      ".opsph-row-ava{width:26px;height:26px;border-radius:50%;background:" + COLOR + ";display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px;color:" + TEXT_COLOR + ";font-family:system-ui,sans-serif;flex-shrink:0;}",
       ".opsph-msg{max-width:80%;padding:9px 13px;border-radius:14px;word-break:break-word;white-space:pre-wrap;line-height:1.55;}",
-      ".opsph-user{align-self:flex-end;background:" + COLOR + ";color:#fff;border-bottom-right-radius:4px;}",
+      ".opsph-user{align-self:flex-end;background:" + COLOR + ";color:" + TEXT_COLOR + ";border-bottom-right-radius:4px;}",
       ".opsph-bot{background:#fff;color:#1e293b;border-bottom-left-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.07);}",
       ".opsph-typing-row{display:flex;align-items:flex-end;gap:7px;}",
       ".opsph-typing{background:#fff;padding:11px 14px;border-radius:14px;border-bottom-left-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.07);}",
@@ -212,21 +254,21 @@
       ".opsph-lead-title{font-weight:700;font-size:13px;color:#1e293b;margin-bottom:10px;font-family:system-ui,sans-serif;}",
       ".opsph-lead-input{width:100%;box-sizing:border-box;padding:9px 12px;border:1px solid #e2e8f0;border-radius:9px;font-size:13px;font-family:system-ui,sans-serif;outline:none;margin-bottom:8px;transition:border-color .15s;}",
       ".opsph-lead-input:focus{border-color:" + COLOR + ";}",
-      ".opsph-lead-btn{width:100%;padding:9px;border:none;border-radius:9px;background:" + COLOR + ";color:#fff;font-weight:600;font-size:13px;font-family:system-ui,sans-serif;cursor:pointer;}",
+      ".opsph-lead-btn{width:100%;padding:9px;border:none;border-radius:9px;background:" + COLOR + ";color:" + TEXT_COLOR + ";font-weight:600;font-size:13px;font-family:system-ui,sans-serif;cursor:pointer;}",
       ".opsph-lead-btn:disabled{opacity:.5;cursor:default;}",
       ".opsph-lead-ok{color:#059669;font-size:13px;font-family:system-ui,sans-serif;font-weight:600;text-align:center;padding:6px 0;}",
       ".opsph-consent-text{font-size:12.5px;line-height:1.5;color:#475569;font-family:system-ui,sans-serif;margin-bottom:8px;white-space:pre-wrap;}",
-      ".opsph-consent-link{display:inline-block;font-size:12px;color:" + COLOR + ";font-family:system-ui,sans-serif;text-decoration:underline;margin-bottom:10px;}",
+      ".opsph-consent-link{display:inline-block;font-size:12px;color:" + LINK_COLOR + ";font-family:system-ui,sans-serif;text-decoration:underline;margin-bottom:10px;}",
       ".opsph-consent-check{display:flex;align-items:flex-start;gap:7px;margin-bottom:10px;cursor:pointer;font-size:11.5px;line-height:1.4;color:#64748b;font-family:system-ui,sans-serif;}",
       ".opsph-consent-check input{margin-top:2px;flex-shrink:0;width:14px;height:14px;cursor:pointer;}",
-      ".opsph-consent-check a{color:" + COLOR + ";text-decoration:underline;}",
+      ".opsph-consent-check a{color:" + LINK_COLOR + ";text-decoration:underline;}",
       "#opsph-footer{display:flex;flex-direction:column;flex-shrink:0;background:#fff;border-top:1px solid #e2e8f0;}",
       "#opsph-form{display:flex;padding:10px 12px 6px;gap:8px;}",
       "#opsph-clear{background:none;border:none;cursor:pointer;font-size:11px;color:#94a3b8;font-family:system-ui,sans-serif;padding:0 12px 8px;text-align:center;width:100%;transition:color .15s;}",
       "#opsph-clear:hover{color:#64748b;}",
       "#opsph-input{flex:1;padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:12px;font-size:14px;font-family:system-ui,sans-serif;outline:none;resize:none;min-height:38px;max-height:96px;line-height:1.4;transition:border-color .15s;color:#1e293b;background:#f8fafc;}",
       "#opsph-input:focus{border-color:" + COLOR + ";background:#fff;}",
-      "#opsph-send{width:38px;height:38px;border-radius:12px;border:none;background:" + COLOR + ";cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}",
+      "#opsph-send{width:38px;height:38px;border-radius:12px;border:none;background:" + COLOR + ";color:" + TEXT_COLOR + ";cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}",
       "#opsph-send:disabled{opacity:.45;cursor:default;}",
       "@media(max-width:480px){" +
         "#opsph-wrap{width:calc(100vw - 20px);}" +
@@ -237,8 +279,8 @@
         "#opsph-bubble-cta{padding:7px 12px;}" +
       "}",
       ".opsph-quick-replies{display:flex;flex-wrap:wrap;margin-top:8px;}",
-      ".opsph-qr-chip{display:inline-flex;align-items:center;padding:6px 14px;border-radius:20px;border:1px solid rgba(8,145,178,0.4);background:rgba(8,145,178,0.12);color:" + COLOR + ";font-size:13px;font-family:system-ui,sans-serif;cursor:pointer;margin:4px 4px 0 0;transition:background .15s;line-height:1.3;}",
-      ".opsph-qr-chip:hover{background:rgba(8,145,178,0.22);}"
+      ".opsph-qr-chip{display:inline-flex;align-items:center;padding:6px 14px;border-radius:20px;border:1px solid " + CHIP_BORDER + ";background:" + CHIP_BG + ";color:" + LINK_COLOR + ";font-size:13px;font-family:system-ui,sans-serif;cursor:pointer;margin:4px 4px 0 0;transition:background .15s;line-height:1.3;}",
+      ".opsph-qr-chip:hover{background:" + CHIP_HOVER + ";}"
     ].join("");
 
     var el = document.createElement("style");
@@ -662,7 +704,7 @@
   }
 
   function sendIcon() {
-    return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 2L15 22l-4-9-9-4 20-7z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 2L15 22l-4-9-9-4 20-7z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   }
 
   function closeIcon() {
@@ -711,6 +753,10 @@
 
   // ── Init — fetch config first, then render ────────────────────────────────────
   function render() {
+    // Validate hex before CSS injection — guards against malformed data-color
+    // attributes or unexpected config values reaching CSS strings.
+    COLOR      = safeHex(COLOR, "#e85d04");
+    TEXT_COLOR = safeHex(TEXT_COLOR, "#ffffff");
     injectCSS();
     buildDOM();
     restoreMessages();
@@ -725,8 +771,20 @@
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (cfg) {
         if (cfg) {
-          if (cfg.color)       COLOR      = cfg.color;
-          if (cfg.title)       CHAR_NAME  = cfg.title;
+          if (cfg.color) COLOR = safeHex(cfg.color, COLOR);
+          if (cfg.text_color) {
+            var _validTc = safeHex(cfg.text_color, "");
+            if (_validTc) {
+              TEXT_COLOR = _validTc;
+              // HAS_CUSTOM_TEXT_COLOR drives chip styling — true only when the client
+              // explicitly uses a non-white text color (e.g. dark graphite on gold).
+              // White (#fff / #ffffff) keeps chips at their default teal appearance so
+              // existing bots (albamed, estet, vlad, lifestyle-crimea) stay pixel-perfect.
+              var _tc = expandHex(_validTc.toLowerCase());
+              HAS_CUSTOM_TEXT_COLOR = (_tc !== "#ffffff");
+            }
+          }
+          if (cfg.title)      CHAR_NAME  = cfg.title;
           if (cfg.placeholder) script.setAttribute("data-placeholder", cfg.placeholder);
           if (Array.isArray(cfg.quick_replies) && cfg.quick_replies.length) QUICK_REPLIES = cfg.quick_replies;
           if (cfg.greeting) GREETING = cfg.greeting;
