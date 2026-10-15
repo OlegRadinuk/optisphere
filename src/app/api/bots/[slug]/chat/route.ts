@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server"
 import Anthropic from "@anthropic-ai/sdk"
-import zlib from "zlib"
 import { getClientBySlug, saveMessage, getMessagesBySession, getDb } from "@/lib/db"
 import { isSafeFetchUrl } from "@/lib/safe-url"
 import { resolveBaseURL } from "@/lib/ai-config"
 import { guessService } from "@/lib/bot-summary"
+import { gzipFetch, ATTEMPT_TIMEOUT_MS, MAX_ATTEMPTS } from "@/lib/bots/ai-fetch"
 
 // ── Telegram helper (same proxy as lead route) ────────────────────────────────
 async function sendTelegram(token: string, chatId: string, text: string) {
@@ -32,50 +32,8 @@ function checkRateLimit(key: string, limit: number): boolean {
   return true
 }
 
-// ── GZIP fetch wrapper ─────────────────────────────────────────────────────────
-// Сжимает тело запроса >8 КБ перед отправкой через CF Worker.
-// Причина: CF-воркер обрывает входящий поток при теле >~30 КБ;
-// gzip даёт коэф. ~4× на русском тексте → все промпты под порогом.
-// Cloudflare с РФ-сервера душит часть соединений: запрос либо проходит за ~2 сек,
-// либо стопорится наглухо. Середины нет, замерено — 4 успеха из 6. Поэтому каждая
-// попытка получает СВОЙ короткий таймаут, а не один длинный на весь вызов:
-// зависшую попытку дешевле бросить и повторить, чем ждать её до конца.
-const ATTEMPT_TIMEOUT_MS = 10_000
-const MAX_ATTEMPTS = 3
-
-const gzipFetch: typeof fetch = async (input, init) => {
-  const raw = init?.body
-  let body = raw
-  const headers = new Headers(init?.headers)
-
-  // Тело сжимаем один раз, до повторов — русский текст жмётся примерно вчетверо.
-  if (typeof raw === "string" && Buffer.byteLength(raw, "utf8") > 8192) {
-    body = zlib.gzipSync(Buffer.from(raw, "utf8")) as unknown as BodyInit
-    headers.set("content-encoding", "gzip")
-    headers.delete("content-length")
-  }
-
-  const outer = init?.signal as AbortSignal | null | undefined
-  let lastErr: unknown
-
-  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
-    const signal = outer
-      ? AbortSignal.any([outer, AbortSignal.timeout(ATTEMPT_TIMEOUT_MS)])
-      : AbortSignal.timeout(ATTEMPT_TIMEOUT_MS)
-    try {
-      return await fetch(input as RequestInfo | URL, { ...init, body, headers, signal })
-    } catch (err) {
-      lastErr = err
-      // Внешний таймаут/отмена — повторять бессмысленно, вызов уже никому не нужен.
-      if (outer?.aborted) throw err
-      console.warn(
-        `[bots/fetch] попытка ${attempt}/${MAX_ATTEMPTS} не прошла: ${(err as Error)?.name ?? "Error"}`
-      )
-      if (attempt < MAX_ATTEMPTS) await new Promise((r) => setTimeout(r, 400))
-    }
-  }
-  throw lastErr
-}
+// gzipFetch, ATTEMPT_TIMEOUT_MS, MAX_ATTEMPTS — из @/lib/bots/ai-fetch.
+// Здесь оставлен только комментарий для навигации; см. модуль для деталей.
 
 // ── URL fetcher ────────────────────────────────────────────────────────────────
 function extractURL(text: string): string | null {
@@ -138,6 +96,30 @@ function cleanContextText(raw: string, maxBytes: number): string {
 // ── Types ──────────────────────────────────────────────────────────────────────
 type ChatMsg = { role: "user" | "assistant"; content: string }
 type Body = { messages: ChatMsg[]; sessionId?: string }
+
+// ── Константы стрима ───────────────────────────────────────────────────────────
+
+// Общий потолок на весь стрим (мс). Должен вместить:
+//  - 3 зависшие попытки × ATTEMPT_TIMEOUT_MS (10 с) + паузы ≈ 30 800 мс
+//  - плюс запас на длинный ответ; 60 с — предварительная оценка;
+//    уточнить замером после перехода на Haiku 5.5 с thinking.
+// Итого: 30 800 + 60 000 = 90 800 мс.
+//
+// ВАЖНО: stream() возвращается сразу (у MessageStream нет then),
+// поэтому таймер снимаем ПОСЛЕ цикла for await, а не после stream().
+//
+// ⚠ Если на сервере nginx выставлен proxy_read_timeout < 91 с
+//   (в vladen/deploy/nginx.conf стоит 90 с), nginx срежет ответ первым.
+//   Конфига nginx для optisphere в репозитории нет — проверить на сервере.
+const TOTAL_TIMEOUT_MS =
+  MAX_ATTEMPTS * ATTEMPT_TIMEOUT_MS + // повторы: 3×10 000 = 30 000
+  (MAX_ATTEMPTS - 1) * 400 +          // паузы между попытками: 2×400 = 800
+  60_000                              // запас на длинный ответ (уточнить замером)
+
+// Фраза, дописываемая пользователю при обрыве уже начатого ответа.
+// Без markdown — виджет рендерит textContent, разметка отображается буквально.
+const PARTIAL_REPLY_SUFFIX =
+  "\n\n(Ответ прервался — пожалуйста, повторите вопрос или позвоните нам.)"
 
 // ── Handler ────────────────────────────────────────────────────────────────────
 export async function POST(
@@ -276,12 +258,15 @@ export async function POST(
             .replace(/[\uFFFD\u0080-\u00BF]+$/u, "")
         }
 
-        // Общий потолок на вызов. Должен быть больше, чем MAX_ATTEMPTS попыток
-        // по ATTEMPT_TIMEOUT_MS каждая, иначе внешний таймаут срежет повторы.
+        // TOTAL_TIMEOUT_MS и PARTIAL_REPLY_SUFFIX — на уровне модуля (см. выше).
         const abortCtrl = new AbortController()
-        const timeoutId = setTimeout(() => abortCtrl.abort(), 38_000)
-
         let timedOut = false
+        let partialSaved = false
+        const timeoutId = setTimeout(() => {
+          timedOut = true
+          abortCtrl.abort()
+        }, TOTAL_TIMEOUT_MS)
+
         try {
           const response = await ai.messages.stream(
             {
@@ -292,7 +277,8 @@ export async function POST(
             },
             { signal: abortCtrl.signal }
           )
-          clearTimeout(timeoutId)
+          // НЕ снимаем timeoutId здесь — stream() возвращается до первого токена.
+          // Потолок должен действовать на весь цикл for await.
 
           for await (const chunk of response) {
             if (chunk.type === "content_block_delta" && chunk.delta.type === "text_delta") {
@@ -303,29 +289,51 @@ export async function POST(
               }
             }
           }
+          // Цикл завершён полностью — снимаем потолок.
+          clearTimeout(timeoutId)
         } catch (aiErr: unknown) {
           clearTimeout(timeoutId)
-          if (abortCtrl.signal.aborted) {
-            timedOut = true
-            console.warn(`[bots/${slug}/chat] timeout after 20s`)
-            controller.enqueue(
-              encoder.encode("Извините, запрос занял слишком долго. Пожалуйста, попробуйте ещё раз.")
+          if (timedOut) {
+            // Потолок сработал в процессе стрима.
+            console.warn(
+              `[bots/${slug}/chat] total timeout after ${TOTAL_TIMEOUT_MS / 1000}s`
             )
-          } else {
-            throw aiErr
+            if (assistantReply) {
+              // Часть ответа уже ушла клиенту — сохраняем что есть
+              // и дописываем вежливую концовку вместо обрыва на полуслове.
+              try { saveMessage(client.id, sessionId, "assistant", assistantReply) } catch {}
+              partialSaved = true
+              controller.enqueue(encoder.encode(PARTIAL_REPLY_SUFFIX))
+            } else {
+              controller.enqueue(
+                encoder.encode("Извините, запрос занял слишком долго. Пожалуйста, попробуйте ещё раз.")
+              )
+            }
+            return
           }
+          // Сетевой обрыв в середине стрима (не по потолку).
+          const hasPartial = assistantReply.length > 0
+          console.error(`[bots/${slug}/chat] stream error (partial=${hasPartial}):`, aiErr)
+          if (hasPartial) {
+            // Частичный ответ уже ушёл клиенту — сохраняем что есть
+            // и дописываем ту же вежливую концовку, что и при таймауте.
+            try { saveMessage(client.id, sessionId, "assistant", assistantReply) } catch {}
+            partialSaved = true
+            controller.enqueue(encoder.encode(PARTIAL_REPLY_SUFFIX))
+            return
+          }
+          throw aiErr
         }
 
-        if (timedOut) return
-
-        // Persist assistant reply
-        if (assistantReply) {
+        // Persist assistant reply (полный ответ — если не было частичного сохранения выше).
+        if (assistantReply && !partialSaved) {
           try { saveMessage(client.id, sessionId, "assistant", assistantReply) } catch {}
         }
 
         // Engaged session notification — send once when session reaches exactly 6 messages
-        // (3 user + 3 assistant exchanges) and no lead was captured yet
-        if (assistantReply && client.tg_token && client.tg_chat_id) {
+        // (3 user + 3 assistant exchanges) and no lead was captured yet.
+        // Не отправляем при частичном сохранении (обрыв стрима) — ответ был неполным.
+        if (assistantReply && !partialSaved && client.tg_token && client.tg_chat_id) {
           try {
             const db = getDb()
             const totalMessages = (db
