@@ -134,6 +134,15 @@ export async function PATCH(request: NextRequest): Promise<Response> {
   const patchColorErr = validateHex(data.widget_color, "widget_color") ?? validateHex(data.widget_text_color, "widget_text_color")
   if (patchColorErr) return NextResponse.json(patchColorErr, { status: 400 })
 
+  // tg_include_transcript must be exactly 0 or 1
+  if (data.tg_include_transcript !== undefined) {
+    const v = Number(data.tg_include_transcript)
+    if (v !== 0 && v !== 1) {
+      return NextResponse.json({ error: "tg_include_transcript: must be 0 or 1" }, { status: 400 })
+    }
+    data.tg_include_transcript = v
+  }
+
   updateClient(slug, data)
   return NextResponse.json({ ok: true })
 }

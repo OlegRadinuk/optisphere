@@ -186,6 +186,15 @@ function initSchema(db: Database.Database) {
   if (!clientCols.includes("widget_text_color")) {
     db.exec(`ALTER TABLE clients ADD COLUMN widget_text_color TEXT NOT NULL DEFAULT '#ffffff'`)
   }
+  // tg_include_transcript: 1 = include full chat history in TG notification (default, existing bots)
+  // 0 = send structured summary only (required for medical bots to avoid leaking health data, ст. 10 152-ФЗ)
+  if (!clientCols.includes("tg_include_transcript")) {
+    db.exec(`ALTER TABLE clients ADD COLUMN tg_include_transcript INTEGER NOT NULL DEFAULT 1`)
+    // Immediately protect existing medical bots: consent_required=1 → tg_include_transcript=0.
+    // Eliminates the deploy-window where the column exists with DEFAULT 1 but the manual
+    // UPDATE has not yet been run, which would cause raw transcripts to reach Telegram.
+    db.exec(`UPDATE clients SET tg_include_transcript = 0 WHERE consent_required = 1`)
+  }
 
   // Факт согласия — фиксируется из widget.js (гейт перед чатом и/или чекбокс формы заявки)
   db.exec(`
@@ -364,7 +373,7 @@ function seedBots(db: Database.Database) {
     if (!seed.slug) continue
     const existing = db.prepare("SELECT id FROM clients WHERE slug = ?").get(seed.slug) as { id: number } | undefined
     if (existing) {
-      const safeFields = ["name","widget_title","widget_color","widget_text_color","widget_placeholder","context_url","quick_replies","system_prompt","model","rate_limit","active","greeting","consent_required","consent_text","policy_url"] as const
+      const safeFields = ["name","widget_title","widget_color","widget_text_color","widget_placeholder","context_url","quick_replies","system_prompt","model","rate_limit","active","greeting","consent_required","consent_text","policy_url","tg_include_transcript"] as const
       const updates: Partial<Client> = {}
       for (const f of safeFields) {
         if (seed[f] !== undefined) (updates as Record<string, unknown>)[f] = seed[f]
@@ -384,11 +393,11 @@ function seedBots(db: Database.Database) {
         INSERT OR IGNORE INTO clients
           (slug,name,description,system_prompt,api_key,base_url,model,tg_token,tg_chat_id,
            widget_color,widget_text_color,widget_title,widget_placeholder,rate_limit,active,context_url,quick_replies,greeting,
-           consent_required,consent_text,policy_url)
+           consent_required,consent_text,policy_url,tg_include_transcript)
         VALUES
           (@slug,@name,@description,@system_prompt,@api_key,@base_url,@model,@tg_token,@tg_chat_id,
            @widget_color,@widget_text_color,@widget_title,@widget_placeholder,@rate_limit,@active,@context_url,@quick_replies,@greeting,
-           @consent_required,@consent_text,@policy_url)
+           @consent_required,@consent_text,@policy_url,@tg_include_transcript)
       `).run({
         slug: seed.slug, name: seed.name ?? seed.slug, description: seed.description ?? "",
         system_prompt: seed.system_prompt ?? "", api_key: seed.api_key ?? "",
@@ -401,6 +410,7 @@ function seedBots(db: Database.Database) {
         greeting: seed.greeting ?? "",
         consent_required: seed.consent_required ?? 0, consent_text: seed.consent_text ?? "",
         policy_url: seed.policy_url ?? "",
+        tg_include_transcript: seed.tg_include_transcript ?? 1,
       })
     }
   }
@@ -431,6 +441,7 @@ export type Client = {
   consent_required: number
   consent_text: string
   policy_url: string
+  tg_include_transcript: number
   created_at: string
 }
 
@@ -487,19 +498,20 @@ export function getAllClients(): Client[] {
 }
 
 export function createClient(
-  data: Omit<Client, "id" | "created_at" | "consent_required" | "consent_text" | "policy_url"> &
-    Partial<Pick<Client, "consent_required" | "consent_text" | "policy_url">>
+  data: Omit<Client, "id" | "created_at" | "consent_required" | "consent_text" | "policy_url" | "tg_include_transcript"> &
+    Partial<Pick<Client, "consent_required" | "consent_text" | "policy_url" | "tg_include_transcript">>
 ): Client {
   const db = getDb()
   const stmt = db.prepare(`
     INSERT INTO clients
       (slug, name, description, system_prompt, api_key, base_url, model,
        tg_token, tg_chat_id, widget_color, widget_text_color, widget_title, widget_placeholder,
-       rate_limit, active, quick_replies, greeting)
+       rate_limit, active, quick_replies, greeting, tg_include_transcript)
     VALUES
       (@slug, @name, @description, @system_prompt, @api_key, @base_url, @model,
        @tg_token, @tg_chat_id, @widget_color, @widget_text_color, @widget_title, @widget_placeholder,
-       @rate_limit, @active, @quick_replies, @greeting)
+       @rate_limit, @active, @quick_replies, @greeting,
+       COALESCE(@tg_include_transcript, 1))
   `)
   const result = stmt.run(data)
   return getDb()
@@ -514,6 +526,7 @@ const UPDATABLE_CLIENT_FIELDS = new Set([
   "tg_token", "tg_chat_id", "widget_color", "widget_text_color", "widget_title", "widget_placeholder",
   "rate_limit", "active", "context_url", "quick_replies", "greeting",
   "consent_required", "consent_text", "policy_url",
+  "tg_include_transcript",
 ])
 
 export function updateClient(
@@ -560,9 +573,10 @@ function syncClientToSeed(slug: string): void {
     entry.greeting           = client.greeting           ?? ""
     entry.tg_token           = client.tg_token           ?? ""
     entry.tg_chat_id         = client.tg_chat_id         ?? ""
-    entry.consent_required   = client.consent_required   ?? 0
-    entry.consent_text       = client.consent_text       ?? ""
-    entry.policy_url         = client.policy_url         ?? ""
+    entry.consent_required       = client.consent_required       ?? 0
+    entry.consent_text           = client.consent_text           ?? ""
+    entry.policy_url             = client.policy_url             ?? ""
+    entry.tg_include_transcript  = client.tg_include_transcript  ?? 1
     if (idx < 0) seeds.push(entry)
     // Атомарная запись: пишем во временный файл, затем переименовываем.
     // Это защищает от обрезанного JSON при краше/PM2 reload в момент записи.

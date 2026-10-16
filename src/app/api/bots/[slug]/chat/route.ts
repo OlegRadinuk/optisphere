@@ -3,7 +3,7 @@ import Anthropic from "@anthropic-ai/sdk"
 import { getClientBySlug, saveMessage, getMessagesBySession, getDb } from "@/lib/db"
 import { isSafeFetchUrl } from "@/lib/safe-url"
 import { resolveBaseURL } from "@/lib/ai-config"
-import { guessService } from "@/lib/bot-summary"
+import { buildTgSummary } from "@/lib/bot-summary"
 import { gzipFetch, ATTEMPT_TIMEOUT_MS, MAX_ATTEMPTS } from "@/lib/bots/ai-fetch"
 
 // ── Telegram helper (same proxy as lead route) ────────────────────────────────
@@ -346,20 +346,20 @@ export async function POST(
                 .get(client.id, sessionId) as { n: number }).n > 0
 
               if (!hasLead) {
-                // consent_required clients (medical, per d:\projects\albamed\spec\bot-compliance.md §4) never get
-                // raw dialog quotes in Telegram — chat content may be special-category PD
-                // (health data). Other bots (vlad, lifestyle-crimea) keep the full quote,
-                // it's a useful ops tool there and nothing sensitive.
+                // Privacy guard: tg_include_transcript=0 OR consent_required=1 → summary only.
+                // Double condition covers the deploy-window where column DEFAULT 1 was not yet
+                // overridden by the UPDATE (ст. 10 152-ФЗ / врачебная тайна).
                 let text: string
-                if (client.consent_required) {
-                  const userMsgs = getMessagesBySession(client.id, sessionId, 6)
-                    .filter((m) => m.role === "user")
-                    .map((m) => m.content)
-                  const service = guessService(userMsgs, client.quick_replies)
+                if (!client.tg_include_transcript || client.consent_required) {
+                  const msgs = getMessagesBySession(client.id, sessionId, 6)
+                  const summary = buildTgSummary(msgs, client.quick_replies)
                   text = [
                     `Активный диалог — ${client.name}`,
-                    `Интересуется: ${service}`,
+                    `Интересуется: ${summary.service}`,
+                    ...(summary.doctor ? [`Врач: ${summary.doctor}`] : []),
+                    ...(summary.time ? [`Время: ${summary.time}`] : []),
                     `Контакт: не оставлен`,
+                    "Переписка доступна в кабинете",
                   ].join("\n")
                 } else {
                   const recentMsgs = getMessagesBySession(client.id, sessionId, 4).reverse()

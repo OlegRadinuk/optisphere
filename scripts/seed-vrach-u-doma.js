@@ -97,6 +97,7 @@ for (const col of [
   "ALTER TABLE clients ADD COLUMN consent_text TEXT DEFAULT ''",
   "ALTER TABLE clients ADD COLUMN policy_url TEXT DEFAULT ''",
   "ALTER TABLE clients ADD COLUMN widget_text_color TEXT NOT NULL DEFAULT '#ffffff'",
+  "ALTER TABLE clients ADD COLUMN tg_include_transcript INTEGER NOT NULL DEFAULT 1",
 ]) {
   try { db.exec(col); } catch { /* column already exists */ }
 }
@@ -373,6 +374,7 @@ const BOT_DATA = {
   consent_required: 1,
   consent_text: CONSENT_TEXT,
   policy_url: POLICY_URL,
+  tg_include_transcript: 0,
 };
 
 if (existing) {
@@ -397,6 +399,7 @@ if (existing) {
       consent_required    = @consent_required,
       consent_text        = @consent_text,
       policy_url          = @policy_url,
+      tg_include_transcript = @tg_include_transcript,
       active              = 1
     WHERE slug = @slug
   `).run({ slug: SLUG, ...BOT_DATA });
@@ -407,12 +410,12 @@ if (existing) {
       (slug, name, description, system_prompt, api_key, base_url, model,
        tg_token, tg_chat_id, widget_color, widget_text_color, widget_title, widget_placeholder,
        rate_limit, active, context_url, quick_replies, greeting,
-       consent_required, consent_text, policy_url)
+       consent_required, consent_text, policy_url, tg_include_transcript)
     VALUES
       (@slug, @name, @description, @system_prompt, @api_key, @base_url, @model,
        @tg_token, @tg_chat_id, @widget_color, @widget_text_color, @widget_title, @widget_placeholder,
        @rate_limit, 1, @context_url, @quick_replies, @greeting,
-       @consent_required, @consent_text, @policy_url)
+       @consent_required, @consent_text, @policy_url, @tg_include_transcript)
   `).run({ slug: SLUG, ...BOT_DATA });
   console.log("✓ vrach-u-doma created (id=" + r.lastInsertRowid + ")");
 }

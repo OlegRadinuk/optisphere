@@ -56,6 +56,9 @@ db.exec(`
   );
 `);
 
+// Safe migration — idempotent
+try { db.exec("ALTER TABLE clients ADD COLUMN tg_include_transcript INTEGER NOT NULL DEFAULT 1"); } catch { /* already exists */ }
+
 const ALBAMED_SYSTEM_PROMPT = `Ты — Альба, AI-ассистент медицинской клиники «Альба Мед» в Симферополе.
 
 ═══════════════════════════════════════
@@ -475,6 +478,7 @@ if (existing) {
       widget_color = @widget_color,
       widget_title = @widget_title,
       widget_placeholder = @widget_placeholder,
+      tg_include_transcript = 0,
       active = 1
     WHERE slug = 'albamed'
   `).run({
@@ -492,10 +496,10 @@ if (existing) {
   const r = db.prepare(`
     INSERT INTO clients
       (slug, name, description, system_prompt, api_key, base_url, model,
-       tg_token, tg_chat_id, widget_color, widget_title, widget_placeholder, rate_limit, active)
+       tg_token, tg_chat_id, widget_color, widget_title, widget_placeholder, rate_limit, active, tg_include_transcript)
     VALUES
       ('albamed', @name, @description, @system_prompt, @api_key, @base_url, @model,
-       @tg_token, @tg_chat_id, @widget_color, @widget_title, @widget_placeholder, 30, 1)
+       @tg_token, @tg_chat_id, @widget_color, @widget_title, @widget_placeholder, 30, 1, 0)
   `).run({
     name: "Альба Мед",
     description: "Медицинская клиника, Симферополь",
