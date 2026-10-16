@@ -5,6 +5,8 @@ import { isSafeFetchUrl } from "@/lib/safe-url"
 import { resolveBaseURL } from "@/lib/ai-config"
 import { buildTgSummary } from "@/lib/bot-summary"
 import { gzipFetch, ATTEMPT_TIMEOUT_MS, MAX_ATTEMPTS } from "@/lib/bots/ai-fetch"
+import { getModelRequestParams } from "@/lib/bots/model"
+import { getLiveContext } from "@/lib/bots/live-context"
 
 // ── Telegram helper (same proxy as lead route) ────────────────────────────────
 async function sendTelegram(token: string, chatId: string, text: string) {
@@ -121,6 +123,15 @@ const TOTAL_TIMEOUT_MS =
 const PARTIAL_REPLY_SUFFIX =
   "\n\n(Ответ прервался — пожалуйста, повторите вопрос или позвоните нам.)"
 
+// Модель не успела сформулировать ответ (max_tokens ушли на размышление).
+const NO_ANSWER_REPLY =
+  "Не получилось сформулировать ответ — пожалуйста, повторите вопрос или позвоните нам."
+
+// Отказ модели (stop_reason "refusal", HTTP 200) или пустой текст (например, одно размышление).
+// Без markdown — виджет рендерит textContent.
+const REFUSAL_REPLY =
+  "Извините, на этот вопрос я не смогу ответить в чате. Пожалуйста, позвоните нам — администратор поможет."
+
 // ── Handler ────────────────────────────────────────────────────────────────────
 export async function POST(
   request: NextRequest,
@@ -157,13 +168,29 @@ export async function POST(
     return NextResponse.json({ error: "messages required" }, { status: 400, headers: corsHeaders })
   }
 
+  // Санитизация истории: только user/assistant со строковым непустым content;
+  // Haiku 5.5 не принимает assistant prefill (последнее сообщение от assistant → 400),
+  // поэтому хвостовые assistant-сообщения отбрасываем.
+  const messages: ChatMsg[] = body.messages.filter(
+    (m): m is ChatMsg =>
+      !!m &&
+      (m.role === "user" || m.role === "assistant") &&
+      typeof m.content === "string" &&
+      m.content.trim().length > 0
+  )
+  while (messages.length > 0 && messages[messages.length - 1].role !== "user") messages.pop()
+  if (messages.length === 0) {
+    return NextResponse.json({ error: "user message required" }, { status: 400, headers: corsHeaders })
+  }
+
   const sessionId = body.sessionId ?? `anon-${Date.now()}`
 
   // Save user message
-  const lastUserMsg = body.messages[body.messages.length - 1]
-  if (lastUserMsg?.role === "user") {
-    try { saveMessage(client.id, sessionId, "user", lastUserMsg.content) } catch {}
-  }
+  const lastUserMsg = messages[messages.length - 1]
+  try { saveMessage(client.id, sessionId, "user", lastUserMsg.content) } catch {}
+
+  // Живой контекст (прайс и т.п.) — стартуем сразу, ждём ниже (с потолком LIVE_CONTEXT_TIMEOUT_MS).
+  const liveCtxPromise = getLiveContext(slug)
 
   // Build system prompt with pre-calculated dates (don't let the model do calendar math)
   const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Europe/Moscow" }))
@@ -193,7 +220,21 @@ export async function POST(
 Завтра — ${fmt(tomorrow)}. Ближайшие выходные: ${fmt(thisSat)} – ${fmt(thisSun)}; следующие: ${fmt(nextSat)} – ${fmt(nextSun)}.
 Это РЕАЛЬНОЕ текущее время. Считай его «сейчас» и «сегодня». Сам даты не вычисляй — бери только отсюда. На слова клиента «сегодня», «завтра», «на выходные» опирайся на эти числа.`
 
-  let systemPrompt = client.system_prompt + calendarCtx
+  // Порядок: промпт клиента → живой контекст (прайс) → календарь → context_url → ссылка пользователя.
+  // Живой контекст идёт ДО обрезки по 60 КБ (см. аудит размера в stream).
+  const liveCtx = await liveCtxPromise
+  let liveCtxBlock = ""
+  if (liveCtx) {
+    liveCtxBlock = "\n\n" + liveCtx.text
+    if (liveCtx.degraded) {
+      console.warn(`[bots/${slug}/live-context] degraded (${liveCtx.note})`)
+    } else {
+      console.info(`[bots/${slug}/live-context] ${Buffer.byteLength(liveCtx.text, "utf8")}b (${liveCtx.note})`)
+    }
+  }
+  // Блоки собираются в stream() с приоритетом при превышении лимита (см. аудит размера).
+  let ctxBlock = ""
+  let urlBlock = ""
 
   // Fetch external context (availability, hot deals, etc.)
   // HTML-страницы очищаем от тегов, обрезаем до 12 КБ чтобы не раздувать тело запроса.
@@ -210,7 +251,7 @@ export async function POST(
           const rawBytes = Buffer.byteLength(ctxRaw, "utf8")
           const cleanedBytes = Buffer.byteLength(ctxCleaned, "utf8")
           console.info(`[bots/${slug}/context] raw=${rawBytes}b → cleaned=${cleanedBytes}b`)
-          systemPrompt += "\n\n" + ctxCleaned
+          ctxBlock = "\n\n" + ctxCleaned
         }
       }
     } catch {
@@ -221,11 +262,9 @@ export async function POST(
   // URL detection
   let urlFetchPromise: Promise<string | null> = Promise.resolve(null)
   let detectedUrl: string | null = null
-  if (lastUserMsg?.role === "user") {
-    detectedUrl = extractURL(lastUserMsg.content)
-    if (detectedUrl && !isSafeFetchUrl(detectedUrl)) detectedUrl = null
-    if (detectedUrl) urlFetchPromise = fetchPage(detectedUrl)
-  }
+  detectedUrl = extractURL(lastUserMsg.content)
+  if (detectedUrl && !isSafeFetchUrl(detectedUrl)) detectedUrl = null
+  if (detectedUrl) urlFetchPromise = fetchPage(detectedUrl)
 
   const baseURL = resolveBaseURL(client.base_url || process.env.AI_BASE_URL)
 
@@ -244,18 +283,35 @@ export async function POST(
         if (detectedUrl) {
           const content = await urlFetchPromise
           if (content) {
-            systemPrompt += `\n\n---\nПользователь поделился ссылкой: ${detectedUrl}\n${content}\n---`
+            urlBlock = `\n\n---\nПользователь поделился ссылкой: ${detectedUrl}\n${content}\n---`
           }
         }
 
-        // ── System prompt size audit ───────────────────────────────────────────
-        const promptBytes = Buffer.byteLength(systemPrompt, "utf8")
-        console.info(`[bots/${slug}/prompt] systemPrompt=${promptBytes}b`)
-        if (promptBytes > 60_000) {
-          console.warn(`[bots/${slug}/prompt] TRUNCATED: ${promptBytes}b > 60000b limit`)
-          // Срезаем системный промпт: оставляем первые 60 КБ
-          systemPrompt = Buffer.from(systemPrompt, "utf8").slice(0, 60_000).toString("utf8")
-            .replace(/[\uFFFD\u0080-\u00BF]+$/u, "")
+        // ── System prompt: сборка и аудит размера ──────────────────────────────
+        // Порядок: промпт клиента → живой контекст (прайс) → календарь → context_url → ссылка.
+        // При превышении лимита режем в обратном приоритете: ссылка → context_url → календарь;
+        // если всё равно больше — режем ТОЛЬКО промпт клиента. Прайс не режется никогда.
+        const MAX_PROMPT_BYTES = 60_000
+        const bytes = (t: string) => Buffer.byteLength(t, "utf8")
+        let calendarPart = calendarCtx
+        const assemble = () => client.system_prompt + liveCtxBlock + calendarPart + ctxBlock + urlBlock
+        let systemPrompt = assemble()
+        console.info(`[bots/${slug}/prompt] systemPrompt=${bytes(systemPrompt)}b`)
+        if (bytes(systemPrompt) > MAX_PROMPT_BYTES) {
+          const dropped: string[] = []
+          if (urlBlock) { urlBlock = ""; dropped.push("url"); systemPrompt = assemble() }
+          if (bytes(systemPrompt) > MAX_PROMPT_BYTES && ctxBlock) { ctxBlock = ""; dropped.push("context_url"); systemPrompt = assemble() }
+          if (bytes(systemPrompt) > MAX_PROMPT_BYTES && calendarPart) { calendarPart = ""; dropped.push("calendar"); systemPrompt = assemble() }
+          if (bytes(systemPrompt) > MAX_PROMPT_BYTES) {
+            const room = Math.max(0, MAX_PROMPT_BYTES - bytes(liveCtxBlock + calendarPart + ctxBlock + urlBlock))
+            const clientPart = Buffer.from(client.system_prompt, "utf8").slice(0, room).toString("utf8")
+              .replace(/[\uFFFD\u0080-\u00BF]+$/u, "")
+            dropped.push(`client_prompt(cut ${bytes(client.system_prompt)}b->${bytes(clientPart)}b)`)
+            systemPrompt = clientPart + liveCtxBlock + calendarPart + ctxBlock + urlBlock
+          }
+          console.warn(
+            `[bots/${slug}/prompt] OVER LIMIT ${MAX_PROMPT_BYTES}b; dropped/cut: ${dropped.join(", ")}; liveContext=${bytes(liveCtxBlock)}b kept intact; final=${bytes(systemPrompt)}b`
+          )
         }
 
         // TOTAL_TIMEOUT_MS и PARTIAL_REPLY_SUFFIX — на уровне модуля (см. выше).
@@ -271,9 +327,9 @@ export async function POST(
           const response = await ai.messages.stream(
             {
               model: client.model,
-              max_tokens: 1024,
+              ...getModelRequestParams(client.model),
               system: systemPrompt,
-              messages: body.messages,
+              messages,
             },
             { signal: abortCtrl.signal }
           )
@@ -289,8 +345,34 @@ export async function POST(
               }
             }
           }
+          // Итог стрима: stop_reason / причина отказа. Текст берём только из text_delta —
+          // перед ним у Haiku 5.5 идут thinking-блоки.
+          const finalMsg = await response.finalMessage()
           // Цикл завершён полностью — снимаем потолок.
           clearTimeout(timeoutId)
+
+          const stopReason = finalMsg.stop_reason
+          if (stopReason === "refusal" || !assistantReply.trim()) {
+            const category = finalMsg.stop_details?.category ?? "none"
+            console.warn(
+              `[bots/${slug}/chat] ${stopReason === "refusal" ? "refusal" : "empty"} stop_reason=${stopReason} category=${category} model=${client.model}`
+            )
+            if (!assistantReply.trim()) {
+              // Ничего не показано: при max_tokens — отдельная фраза, иначе вежливый отказ.
+              const reply = stopReason === "max_tokens" ? NO_ANSWER_REPLY : REFUSAL_REPLY
+              assistantReply = reply
+              controller.enqueue(encoder.encode(reply))
+            } else {
+              // Отказ посреди ответа: часть текста уже показана — та же концовка, что при обрыве.
+              try { saveMessage(client.id, sessionId, "assistant", assistantReply) } catch {}
+              partialSaved = true
+              controller.enqueue(encoder.encode(PARTIAL_REPLY_SUFFIX))
+            }
+          } else if (stopReason === "max_tokens") {
+            console.warn(
+              `[bots/${slug}/chat] max_tokens reached (replyChars=${assistantReply.length}, model=${client.model})`
+            )
+          }
         } catch (aiErr: unknown) {
           clearTimeout(timeoutId)
           if (timedOut) {

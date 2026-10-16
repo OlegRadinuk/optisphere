@@ -26,7 +26,7 @@ db.exec(`
     system_prompt TEXT NOT NULL DEFAULT '',
     api_key TEXT NOT NULL DEFAULT '',
     base_url TEXT NOT NULL DEFAULT 'https://api.anthropic.com',
-    model TEXT NOT NULL DEFAULT 'claude-haiku-4-5-20251001',
+    model TEXT NOT NULL DEFAULT 'claude-haiku-5-5',
     tg_token TEXT DEFAULT '',
     tg_chat_id TEXT DEFAULT '',
     widget_color TEXT DEFAULT '#2563eb',
@@ -59,7 +59,7 @@ db.exec(`
 // Safe migration — idempotent
 try { db.exec("ALTER TABLE clients ADD COLUMN tg_include_transcript INTEGER NOT NULL DEFAULT 1"); } catch { /* already exists */ }
 
-const ALBAMED_SYSTEM_PROMPT = `Ты — Альба, AI-ассистент медицинской клиники «Альба Мед» в Симферополе.
+const ALBAMED_SYSTEM_PROMPT_RAW = `Ты — Альба, AI-ассистент медицинской клиники «Альба Мед» в Симферополе.
 
 ═══════════════════════════════════════
 КТО ТЫ
@@ -465,6 +465,12 @@ Email: sintax70@mail.ru
 - Не пиши длинные списки без необходимости
 - Не спрашивай "к какому специалисту?" если пациент уже сказал или это очевидно из симптомов`;
 
+// Статический «ПОЛНЫЙ ПРАЙС-ЛИСТ» устарел: живой прайс подставляет чат-роут из МедФлекса
+// (src/lib/bots/live-context.ts). Вырезаем раздел той же логикой, что в
+// scripts/albamed-remove-static-prices.js, чтобы повторный seed не возвращал старые цены.
+const { removeStaticPrices } = require("./albamed-remove-static-prices");
+const ALBAMED_SYSTEM_PROMPT = removeStaticPrices(ALBAMED_SYSTEM_PROMPT_RAW).text;
+
 const existing = db.prepare("SELECT id FROM clients WHERE slug = 'albamed'").get();
 
 if (existing) {
@@ -506,7 +512,7 @@ if (existing) {
     system_prompt: ALBAMED_SYSTEM_PROMPT,
     api_key: process.env.ALBAMED_API_KEY || "",
     base_url: "https://api.anthropic.com",
-    model: "claude-haiku-4-5-20251001",
+    model: "claude-haiku-5-5",
     tg_token: process.env.ALBAMED_TG_TOKEN || "",
     tg_chat_id: process.env.ALBAMED_TG_CHAT_ID || "",
     widget_color: "#e85d04",

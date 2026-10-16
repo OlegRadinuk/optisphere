@@ -103,6 +103,22 @@ const lastGoodCache = new Map<AlbamedBranch, CacheEntry>()
 // иначе один сбой навсегда "заморозит" отклонённый промис для всех последующих.
 const inFlight = new Map<AlbamedBranch, Promise<AlbamedPricesResult>>()
 
+// Негативный кэш: после неудачного похода в МедФлекс на NEGATIVE_CACHE_MS не стучимся снова
+// (иначе при упавшем МедФлексе каждое сообщение бота ждёт таймаут). В это окно отдаём
+// lastGood (если моложе 48 ч) или повторяем прежнюю ошибку.
+const NEGATIVE_CACHE_MS = 60 * 1000
+const failureCache = new Map<AlbamedBranch, { at: number; error: Error }>()
+
+/**
+ * Последний удачный прайс, если он моложе 48 ч (иначе null). Без сети и без ожидания —
+ * для stale-while-revalidate: пока свежий запрос идёт в фоне (inFlight), потребитель берёт это.
+ */
+export function getAlbamedLastGood(branch: AlbamedBranch): AlbamedPricesResult | null {
+  const lastGood = lastGoodCache.get(branch)
+  if (!lastGood || Date.now() - lastGood.fetchedAt >= LAST_GOOD_MAX_AGE_MS) return null
+  return { data: lastGood.data, fromCache: true, stale: true }
+}
+
 function buildPricesResponse(
   branch: AlbamedBranch,
   services: MedflexService[],
@@ -172,6 +188,13 @@ export async function getAlbamedPrices(branch: AlbamedBranch): Promise<AlbamedPr
   const pending = inFlight.get(branch)
   if (pending) return pending
 
+  const failure = failureCache.get(branch)
+  if (failure && Date.now() - failure.at < NEGATIVE_CACHE_MS) {
+    const stale = getAlbamedLastGood(branch)
+    if (stale) return stale
+    throw failure.error
+  }
+
   const promise = loadAlbamedPrices(branch).finally(() => {
     inFlight.delete(branch)
   })
@@ -185,8 +208,20 @@ async function loadAlbamedPrices(branch: AlbamedBranch): Promise<AlbamedPricesRe
     const entry: CacheEntry = { data, fetchedAt: Date.now() }
     freshCache.set(branch, entry)
     lastGoodCache.set(branch, entry)
+    failureCache.delete(branch)
     return { data, fromCache: false, stale: false }
   } catch (err) {
+    // В негативный кэш кладём ту же ошибку, что бросаем ниже (Medflex*Error), —
+    // иначе повтор в окне 60 с отдал бы /api/albamed/prices 500 вместо 502.
+    const normalized =
+      err instanceof MedflexConfigError || err instanceof MedflexApiError
+        ? err
+        : new MedflexApiError(
+            `Не удалось получить прайс МедФлекса для филиала ${branch}: ${
+              err instanceof Error ? err.message : String(err)
+            }`
+          )
+    failureCache.set(branch, { at: Date.now(), error: normalized })
     const lastGood = lastGoodCache.get(branch)
     const lastGoodAgeMs = lastGood ? Date.now() - lastGood.fetchedAt : Infinity
 
@@ -204,12 +239,6 @@ async function loadAlbamedPrices(branch: AlbamedBranch): Promise<AlbamedPricesRe
       )
     }
 
-    if (err instanceof MedflexConfigError) throw err
-    if (err instanceof MedflexApiError) throw err
-    throw new MedflexApiError(
-      `Не удалось получить прайс МедФлекса для филиала ${branch}: ${
-        err instanceof Error ? err.message : String(err)
-      }`
-    )
+    throw normalized
   }
 }

@@ -35,7 +35,7 @@ function initSchema(db: Database.Database) {
       system_prompt TEXT  NOT NULL DEFAULT '',
       api_key     TEXT    NOT NULL DEFAULT '',
       base_url    TEXT    NOT NULL DEFAULT 'https://ai-proxyoptispheretech.radinuko.workers.dev/v1/',
-      model       TEXT    NOT NULL DEFAULT 'claude-haiku-4-5-20251001',
+      model       TEXT    NOT NULL DEFAULT 'claude-haiku-5-5',
       tg_token    TEXT    DEFAULT '',
       tg_chat_id  TEXT    DEFAULT '',
       widget_color      TEXT DEFAULT '#2563eb',
@@ -418,7 +418,7 @@ function seedBots(db: Database.Database) {
       `).run({
         slug: seed.slug, name: seed.name ?? seed.slug, description: seed.description ?? "",
         system_prompt: seed.system_prompt ?? "", api_key: seed.api_key ?? "",
-        base_url: seed.base_url ?? WORKING_PROXY, model: seed.model ?? "claude-haiku-4-5-20251001",
+        base_url: seed.base_url ?? WORKING_PROXY, model: seed.model ?? "claude-haiku-5-5",
         tg_token: seed.tg_token ?? "", tg_chat_id: seed.tg_chat_id ?? "",
         widget_color: seed.widget_color ?? "#2563eb", widget_text_color: seed.widget_text_color ?? "#ffffff", widget_title: seed.widget_title ?? "Ассистент",
         widget_placeholder: seed.widget_placeholder ?? "Напишите вопрос…",
@@ -596,7 +596,7 @@ function syncClientToSeed(slug: string): void {
     entry.context_url        = client.context_url        ?? ""
     entry.quick_replies      = client.quick_replies      ?? ""
     entry.system_prompt      = client.system_prompt      ?? ""
-    entry.model              = client.model              ?? "claude-haiku-4-5-20251001"
+    entry.model              = client.model              ?? "claude-haiku-5-5"
     entry.rate_limit         = client.rate_limit         ?? 30
     entry.active             = client.active             ?? 1
     entry.greeting           = client.greeting           ?? ""

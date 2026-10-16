@@ -211,7 +211,8 @@ export default function EditClientPage() {
               </Field>
               <Field label="Модель">
                 <select style={styles.input} value={form.model} onChange={(e) => set("model", e.target.value)}>
-                  <option value="claude-haiku-4-5-20251001">Claude Haiku 4.5 (быстрый)</option>
+                  <option value="claude-haiku-5-5">Claude Haiku 5.5 (быстрый)</option>
+                  <option value="claude-haiku-4-5-20251001">Claude Haiku 4.5 (откат)</option>
                   <option value="claude-sonnet-4-6">Claude Sonnet 4.6 (умный)</option>
                   <option value="claude-opus-4-6">Claude Opus 4.6 (максимум)</option>
                   <option value="gpt-4o-mini">GPT-4o mini</option>

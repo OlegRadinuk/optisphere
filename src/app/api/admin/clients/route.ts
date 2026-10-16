@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { isAuthenticated } from "@/lib/auth"
 import { WORKING_PROXY } from "@/lib/ai-config"
+import { DEFAULT_BOT_MODEL } from "@/lib/bots/model"
 
 const HEX_RE = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i
 function validateHex(v: unknown, field: string): { error: string } | null {
@@ -124,7 +125,7 @@ export async function POST(request: NextRequest): Promise<Response> {
       system_prompt: data.system_prompt ?? "",
       api_key: data.api_key ?? "",
       base_url: data.base_url ?? WORKING_PROXY,
-      model: data.model ?? "claude-haiku-4-5-20251001",
+      model: data.model ?? DEFAULT_BOT_MODEL,
       tg_token: data.tg_token ?? "",
       tg_chat_id: data.tg_chat_id ?? "",
       widget_color: data.widget_color ?? "#2563eb",

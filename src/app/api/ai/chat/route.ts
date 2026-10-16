@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import Anthropic from "@anthropic-ai/sdk"
 import { isSafeFetchUrl } from "@/lib/safe-url"
 import { resolveBaseURL } from "@/lib/ai-config"
+import { DEFAULT_BOT_MODEL, getModelRequestParams } from "@/lib/bots/model"
 
 function getAI() {
   return new Anthropic({
@@ -319,6 +320,11 @@ export async function POST(request: NextRequest): Promise<Response> {
     }
   }
 
+  // Haiku 5.5 не принимает assistant prefill: последнее сообщение должно быть от user.
+  if (body.messages[body.messages.length - 1]?.role !== "user") {
+    return NextResponse.json({ error: "Last message must be from user" }, { status: 400 })
+  }
+
   // Sanitize calcResult before inserting into system prompt
   const safeCalcResult = body.calcResult
     ? String(body.calcResult).slice(0, 500).replace(/[<>]/g, "")
@@ -361,18 +367,36 @@ export async function POST(request: NextRequest): Promise<Response> {
           }
         }
 
+        const model = process.env.AI_MODEL ?? DEFAULT_BOT_MODEL
         const response = await getAI().messages.stream({
-          model: process.env.AI_MODEL ?? "claude-haiku-4-5-20251001",
-          max_tokens: 1024,
+          model,
+          ...getModelRequestParams(model),
           system: systemPrompt,
           messages: body.messages,
         })
 
+        let gotText = false
         for await (const chunk of response) {
           if (chunk.type === "content_block_delta" && chunk.delta.type === "text_delta") {
             const text = chunk.delta.text
-            if (text) controller.enqueue(encoder.encode(text))
+            if (text) {
+              gotText = true
+              controller.enqueue(encoder.encode(text))
+            }
           }
+        }
+        const finalMsg = await response.finalMessage()
+        if (finalMsg.stop_reason === "refusal" || !gotText) {
+          console.warn(
+            `[ai/chat] ${finalMsg.stop_reason === "refusal" ? "refusal" : "empty"} stop_reason=${finalMsg.stop_reason} category=${finalMsg.stop_details?.category ?? "none"}`
+          )
+          if (!gotText) {
+            controller.enqueue(
+              encoder.encode("Извините, на этот вопрос я не смогу ответить в чате. Попробуйте переформулировать или напишите нам напрямую.")
+            )
+          }
+        } else if (finalMsg.stop_reason === "max_tokens") {
+          console.warn("[ai/chat] max_tokens reached")
         }
       } catch (err) {
         console.error("[ai/chat] stream error:", err)

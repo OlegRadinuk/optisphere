@@ -40,7 +40,7 @@ db.exec(`
     system_prompt       TEXT    NOT NULL DEFAULT '',
     api_key             TEXT    NOT NULL DEFAULT '',
     base_url            TEXT    NOT NULL DEFAULT 'https://api.anthropic.com',
-    model               TEXT    NOT NULL DEFAULT 'claude-haiku-4-5-20251001',
+    model               TEXT    NOT NULL DEFAULT 'claude-haiku-5-5',
     tg_token            TEXT    DEFAULT '',
     tg_chat_id          TEXT    DEFAULT '',
     widget_color        TEXT    DEFAULT '#2563eb',
@@ -355,7 +355,7 @@ const BOT_DATA = {
   system_prompt: VUD_SYSTEM_PROMPT,
   api_key: resolvedApiKey,
   base_url: "https://api.anthropic.com",
-  model: "claude-haiku-4-5-20251001",
+  model: "claude-haiku-5-5",
   tg_token: resolvedTgToken,
   tg_chat_id: resolvedTgChat,
   // Gold accent #DAA759 — brand color of «Врач у дома».

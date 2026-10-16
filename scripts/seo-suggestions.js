@@ -135,8 +135,9 @@ URL: ${page}
 Отвечай коротко, только title и description, без объяснений.`;
 
   const body = JSON.stringify({
-    model: 'claude-haiku-4-5-20251001',
-    max_tokens: 300,
+    model: 'claude-haiku-5-5',
+    max_tokens: 1024, // токены размышления входят в лимит
+    output_config: { effort: 'low' },
     messages: [{ role: 'user', content: prompt }],
   });
 
@@ -152,7 +153,9 @@ URL: ${page}
     },
   }, body);
 
-  return res.content?.[0]?.text || 'Не удалось получить подсказку';
+  // На Haiku 5.5 первым может идти thinking-блок — берём первый type==='text'.
+  const textBlock = (res.content || []).find((c) => c.type === 'text');
+  return (textBlock && textBlock.text) || 'Не удалось получить подсказку';
 }
 
 // ── Telegram ──────────────────────────────────────────────────────────────────
