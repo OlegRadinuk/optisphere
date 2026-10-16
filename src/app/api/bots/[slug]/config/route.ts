@@ -41,6 +41,11 @@ export async function GET(
       consent_required: client.consent_required === 1,
       consent_text: client.consent_text || "",
       policy_url: client.policy_url || "",
+      // Widget appearance (2026-10-16): empty string/false means use widget defaults
+      avatar_letter: client.widget_avatar_letter || "",
+      avatar_url: client.widget_avatar_url || "",
+      online_dot: client.widget_online_dot === 1,
+      subtitle: client.widget_subtitle || "",
     },
     { headers: corsHeaders }
   )

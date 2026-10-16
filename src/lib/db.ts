@@ -195,6 +195,19 @@ function initSchema(db: Database.Database) {
     // UPDATE has not yet been run, which would cause raw transcripts to reach Telegram.
     db.exec(`UPDATE clients SET tg_include_transcript = 0 WHERE consent_required = 1`)
   }
+  // ── Widget appearance settings (2026-10-16) ────────────────────────────────
+  if (!clientCols.includes("widget_avatar_letter")) {
+    db.exec(`ALTER TABLE clients ADD COLUMN widget_avatar_letter TEXT NOT NULL DEFAULT ''`)
+  }
+  if (!clientCols.includes("widget_avatar_url")) {
+    db.exec(`ALTER TABLE clients ADD COLUMN widget_avatar_url TEXT NOT NULL DEFAULT ''`)
+  }
+  if (!clientCols.includes("widget_online_dot")) {
+    db.exec(`ALTER TABLE clients ADD COLUMN widget_online_dot INTEGER NOT NULL DEFAULT 0`)
+  }
+  if (!clientCols.includes("widget_subtitle")) {
+    db.exec(`ALTER TABLE clients ADD COLUMN widget_subtitle TEXT NOT NULL DEFAULT ''`)
+  }
 
   // Факт согласия — фиксируется из widget.js (гейт перед чатом и/или чекбокс формы заявки)
   db.exec(`
@@ -373,7 +386,7 @@ function seedBots(db: Database.Database) {
     if (!seed.slug) continue
     const existing = db.prepare("SELECT id FROM clients WHERE slug = ?").get(seed.slug) as { id: number } | undefined
     if (existing) {
-      const safeFields = ["name","widget_title","widget_color","widget_text_color","widget_placeholder","context_url","quick_replies","system_prompt","model","rate_limit","active","greeting","consent_required","consent_text","policy_url","tg_include_transcript"] as const
+      const safeFields = ["name","widget_title","widget_color","widget_text_color","widget_placeholder","widget_avatar_letter","widget_avatar_url","widget_online_dot","widget_subtitle","context_url","quick_replies","system_prompt","model","rate_limit","active","greeting","consent_required","consent_text","policy_url","tg_include_transcript"] as const
       const updates: Partial<Client> = {}
       for (const f of safeFields) {
         if (seed[f] !== undefined) (updates as Record<string, unknown>)[f] = seed[f]
@@ -392,11 +405,15 @@ function seedBots(db: Database.Database) {
       db.prepare(`
         INSERT OR IGNORE INTO clients
           (slug,name,description,system_prompt,api_key,base_url,model,tg_token,tg_chat_id,
-           widget_color,widget_text_color,widget_title,widget_placeholder,rate_limit,active,context_url,quick_replies,greeting,
+           widget_color,widget_text_color,widget_title,widget_placeholder,
+           widget_avatar_letter,widget_avatar_url,widget_online_dot,widget_subtitle,
+           rate_limit,active,context_url,quick_replies,greeting,
            consent_required,consent_text,policy_url,tg_include_transcript)
         VALUES
           (@slug,@name,@description,@system_prompt,@api_key,@base_url,@model,@tg_token,@tg_chat_id,
-           @widget_color,@widget_text_color,@widget_title,@widget_placeholder,@rate_limit,@active,@context_url,@quick_replies,@greeting,
+           @widget_color,@widget_text_color,@widget_title,@widget_placeholder,
+           @widget_avatar_letter,@widget_avatar_url,@widget_online_dot,@widget_subtitle,
+           @rate_limit,@active,@context_url,@quick_replies,@greeting,
            @consent_required,@consent_text,@policy_url,@tg_include_transcript)
       `).run({
         slug: seed.slug, name: seed.name ?? seed.slug, description: seed.description ?? "",
@@ -405,6 +422,10 @@ function seedBots(db: Database.Database) {
         tg_token: seed.tg_token ?? "", tg_chat_id: seed.tg_chat_id ?? "",
         widget_color: seed.widget_color ?? "#2563eb", widget_text_color: seed.widget_text_color ?? "#ffffff", widget_title: seed.widget_title ?? "Ассистент",
         widget_placeholder: seed.widget_placeholder ?? "Напишите вопрос…",
+        widget_avatar_letter: seed.widget_avatar_letter ?? "",
+        widget_avatar_url: seed.widget_avatar_url ?? "",
+        widget_online_dot: seed.widget_online_dot ?? 0,
+        widget_subtitle: seed.widget_subtitle ?? "",
         rate_limit: seed.rate_limit ?? 30, active: seed.active ?? 1,
         context_url: seed.context_url ?? "", quick_replies: seed.quick_replies ?? "",
         greeting: seed.greeting ?? "",
@@ -433,6 +454,10 @@ export type Client = {
   widget_text_color: string
   widget_title: string
   widget_placeholder: string
+  widget_avatar_letter: string
+  widget_avatar_url: string
+  widget_online_dot: number
+  widget_subtitle: string
   rate_limit: number
   active: number
   context_url: string
@@ -498,18 +523,21 @@ export function getAllClients(): Client[] {
 }
 
 export function createClient(
-  data: Omit<Client, "id" | "created_at" | "consent_required" | "consent_text" | "policy_url" | "tg_include_transcript"> &
-    Partial<Pick<Client, "consent_required" | "consent_text" | "policy_url" | "tg_include_transcript">>
+  data: Omit<Client, "id" | "created_at" | "consent_required" | "consent_text" | "policy_url" | "tg_include_transcript" | "widget_avatar_letter" | "widget_avatar_url" | "widget_online_dot" | "widget_subtitle"> &
+    Partial<Pick<Client, "consent_required" | "consent_text" | "policy_url" | "tg_include_transcript" | "widget_avatar_letter" | "widget_avatar_url" | "widget_online_dot" | "widget_subtitle">>
 ): Client {
   const db = getDb()
   const stmt = db.prepare(`
     INSERT INTO clients
       (slug, name, description, system_prompt, api_key, base_url, model,
        tg_token, tg_chat_id, widget_color, widget_text_color, widget_title, widget_placeholder,
+       widget_avatar_letter, widget_avatar_url, widget_online_dot, widget_subtitle,
        rate_limit, active, quick_replies, greeting, tg_include_transcript)
     VALUES
       (@slug, @name, @description, @system_prompt, @api_key, @base_url, @model,
        @tg_token, @tg_chat_id, @widget_color, @widget_text_color, @widget_title, @widget_placeholder,
+       COALESCE(@widget_avatar_letter, ''), COALESCE(@widget_avatar_url, ''),
+       COALESCE(@widget_online_dot, 0), COALESCE(@widget_subtitle, ''),
        @rate_limit, @active, @quick_replies, @greeting,
        COALESCE(@tg_include_transcript, 1))
   `)
@@ -524,6 +552,7 @@ export function createClient(
 const UPDATABLE_CLIENT_FIELDS = new Set([
   "name", "description", "system_prompt", "api_key", "base_url", "model",
   "tg_token", "tg_chat_id", "widget_color", "widget_text_color", "widget_title", "widget_placeholder",
+  "widget_avatar_letter", "widget_avatar_url", "widget_online_dot", "widget_subtitle",
   "rate_limit", "active", "context_url", "quick_replies", "greeting",
   "consent_required", "consent_text", "policy_url",
   "tg_include_transcript",
@@ -577,6 +606,10 @@ function syncClientToSeed(slug: string): void {
     entry.consent_text           = client.consent_text           ?? ""
     entry.policy_url             = client.policy_url             ?? ""
     entry.tg_include_transcript  = client.tg_include_transcript  ?? 1
+    entry.widget_avatar_letter   = client.widget_avatar_letter   ?? ""
+    entry.widget_avatar_url      = client.widget_avatar_url      ?? ""
+    entry.widget_online_dot      = client.widget_online_dot      ?? 0
+    entry.widget_subtitle        = client.widget_subtitle        ?? ""
     if (idx < 0) seeds.push(entry)
     // Атомарная запись: пишем во временный файл, затем переименовываем.
     // Это защищает от обрезанного JSON при краше/PM2 reload в момент записи.

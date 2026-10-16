@@ -69,6 +69,12 @@
   var POLICY_URL       = "";
   var DEFAULT_CONSENT_TEXT = "Это ИИ-ассистент. Он не заменяет консультацию специалиста. Переписка обрабатывается, в том числе с использованием зарубежного ИИ-сервиса. Продолжая, вы соглашаетесь на обработку персональных данных согласно Политике конфиденциальности.";
 
+  // ── Widget appearance settings (from config, 2026-10-16) ─────────────────────
+  // Empty/false = keep existing default behaviour (pixel-perfect for current bots).
+  var WIDGET_AVATAR_LETTER = ""; // 1-2 chars; overrides first-char of CHAR_NAME when non-empty
+  var ONLINE_DOT   = false;      // green online dot on launcher and header avatar
+  var SUBTITLE     = "";         // text under name in header; empty → default hardcoded text
+
   function makeAvaHtml(size) {
     if (AVATAR_URL) {
       return '<img src="' + escHtml(AVATAR_URL) + '" style="width:' + size + 'px;height:' + size + 'px;border-radius:50%;object-fit:cover;display:block;" alt="">';
@@ -309,7 +315,7 @@
         '<div id="opsph-head-ava">' + makeAvaHtml(36) + '</div>',
         '<div id="opsph-head-info">',
           '<div id="opsph-head-name">' + escHtml(CHAR_NAME) + '</div>',
-          '<div id="opsph-head-sub">● Онлайн · ИИ-ассистент</div>',
+          '<div id="opsph-head-sub">' + (SUBTITLE ? escHtml(SUBTITLE) : '● Онлайн · ИИ-ассистент') + '</div>',
         '</div>',
         '<button id="opsph-close" aria-label="Закрыть">' + closeIcon() + '</button>',
       '</div>',
@@ -759,6 +765,25 @@
     TEXT_COLOR = safeHex(TEXT_COLOR, "#ffffff");
     injectCSS();
     buildDOM();
+    // ── Online dot: append to launcher and header avatars after DOM is built ──
+    // Stationary green dot (#22c55e) at bottom-right of avatar circle.
+    // Only active when explicitly enabled per-client (default OFF → zero visual change).
+    if (ONLINE_DOT) {
+      var _dotBtnAva = document.getElementById("opsph-btn-ava");
+      if (_dotBtnAva) {
+        _dotBtnAva.style.position = "relative";
+        var _dot1 = document.createElement("span");
+        _dot1.style.cssText = "position:absolute;bottom:0;right:0;width:10px;height:10px;border-radius:50%;background:#22c55e;border:2px solid " + COLOR + ";pointer-events:none;";
+        _dotBtnAva.appendChild(_dot1);
+      }
+      var _dotHeadAva = document.getElementById("opsph-head-ava");
+      if (_dotHeadAva) {
+        _dotHeadAva.style.position = "relative";
+        var _dot2 = document.createElement("span");
+        _dot2.style.cssText = "position:absolute;bottom:0;right:0;width:10px;height:10px;border-radius:50%;background:#22c55e;border:2px solid " + COLOR + ";pointer-events:none;";
+        _dotHeadAva.appendChild(_dot2);
+      }
+    }
     restoreMessages();
     loadConsent();
     if (CONSENT_REQUIRED && !consentGiven) setInputLocked(true);
@@ -796,6 +821,21 @@
             else localStorage.removeItem(GATE_FLAG_KEY);
           } catch (e) {}
           AVA_LETTER = CHAR_NAME.charAt(0).toUpperCase();
+          // ── New appearance fields (2026-10-16) ──────────────────────────────
+          // avatar_letter: 1-2 chars (letters or digits, incl. Cyrillic); replaces first-char fallback.
+          // Strip only whitespace — [a-zA-Z0-9] would reject Cyrillic ("В" etc); server validates.
+          if (cfg.avatar_letter && typeof cfg.avatar_letter === "string") {
+            var _al = ("" + cfg.avatar_letter).replace(/\s/g, "").slice(0, 2);
+            if (_al) { WIDGET_AVATAR_LETTER = _al.toUpperCase(); AVA_LETTER = WIDGET_AVATAR_LETTER; }
+          }
+          // avatar_url from config: lower priority than data-avatar attribute on tag.
+          if (!AVATAR_URL && cfg.avatar_url && typeof cfg.avatar_url === "string" && cfg.avatar_url.indexOf("https://") === 0) {
+            AVATAR_URL = cfg.avatar_url;
+          }
+          // online_dot: truthy in config → enable green online dot.
+          ONLINE_DOT = !!cfg.online_dot;
+          // subtitle: replaces hardcoded "● Онлайн · ИИ-ассистент"; empty → keep default.
+          SUBTITLE = (cfg.subtitle && typeof cfg.subtitle === "string") ? cfg.subtitle.slice(0, 60) : "";
         }
         render();
       })

@@ -9,6 +9,34 @@ function validateHex(v: unknown, field: string): { error: string } | null {
   }
   return null
 }
+// Validates widget appearance fields for POST and PATCH.
+// Returns an error object or null.
+function validateWidgetAppearance(data: Partial<{ widget_avatar_letter: string; widget_avatar_url: string; widget_online_dot: number; widget_subtitle: string }>): { error: string } | null {
+  if (data.widget_avatar_letter !== undefined) {
+    if (typeof data.widget_avatar_letter !== "string") return { error: "widget_avatar_letter: must be a string" }
+    const v = data.widget_avatar_letter
+    // Unicode-aware: allows Cyrillic, Latin, digits (e.g. "В", "A", "1")
+    if (v !== "" && (!/^\S{1,2}$/u.test(v) || /[\u0000-\u001f]/.test(v))) {
+      return { error: "widget_avatar_letter: must be empty or 1–2 non-whitespace characters" }
+    }
+  }
+  if (data.widget_avatar_url !== undefined) {
+    if (typeof data.widget_avatar_url !== "string") return { error: "widget_avatar_url: must be a string" }
+    const v = data.widget_avatar_url
+    if (v !== "" && (!v.startsWith("https://") || v.length > 500)) {
+      return { error: "widget_avatar_url: must be empty or an https:// URL up to 500 characters" }
+    }
+  }
+  if (data.widget_online_dot !== undefined) {
+    const v = Number(data.widget_online_dot)
+    if (v !== 0 && v !== 1) return { error: "widget_online_dot: must be 0 or 1" }
+  }
+  if (data.widget_subtitle !== undefined) {
+    if (typeof data.widget_subtitle !== "string") return { error: "widget_subtitle: must be a string" }
+    if (data.widget_subtitle.length > 60) return { error: "widget_subtitle: max 60 characters" }
+  }
+  return null
+}
 import {
   getAllClients,
   createClient,
@@ -79,6 +107,15 @@ export async function POST(request: NextRequest): Promise<Response> {
   const colorErr = validateHex(data.widget_color, "widget_color") ?? validateHex(data.widget_text_color, "widget_text_color")
   if (colorErr) return NextResponse.json(colorErr, { status: 400 })
 
+  // Validate widget appearance fields
+  const appearErr = validateWidgetAppearance(data)
+  if (appearErr) return NextResponse.json(appearErr, { status: 400 })
+
+  // Normalise widget_online_dot to integer
+  if (data.widget_online_dot !== undefined) {
+    data.widget_online_dot = Number(data.widget_online_dot) as 0 | 1
+  }
+
   try {
     const client = createClient({
       slug: data.slug,
@@ -94,6 +131,10 @@ export async function POST(request: NextRequest): Promise<Response> {
       widget_text_color: data.widget_text_color ?? "#ffffff",
       widget_title: data.widget_title ?? "Ассистент",
       widget_placeholder: data.widget_placeholder ?? "Напишите вопрос…",
+      widget_avatar_letter: data.widget_avatar_letter ?? "",
+      widget_avatar_url: data.widget_avatar_url ?? "",
+      widget_online_dot: data.widget_online_dot ?? 0,
+      widget_subtitle: (data.widget_subtitle ?? "").slice(0, 60),
       rate_limit: data.rate_limit ?? 30,
       active: data.active ?? 1,
       context_url: data.context_url ?? "",
@@ -134,6 +175,10 @@ export async function PATCH(request: NextRequest): Promise<Response> {
   const patchColorErr = validateHex(data.widget_color, "widget_color") ?? validateHex(data.widget_text_color, "widget_text_color")
   if (patchColorErr) return NextResponse.json(patchColorErr, { status: 400 })
 
+  // Validate widget appearance fields
+  const patchAppearErr = validateWidgetAppearance(data)
+  if (patchAppearErr) return NextResponse.json(patchAppearErr, { status: 400 })
+
   // tg_include_transcript must be exactly 0 or 1
   if (data.tg_include_transcript !== undefined) {
     const v = Number(data.tg_include_transcript)
@@ -141,6 +186,16 @@ export async function PATCH(request: NextRequest): Promise<Response> {
       return NextResponse.json({ error: "tg_include_transcript: must be 0 or 1" }, { status: 400 })
     }
     data.tg_include_transcript = v
+  }
+
+  // Normalise widget_online_dot to integer
+  if (data.widget_online_dot !== undefined) {
+    data.widget_online_dot = Number(data.widget_online_dot) as 0 | 1
+  }
+
+  // Clamp widget_subtitle to max 60 chars (already validated above, guard for edge cases)
+  if (typeof data.widget_subtitle === "string") {
+    data.widget_subtitle = data.widget_subtitle.slice(0, 60)
   }
 
   updateClient(slug, data)

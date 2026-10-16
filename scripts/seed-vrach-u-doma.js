@@ -98,6 +98,10 @@ for (const col of [
   "ALTER TABLE clients ADD COLUMN policy_url TEXT DEFAULT ''",
   "ALTER TABLE clients ADD COLUMN widget_text_color TEXT NOT NULL DEFAULT '#ffffff'",
   "ALTER TABLE clients ADD COLUMN tg_include_transcript INTEGER NOT NULL DEFAULT 1",
+  "ALTER TABLE clients ADD COLUMN widget_avatar_letter TEXT NOT NULL DEFAULT ''",
+  "ALTER TABLE clients ADD COLUMN widget_avatar_url TEXT NOT NULL DEFAULT ''",
+  "ALTER TABLE clients ADD COLUMN widget_online_dot INTEGER NOT NULL DEFAULT 0",
+  "ALTER TABLE clients ADD COLUMN widget_subtitle TEXT NOT NULL DEFAULT ''",
 ]) {
   try { db.exec(col); } catch { /* column already exists */ }
 }
@@ -358,7 +362,13 @@ const BOT_DATA = {
   // White text fails WCAG AA on gold (2.2:1), so widget_text_color = dark graphite #171310 (≈19:1 contrast).
   widget_color: "#DAA759",
   widget_text_color: "#171310",
-  widget_title: "Онлайн администратор",
+  widget_title: "Администратор онлайн",
+  widget_avatar_letter: "В",
+  widget_avatar_url: "",
+  widget_online_dot: 1,
+  // widget_subtitle empty → keeps default "● Онлайн · ИИ-ассистент" in panel header
+  // (honesty requirement: must keep "ИИ-ассистент" visible; согласие + 152-ФЗ).
+  widget_subtitle: "",
   widget_placeholder: "Задайте вопрос или запишитесь на приём…",
   rate_limit: 20,
   context_url: "",
@@ -392,6 +402,10 @@ if (existing) {
       widget_text_color   = @widget_text_color,
       widget_title        = @widget_title,
       widget_placeholder  = @widget_placeholder,
+      widget_avatar_letter = @widget_avatar_letter,
+      widget_avatar_url   = @widget_avatar_url,
+      widget_online_dot   = @widget_online_dot,
+      widget_subtitle     = @widget_subtitle,
       rate_limit          = @rate_limit,
       context_url         = @context_url,
       quick_replies       = @quick_replies,
@@ -409,11 +423,13 @@ if (existing) {
     INSERT INTO clients
       (slug, name, description, system_prompt, api_key, base_url, model,
        tg_token, tg_chat_id, widget_color, widget_text_color, widget_title, widget_placeholder,
+       widget_avatar_letter, widget_avatar_url, widget_online_dot, widget_subtitle,
        rate_limit, active, context_url, quick_replies, greeting,
        consent_required, consent_text, policy_url, tg_include_transcript)
     VALUES
       (@slug, @name, @description, @system_prompt, @api_key, @base_url, @model,
        @tg_token, @tg_chat_id, @widget_color, @widget_text_color, @widget_title, @widget_placeholder,
+       @widget_avatar_letter, @widget_avatar_url, @widget_online_dot, @widget_subtitle,
        @rate_limit, 1, @context_url, @quick_replies, @greeting,
        @consent_required, @consent_text, @policy_url, @tg_include_transcript)
   `).run({ slug: SLUG, ...BOT_DATA });
