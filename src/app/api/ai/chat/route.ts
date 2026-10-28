@@ -3,11 +3,17 @@ import Anthropic from "@anthropic-ai/sdk"
 import { isSafeFetchUrl } from "@/lib/safe-url"
 import { resolveBaseURL } from "@/lib/ai-config"
 import { DEFAULT_BOT_MODEL, getModelRequestParams } from "@/lib/bots/model"
+import { gzipFetch } from "@/lib/bots/ai-fetch"
 
 function getAI() {
   return new Anthropic({
     apiKey: process.env.ANTHROPIC_API_KEY ?? process.env.AI_API_KEY ?? "placeholder",
     baseURL: resolveBaseURL(process.env.AI_BASE_URL),
+    // gzip тела >8 КБ + повтор зависших соединений: CF-воркер рвёт тела >~30 КБ.
+    // Ответ стримится (messages.stream) — заголовки приходят до генерации, таймаут попытки безопасен.
+    fetch: gzipFetch as unknown as typeof fetch,
+    // Зависания повторяет gzipFetch; без этого SDK умножил бы повторы (3×3 попытки).
+    maxRetries: 0,
   })
 }
 
@@ -373,6 +379,9 @@ export async function POST(request: NextRequest): Promise<Response> {
           ...getModelRequestParams(model),
           system: systemPrompt,
           messages: body.messages,
+        }, {
+          // Общий потолок: 3 попытки × 10 с + паузы + запас на ответ (как в ботах), до nginx-таймаута.
+          signal: AbortSignal.timeout(90_000),
         })
 
         let gotText = false
